@@ -22,7 +22,7 @@ namespace PacManGame
 
         public string AuthorName()
         {
-            return "JanV: \"mostly random moves\"";
+            return "Dominik, Job, Janita, Wendy & Erik";
         }
 
         /***
@@ -32,6 +32,19 @@ namespace PacManGame
          * PURPOSE: FIND THE BEST MOVE FOR THE PACMAN
          * 
          ***/
+
+        protected Point NewPosition(Point newDirection, Point currentPosition)
+        {
+            Point newPosition = new Point();
+            newPosition.X = currentPosition.X + Speed * newDirection.X;
+            newPosition.Y = currentPosition.Y + Speed * newDirection.Y;
+            return newPosition;
+        }
+
+        protected Point GridToPixel(Point gridPosition)
+        {
+            return new Point(gridPosition.X * World.BLOCKSIZE, gridPosition.Y * World.BLOCKSIZE);
+        }
 
         public override void Update()
         {
@@ -54,17 +67,17 @@ namespace PacManGame
                         bool CanAdd = true;
                         if (World.Instance.CanUp(newPosition))
                         {
-                            if (World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(-1, -1))))
+                            if (World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(0, -1), GridToPixel(newPosition))))
                                 CanAdd = false;
                         }
                         if (World.Instance.CanLeft(newPosition))
                         {
-                            if (World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(-2, 0))))
+                            if (World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(-1, 0), GridToPixel(newPosition))))
                                 CanAdd = false;
                         }
                         if (World.Instance.CanDown(newPosition))
                         {
-                            if (World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(-1, 1))))
+                            if (World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(0, 1), GridToPixel(newPosition))))
                                 CanAdd = false;
                         }
                         if (CanAdd)
@@ -72,6 +85,10 @@ namespace PacManGame
                             d2.Add(new Point(-1, 0));       //  left direction possible and there is no ghost
                             if (Direction.X != 1)
                                 d1.Add(new Point(-1, 0));   //  same, but it's our reversed direction: so second choice!
+                        }
+                        else
+                        {
+
                         }
                     }
                 }
@@ -84,17 +101,17 @@ namespace PacManGame
                         bool CanAdd = true;
                         if (World.Instance.CanRight(newPosition))
                         {
-                            if (World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(1, -1))))
+                            if (World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(1, 0), GridToPixel(newPosition))))
                                 CanAdd = false;
                         }
                         if (World.Instance.CanUp(newPosition))
                         {
-                            if (World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(0, -2))))
+                            if (World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(0, -1), GridToPixel(newPosition))))
                                 CanAdd = false;
                         }
                         if (World.Instance.CanLeft(newPosition))
                         {
-                            if (World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(-1, -1))))
+                            if (World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(-1, 0), GridToPixel(newPosition))))
                                 CanAdd = false;
                         }
 
@@ -103,6 +120,10 @@ namespace PacManGame
                             d2.Add(new Point(0, -1));
                             if (Direction.Y != 1)
                                 d1.Add(new Point(0, -1));
+                        }
+                        else
+                        {
+
                         }
                     }
                 }
@@ -115,17 +136,17 @@ namespace PacManGame
                         bool CanAdd = true;
                         if (World.Instance.CanRight(newPosition))
                         {
-                            if (World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(2, 0))))
+                            if (World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(1, 0), GridToPixel(newPosition))))
                                 CanAdd = false;
                         }
                         if (World.Instance.CanUp(newPosition))
                         {
-                            if (World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(1, -1))))
+                            if (World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(0, -1), GridToPixel(newPosition))))
                                 CanAdd = false;
                         }
                         if (World.Instance.CanDown(newPosition))
                         {
-                            if (World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(1, 1))))
+                            if (World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(0, 1), GridToPixel(newPosition))))
                                 CanAdd = false;
                         }
 
@@ -134,6 +155,10 @@ namespace PacManGame
                             d2.Add(new Point(1, 0));
                             if (Direction.X != -1)
                                 d1.Add(new Point(1, 0));
+                        }
+                        else
+                        {
+
                         }
                     }
                 }
@@ -146,17 +171,17 @@ namespace PacManGame
                         bool CanAdd = true;
                         if (World.Instance.CanRight(newPosition))
                         {
-                            if (World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(1, 1))))
+                            if (World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(1, 0), GridToPixel(newPosition))))
                                 CanAdd = false;
                         }
                         if (World.Instance.CanLeft(newPosition))
                         {
-                            if (World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(-1, 1))))
+                            if (World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(-1, 0), GridToPixel(newPosition))))
                                 CanAdd = false;
                         }
                         if (World.Instance.CanDown(newPosition))
                         {
-                            if (World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(0, 2))))
+                            if (World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(0, 1), GridToPixel(newPosition))))
                                 CanAdd = false;
                         }
 
@@ -165,6 +190,10 @@ namespace PacManGame
                             d2.Add(new Point(0, 1));
                             if (Direction.Y != -1)
                                 d1.Add(new Point(0, 1));
+                        }
+                        else
+                        {
+
                         }
                     }
                 }

@@ -48,41 +48,124 @@ namespace PacManGame
 
                 if (World.Instance.CanLeft(gridPosition))
                 {
+                    Point newPosition = new Point(gridPosition.X -1, gridPosition.Y);
                     if (!World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(-1, 0))))
                     {
-                        d2.Add(new Point(-1, 0));       //  left direction possible and there is no ghost
-                        if (Direction.X != 1)
-                            d1.Add(new Point(-1, 0));   //  same, but it's our reversed direction: so second choice!
+                        bool CanAdd = true;
+                        if (World.Instance.CanUp(newPosition))
+                        {
+                            if (World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(-1, -1))))
+                                CanAdd = false;
+                        }
+                        if (World.Instance.CanLeft(newPosition))
+                        {
+                            if (World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(-2, 0))))
+                                CanAdd = false;
+                        }
+                        if (World.Instance.CanDown(newPosition))
+                        {
+                            if (World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(-1, 1))))
+                                CanAdd = false;
+                        }
+                        if (CanAdd)
+                        {
+                            d2.Add(new Point(-1, 0));       //  left direction possible and there is no ghost
+                            if (Direction.X != 1)
+                                d1.Add(new Point(-1, 0));   //  same, but it's our reversed direction: so second choice!
+                        }
                     }
                 }
 
                 if (World.Instance.CanUp(gridPosition))
                 {
+                    Point newPosition = new Point(gridPosition.X, gridPosition.Y - 1);
                     if (!World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(0, -1))))
                     {
-                        d2.Add(new Point(0, -1));
-                        if (Direction.Y != 1)
-                            d1.Add(new Point(0, -1));
+                        bool CanAdd = true;
+                        if (World.Instance.CanRight(newPosition))
+                        {
+                            if (World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(1, -1))))
+                                CanAdd = false;
+                        }
+                        if (World.Instance.CanUp(newPosition))
+                        {
+                            if (World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(0, -2))))
+                                CanAdd = false;
+                        }
+                        if (World.Instance.CanLeft(newPosition))
+                        {
+                            if (World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(-1, -1))))
+                                CanAdd = false;
+                        }
+
+                        if (CanAdd)
+                        {
+                            d2.Add(new Point(0, -1));
+                            if (Direction.Y != 1)
+                                d1.Add(new Point(0, -1));
+                        }
                     }
                 }
 
                 if (World.Instance.CanRight(gridPosition))
                 {
+                    Point newPosition = new Point(gridPosition.X + 1, gridPosition.Y);
                     if (!World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(1, 0))))
                     {
-                        d2.Add(new Point(1, 0));
-                        if (Direction.X != -1)
-                            d1.Add(new Point(1, 0));
+                        bool CanAdd = true;
+                        if (World.Instance.CanRight(newPosition))
+                        {
+                            if (World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(2, 0))))
+                                CanAdd = false;
+                        }
+                        if (World.Instance.CanUp(newPosition))
+                        {
+                            if (World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(1, -1))))
+                                CanAdd = false;
+                        }
+                        if (World.Instance.CanDown(newPosition))
+                        {
+                            if (World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(1, 1))))
+                                CanAdd = false;
+                        }
+
+                        if (CanAdd)
+                        {
+                            d2.Add(new Point(1, 0));
+                            if (Direction.X != -1)
+                                d1.Add(new Point(1, 0));
+                        }
                     }
                 }
 
                 if (World.Instance.CanDown(gridPosition))
                 {
+                    Point newPosition = new Point(gridPosition.X, gridPosition.Y + 1);
                     if (!World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(0, 1))))
                     {
-                        d2.Add(new Point(0, 1));
-                        if (Direction.Y != -1)
-                            d1.Add(new Point(0, 1));
+                        bool CanAdd = true;
+                        if (World.Instance.CanRight(newPosition))
+                        {
+                            if (World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(1, 1))))
+                                CanAdd = false;
+                        }
+                        if (World.Instance.CanLeft(newPosition))
+                        {
+                            if (World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(-1, 1))))
+                                CanAdd = false;
+                        }
+                        if (World.Instance.CanDown(newPosition))
+                        {
+                            if (World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(0, 2))))
+                                CanAdd = false;
+                        }
+
+                        if (CanAdd)
+                        {
+                            d2.Add(new Point(0, 1));
+                            if (Direction.Y != -1)
+                                d1.Add(new Point(0, 1));
+                        }
                     }
                 }
 

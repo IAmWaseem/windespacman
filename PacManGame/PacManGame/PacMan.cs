@@ -334,6 +334,8 @@ namespace PacManGame
                         if (tempdistance < lowestdistance)
                             lowestdistance = tempdistance;
                     }
+                    else
+                        lowestdistance = Int32.MaxValue;
                 }
                 if (World.Instance.CanRight(point))
                 {
@@ -343,6 +345,8 @@ namespace PacManGame
                         if (tempdistance < lowestdistance)
                             lowestdistance = tempdistance;
                     }
+                    else
+                        lowestdistance = Int32.MaxValue;
                 }
                 if (World.Instance.CanDown(point))
                 {
@@ -352,6 +356,8 @@ namespace PacManGame
                         if (tempdistance < lowestdistance)
                             lowestdistance = tempdistance;
                     }
+                    else
+                        lowestdistance = Int32.MaxValue;
                 }
                 if (World.Instance.CanUp(point))
                 {
@@ -361,6 +367,8 @@ namespace PacManGame
                         if (tempdistance < lowestdistance)
                             lowestdistance = tempdistance;
                     }
+                    else
+                        lowestdistance = Int32.MaxValue;
                 }
                 return lowestdistance;
             }

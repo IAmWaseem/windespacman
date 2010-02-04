@@ -328,27 +328,39 @@ namespace PacManGame
 
                 if (World.Instance.CanLeft(point))
                 {
-                    tempdistance = getDistanceToPointsSpot(new Point(point.X - 1, point.Y), distance);
-                    if (tempdistance < lowestdistance)
-                        lowestdistance = tempdistance;
+                    if (!World.Instance.IsThereAGhostAtPixel(GridToPixel(point)))
+                    {
+                        tempdistance = getDistanceToPointsSpot(new Point(point.X - 1, point.Y), distance);
+                        if (tempdistance < lowestdistance)
+                            lowestdistance = tempdistance;
+                    }
                 }
                 if (World.Instance.CanRight(point))
                 {
-                    tempdistance = getDistanceToPointsSpot(new Point(point.X + 1, point.Y), distance);
-                    if (tempdistance < lowestdistance)
-                        lowestdistance = tempdistance;
+                    if (!World.Instance.IsThereAGhostAtPixel(GridToPixel(point)))
+                    {
+                        tempdistance = getDistanceToPointsSpot(new Point(point.X + 1, point.Y), distance);
+                        if (tempdistance < lowestdistance)
+                            lowestdistance = tempdistance;
+                    }
                 }
                 if (World.Instance.CanDown(point))
                 {
-                    tempdistance = getDistanceToPointsSpot(new Point(point.X, point.Y + 1), distance);
-                    if (tempdistance < lowestdistance)
-                        lowestdistance = tempdistance;
+                    if (!World.Instance.IsThereAGhostAtPixel(GridToPixel(point)))
+                    {
+                        tempdistance = getDistanceToPointsSpot(new Point(point.X, point.Y + 1), distance);
+                        if (tempdistance < lowestdistance)
+                            lowestdistance = tempdistance;
+                    }
                 }
                 if (World.Instance.CanUp(point))
                 {
-                    tempdistance = getDistanceToPointsSpot(new Point(point.X, point.Y - 1), distance);
-                    if (tempdistance < lowestdistance)
-                        lowestdistance = tempdistance;
+                    if (!World.Instance.IsThereAGhostAtPixel(GridToPixel(point)))
+                    {
+                        tempdistance = getDistanceToPointsSpot(new Point(point.X, point.Y - 1), distance);
+                        if (tempdistance < lowestdistance)
+                            lowestdistance = tempdistance;
+                    }
                 }
                 return lowestdistance;
             }

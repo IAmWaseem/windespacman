@@ -270,7 +270,7 @@ namespace PacManGame
 
                     if (choise1.Count > 0)
                     {
-                        Point bestChoise = new Point(0, 0);
+                        Point bestChoise = new Point(0,0);
                         int shortestDistance = Int32.MaxValue;
                         foreach (Point possibleChoise in choise1)
                         {
@@ -280,6 +280,11 @@ namespace PacManGame
                                 bestChoise = possibleChoise;
                                 shortestDistance = tempDistance;
                             }
+                        }
+                        if (shortestDistance > 10)
+                        {
+                            int random = World.GetRandomInt(choise1.Count);
+                            bestChoise = new Point(choise1[random].X, choise1[random].Y);
                         }
                         Direction = bestChoise;
                     }
@@ -296,6 +301,11 @@ namespace PacManGame
                                 bestChoise = possibleChoise;
                                 shortestDistance = tempDistance;
                             }
+                        }
+                        if (shortestDistance > 10)
+                        {
+                            int random = World.GetRandomInt(choise2.Count);
+                            bestChoise = new Point(choise2[random].X, choise2[random].Y);
                         }
                         Direction = bestChoise;
                     }

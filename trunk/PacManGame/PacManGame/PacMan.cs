@@ -41,6 +41,14 @@ namespace PacManGame
             return newPosition;
         }
 
+        protected Point NewGridPosition(Point newDirection)
+        {
+            Point newPosition = new Point();
+            newPosition.X = GridPosition.X + newDirection.X;
+            newPosition.Y = GridPosition.Y + newDirection.Y;
+            return newPosition;
+        }
+
         protected Point GridToPixel(Point gridPosition)
         {
             return new Point(gridPosition.X * World.BLOCKSIZE, gridPosition.Y * World.BLOCKSIZE);
@@ -214,16 +222,56 @@ namespace PacManGame
                     }
                     else
                     {
-                        //  make a random choise from second best
-                        int random = World.GetRandomInt(d2.Count);
-                        Direction = new Point(d2[random].X, d2[random].Y);
+                        List<Point> choise1 = new List<Point>();
+                        List<Point> choise2 = new List<Point>();
+
+                        foreach (Point p in d2)
+                        {
+                            if (World.Instance.IsSpot(NewGridPosition(p), World.DOT) || World.Instance.IsSpot(NewGridPosition(p), World.POWER))
+                                choise1.Add(p);
+                            else
+                                choise2.Add(p);
+                        }
+
+                        if (choise1.Count > 0)
+                        {
+                            //  make a random choise from first best
+                            int random = World.GetRandomInt(choise1.Count);
+                            Direction = new Point(choise1[random].X, choise1[random].Y);
+                        }
+                        else
+                        {
+                            //  make a random choise from first best
+                            int random = World.GetRandomInt(choise2.Count);
+                            Direction = new Point(choise2[random].X, choise2[random].Y);
+                        }
                     }
                 }
                 else
                 {
-                    //  make a random choise from first best
-                    int random = World.GetRandomInt(d1.Count);
-                    Direction = new Point(d1[random].X, d1[random].Y);
+                    List<Point> choise1 = new List<Point>();
+                    List<Point> choise2 = new List<Point>();
+
+                    foreach(Point p in d1)
+                    {
+                        if (World.Instance.IsSpot(NewGridPosition(p), World.DOT) || World.Instance.IsSpot(NewGridPosition(p), World.POWER))
+                            choise1.Add(p);                        
+                        else
+                            choise2.Add(p);
+                    }
+
+                    if (choise1.Count > 0)
+                    {
+                        //  make a random choise from first best
+                        int random = World.GetRandomInt(choise1.Count);
+                        Direction = new Point(choise1[random].X, choise1[random].Y);
+                    }
+                    else
+                    {
+                        //  make a random choise from first best
+                        int random = World.GetRandomInt(choise2.Count);
+                        Direction = new Point(choise2[random].X, choise2[random].Y);
+                    }
                 }
             }
 

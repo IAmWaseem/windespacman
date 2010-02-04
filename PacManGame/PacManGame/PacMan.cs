@@ -23,7 +23,7 @@ namespace PacManGame
 
         public string AuthorName()
         {
-            return "Dominik, Job, Janita, Wendy & Erik";
+            return "Lewi, Job, Janita, Wendy & Erik";
         }
 
         /***
@@ -95,10 +95,6 @@ namespace PacManGame
                             if (Direction.X != 1)
                                 d1.Add(new Point(-1, 0));   //  same, but it's our reversed direction: so second choice!
                         }
-                        else
-                        {
-
-                        }
                     }
                 }
 
@@ -129,10 +125,6 @@ namespace PacManGame
                             d2.Add(new Point(0, -1));
                             if (Direction.Y != 1)
                                 d1.Add(new Point(0, -1));
-                        }
-                        else
-                        {
-
                         }
                     }
                 }
@@ -165,10 +157,6 @@ namespace PacManGame
                             if (Direction.X != -1)
                                 d1.Add(new Point(1, 0));
                         }
-                        else
-                        {
-
-                        }
                     }
                 }
 
@@ -200,10 +188,6 @@ namespace PacManGame
                             if (Direction.Y != -1)
                                 d1.Add(new Point(0, 1));
                         }
-                        else
-                        {
-
-                        }
                     }
                 }
 
@@ -218,7 +202,6 @@ namespace PacManGame
                         else
                         {
                             Direction = new Point(-Direction.X, -Direction.Y);  //  reverse direction
-
                         }
                     }
                     else
@@ -384,7 +367,7 @@ namespace PacManGame
                 }
                 if (World.Instance.CanDown(point))
                 {
-                    if (!World.Instance.IsThereAGhostAtPixel(GridToPixel(point)) && from != CameFrom.Up )
+                    if (!World.Instance.IsThereAGhostAtPixel(GridToPixel(point)) && from != CameFrom.Up)
                     {
                         tempdistance = getDistanceToPointsSpot(new Point(point.X, point.Y + 1), distance, CameFrom.Down);
                     }
@@ -406,7 +389,6 @@ namespace PacManGame
 
                     if (tempdistance < lowestdistance)
                         lowestdistance = tempdistance;
-
                 }
                 return lowestdistance;
             }

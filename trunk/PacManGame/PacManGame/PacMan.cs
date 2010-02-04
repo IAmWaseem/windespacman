@@ -268,9 +268,16 @@ namespace PacManGame
                     }
                     else
                     {
-                        //  make a random choise from first best
-                        int random = World.GetRandomInt(choise2.Count);
-                        Direction = new Point(choise2[random].X, choise2[random].Y);
+                        
+                        Point bestChoise = new Point(0,0);
+                        int shortestDistance = Int32.MaxValue;
+                        foreach (Point possibleChoise in choise2)
+                        {
+                            int tempDistance = getDistanceToPointsSpot(new Point(GridPosition.X+possibleChoise.X, GridPosition.Y+possibleChoise.Y));
+                            if (tempDistance < shortestDistance)
+                                bestChoise = possibleChoise;
+                        }
+                        Direction = bestChoise;
                     }
                 }
             }
@@ -278,6 +285,53 @@ namespace PacManGame
             //  compute new position depending on the found direction
 
             pixelPosition = NewPosition(Direction);
+        }
+
+        private int getDistanceToPointsSpot(Point point)
+        {
+            return getDistanceToPointsSpot(point, 0);
+        }
+
+        private int getDistanceToPointsSpot(Point point, int distance)
+        {
+            if (distance > 10)
+                return distance;
+            if (World.Instance.IsSpot(point, World.DOT) || World.Instance.IsSpot(point, World.POWER))
+            {
+                return distance;
+            }
+            else
+            {
+                distance++;
+                int tempdistance;
+                int lowestdistance = Int32.MaxValue;
+
+                if (World.Instance.CanLeft(point))
+                {
+                    tempdistance = getDistanceToPointsSpot(new Point(point.X - 1, point.Y), distance);
+                    if (tempdistance < lowestdistance)
+                        lowestdistance = tempdistance;
+                }
+                if (World.Instance.CanRight(point))
+                {
+                    tempdistance = getDistanceToPointsSpot(new Point(point.X + 1, point.Y), distance);
+                    if (tempdistance < lowestdistance)
+                        lowestdistance = tempdistance;
+                }
+                if (World.Instance.CanDown(point))
+                {
+                    tempdistance = getDistanceToPointsSpot(new Point(point.X, point.Y + 1), distance);
+                    if (tempdistance < lowestdistance)
+                        lowestdistance = tempdistance;
+                }
+                if (World.Instance.CanUp(point))
+                {
+                    tempdistance = getDistanceToPointsSpot(new Point(point.X, point.Y - 1), distance);
+                    if (tempdistance < lowestdistance)
+                        lowestdistance = tempdistance;
+                }
+                return lowestdistance;
+            }
         }
 
     }

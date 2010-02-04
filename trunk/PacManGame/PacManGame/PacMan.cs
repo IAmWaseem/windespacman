@@ -252,7 +252,15 @@ namespace PacManGame
                     List<Point> choise1 = new List<Point>();
                     List<Point> choise2 = new List<Point>();
 
-                    foreach(Point p in d1)
+                    foreach (Point p in d1)
+                    {
+                        if (World.Instance.IsSpot(NewGridPosition(p), World.DOT) || World.Instance.IsSpot(NewGridPosition(p), World.POWER))
+                            choise1.Add(p);
+                        else
+                            choise2.Add(p);
+                    }    
+                
+                    foreach(Point p in d2)
                     {
                         if (World.Instance.IsSpot(NewGridPosition(p), World.DOT) || World.Instance.IsSpot(NewGridPosition(p), World.POWER))
                             choise1.Add(p);                        
@@ -262,9 +270,18 @@ namespace PacManGame
 
                     if (choise1.Count > 0)
                     {
-                        //  make a random choise from first best
-                        int random = World.GetRandomInt(choise1.Count);
-                        Direction = new Point(choise1[random].X, choise1[random].Y);
+                        Point bestChoise = new Point(0, 0);
+                        int shortestDistance = Int32.MaxValue;
+                        foreach (Point possibleChoise in choise1)
+                        {
+                            int tempDistance = getDistanceToPointsSpot(new Point(GridPosition.X + possibleChoise.X, GridPosition.Y + possibleChoise.Y));
+                            if (tempDistance < shortestDistance)
+                            {
+                                bestChoise = possibleChoise;
+                                shortestDistance = tempDistance;
+                            }
+                        }
+                        Direction = bestChoise;
                     }
                     else
                     {
@@ -275,7 +292,10 @@ namespace PacManGame
                         {
                             int tempDistance = getDistanceToPointsSpot(new Point(GridPosition.X+possibleChoise.X, GridPosition.Y+possibleChoise.Y));
                             if (tempDistance < shortestDistance)
+                            {
                                 bestChoise = possibleChoise;
+                                shortestDistance = tempDistance;
+                            }
                         }
                         Direction = bestChoise;
                     }

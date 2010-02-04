@@ -290,7 +290,7 @@ namespace PacManGame
                                 shortestDistance = tempDistance;
                             }
                         }
-                        if (shortestDistance > 20)
+                        if (shortestDistance > maxDist)
                         {
                             int random = World.GetRandomInt(choise1.Count);
                             bestChoise = new Point(choise1[random].X, choise1[random].Y);
@@ -311,7 +311,7 @@ namespace PacManGame
                                 shortestDistance = tempDistance;
                             }
                         }
-                        if (shortestDistance > 20)
+                        if (shortestDistance > maxDist)
                         {
                             int random = World.GetRandomInt(choise2.Count);
                             bestChoise = new Point(choise2[random].X, choise2[random].Y);
@@ -341,9 +341,11 @@ namespace PacManGame
             Down = 4
         }
 
+        private int maxDist = 30;
+
         private int getDistanceToPointsSpot(Point point, int distance, CameFrom from)
         {
-            if (distance > 20)
+            if (distance > maxDist)
                 return distance;
             if (World.Instance.IsSpot(point, World.DOT) || World.Instance.IsSpot(point, World.POWER))
             {
@@ -382,7 +384,7 @@ namespace PacManGame
                 }
                 if (World.Instance.CanDown(point))
                 {
-                    if (!World.Instance.IsThereAGhostAtPixel(GridToPixel(point)) && from != CameFrom.Up)
+                    if (!World.Instance.IsThereAGhostAtPixel(GridToPixel(point)) && from != CameFrom.Up )
                     {
                         tempdistance = getDistanceToPointsSpot(new Point(point.X, point.Y + 1), distance, CameFrom.Down);
                     }

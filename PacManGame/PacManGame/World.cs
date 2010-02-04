@@ -98,7 +98,7 @@ namespace PacManGame
 
             if (gameOver)
             {
-                Font font = new Font("Verdana", 32, FontStyle.Bold);
+                Font font = new Font("Verdana", 24, FontStyle.Bold);
                 Brush brush = new SolidBrush(Color.Red);
                 g.DrawString("    GAME OVER  ", font, brush, 0, 100);
                 g.DrawString("Final Score: " + finalScore, font, brush, 0, 200);
@@ -259,7 +259,7 @@ namespace PacManGame
 
             Font font = new Font("Arial", 12);
             Brush brush = new SolidBrush(Color.Red);
-            g.DrawString("Score: " + score, font, brush, 0, scrsize + 18);
+            g.DrawString("Scored points: " + score.ToString("0"), font, brush, 0, scrsize + 18);
             g.DrawString("Food left: " + food, font, brush, 140, scrsize + 18);
             g.DrawString("Time: " + this.elapsedTime / 1000, font, brush, 300, scrsize + 18);
             brush = new SolidBrush(Color.Aqua);

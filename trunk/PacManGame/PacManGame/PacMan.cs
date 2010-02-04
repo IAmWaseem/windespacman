@@ -6,13 +6,14 @@ using System.Drawing;
 
 namespace PacManGame
 {
-    class PacMan:MovingObject
+    class PacMan : MovingObject
     {
         /***
          * Constructor: please don't modify !!
          ***/
 
-        public PacMan(): base(new PacManDraw(), new Point(7,11), new Point(0,1), 6)
+        public PacMan()
+            : base(new PacManDraw(), new Point(7, 11), new Point(0, 1), 6)
         {
         }
 
@@ -69,21 +70,21 @@ namespace PacManGame
 
                 if (World.Instance.CanLeft(gridPosition))
                 {
-                    Point newPosition = new Point(gridPosition.X -1, gridPosition.Y);
+                    Point newPosition = new Point(gridPosition.X - 1, gridPosition.Y);
                     if (!World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(-1, 0))))
                     {
                         bool CanAdd = true;
-                        if (World.Instance.CanUp(newPosition))
+                        if (World.Instance.CanUp(newPosition) && Direction.X != 1)
                         {
                             if (World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(0, -1), GridToPixel(newPosition))))
                                 CanAdd = false;
                         }
-                        if (World.Instance.CanLeft(newPosition))
+                        if (World.Instance.CanLeft(newPosition) && Direction.X != 1)
                         {
                             if (World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(-1, 0), GridToPixel(newPosition))))
                                 CanAdd = false;
                         }
-                        if (World.Instance.CanDown(newPosition))
+                        if (World.Instance.CanDown(newPosition) && Direction.X != 1)
                         {
                             if (World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(0, 1), GridToPixel(newPosition))))
                                 CanAdd = false;
@@ -107,17 +108,17 @@ namespace PacManGame
                     if (!World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(0, -1))))
                     {
                         bool CanAdd = true;
-                        if (World.Instance.CanRight(newPosition))
+                        if (World.Instance.CanRight(newPosition) && Direction.Y != 1)
                         {
                             if (World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(1, 0), GridToPixel(newPosition))))
                                 CanAdd = false;
                         }
-                        if (World.Instance.CanUp(newPosition))
+                        if (World.Instance.CanUp(newPosition) && Direction.Y != 1)
                         {
                             if (World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(0, -1), GridToPixel(newPosition))))
                                 CanAdd = false;
                         }
-                        if (World.Instance.CanLeft(newPosition))
+                        if (World.Instance.CanLeft(newPosition) && Direction.Y != 1)
                         {
                             if (World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(-1, 0), GridToPixel(newPosition))))
                                 CanAdd = false;
@@ -142,17 +143,17 @@ namespace PacManGame
                     if (!World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(1, 0))))
                     {
                         bool CanAdd = true;
-                        if (World.Instance.CanRight(newPosition))
+                        if (World.Instance.CanRight(newPosition) && Direction.X != -1)
                         {
                             if (World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(1, 0), GridToPixel(newPosition))))
                                 CanAdd = false;
                         }
-                        if (World.Instance.CanUp(newPosition))
+                        if (World.Instance.CanUp(newPosition) && Direction.X != -1)
                         {
                             if (World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(0, -1), GridToPixel(newPosition))))
                                 CanAdd = false;
                         }
-                        if (World.Instance.CanDown(newPosition))
+                        if (World.Instance.CanDown(newPosition) && Direction.X != -1)
                         {
                             if (World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(0, 1), GridToPixel(newPosition))))
                                 CanAdd = false;
@@ -177,17 +178,17 @@ namespace PacManGame
                     if (!World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(0, 1))))
                     {
                         bool CanAdd = true;
-                        if (World.Instance.CanRight(newPosition))
+                        if (World.Instance.CanRight(newPosition) && Direction.Y != -1)
                         {
                             if (World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(1, 0), GridToPixel(newPosition))))
                                 CanAdd = false;
                         }
-                        if (World.Instance.CanLeft(newPosition))
+                        if (World.Instance.CanLeft(newPosition) && Direction.Y != -1)
                         {
                             if (World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(-1, 0), GridToPixel(newPosition))))
                                 CanAdd = false;
                         }
-                        if (World.Instance.CanDown(newPosition))
+                        if (World.Instance.CanDown(newPosition) && Direction.Y != -1)
                         {
                             if (World.Instance.IsThereAGhostAtPixel(NewPosition(new Point(0, 1), GridToPixel(newPosition))))
                                 CanAdd = false;
@@ -228,7 +229,9 @@ namespace PacManGame
                         foreach (Point p in d2)
                         {
                             if (World.Instance.IsSpot(NewGridPosition(p), World.DOT) || World.Instance.IsSpot(NewGridPosition(p), World.POWER))
+                            {
                                 choise1.Add(p);
+                            }
                             else
                                 choise2.Add(p);
                         }
@@ -255,22 +258,28 @@ namespace PacManGame
                     foreach (Point p in d1)
                     {
                         if (World.Instance.IsSpot(NewGridPosition(p), World.DOT) || World.Instance.IsSpot(NewGridPosition(p), World.POWER))
+                        {
                             choise1.Add(p);
+                            choise2.Add(p);
+                        }
                         else
                             choise2.Add(p);
-                    }    
-                
-                    foreach(Point p in d2)
+                    }
+
+                    foreach (Point p in d2)
                     {
                         if (World.Instance.IsSpot(NewGridPosition(p), World.DOT) || World.Instance.IsSpot(NewGridPosition(p), World.POWER))
-                            choise1.Add(p);                        
+                        {
+                            choise1.Add(p);
+                            choise2.Add(p);
+                        }
                         else
                             choise2.Add(p);
                     }
 
                     if (choise1.Count > 0)
                     {
-                        Point bestChoise = new Point(0,0);
+                        Point bestChoise = new Point(0, 0);
                         int shortestDistance = Int32.MaxValue;
                         foreach (Point possibleChoise in choise1)
                         {
@@ -281,7 +290,7 @@ namespace PacManGame
                                 shortestDistance = tempDistance;
                             }
                         }
-                        if (shortestDistance > 10)
+                        if (shortestDistance > 20)
                         {
                             int random = World.GetRandomInt(choise1.Count);
                             bestChoise = new Point(choise1[random].X, choise1[random].Y);
@@ -290,19 +299,19 @@ namespace PacManGame
                     }
                     else
                     {
-                        
-                        Point bestChoise = new Point(0,0);
+
+                        Point bestChoise = new Point(0, 0);
                         int shortestDistance = Int32.MaxValue;
                         foreach (Point possibleChoise in choise2)
                         {
-                            int tempDistance = getDistanceToPointsSpot(new Point(GridPosition.X+possibleChoise.X, GridPosition.Y+possibleChoise.Y));
+                            int tempDistance = getDistanceToPointsSpot(new Point(GridPosition.X + possibleChoise.X, GridPosition.Y + possibleChoise.Y));
                             if (tempDistance < shortestDistance)
                             {
                                 bestChoise = possibleChoise;
                                 shortestDistance = tempDistance;
                             }
                         }
-                        if (shortestDistance > 10)
+                        if (shortestDistance > 20)
                         {
                             int random = World.GetRandomInt(choise2.Count);
                             bestChoise = new Point(choise2[random].X, choise2[random].Y);
@@ -313,18 +322,28 @@ namespace PacManGame
             }
 
             //  compute new position depending on the found direction
-
             pixelPosition = NewPosition(Direction);
         }
 
         private int getDistanceToPointsSpot(Point point)
         {
-            return getDistanceToPointsSpot(point, 0);
+            int distance = getDistanceToPointsSpot(point, 0, CameFrom.NoFrom);
+            Console.WriteLine(distance);
+            return distance;
         }
 
-        private int getDistanceToPointsSpot(Point point, int distance)
+        enum CameFrom
         {
-            if (distance > 10)
+            NoFrom = 0,
+            Left = 1,
+            Right = 2,
+            Up = 3,
+            Down = 4
+        }
+
+        private int getDistanceToPointsSpot(Point point, int distance, CameFrom from)
+        {
+            if (distance > 20)
                 return distance;
             if (World.Instance.IsSpot(point, World.DOT) || World.Instance.IsSpot(point, World.POWER))
             {
@@ -338,39 +357,54 @@ namespace PacManGame
 
                 if (World.Instance.CanLeft(point))
                 {
-                    if (!World.Instance.IsThereAGhostAtPixel(GridToPixel(point)))
+                    if (!World.Instance.IsThereAGhostAtPixel(GridToPixel(point)) && from != CameFrom.Right)
                     {
-                        tempdistance = getDistanceToPointsSpot(new Point(point.X - 1, point.Y), distance);
-                        if (tempdistance < lowestdistance)
-                            lowestdistance = tempdistance;
+                        tempdistance = getDistanceToPointsSpot(new Point(point.X - 1, point.Y), distance, CameFrom.Left);
                     }
+                    else
+                        tempdistance = Int32.MaxValue;
+
+                    if (tempdistance < lowestdistance)
+                        lowestdistance = tempdistance;
+
                 }
                 if (World.Instance.CanRight(point))
                 {
-                    if (!World.Instance.IsThereAGhostAtPixel(GridToPixel(point)))
+                    if (!World.Instance.IsThereAGhostAtPixel(GridToPixel(point)) && from != CameFrom.Left)
                     {
-                        tempdistance = getDistanceToPointsSpot(new Point(point.X + 1, point.Y), distance);
-                        if (tempdistance < lowestdistance)
-                            lowestdistance = tempdistance;
+                        tempdistance = getDistanceToPointsSpot(new Point(point.X + 1, point.Y), distance, CameFrom.Right);
                     }
+                    else
+                        tempdistance = Int32.MaxValue;
+
+                    if (tempdistance < lowestdistance)
+                        lowestdistance = tempdistance;
                 }
                 if (World.Instance.CanDown(point))
                 {
-                    if (!World.Instance.IsThereAGhostAtPixel(GridToPixel(point)))
+                    if (!World.Instance.IsThereAGhostAtPixel(GridToPixel(point)) && from != CameFrom.Up)
                     {
-                        tempdistance = getDistanceToPointsSpot(new Point(point.X, point.Y + 1), distance);
-                        if (tempdistance < lowestdistance)
-                            lowestdistance = tempdistance;
+                        tempdistance = getDistanceToPointsSpot(new Point(point.X, point.Y + 1), distance, CameFrom.Down);
                     }
+                    else
+                        tempdistance = Int32.MaxValue;
+
+                    if (tempdistance < lowestdistance)
+                        lowestdistance = tempdistance;
+
                 }
                 if (World.Instance.CanUp(point))
                 {
-                    if (!World.Instance.IsThereAGhostAtPixel(GridToPixel(point)))
+                    if (!World.Instance.IsThereAGhostAtPixel(GridToPixel(point)) && from != CameFrom.Down)
                     {
-                        tempdistance = getDistanceToPointsSpot(new Point(point.X, point.Y - 1), distance);
-                        if (tempdistance < lowestdistance)
-                            lowestdistance = tempdistance;
+                        tempdistance = getDistanceToPointsSpot(new Point(point.X, point.Y - 1), distance, CameFrom.Up);
                     }
+                    else
+                        tempdistance = Int32.MaxValue;
+
+                    if (tempdistance < lowestdistance)
+                        lowestdistance = tempdistance;
+
                 }
                 return lowestdistance;
             }

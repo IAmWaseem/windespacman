@@ -34,6 +34,10 @@ public:
 	 virtual void GameEnd() = 0;
 	 int positionX;
 	 int positionY;
+	 int jump;
+	 int jump_speed;
+	 int direction;
+	 int gravity;
 	 int pinguin;
 };
 

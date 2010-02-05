@@ -64,7 +64,7 @@ int CWin::Run()
 		} 
 		else 
 		{
-		  GameLoop();
+		  GameLoop(m_hWnd);
 		}
 	}
 	

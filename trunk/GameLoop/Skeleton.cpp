@@ -29,7 +29,7 @@ void CSkeleton::GameInit()
 	::FillRect(bufDC, &rect, ::CreateSolidBrush(0x00FFFFFF));
 }
 
-void CSkeleton::GameLoop()
+void CSkeleton::GameLoop(HWND hWnd)
 {		
 	BITMAP bitmap;
 	SIZE imgSize;
@@ -61,11 +61,14 @@ void CSkeleton::GameLoop()
 		SelectObject(hImageDC, hImage);
 	}
 	BitBlt(bufDC, 300 + positionX, 50 + positionY ,imgSize.cx, imgSize.cy, hImageDC, 0, 0, SRCCOPY);
+	ReleaseDC(hWnd, hImageDC);
 	DeleteDC(hImageDC);
 
 	BitBlt(graphics, 
 		rect.left,rect.top, rect.right, rect.bottom,
 		bufDC, 0, 0, SRCCOPY);
+
+	ReleaseDC(hWnd, bufDC);
 }
 
 void CSkeleton::GameEnd()

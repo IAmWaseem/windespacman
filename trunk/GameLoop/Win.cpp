@@ -1,6 +1,5 @@
 #include "Win.h"
 #include <tchar.h>
-
 //////////////////////////////////////////////////////////////////
 // Static Initialisation
 //////////////////////////////////////////////////////////////////
@@ -36,8 +35,12 @@ CWin::CWin()
 	this->m_hIcon				= LoadIcon(m_hInstance, (LPCTSTR)IDI_APPLICATION);
 	this->m_strWindowTitle		= _T("Kovu the Pinguin");
 	this->m_hMenu				= NULL; 	
-	this->positionX = 0;
-	this->positionY = 0;
+	this->positionX = 50;
+	this->positionY = 300;
+	this->jump=0;
+	this->jump_speed=-20;
+	this->gravity=1;
+	this->direction=0;
 	this->pinguin = 0;
 }
 
@@ -115,7 +118,7 @@ LRESULT CWin::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	int wmId;
 	int wmEvent;
-
+	
 	if (!m_hWnd)
 		m_hWnd = hWnd;
 
@@ -136,6 +139,7 @@ LRESULT CWin::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			PostQuitMessage(0);
 			break;
 		case WM_KEYDOWN:
+		
 		if(pinguin == 0)
 		{
 			pinguin = 1;
@@ -146,11 +150,11 @@ LRESULT CWin::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		}
 		if( GetAsyncKeyState(VK_LEFT))
 		{
-			this->positionX += -10;
+			this->positionX += -10;direction=1;
 		}
 		else if( GetAsyncKeyState(VK_RIGHT))
 		{
-			this->positionX+=10;
+			this->positionX+=10;direction=0;
 		}
 		else if(GetAsyncKeyState(VK_UP))
 		{
@@ -160,6 +164,14 @@ LRESULT CWin::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		{
 			this->positionY+=10;
 		}
+		else if(GetAsyncKeyState(VK_SPACE))
+		{
+			if(jump==0)
+			{
+				this->jump=1;
+			}
+		}
+		
 		break;
 		default:
 			return DefWindowProc(hWnd, uMsg, wParam, lParam);

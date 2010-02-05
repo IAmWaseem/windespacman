@@ -20,7 +20,7 @@ public:
 	LRESULT MsgProc(HWND, UINT, WPARAM, LPARAM);
 
 	void GameInit();
-	void GameLoop();
+	void GameLoop(HWND);
 	void GameEnd();
 };
 

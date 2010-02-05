@@ -13,6 +13,8 @@ private:
 	HBITMAP bufBMP;
 	HANDLE hImage;
 	HANDLE hImage2;
+	HANDLE hImage3;
+	HANDLE hImage4;
 public:
 	CSkeleton();
 	~CSkeleton();

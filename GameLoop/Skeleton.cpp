@@ -39,26 +39,28 @@ void CSkeleton::GameLoop(HWND hWnd)
 	BITMAP bitmap;
 	SIZE imgSize;
 	RECT rect;
-	if(pinguin == 1)
-	{
-		if(direction==0){
-			GetObject(hImage2, sizeof(BITMAP), &bitmap);
-		}
-		else
-		{
-			GetObject(hImage4, sizeof(BITMAP), &bitmap);
-		}
-	}
-	else
-	{	
-		if(direction==0){
-			GetObject(hImage, sizeof(BITMAP), &bitmap);
-		}
-		else
-		{
-			GetObject(hImage3, sizeof(BITMAP), &bitmap);
-		}
-	}
+	//if(pinguin == 1)
+	//{
+	//	if(direction==0){
+	//		GetObject(hImage2, sizeof(BITMAP), &bitmap);
+	//	}
+	//	else
+	//	{
+	//		GetObject(hImage4, sizeof(BITMAP), &bitmap);
+	//	}
+	//}
+	//else
+	//{	
+	//	if(direction==0){
+	//		GetObject(hImage, sizeof(BITMAP), &bitmap);
+	//	}
+	//	else
+	//	{
+	//		GetObject(hImage3, sizeof(BITMAP), &bitmap);
+	//	}
+	//}
+
+	GetObject(hImage, sizeof(BITMAP), &bitmap);
 
 	imgSize.cx = bitmap.bmWidth;
 	imgSize.cy = bitmap.bmHeight;

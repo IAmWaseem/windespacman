@@ -1,4 +1,7 @@
 #include "Skeleton.h"
+#include "Bitmap.h"
+
+using namespace dotnetguy;
 /////////////////////////////////////
 // Constructors / Destructors      //
 /////////////////////////////////////
@@ -100,6 +103,16 @@ void CSkeleton::GameLoop(HWND hWnd)
 		}
 		jump++;
 	}else{jump=0;jump_speed=-20;}}
+	
+	RECT placeRect;
+	placeRect.left = positionX;
+	placeRect.top = positionY;
+	placeRect.right = positionX+80;
+	placeRect.bottom = positionY + 111;
+	Bitmap bitmap2;
+	bitmap2.LoadDIBFile("res/p1.bmp");
+	bitmap2.TransparentPaint(bufDC, RGB(255, 255, 0), &placeRect, NULL); 
+
 	BitBlt(bufDC, 300 + positionX, 50 + positionY ,imgSize.cx, imgSize.cy, hImageDC, 0, 0, SRCCOPY);
 	ReleaseDC(hWnd, hImageDC);
 	DeleteDC(hImageDC);

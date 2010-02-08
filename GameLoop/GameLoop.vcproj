@@ -152,6 +152,14 @@
 			Filter="cpp"
 			>
 			<File
+				RelativePath=".\Bitmap.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Bitmap.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Skeleton.cpp"
 				>
 			</File>

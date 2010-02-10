@@ -18,21 +18,13 @@ CSkeleton::~CSkeleton()
 
 LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-	MessageQueue* messageQueue;
-	messageQueue = messageQueue->Inst();
-	Level* level;
-	level = level->Inst();
-
 	switch (uMsg) 
 	{
 	case WM_CREATE:
-		messageQueue->attach(level);
+		messageQueue->Inst()->attach(level->Inst());
 		break;
 	case WM_KEYDOWN:
-		messageQueue->sendMessage("test");
-		break;
-	case WM_DESTROY:
-
+		messageQueue->Inst()->sendMessage(CM_KEY);
 		break;
 	}
 	return CWin::MsgProc(hWnd, uMsg, wParam, lParam);

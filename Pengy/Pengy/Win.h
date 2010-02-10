@@ -3,6 +3,7 @@
 
 #include <windows.h>
 #include "Level.h"
+#include "Messages.h"
 
 class CWin
 {

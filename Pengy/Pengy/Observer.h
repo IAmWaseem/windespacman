@@ -1,5 +1,7 @@
 #pragma once
 
+#include <windows.h>
+#include "messages.h"
 #include <string>
 using namespace std;
 
@@ -9,7 +11,7 @@ class Observer
 {
 public:
     Observer();
-    virtual void recieveMessage(string message)= 0;
+    virtual void recieveMessage(UINT message)= 0;
     ~Observer();
 };
 

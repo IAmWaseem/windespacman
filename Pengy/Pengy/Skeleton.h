@@ -10,6 +10,9 @@ public:
 	~CSkeleton();
 
 	LRESULT MsgProc(HWND, UINT, WPARAM, LPARAM);
+private:
+	MessageQueue* messageQueue;
+	Level* level;
 };
 
 #endif

@@ -16,7 +16,11 @@ Level::~Level(){
   if(pInstance != 0)delete pInstance;
 }
 
-void Level::recieveMessage(string message) 
+void Level::recieveMessage(UINT message) 
 {
-	//message is recieved
+	switch (message) 
+	{
+	case CM_KEY:
+		break;
+	}
 }

@@ -7,7 +7,7 @@ class Level : public Observer
 public:
 	static Level* Inst();
     ~Level();
-    void recieveMessage(string message);
+    void recieveMessage(UINT message);
 protected:
 	Level();
 private:

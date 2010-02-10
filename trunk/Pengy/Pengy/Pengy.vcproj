@@ -189,6 +189,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\messages.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Observer.h"
 				>
 			</File>

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <windows.h>
 #include <vector>
 using namespace std;
 
@@ -13,7 +14,7 @@ public:
 
 	void attach( Observer *myObserver);
 	void detach( Observer *myObserver);
-    void sendMessage(string message);
+    void sendMessage(UINT message);
 
   protected:
     MessageQueue();

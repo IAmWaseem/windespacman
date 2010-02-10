@@ -34,7 +34,7 @@ void MessageQueue::detach( Observer *myObserver)
     }
 }
 
-void MessageQueue::sendMessage(string message)
+void MessageQueue::sendMessage(UINT message)
 {
     for (int i= 0; i< myObs.size(); i++)
     {

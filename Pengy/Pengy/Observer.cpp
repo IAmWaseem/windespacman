@@ -1,10 +1,10 @@
 #include "Observer.h"
 #include "MessageQueue.h"
 
-Observer::Observer(void)
+Observer::Observer()
 {
 }
 
-Observer::~Observer(void)
+Observer::~Observer()
 {
 }

@@ -1,10 +1,15 @@
+#pragma once
+
+#include <string>
+using namespace std;
+
 class MessageQueue;
 
 class Observer
 {
 public:
-    Observer(void);
-    virtual void update( MessageQueue *messageQueue)= 0;
-    ~Observer(void);
+    Observer();
+    virtual void recieveMessage(string message)= 0;
+    ~Observer();
 };
 

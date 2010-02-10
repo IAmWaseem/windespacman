@@ -34,10 +34,10 @@ void MessageQueue::detach( Observer *myObserver)
     }
 }
 
-void MessageQueue::notifyObs()
+void MessageQueue::sendMessage(string message)
 {
     for (int i= 0; i< myObs.size(); i++)
     {
-        myObs[i]->update(this);
+        myObs[i]->recieveMessage(message);
     }
 }

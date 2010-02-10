@@ -1,3 +1,5 @@
+#pragma once
+
 #include <vector>
 using namespace std;
 
@@ -11,7 +13,7 @@ public:
 
 	void attach( Observer *myObserver);
 	void detach( Observer *myObserver);
-    void notifyObs();
+    void sendMessage(string message);
 
   protected:
     MessageQueue();

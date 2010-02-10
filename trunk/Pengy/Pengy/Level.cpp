@@ -1,16 +1,22 @@
 #include "Level.h"
 
-Level::Level(void)
-{
+Level* Level::pInstance = NULL;
+
+Level* Level::Inst(){
+  if(pInstance == NULL){
+    pInstance = new Level();
+  }
+  return pInstance;
 }
 
-Level::~Level(void)
-{
+Level::Level(){ 
 }
 
-void Level::update ( MessageQueue *messageQueue) 
+Level::~Level(){
+  if(pInstance != 0)delete pInstance;
+}
+
+void Level::recieveMessage(string message) 
 {
-      // do Address verification stuff here
-      // can get more information about customer
-      // in question by using myCust
+	//message is recieved
 }

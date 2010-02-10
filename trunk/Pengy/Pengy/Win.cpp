@@ -102,7 +102,6 @@ LRESULT CWin::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 	if (!m_hWnd)
 		m_hWnd = hWnd;
-
 	switch (uMsg) 
 	{
 		case WM_COMMAND:

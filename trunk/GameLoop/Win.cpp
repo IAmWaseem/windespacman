@@ -139,39 +139,37 @@ LRESULT CWin::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			PostQuitMessage(0);
 			break;
 		case WM_KEYDOWN:
-		
-		if(pinguin == 0)
-		{
-			pinguin = 1;
-		}
-		else if(pinguin == 1)
-		{
-			pinguin = 0;
-		}
-		if( GetAsyncKeyState(VK_LEFT))
-		{
-			this->positionX += -10;direction=1;
-		}
-		else if( GetAsyncKeyState(VK_RIGHT))
-		{
-			this->positionX+=10;direction=0;
-		}
-		else if(GetAsyncKeyState(VK_UP))
-		{
-			this->positionY+=-10;
-		}
-		else if(GetAsyncKeyState(VK_DOWN))
-		{
-			this->positionY+=10;
-		}
-		else if(GetAsyncKeyState(VK_SPACE))
-		{
-			if(jump==0)
+			if(pinguin == 0)
 			{
-				this->jump=1;
+				pinguin = 1;
 			}
-		}
-		
+			else if(pinguin == 1)
+			{
+				pinguin = 0;
+			}
+			if( GetAsyncKeyState(VK_LEFT))
+			{
+				this->positionX += -10;direction=1;
+			}
+			else if( GetAsyncKeyState(VK_RIGHT))
+			{
+				this->positionX+=10;direction=0;
+			}
+			else if(GetAsyncKeyState(VK_UP))
+			{
+				this->positionY+=-10;
+			}
+			else if(GetAsyncKeyState(VK_DOWN))
+			{
+				this->positionY+=10;
+			}
+			else if(GetAsyncKeyState(VK_SPACE))
+			{
+				if(jump==0)
+				{
+					this->jump=1;
+				}
+			}
 		break;
 		default:
 			return DefWindowProc(hWnd, uMsg, wParam, lParam);

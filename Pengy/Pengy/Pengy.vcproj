@@ -4,6 +4,7 @@
 	Version="9,00"
 	Name="Pengy"
 	ProjectGUID="{D9792256-FBF2-4E04-A095-D180715C6649}"
+	RootNamespace="Pengy"
 	TargetFrameworkVersion="196613"
 	>
 	<Platforms>
@@ -164,7 +165,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Renderer.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Skeleton.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\View.cpp"
 				>
 			</File>
 			<File
@@ -197,7 +206,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Renderer.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Skeleton.h"
+				>
+			</File>
+			<File
+				RelativePath=".\View.h"
 				>
 			</File>
 			<File

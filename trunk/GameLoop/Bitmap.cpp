@@ -742,6 +742,94 @@ namespace dotnetguy
         return true;
     }
 
+	bool
+    Bitmap::TransparentPaintTile( HDC hdc, COLORREF clrTransparent, int screenColX, int screenColY, int tileColX, int tileColY )
+    {
+		LPRECT lpDCRect = 0;
+		LPRECT lpDIBRect = 0;
+
+		int tileWidth = 32;
+		int tileHeight = 32;
+
+        //  Ensure we have a DIB
+
+        if( !IsValid())
+            return false;
+
+        //  Did they provide the rectangle for the DIB?
+
+        RECT rectDIBExtra;
+
+        if( lpDIBRect == 0 )
+        {
+            rectDIBExtra.left = 0;
+            rectDIBExtra.top = 0;
+            rectDIBExtra.right = Width();
+            rectDIBExtra.bottom = Height();
+
+            lpDIBRect = &rectDIBExtra;
+        }
+
+        //  Did they provide the rectangle for the DC?
+
+        RECT rectDCExtra;
+
+        if( lpDCRect == 0 )
+        {
+            rectDCExtra.left = 0;
+            rectDCExtra.top = 0;
+            rectDCExtra.right = Width();
+            rectDCExtra.bottom = Height();
+
+            lpDCRect = &rectDCExtra;
+        }
+
+        //  Create a memory DC for the original bitmap
+
+        int width  = lpDCRect -> right - lpDCRect -> left;
+        int height = lpDCRect -> bottom - lpDCRect -> top;
+
+        RECT rectTemp = { 0, 0, width, height };
+
+        HDC     hdcBmp  = CreateCompatibleDC( hdc );
+        HBITMAP hbmpBmp = CreateCompatibleBitmap( hdc, width, height );
+        HBITMAP hOldBmp = (HBITMAP) SelectObject( hdcBmp, hbmpBmp );
+
+        PaintDIB( hdcBmp, &rectTemp, lpDIBRect );
+
+        //  Create a monochrome memory DC for the mask
+
+        HDC     hdcMask  = CreateCompatibleDC( hdc );
+        HBITMAP hbmpMask = CreateCompatibleBitmap( hdcMask, width, height );
+        HBITMAP hOldMask = (HBITMAP) SelectObject( hdcMask, hbmpMask );
+
+        SetBkColor( hdcBmp, clrTransparent );
+        BitBlt( hdcMask, 0, 0, width, height, hdcBmp, 0, 0, SRCCOPY );
+
+        //  Three step paint
+
+        SetBkColor( hdc, RGB( 255, 255, 255 ));
+        SetTextColor( hdc, RGB( 0, 0, 0 ));
+
+        int x = lpDCRect -> left;
+        int y = lpDCRect -> top;
+
+        BitBlt( hdc, screenColX * tileWidth, screenColY * tileHeight, tileWidth, tileHeight, hdcBmp,  tileColX * tileWidth, tileColY * tileHeight, SRCINVERT );
+        BitBlt( hdc, screenColX * tileWidth, screenColY * tileHeight, tileWidth, tileHeight, hdcMask, tileColX * tileWidth, tileColY * tileHeight, SRCAND );
+        BitBlt( hdc, screenColX * tileWidth, screenColY * tileHeight, tileWidth, tileHeight, hdcBmp,  tileColX * tileWidth, tileColY * tileHeight, SRCINVERT );
+
+        //  Clean up
+
+        SelectObject( hdcMask, hOldMask );
+        SelectObject( hdcBmp, hOldBmp );
+        ::DeleteObject( hbmpMask );
+        ::DeleteObject( hbmpBmp );
+        DeleteDC( hdcMask );
+        DeleteDC( hdcBmp );
+    
+        return true;
+    }
+
     // **************************************************************************
     //  Bitmap::IsValid()
     //    Returns true if the bitmap data is valid; false if not

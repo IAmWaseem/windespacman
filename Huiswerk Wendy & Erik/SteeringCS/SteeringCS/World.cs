@@ -15,9 +15,9 @@ namespace SteeringCS
             //  private attributes  //
 
             public Vehicle target;
-            List<Vehicle> agents;
+            public List<Vehicle> agents;
             long elapsedTime = 0;
-            int numberOfVehicles = 1;
+            int numberOfVehicles = 10;
 
             //  singleton pattern   //
             private static World instance;
@@ -71,6 +71,12 @@ namespace SteeringCS
                 if (steeringName.Equals("Explore", StringComparison.OrdinalIgnoreCase))
                 {
                     DemoExplore();
+                    return;
+                }
+
+                if (steeringName.Equals("Leader Following", StringComparison.OrdinalIgnoreCase))
+                {
+                    DemoLeaderFollowing();
                     return;
                 }
 
@@ -152,6 +158,21 @@ namespace SteeringCS
                 for (int i = 1; i < numberOfVehicles; i++)
                 {
                     agents.Add(new Vehicle(agents[i - 1], Vehicle.SB.Arrive));
+                }
+            }
+
+            private void DemoLeaderFollowing()
+            {
+                target = new Vehicle(null, Vehicle.SB.Wander);
+                target.MaxSpeed = 2;
+                target.CurrentPosition = new Vector2D(ClientSize.Width / 2, ClientSize.Height / 2);
+
+                agents = new List<Vehicle>();
+                agents.Add(target);    //  leader
+
+                for (int i = 1; i < numberOfVehicles; i++)
+                {
+                    agents.Add(new Vehicle(agents[i - 1], Vehicle.SB.LeaderFollowing));
                 }
             }
 

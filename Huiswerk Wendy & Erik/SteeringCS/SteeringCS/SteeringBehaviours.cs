@@ -189,5 +189,63 @@ namespace SteeringCS
             }
             return Vector2D.None();
         }
+        public static Vector2D LeaderFollowing(Vector2D targetPosition, ref Vector2D currentPosition, ref Vector2D Velocity, int max_speed, int max_force)
+        {
+            // Separate
+            Vector2D s = Separate(World.Instance.agents, ref currentPosition, ref Velocity, max_speed);
+            //Arrival
+            Vector2D a = Arrive(targetPosition, ref currentPosition, ref Velocity, max_speed);
+            
+            // combineren
+            Vector2D total = new Vector2D();
+            total.X = (a.X * 3) + (s.X * 1);
+            total.Y = (a.Y * 3) + (s.Y * 1);
+            total = Vector2D.Truncate(total, max_force);
+
+            return total;
+        }
+        public static Vector2D Separate(List<Vehicle> vehicles, ref Vector2D vehicle1, ref Vector2D Velocity, int max_speed)
+        {
+            int r = 30;
+            float desiredseparation = r * 2;
+            Vector2D steer = new Vector2D();
+            int count = 0;
+            // For every boid in the system, check if it's too close
+            for (int i = 0; i < vehicles.Count; i++)
+            {
+                Vehicle vehicle2 = vehicles[i];
+
+                Vector2D diff = Vector2D.Subtract(vehicle1, vehicle2.CurrentPosition);
+                // If the distance is greater than 0 and less than an arbitrary amount (0 when you are yourself)
+                if ((diff.X > 0 || diff.Y > 0) && (diff.X < desiredseparation || diff.Y < desiredseparation))
+                {
+                    // Calculate vector pointing away from neighbor
+                    diff.Normalize();
+                    steer = Vector2D.Add(steer, diff);
+                    count++;            // Keep track of how many
+                }
+            }
+            // Average -- divide by how many
+            if (count > 0)
+            {
+                float X = steer.X / count;
+                float Y = steer.Y / count;
+                steer.X = X;
+                steer.Y = Y;
+            }
+
+            // As long as the vector is greater than 0
+            if (steer.X > 0 || steer.Y > 0)
+            {
+                // Implement Reynolds: Steering = Desired - Velocity
+                steer.Normalize();
+                float x = steer.X * max_speed;
+                float y = steer.Y * max_speed;
+                steer.X = x;
+                steer.Y = y;
+                steer = Vector2D.Subtract(steer, Velocity);
+            }
+            return steer;
+        }
     }
 }

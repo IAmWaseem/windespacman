@@ -27,7 +27,8 @@ namespace SteeringCS
             Alignment,
             Separation,
             Flocking,
-            Explore
+            Explore,
+            LeaderFollowing
         }
 
         private float mass;
@@ -133,6 +134,9 @@ namespace SteeringCS
                 case SB.Explore:
                     steerForce = SteeringBehaviours.Explore(ref wanderTarget, ref CurrentPosition, ref velocity, 20);
                     break;
+                case SB.LeaderFollowing:
+                    steerForce = SteeringBehaviours.LeaderFollowing(target.CurrentPosition, ref CurrentPosition, ref velocity, max_speed, max_force);
+                    break;
             }
 
             //  compute new current position
@@ -208,7 +212,7 @@ namespace SteeringCS
                 g.DrawEllipse(Pens.SkyBlue, new RectangleF(new PointF(CurrentPosition.X - arriveRadius, CurrentPosition.Y - arriveRadius), new SizeF(arriveRadius * 2, arriveRadius * 2)));
             }
 
-            if (sb == SB.Wander || sb == SB.Explore)
+            if (sb == SB.Wander || sb == SB.Explore || sb == SB.LeaderFollowing)
             {
                 g.DrawEllipse(Pens.SkyBlue, new RectangleF(new PointF(wanderTarget.X - 80, wanderTarget.Y - 80), new SizeF(80 * 2, 80 * 2)));
                 g.FillEllipse(Brushes.Yellow, new RectangleF(new PointF(wanderTarget.X - 5, wanderTarget.Y - 5), new SizeF(5 * 2, 5 * 2)));
@@ -216,9 +220,7 @@ namespace SteeringCS
 
             
 
-            bool debug = true;
-           
-
+            bool debug = false;
             if (debug)
             {
                 if (fpsCount >= 20)

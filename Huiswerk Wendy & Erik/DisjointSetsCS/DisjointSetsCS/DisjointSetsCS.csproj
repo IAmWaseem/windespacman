@@ -51,6 +51,7 @@
     <Compile Include="DisjointSets.cs" />
     <Compile Include="DisjointSetsHeight.cs" />
     <Compile Include="DisjointSetsSize.cs" />
+    <Compile Include="MazeGenerator.cs" />
     <Compile Include="RichConsole.cs">
       <SubType>Form</SubType>
     </Compile>

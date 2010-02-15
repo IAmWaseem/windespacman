@@ -29,64 +29,64 @@ namespace DisjointSetsCS
             d_arbit.Union(4, 0); d_size.Union(4, 0); d_height.Union(4, 0);
             d_arbit.Union(0, 2); d_size.Union(0, 2); d_height.Union(0, 2);
 
-            WLConsole("Created by Wendy & Erik");
-            WLConsole();
+            WriteConsole("Created by Wendy & Erik");
+            WriteConsole();
 
             // print the array
-            WLConsole("Preformed arbitrarily");
-            WLConsole("Normal", true);
-            WLConsole(d_arbit.ToStringIndex(), true);
-            WLConsole(d_arbit.ToString(), true);
-            WLConsole();
-            WLConsole("After d_arbit.Find(7)", true);
+            WriteConsole("Preformed arbitrarily");
+            WriteConsole("Normal", true);
+            WriteConsole(d_arbit.ToStringIndex(), true);
+            WriteConsole(d_arbit.ToString(), true);
+            WriteConsole();
+            WriteConsole("After d_arbit.Find(7)", true);
             d_arbit.Find(7);
             // reprint
-            WLConsole(d_arbit.ToStringIndex(), true);
-            WLConsole(d_arbit.ToString(), true);
-            WLConsole();
+            WriteConsole(d_arbit.ToStringIndex(), true);
+            WriteConsole(d_arbit.ToString(), true);
+            WriteConsole();
 
             // print the array
-            WLConsole("Performed smart (by size)");
-            WLConsole("Normal", true);
-            WLConsole(d_size.ToStringIndex(), true);
-            WLConsole(d_size.ToString(), true);
-            WLConsole();
-            WLConsole("After d_size.Find(1)", true);
+            WriteConsole("Performed smart (by size)");
+            WriteConsole("Normal", true);
+            WriteConsole(d_size.ToStringIndex(), true);
+            WriteConsole(d_size.ToString(), true);
+            WriteConsole();
+            WriteConsole("After d_size.Find(1)", true);
             d_size.Find(1);
             // reprint
-            WLConsole(d_size.ToStringIndex(), true);
-            WLConsole(d_size.ToString(), true);
-            WLConsole();
+            WriteConsole(d_size.ToStringIndex(), true);
+            WriteConsole(d_size.ToString(), true);
+            WriteConsole();
 
             // print the array
-            WLConsole("Performed smart (by height)");
-            WLConsole("Normal", true);
-            WLConsole(d_height.ToStringIndex(), true);
-            WLConsole(d_height.ToString(), true);
-            WLConsole();
-            WLConsole("After d_height.Find(1)", true);
+            WriteConsole("Performed smart (by height)");
+            WriteConsole("Normal", true);
+            WriteConsole(d_height.ToStringIndex(), true);
+            WriteConsole(d_height.ToString(), true);
+            WriteConsole();
+            WriteConsole("After d_height.Find(1)", true);
             d_height.Find(1);
             // reprint
-            WLConsole(d_height.ToStringIndex(), true);
-            WLConsole(d_height.ToString(), true);
+            WriteConsole(d_height.ToStringIndex(), true);
+            WriteConsole(d_height.ToString(), true);
         }
 
-        public void WLConsole()
+        public void WriteConsole()
         {
-            WLConsole("", false, true);
+            WriteConsole("", false, true);
         }
 
-        public void WLConsole(string s)
+        public void WriteConsole(string s)
         {
-            WLConsole(s, false, true);
+            WriteConsole(s, false, true);
         }
 
-        public void WLConsole(string s, bool Tab)
+        public void WriteConsole(string s, bool Tab)
         {
-            WLConsole(s, Tab, true);
+            WriteConsole(s, Tab, true);
         }
 
-        public void WLConsole(string s, bool Tab, bool NewLine)
+        public void WriteConsole(string s, bool Tab, bool NewLine)
         {
             if (Tab)
                 richTextBox1.Text += "\t";

@@ -63,11 +63,9 @@ namespace SteeringCS
             heading = Vector2D.Normalize(velocity);
             CurrentPosition = new Vector2D(World.Instance.random.Next(World.Instance.ClientSize.Width), World.Instance.random.Next(World.Instance.ClientSize.Height));
             steerForce = Vector2D.None();
-
             brushVehicle = Brushes.Red;
             brushTarget = Brushes.Blue;
             whitePen = Pens.White;
-
             this.target = target;
         }
 
@@ -135,7 +133,7 @@ namespace SteeringCS
                     steerForce = SteeringBehaviours.Explore(ref wanderTarget, ref CurrentPosition, ref velocity, 20);
                     break;
                 case SB.LeaderFollowing:
-                    steerForce = SteeringBehaviours.LeaderFollowing(target.CurrentPosition, ref CurrentPosition, ref velocity, max_speed, max_force);
+                    steerForce = SteeringBehaviours.LeaderFollowing(ref heading, target.CurrentPosition, ref CurrentPosition, ref velocity, max_speed, max_force);
                     break;
             }
 
@@ -185,8 +183,8 @@ namespace SteeringCS
             if (sb == SB.Explore)
             {
                 PointF[] points = SteeringBehaviours.BeenPoints();
-                if (points.Length > 0)
-                    g.DrawLines(new Pen(Brushes.Red, 1f), points);
+                if (points.Length > 1)
+                    g.DrawLines(new Pen(Brushes.GreenYellow, 1f), points);
             }
 
             if (max_speed != 0)
@@ -212,7 +210,7 @@ namespace SteeringCS
                 g.DrawEllipse(Pens.SkyBlue, new RectangleF(new PointF(CurrentPosition.X - arriveRadius, CurrentPosition.Y - arriveRadius), new SizeF(arriveRadius * 2, arriveRadius * 2)));
             }
 
-            if (sb == SB.Wander || sb == SB.Explore || sb == SB.LeaderFollowing)
+            if (sb == SB.Wander || sb == SB.Explore)
             {
                 g.DrawEllipse(Pens.SkyBlue, new RectangleF(new PointF(wanderTarget.X - 80, wanderTarget.Y - 80), new SizeF(80 * 2, 80 * 2)));
                 g.FillEllipse(Brushes.Yellow, new RectangleF(new PointF(wanderTarget.X - 5, wanderTarget.Y - 5), new SizeF(5 * 2, 5 * 2)));
@@ -223,8 +221,8 @@ namespace SteeringCS
             bool debug = false;
             if (debug)
             {
-                if (fpsCount >= 20)
-                {
+                //if (fpsCount >= 20)
+                //{
                     Font font = new Font("Courier New", 12);
                     Brush brushDebug = Brushes.White;
                     g.DrawString("Position       " + this.CurrentPosition.ToString(), font, brushDebug, 10, 30);
@@ -236,10 +234,10 @@ namespace SteeringCS
                         g.DrawString("Target         " + this.target.CurrentPosition.ToString(), font, brushDebug, 10, 130);
 
                     g.DrawString("Speed " + velocity.Length().ToString(), font, brushDebug, 450, 50);
-                    fpsCount = 0;
-                }
-                else
-                    fpsCount = fpsCount + 1;
+                //    fpsCount = 0;
+                //}
+                //else
+                //    fpsCount = fpsCount + 1;
             }
         }
     }

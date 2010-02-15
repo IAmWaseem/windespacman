@@ -87,9 +87,15 @@ namespace SteeringCS
 
         private static void RemoveAllTargetsInRange(float range, ref Vector2D currentPosition)
         {
+            float beenRange = range;
+            List<Vector2D> toKeep = new List<Vector2D>();
+
             if (HasBeen == null)
                 HasBeen = new List<Vector2D>();
-            List<Vector2D> toKeep = new List<Vector2D>();
+            if (ExploreGrid == null)
+                ExploreGrid = new List<Vector2D>();
+
+            
             foreach (Vector2D vec in ExploreGrid)
             {
                 float diffX = vec.X - currentPosition.X;
@@ -97,7 +103,7 @@ namespace SteeringCS
                 if ((diffX <= range && diffX > -1 * range)
                     && (diffY <= range && diffY > -1 * range))
                 {
-                    HasBeen.Add(vec);
+                    // do nothing                        
                 }
                 else
                     toKeep.Add(vec);
@@ -124,6 +130,20 @@ namespace SteeringCS
             return p;
         }
 
+        public static PointF[] ExplorePoints()
+        {
+            if (ExploreGrid == null)
+                ExploreGrid = new List<Vector2D>();
+            PointF[] p = new PointF[ExploreGrid.Count];
+            for (int i = 0; i < ExploreGrid.Count; i++)
+            {
+                p[i].X = ExploreGrid[i].X;
+                p[i].Y = ExploreGrid[i].Y;
+            }
+
+            return p;
+        }
+
         private static List<Vector2D> HasBeen = null;
         private static List<Vector2D> ExploreGrid = null;
         /***
@@ -135,16 +155,17 @@ namespace SteeringCS
             //  see:    http://www.shiffman.net/teaching/nature/steering/
 
 
-            if (ExploreGrid == null || ExploreGrid.Count == 0)
+            if (ExploreGrid == null)
             {
                 ExploreGrid = new List<Vector2D>();
+                HasBeen = new List<Vector2D>();
 
                 int height = World.Instance.ClientSize.Height;
                 int width = World.Instance.ClientSize.Width;
 
-                for (int x = 25; x < (width - 25); x++)
+                for (int x = 20; x < (width - 20); x++)
                 {
-                    for (int y = 25; y < (height - 25); y++)
+                    for (int y = 20; y < (height - 20); y++)
                     {
                         ExploreGrid.Add(new Vector2D(x, y));
                     }
@@ -152,24 +173,43 @@ namespace SteeringCS
             }
 
             int arriveRadius = 100;
-            Vector2D theTarget = new Vector2D(World.Instance.ClientSize.Height / 2, World.Instance.ClientSize.Width / 2);
+            Vector2D theTarget = new Vector2D(World.Instance.ClientSize.Width / 2, World.Instance.ClientSize.Height / 2);
 
-            float diffX = ExploreGrid.First().X - currentPosition.X;
-            float diffY = ExploreGrid.First().Y - currentPosition.Y;
-            float distanceToTarget = 30f;
+            float diffX = 0;
+            float diffY = 0;
+            float distanceToTarget = 0;
 
-            RemoveAllTargetsInRange(distanceToTarget, ref currentPosition);
-
-            if ((diffX <= distanceToTarget && diffX > -1 * distanceToTarget)
-                && (diffY <= distanceToTarget && diffY > -1 * distanceToTarget))
+            if (ExploreGrid.Count <= 0)
             {
-                theTarget = new Vector2D(ExploreGrid.First().X, ExploreGrid.First().Y);
+
             }
             else
             {
-                theTarget = new Vector2D(ExploreGrid.First().X, ExploreGrid.First().Y);
-            }
+                diffX = ExploreGrid.First().X - currentPosition.X;
+                diffY = ExploreGrid.First().Y - currentPosition.Y;
+                distanceToTarget = 30f;
+                RemoveAllTargetsInRange(distanceToTarget, ref currentPosition);
 
+                
+            }
+            HasBeen.Add(currentPosition);
+
+            if (ExploreGrid.Count <= 0)
+            {
+                theTarget = new Vector2D(World.Instance.ClientSize.Width / 2, World.Instance.ClientSize.Height / 2);
+            }
+            else
+            {
+                if ((diffX <= distanceToTarget && diffX > -1 * distanceToTarget)
+                    && (diffY <= distanceToTarget && diffY > -1 * distanceToTarget))
+                {
+                    theTarget = new Vector2D(ExploreGrid.First().X, ExploreGrid.First().Y);
+                }
+                else
+                {
+                    theTarget = new Vector2D(ExploreGrid.First().X, ExploreGrid.First().Y);
+                }
+            }
 
             Vector2D toTarget = Vector2D.Subtract(theTarget, currentPosition);
             wanderTarget = theTarget;
@@ -189,24 +229,63 @@ namespace SteeringCS
             }
             return Vector2D.None();
         }
-        public static Vector2D LeaderFollowing(Vector2D targetPosition, ref Vector2D currentPosition, ref Vector2D Velocity, int max_speed, int max_force)
+        public static void ResetLists()
+        {
+            ExploreGrid = null;
+            HasBeen = null;
+        }
+
+        public static Vector2D LeaderFollowing(ref Vector2D heading, Vector2D targetPosition, ref Vector2D currentPosition, ref Vector2D Velocity, int max_speed, int max_force)
         {
             // Separate
             Vector2D s = Separate(World.Instance.agents, ref currentPosition, ref Velocity, max_speed);
             //Arrival
-            Vector2D a = Arrive(targetPosition, ref currentPosition, ref Velocity, max_speed);
+
+            Vector2D behindLeader = Vector2D.Subtract(targetPosition, heading);
+            behindLeader = Vector2D.Subtract(behindLeader, heading);
+            behindLeader = Vector2D.Subtract(behindLeader, heading);
+            behindLeader = Vector2D.Subtract(behindLeader, heading);
+            behindLeader = Vector2D.Subtract(behindLeader, heading);
+            behindLeader = Vector2D.Subtract(behindLeader, heading);
+            behindLeader = Vector2D.Subtract(behindLeader, heading);
+            behindLeader = Vector2D.Subtract(behindLeader, heading);
+            behindLeader = Vector2D.Subtract(behindLeader, heading);
+            behindLeader = Vector2D.Subtract(behindLeader, heading);
+            behindLeader = Vector2D.Subtract(behindLeader, heading);
+            behindLeader = Vector2D.Subtract(behindLeader, heading);
+            behindLeader = Vector2D.Subtract(behindLeader, heading);
+            behindLeader = Vector2D.Subtract(behindLeader, heading);
+            behindLeader = Vector2D.Subtract(behindLeader, heading);
+            behindLeader = Vector2D.Subtract(behindLeader, heading);
+            behindLeader = Vector2D.Subtract(behindLeader, heading);
+            behindLeader = Vector2D.Subtract(behindLeader, heading);
+            behindLeader = Vector2D.Subtract(behindLeader, heading);
+            behindLeader = Vector2D.Subtract(behindLeader, heading);
+            behindLeader = Vector2D.Subtract(behindLeader, heading);
+            behindLeader = Vector2D.Subtract(behindLeader, heading);
+            behindLeader = Vector2D.Subtract(behindLeader, heading);
+            behindLeader = Vector2D.Subtract(behindLeader, heading);
+            behindLeader = Vector2D.Subtract(behindLeader, heading);
+            behindLeader = Vector2D.Subtract(behindLeader, heading);
+            behindLeader = Vector2D.Subtract(behindLeader, heading);
+            behindLeader = Vector2D.Subtract(behindLeader, heading);
+            behindLeader = Vector2D.Subtract(behindLeader, heading);
+            behindLeader = Vector2D.Subtract(behindLeader, heading);
+
+
+            Vector2D a = Arrive(behindLeader, ref currentPosition, ref Velocity, max_speed);
             
             // combineren
             Vector2D total = new Vector2D();
-            total.X = (a.X * 3) + (s.X * 1);
-            total.Y = (a.Y * 3) + (s.Y * 1);
+            total.X = (a.X * 2) + (s.X * 1);
+            total.Y = (a.Y * 2) + (s.Y * 1);
             total = Vector2D.Truncate(total, max_force);
 
             return total;
         }
         public static Vector2D Separate(List<Vehicle> vehicles, ref Vector2D vehicle1, ref Vector2D Velocity, int max_speed)
         {
-            int r = 30;
+            int r = 45;
             float desiredseparation = r * 2;
             Vector2D steer = new Vector2D();
             int count = 0;

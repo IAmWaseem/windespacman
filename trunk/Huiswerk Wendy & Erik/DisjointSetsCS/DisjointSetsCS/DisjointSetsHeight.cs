@@ -44,6 +44,18 @@ namespace DisjointSetsCS
             }
         }
 
+        public override uint Find_(uint elem)
+        {
+            if (SetArray[elem] < 0)
+                return elem;
+            else
+            {
+                // Recursively set array to whatever Find returns.  Find will
+                // return the root, thus each node from this one up is set to 	// root.
+                return (Find((uint)SetArray[elem]));
+            }
+        }
+
         public override void Union(uint elem1, uint elem2)
         {
             uint root1, root2;

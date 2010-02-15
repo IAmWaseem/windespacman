@@ -71,6 +71,44 @@ namespace DisjointSetsCS
             }
         }
 
+
+        public virtual uint Find_(uint elem)
+        {
+            if (SetArray[elem] < 0)
+                return elem;
+            else
+            {
+                // Recursively set array to whatever Find returns.  Find will
+                // return the root, thus each node from this one up is set to 	// root.
+                return (Find((uint)SetArray[elem]));
+            }
+        }
+
+        //private List<uint> path = new List<uint>();
+        //public virtual List<uint> FindPath(uint elem1, uint elem2)
+        //{
+            
+        //    FindPath_(35);
+        //    List<uint> path1 = new List<uint>();
+        //    path1.AddRange(path);
+        //    path.Clear();
+        //    //FindPath_(elem2);
+        //    //List<uint> path2 = new List<uint>();
+        //    //path2.AddRange(path);
+        //    return path1;
+        //}
+
+        //public virtual void FindPath_(uint elem)
+        //{
+        //    if (SetArray[elem] < 0)
+        //        path.Add(elem);
+        //    else
+        //    {
+        //        path.Add(elem);
+        //        FindPath_((uint)SetArray[elem]);
+        //    }
+        //}
+
         public virtual void Union(uint elem1, uint elem2)
         {
             uint root1, root2;

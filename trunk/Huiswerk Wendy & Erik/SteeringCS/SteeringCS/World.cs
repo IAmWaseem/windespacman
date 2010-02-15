@@ -17,7 +17,7 @@ namespace SteeringCS
             public Vehicle target;
             public List<Vehicle> agents;
             long elapsedTime = 0;
-            int numberOfVehicles = 10;
+            int numberOfVehicles = 5;
 
             //  singleton pattern   //
             private static World instance;
@@ -172,7 +172,7 @@ namespace SteeringCS
 
                 for (int i = 1; i < numberOfVehicles; i++)
                 {
-                    agents.Add(new Vehicle(agents[i - 1], Vehicle.SB.LeaderFollowing));
+                    agents.Add(new Vehicle(target, Vehicle.SB.LeaderFollowing));
                 }
             }
 
@@ -180,15 +180,10 @@ namespace SteeringCS
             {
                 target = new Vehicle(null, Vehicle.SB.Explore);
                 target.MaxSpeed = 5;
-                target.CurrentPosition = new Vector2D(ClientSize.Width / 2, ClientSize.Height / 2);
+                target.CurrentPosition = new Vector2D(25, 0);
 
                 agents = new List<Vehicle>();
                 agents.Add(target);    //  target of seek
-
-                for (int i = 1; i < numberOfVehicles; i++)
-                {
-                    agents.Add(new Vehicle(agents[i - 1], Vehicle.SB.Seek));
-                }
             }
 
 

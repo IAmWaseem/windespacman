@@ -21,14 +21,15 @@ namespace SteeringCS
         private void buttonStart_Click(object sender, EventArgs e)
         {
             World.Instance.Init(steeringName);
-             World.Instance.mirrored = checkBox1.Checked;
-           this.pictureBox1.Size = World.Instance.ClientSize;
+            World.Instance.mirrored = checkBox1.Checked;
+            SteeringBehaviours.ResetLists();
+            this.pictureBox1.Size = World.Instance.ClientSize;
             timer1.Enabled = true;
         }
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
-            World.Instance.Render(e.Graphics);   
+            World.Instance.Render(e.Graphics);
         }
 
         private void timer1_Tick(object sender, EventArgs e)

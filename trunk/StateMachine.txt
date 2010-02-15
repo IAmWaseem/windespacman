@@ -1,0 +1,36 @@
+CharacterState
+-> Fall
+-> Walk
+-> Jump
+-> Fly
+-> Slide
+-> Crouched
+-> PoweredUp
+-> Idle
+-> Climb
+
+CharacterEvents:
+-> Up();
+-> PickUpGadget();
+-> Left();
+-> Right();
+-> Down();
+-> Throw();
+-> Climbing();
+
+EnemyState
+-> Wandering
+-> Attacking
+-> Idle
+
+EnemyEvents:
+-> Up();
+-> Left();
+-> Right();
+-> Down();
+-> Throw();
+
+GadgetState
+-> Available
+-> PickedUp 
+-> Used

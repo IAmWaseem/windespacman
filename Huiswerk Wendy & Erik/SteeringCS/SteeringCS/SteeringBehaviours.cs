@@ -265,7 +265,7 @@ namespace SteeringCS
         // Method checks for nearby boids and steers away
         public static Vector2D Separate(List<Vehicle> vehicles, ref Vector2D currentVehicle, ref Vector2D Velocity, int max_speed, int max_force)
         {
-            float desiredseparation = 20.0F;
+            float desiredseparation = 30.0F;
             Vector2D steer = new Vector2D();
             int count = 0;
             // For every boid in the system, check if it's too close
@@ -329,7 +329,7 @@ namespace SteeringCS
         // For every nearby boid in the system, calculate the average velocity
         public static Vector2D Align(List<Vehicle> vehicles, ref Vector2D currentPosition, ref Vector2D Velocity, int max_speed)
         {
-            float neighbordist = 50.0F;
+            float neighbordist = 40.0F;
             Vector2D steer = new Vector2D();
             int count = 0;
             for (int i = 0; i < vehicles.Count; i++)
@@ -369,7 +369,7 @@ namespace SteeringCS
         // For the average location (i.e. center) of all nearby boids, calculate steering vector towards that location
         public static Vector2D Cohesion(List<Vehicle> vehicles, ref Vector2D currentPosition, ref Vector2D Velocity, int max_speed)
         {
-            float neighbordist = 25.0F;
+            float neighbordist = 30.0F;
             Vector2D sum = new Vector2D();   // Start with empty vector to accumulate all locations
             int count = 0;
             for (int i = 0; i < vehicles.Count; i++)

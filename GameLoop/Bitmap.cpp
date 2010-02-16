@@ -510,7 +510,7 @@ namespace dotnetguy
         //  Check the header for the size
 
         BITMAPCOREINFO* pHdr = GetCoreHeader();
-        return( pHdr -> bmciHeader.bcSize == sizeof( BITMAPINFOHEADER ));
+		return( pHdr -> bmciHeader.bcSize == sizeof( BITMAPINFOHEADER ));
     }
 
     // **************************************************************************
@@ -757,33 +757,21 @@ namespace dotnetguy
             return false;
 
         //  Did they provide the rectangle for the DIB?
-
         RECT rectDIBExtra;
-
-        if( lpDIBRect == 0 )
-        {
-            rectDIBExtra.left = 0;
-            rectDIBExtra.top = 0;
-            rectDIBExtra.right = Width();
-            rectDIBExtra.bottom = Height();
-
-            lpDIBRect = &rectDIBExtra;
-        }
+        rectDIBExtra.left = 0;
+        rectDIBExtra.top = 0;
+        rectDIBExtra.right = Width();
+        rectDIBExtra.bottom = Height();
+        lpDIBRect = &rectDIBExtra;        
 
         //  Did they provide the rectangle for the DC?
-
         RECT rectDCExtra;
-
-        if( lpDCRect == 0 )
-        {
-            rectDCExtra.left = 0;
-            rectDCExtra.top = 0;
-            rectDCExtra.right = Width();
-            rectDCExtra.bottom = Height();
-
-            lpDCRect = &rectDCExtra;
-        }
-
+        rectDCExtra.left = lpDIBRect->left;
+        rectDCExtra.top = lpDIBRect->top;
+        rectDCExtra.right = lpDIBRect->right;
+        rectDCExtra.bottom = lpDIBRect->bottom;
+        lpDCRect = &rectDCExtra;
+        
         //  Create a memory DC for the original bitmap
 
         int width  = lpDCRect -> right - lpDCRect -> left;
@@ -810,9 +798,6 @@ namespace dotnetguy
 
         SetBkColor( hdc, RGB( 255, 255, 255 ));
         SetTextColor( hdc, RGB( 0, 0, 0 ));
-
-        int x = lpDCRect -> left;
-        int y = lpDCRect -> top;
 
         BitBlt( hdc, screenColX * tileWidth, screenColY * tileHeight, tileWidth, tileHeight, hdcBmp,  tileColX * tileWidth, tileColY * tileHeight, SRCINVERT );
         BitBlt( hdc, screenColX * tileWidth, screenColY * tileHeight, tileWidth, tileHeight, hdcMask, tileColX * tileWidth, tileColY * tileHeight, SRCAND );

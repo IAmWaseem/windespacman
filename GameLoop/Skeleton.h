@@ -2,6 +2,8 @@
 #define Skeleton_H
 
 #include "Win.h"
+#include "Tile.h"
+#include "TileManager.h"
 
 class CSkeleton : public CWin
 {
@@ -11,11 +13,14 @@ private:
 	RECT rect;
 	HDC bufDC;
 	HBITMAP bufBMP;
-	HANDLE tileset;
 	HANDLE hImage;
 	HANDLE hImage2;
 	HANDLE hImage3;
 	HANDLE hImage4;
+	Bitmap bitmap2;
+	Bitmap bitmap3;
+	TileManager tm;
+	SYSTEMTIME st;
 public:
 	CSkeleton();
 	~CSkeleton();

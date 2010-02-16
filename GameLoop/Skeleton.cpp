@@ -1,6 +1,6 @@
 #include "Skeleton.h"
 #include "Bitmap.h"
-
+#include <sstream>
 using namespace dotnetguy;
 /////////////////////////////////////
 // Constructors / Destructors      //
@@ -15,11 +15,14 @@ CSkeleton::~CSkeleton()
 
 void CSkeleton::GameInit()
 {
+	GetSystemTime(&st);
 	width = 400;
 	height = 300;
-
 	char picfile[] = "res/Penguin.bmp";
 	hImage = LoadImage(NULL, picfile, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+
+	bitmap2.LoadDIBFile("res/p1.bmp");
+	bitmap3.LoadDIBFile("res/Summer.bmp");
 
 	char picfile2[] = "res/Penguin2.bmp";
 	hImage2 = LoadImage(NULL, picfile2, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
@@ -30,14 +33,45 @@ void CSkeleton::GameInit()
 	char picfile4[] = "res/Penguin4.bmp";
 	hImage4 = LoadImage(NULL, picfile4, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
 
-	char tilesetplace[] = "res/Woodland_Tileset.bmp";
-	tileset = LoadImage(NULL, tilesetplace, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
-	
+	tm = TileManager("res/Woodland_Tileset.bmp");
+	tm.ClearTiles();	
+	tm.AddTile(0, 0, 0, 0);
+	tm.AddTile(1, 0, 0, 0);
+	tm.AddTile(2, 0, 0, 0);
+	tm.AddTile(0, 0, 3, 0, true);
+	tm.AddTile(1, 0, 4, 0, true);
+	tm.AddTile(2, 0, 5, 0, true);
+	tm.AddTile(Tile(0, 1, 13, 13));
+	tm.AddTile(Tile(1, 1, 0, 0));
+	tm.AddTile(Tile(2, 1, 15, 13));
+	tm.AddTile(Tile(0, 1, 3, 1, true));
+	tm.AddTile(Tile(1, 1, 4, 1, true));
+	tm.AddTile(Tile(2, 1, 5, 1, true));
+	tm.AddTile(Tile(0, 2, 13, 14));
+	tm.AddTile(Tile(1, 2, 14, 14));
+	tm.AddTile(Tile(2, 2, 15, 14));
+	tm.AddTile(Tile(0, 2, 15, 12, true));
+	tm.AddTile(Tile(1, 2, 4, 2, true));
+	tm.AddTile(Tile(2, 2, 15, 12, true));
+	tm.AddTile(Tile(0, 3, 13, 15));
+	tm.AddTile(Tile(1, 3, 14, 15));
+	tm.AddTile(Tile(2, 3, 15, 15));
+	tm.AddTile(Tile(0, 3, 15, 12, true));
+	tm.AddTile(Tile(1, 3, 4, 2, true));
+	tm.AddTile(Tile(2, 3, 15, 12, true));
+	tm.AddTile(Tile(0, 4, 0, 0));
+	tm.AddTile(Tile(1, 4, 4, 3));
+	tm.AddTile(Tile(2, 4, 0, 0));
+	tm.AddTile(Tile(0, 5, 0, 0));
+	tm.AddTile(Tile(1, 5, 0, 0));
+	tm.AddTile(Tile(2, 5, 0, 0));
+
 	::GetClientRect(m_hWnd, &rect);
 	bufDC = CreateCompatibleDC(graphics);
 	bufBMP = CreateCompatibleBitmap(graphics, rect.right, rect.bottom);
 	SelectObject(bufDC, bufBMP);
 	::FillRect(bufDC, &rect, ::CreateSolidBrush(0x00FFFFFF));
+
 }
 
 void CSkeleton::GameLoop(HWND hWnd)
@@ -45,6 +79,40 @@ void CSkeleton::GameLoop(HWND hWnd)
 	BITMAP bitmap;
 	SIZE imgSize;
 	RECT rect;
+
+
+	SYSTEMTIME now;
+	GetSystemTime(&now);
+
+	float fps1 = st.wMilliseconds;
+	float fps2 = now.wMilliseconds;
+	float dif = 0;
+
+	if(fps1 > fps2)
+		fps2 += 1000;
+
+	dif = fps2 - fps1;
+
+	float cur_fps = 1000 / dif;
+
+	ostringstream s;
+	s << "FPS: ";
+	if(cur_fps < 1000)
+		s << " ";
+	if(cur_fps < 100)
+		s << " ";
+	if(cur_fps < 10)
+		s << " ";
+
+
+	s << cur_fps;
+	LPCSTR fps = "";
+	string temp;
+	temp = s.str();
+	fps = temp.c_str();
+
+	GetSystemTime(&st);
+
 	if(pinguin == 1)
 	{
 		if(direction==0){
@@ -70,12 +138,11 @@ void CSkeleton::GameLoop(HWND hWnd)
 	imgSize.cy = bitmap.bmHeight;
 
 	HDC hImageDC = CreateCompatibleDC(bufDC);
-	
 
 	::GetClientRect(m_hWnd, &rect);
 	FillRect(bufDC, &rect, (HBRUSH)GetStockObject(WHITE_BRUSH));
 	FillRect(hImageDC, &rect, (HBRUSH)GetStockObject(WHITE_BRUSH));
-	
+
 
 	if(pinguin == 1)
 	{
@@ -97,92 +164,30 @@ void CSkeleton::GameLoop(HWND hWnd)
 			SelectObject(hImageDC, hImage3);
 		}
 	}
-	
-	
+
 
 
 	if(jump){
-	if (jump<756)
-	{
-		if(jump%18==0)
+		if (jump<198)
 		{
-		this->positionY+=jump_speed;
-		jump_speed+=gravity;
-		}
-		jump++;
-	}else{jump=0;jump_speed=-20;}}
-	
+			if(jump%18==0)
+			{
+				this->positionY+=jump_speed;
+				jump_speed+=gravity;
+			}
+			jump++;
+		}else{jump=0;jump_speed=-20;}}
+
 	RECT placeRect;
 	placeRect.left = positionX;
 	placeRect.top = positionY;
 	placeRect.right = positionX+80;
-	placeRect.bottom = positionY + 111;
-	
-	/*DrawTile(0, 0, 3, 0, bufDC, hWnd);
-	DrawTile(1, 0, 4, 0, bufDC, hWnd);
-	DrawTile(2, 0, 5, 0, bufDC, hWnd);
+	placeRect.bottom = positionY + 111;	
+	//tm.RenderTiles(bufDC, rect);
 
-	DrawTile(0, 1, 3, 1, bufDC, hWnd);
-	DrawTile(1, 1, 4, 1, bufDC, hWnd);
-	DrawTile(2, 1, 5, 1, bufDC, hWnd);
-
-	DrawTile(1, 2, 4, 2, bufDC, hWnd);
-	
-	DrawTile(1, 3, 4, 2, bufDC, hWnd);
-
-	DrawTile(0, 4, 0, 0, bufDC, hWnd);
-	DrawTile(1, 4, 4, 3, bufDC, hWnd);
-	DrawTile(2, 4, 0, 0, bufDC, hWnd);
-
-	DrawTile(0, 5, 0, 0, bufDC, hWnd);
-	DrawTile(1, 5, 0, 0, bufDC, hWnd);
-	DrawTile(2, 5, 0, 0, bufDC, hWnd);*/
-
-	Bitmap tiles;
-	tiles.LoadDIBFile("res/Woodland_Tileset.bmp");
-tiles.TransparentPaintTile(bufDC, RGB(0, 0, 0), 0, 0, 0, 0);
-	tiles.TransparentPaintTile(bufDC, RGB(0, 0, 0), 1, 0, 0, 0);
-	tiles.TransparentPaintTile(bufDC, RGB(0, 0, 0), 2, 0, 0, 0);
-
-	tiles.TransparentPaintTile(bufDC, RGB(0, 0, 0), 0, 0, 3, 0);
-	tiles.TransparentPaintTile(bufDC, RGB(0, 0, 0), 1, 0, 4, 0);
-	tiles.TransparentPaintTile(bufDC, RGB(0, 0, 0), 2, 0, 5, 0);
-
-	tiles.TransparentPaintTile(bufDC, RGB(0, 0, 0), 0, 1, 13, 13);
-	tiles.TransparentPaintTile(bufDC, RGB(0, 0, 0), 1, 1, 0,0);
-	tiles.TransparentPaintTile(bufDC, RGB(0, 0, 0), 2, 1, 15, 13);
-
-	tiles.TransparentPaintTile(bufDC, RGB(0, 0, 0), 0, 1, 3, 1);
-	tiles.TransparentPaintTile(bufDC, RGB(0, 0, 0), 1, 1, 4, 1);
-	tiles.TransparentPaintTile(bufDC, RGB(0, 0, 0), 2, 1, 5, 1);
-
-	tiles.TransparentPaintTile(bufDC, RGB(0, 0, 0), 0, 2, 13, 14);
-	tiles.TransparentPaintTile(bufDC, RGB(0, 0, 0), 1, 2, 14, 14);
-	tiles.TransparentPaintTile(bufDC, RGB(0, 0, 0), 2, 2, 15, 14);
-
-	tiles.TransparentPaintTile(bufDC, RGB(0, 0, 0), 0, 2, 15, 12);
-	tiles.TransparentPaintTile(bufDC, RGB(0, 0, 0), 1, 2, 4, 2);
-	tiles.TransparentPaintTile(bufDC, RGB(0, 0, 0), 2, 2, 15, 12);
-	
-	tiles.TransparentPaintTile(bufDC, RGB(0, 0, 0), 0, 3, 13, 15);
-	tiles.TransparentPaintTile(bufDC, RGB(0, 0, 0), 1, 3, 14, 15);
-	tiles.TransparentPaintTile(bufDC, RGB(0, 0, 0), 2, 3, 15, 15);
-
-	tiles.TransparentPaintTile(bufDC, RGB(0, 0, 0), 0, 3, 15, 12);	
-	tiles.TransparentPaintTile(bufDC, RGB(0, 0, 0), 1, 3, 4, 2);	
-	tiles.TransparentPaintTile(bufDC, RGB(0, 0, 0), 2, 3, 15, 12);
-
-	tiles.TransparentPaintTile(bufDC, RGB(0, 0, 0), 0, 4, 0, 0);
-	tiles.TransparentPaintTile(bufDC, RGB(0, 0, 0), 1, 4, 4, 3);
-	tiles.TransparentPaintTile(bufDC, RGB(0, 0, 0), 2, 4, 0, 0);
-
-	tiles.TransparentPaintTile(bufDC, RGB(0, 0, 0), 0, 5, 0, 0);
-	tiles.TransparentPaintTile(bufDC, RGB(0, 0, 0), 1, 5, 0, 0);
-	tiles.TransparentPaintTile(bufDC, RGB(0, 0, 0), 2, 5, 0, 0);
-
-	Bitmap bitmap2;
-	bitmap2.LoadDIBFile("res/p1.bmp");
-	bitmap2.TransparentPaint(bufDC, RGB(255, 255, 0), &placeRect, NULL);
+	//bitmap2.TransparentPaint(bufDC, RGB(255, 255, 0), &placeRect, NULL);
+	bitmap3.TransparentPaint(bufDC, RGB(0, 255, 0), NULL, NULL);
+	TextOut(bufDC, 10,10, fps, 20);
 
 	BitBlt(bufDC, 300 + positionX, 50 + positionY ,imgSize.cx, imgSize.cy, hImageDC, 0, 0, SRCCOPY);
 	ReleaseDC(hWnd, hImageDC);
@@ -192,18 +197,6 @@ tiles.TransparentPaintTile(bufDC, RGB(0, 0, 0), 0, 0, 0, 0);
 		bufDC, 0, 0, SRCCOPY);
 
 	ReleaseDC(hWnd, bufDC);
-}
-
-void CSkeleton::DrawTile(int screenColX, int screenColY, int tileColX, int tileColY, HDC hdc, HWND hWnd)
-{
-	//int tileWidth = 32;
-	//int tileHeight = 32;
-	//HDC hTileDC = CreateCompatibleDC(hdc);
-	//FillRect(hTileDC, &rect, (HBRUSH)GetStockObject(WHITE_BRUSH));
-	//SelectObject(hTileDC, tileset);
-	//BitBlt(hdc, screenColX * tileWidth, screenColY * tileHeight, tileWidth, tileHeight, hTileDC, tileColX * tileWidth, tileColY * tileHeight, SRCCOPY);	
-	//ReleaseDC(hWnd, hTileDC);
-	//DeleteDC(hTileDC);
 }
 
 void CSkeleton::GameEnd()

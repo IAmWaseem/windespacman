@@ -19,6 +19,7 @@
 			OutputDirectory="Debug"
 			IntermediateDirectory="Debug"
 			ConfigurationType="1"
+			ManagedExtensions="0"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -38,11 +39,11 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				MinimalRebuild="true"
+				MinimalRebuild="false"
 				RuntimeLibrary="3"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
-				DebugInformationFormat="4"
+				DebugInformationFormat="3"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -61,6 +62,7 @@
 				SuppressStartupBanner="true"
 				IgnoreDefaultLibraryNames="libci.lib"
 				GenerateDebugInformation="true"
+				AssemblyDebug="1"
 				ProgramDatabaseFile="$(outdir)GameLoop.pdb"
 			/>
 			<Tool
@@ -164,6 +166,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Tile.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\TileManager.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Win.cpp"
 				>
 			</File>
@@ -178,6 +188,14 @@
 			>
 			<File
 				RelativePath=".\Skeleton.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Tile.h"
+				>
+			</File>
+			<File
+				RelativePath=".\TileManager.h"
 				>
 			</File>
 			<File

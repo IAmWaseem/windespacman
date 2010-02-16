@@ -95,7 +95,7 @@ namespace SteeringCS
             if (ExploreGrid == null)
                 ExploreGrid = new List<Vector2D>();
 
-            
+
             foreach (Vector2D vec in ExploreGrid)
             {
                 float diffX = vec.X - currentPosition.X;
@@ -169,7 +169,7 @@ namespace SteeringCS
                     {
                         ExploreGrid.Add(new Vector2D(x, y));
                     }
-                }                
+                }
             }
 
             int arriveRadius = 100;
@@ -190,7 +190,7 @@ namespace SteeringCS
                 distanceToTarget = 30f;
                 RemoveAllTargetsInRange(distanceToTarget, ref currentPosition);
 
-                
+
             }
             HasBeen.Add(currentPosition);
 
@@ -238,83 +238,121 @@ namespace SteeringCS
         public static Vector2D LeaderFollowing(ref Vector2D heading, Vector2D targetPosition, ref Vector2D currentPosition, ref Vector2D Velocity, int max_speed, int max_force)
         {
             // Separate
-            Vector2D s = Separate(World.Instance.agents, ref currentPosition, ref Velocity, max_speed);
+            Vector2D s = Separate(World.Instance.agents, ref currentPosition, ref Velocity, max_speed, max_force);
             //Arrival
 
             Vector2D behindLeader = Vector2D.Subtract(targetPosition, heading);
-            behindLeader = Vector2D.Subtract(behindLeader, heading);
-            behindLeader = Vector2D.Subtract(behindLeader, heading);
-            behindLeader = Vector2D.Subtract(behindLeader, heading);
-            behindLeader = Vector2D.Subtract(behindLeader, heading);
-            behindLeader = Vector2D.Subtract(behindLeader, heading);
-            behindLeader = Vector2D.Subtract(behindLeader, heading);
-            behindLeader = Vector2D.Subtract(behindLeader, heading);
-            behindLeader = Vector2D.Subtract(behindLeader, heading);
-            behindLeader = Vector2D.Subtract(behindLeader, heading);
-            behindLeader = Vector2D.Subtract(behindLeader, heading);
-            behindLeader = Vector2D.Subtract(behindLeader, heading);
-            behindLeader = Vector2D.Subtract(behindLeader, heading);
-            behindLeader = Vector2D.Subtract(behindLeader, heading);
-            behindLeader = Vector2D.Subtract(behindLeader, heading);
-            behindLeader = Vector2D.Subtract(behindLeader, heading);
-            behindLeader = Vector2D.Subtract(behindLeader, heading);
-            behindLeader = Vector2D.Subtract(behindLeader, heading);
-            behindLeader = Vector2D.Subtract(behindLeader, heading);
-            behindLeader = Vector2D.Subtract(behindLeader, heading);
-            behindLeader = Vector2D.Subtract(behindLeader, heading);
-            behindLeader = Vector2D.Subtract(behindLeader, heading);
-            behindLeader = Vector2D.Subtract(behindLeader, heading);
-            behindLeader = Vector2D.Subtract(behindLeader, heading);
-            behindLeader = Vector2D.Subtract(behindLeader, heading);
-            behindLeader = Vector2D.Subtract(behindLeader, heading);
-            behindLeader = Vector2D.Subtract(behindLeader, heading);
-            behindLeader = Vector2D.Subtract(behindLeader, heading);
-            behindLeader = Vector2D.Subtract(behindLeader, heading);
-            behindLeader = Vector2D.Subtract(behindLeader, heading);
+
+            for (int i = 0; i < 50; i++)
+            {
+                behindLeader = Vector2D.Subtract(behindLeader, heading);
+            }
+            
 
 
             Vector2D a = Arrive(behindLeader, ref currentPosition, ref Velocity, max_speed);
-            
+
             // combineren
             Vector2D total = new Vector2D();
-            total.X = (a.X * 2) + (s.X * 1);
-            total.Y = (a.Y * 2) + (s.Y * 1);
+            total.X = (a.X * 3) + (s.X * 3);
+            total.Y = (a.Y * 3) + (s.Y * 3);
             total = Vector2D.Truncate(total, max_force);
 
             return total;
         }
-        public static Vector2D Separate(List<Vehicle> vehicles, ref Vector2D vehicle1, ref Vector2D Velocity, int max_speed)
+        
+        // Separation
+        // Method checks for nearby boids and steers away
+        public static Vector2D Separate(List<Vehicle> vehicles, ref Vector2D currentVehicle, ref Vector2D Velocity, int max_speed, int max_force)
         {
-            int r = 45;
-            float desiredseparation = r * 2;
+            float desiredseparation = 20.0F;
             Vector2D steer = new Vector2D();
             int count = 0;
             // For every boid in the system, check if it's too close
             for (int i = 0; i < vehicles.Count; i++)
             {
-                Vehicle vehicle2 = vehicles[i];
-
-                Vector2D diff = Vector2D.Subtract(vehicle1, vehicle2.CurrentPosition);
+                Vehicle other = vehicles[i];
+                Vector2D temp = new Vector2D();
+                temp.X = other.CurrentPosition.X - currentVehicle.X;
+                temp.Y = other.CurrentPosition.Y - currentVehicle.Y;
+                float d = (float)temp.Length();
                 // If the distance is greater than 0 and less than an arbitrary amount (0 when you are yourself)
-                if ((diff.X > 0 || diff.Y > 0) && (diff.X < desiredseparation || diff.Y < desiredseparation))
+                if ((d > 0) && (d < desiredseparation))
                 {
                     // Calculate vector pointing away from neighbor
+                    Vector2D diff = Vector2D.Subtract(currentVehicle, other.CurrentPosition);
                     diff.Normalize();
-                    steer = Vector2D.Add(steer, diff);
+                    diff /= d;       // Weight by distance
+                    steer += diff;
                     count++;            // Keep track of how many
                 }
             }
             // Average -- divide by how many
             if (count > 0)
             {
-                float X = steer.X / count;
-                float Y = steer.Y / count;
-                steer.X = X;
-                steer.Y = Y;
+                steer/=((float)count);
             }
 
             // As long as the vector is greater than 0
-            if (steer.X > 0 || steer.Y > 0)
+            if (steer.Length() > 0)
+            {
+                // Implement Reynolds: Steering = Desired - Velocity
+                steer.Normalize();
+                steer*=max_speed;
+                steer = Vector2D.Subtract(steer,Velocity);
+                steer = Vector2D.Truncate(steer, max_force);
+            }
+            return steer;
+        }
+
+
+        // We accumulate a new acceleration each time based on three rules
+        public static Vector2D Flocking(ref Vector2D Velocity, int max_speed, ref Vector2D currentPosition, int max_force)
+        {
+            Vector2D sep = Separate(World.Instance.agents, ref currentPosition, ref Velocity, max_speed, max_force);   // Separation
+            Vector2D ali = Align(World.Instance.agents, ref currentPosition, ref Velocity, max_speed);      // Alignment
+            Vector2D coh = Cohesion(World.Instance.agents, ref currentPosition, ref Velocity, max_speed);   // Cohesion
+            // Arbitrarily weight these forces
+            sep = sep * 4.0F;
+            ali = ali * 2.0F;
+            coh = coh * 1.0F;
+            // Add the force vectors to acceleration
+            Vector2D acc = new Vector2D();
+            acc = acc + sep;
+            acc = acc + ali;
+            acc = acc + coh;
+            acc = Vector2D.Truncate(acc, max_force);
+            return acc;
+        }
+
+        // Alignment
+        // For every nearby boid in the system, calculate the average velocity
+        public static Vector2D Align(List<Vehicle> vehicles, ref Vector2D currentPosition, ref Vector2D Velocity, int max_speed)
+        {
+            float neighbordist = 50.0F;
+            Vector2D steer = new Vector2D();
+            int count = 0;
+            for (int i = 0; i < vehicles.Count; i++)
+            {
+                Vehicle other = vehicles[i];
+                Vector2D temp = new Vector2D();
+                temp.X = other.CurrentPosition.X - currentPosition.X;
+                temp.Y = other.CurrentPosition.Y - currentPosition.Y;
+                float d = (float)temp.Length();
+                if ((d > 0) && (d < neighbordist))
+                {
+                    steer.X += other.Velocity.X;
+                    steer.Y += other.Velocity.Y;
+                    count++;
+                }
+            }
+            if (count > 0)
+            {
+                steer = steer / (float)count;
+            }
+
+            // As long as the vector is greater than 0
+            if (steer.Length() > 0)
             {
                 // Implement Reynolds: Steering = Desired - Velocity
                 steer.Normalize();
@@ -325,6 +363,35 @@ namespace SteeringCS
                 steer = Vector2D.Subtract(steer, Velocity);
             }
             return steer;
+        }
+
+        // Cohesion
+        // For the average location (i.e. center) of all nearby boids, calculate steering vector towards that location
+        public static Vector2D Cohesion(List<Vehicle> vehicles, ref Vector2D currentPosition, ref Vector2D Velocity, int max_speed)
+        {
+            float neighbordist = 25.0F;
+            Vector2D sum = new Vector2D();   // Start with empty vector to accumulate all locations
+            int count = 0;
+            for (int i = 0; i < vehicles.Count; i++)
+            {
+                Vehicle other = vehicles[i];
+                Vector2D temp = new Vector2D();
+                temp.X = other.CurrentPosition.X - currentPosition.X;
+                temp.Y = other.CurrentPosition.Y - currentPosition.Y;
+                float d = (float)temp.Length();
+                if ((d > 0) && (d < neighbordist))
+                {
+                    sum.X += other.CurrentPosition.X;
+                    sum.Y += other.CurrentPosition.Y;
+                    count++;
+                }
+            }
+            if (count > 0)
+            {
+                sum = sum / (float)count;
+                return Seek(sum, ref currentPosition, ref Velocity, max_speed);
+            }
+            return sum;
         }
     }
 }

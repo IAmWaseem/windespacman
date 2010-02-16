@@ -190,7 +190,7 @@ namespace SteeringCS
                 agents = new List<Vehicle>();
                 //agents.Add(target);    //  leader
 
-                for (int i = 1; i < numberOfVehicles*6; i++)
+                for (int i = 1; i < numberOfVehicles*15; i++)
                 {
                     agents.Add(new Vehicle(null, Vehicle.SB.Flocking));
                 }

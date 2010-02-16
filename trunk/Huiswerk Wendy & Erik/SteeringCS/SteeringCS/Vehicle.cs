@@ -135,6 +135,9 @@ namespace SteeringCS
                 case SB.LeaderFollowing:
                     steerForce = SteeringBehaviours.LeaderFollowing(ref heading, target.CurrentPosition, ref CurrentPosition, ref velocity, max_speed, max_force);
                     break;
+                case SB.Flocking:
+                    steerForce = SteeringBehaviours.Flocking(ref velocity, max_speed, ref CurrentPosition, max_force);
+                    break;
             }
 
             //  compute new current position

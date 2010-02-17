@@ -30,7 +30,7 @@ public:
 	void LoadImage(CharacterImage image, LPCSTR path);
 	CharacterImage GetCurrentImage();
 	void ChangeCurrentImage(CharacterImage image);
-	void draw(HDC hdc);
+	void Draw(HDC hdc);
 
 private:
 	map<CharacterImage, Bitmap*> * pImages;

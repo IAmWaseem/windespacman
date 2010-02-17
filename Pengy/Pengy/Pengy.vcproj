@@ -157,6 +157,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Character.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\CharacterView.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Level.cpp"
 				>
 			</File>
@@ -199,6 +207,14 @@
 			>
 			<File
 				RelativePath=".\Bitmap.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Character.h"
+				>
+			</File>
+			<File
+				RelativePath=".\CharacterView.h"
 				>
 			</File>
 			<File

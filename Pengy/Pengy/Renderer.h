@@ -26,4 +26,5 @@ public:
     Bitmap bitmap;
     static Renderer* pInstance;
 	vector<View*> myViews;
+	int numViews;
 };

@@ -13,6 +13,7 @@ Renderer* Renderer::Inst(){
 Renderer::Renderer()
 {
 	bitmap.LoadDIBFile("res/PengyAutumnLeft2.bmp");
+	numViews = 0;
 }
 
 Renderer::~Renderer(){
@@ -22,6 +23,7 @@ Renderer::~Renderer(){
 void Renderer::attach( View *myView)
 {
     myViews.push_back( myView);
+	numViews++;
 }
 
 void Renderer::detach( View *myView)
@@ -31,6 +33,7 @@ void Renderer::detach( View *myView)
         if (myViews[i]== myView)
         {
             myViews.erase(myViews.begin()+i);
+			numViews--;
             return;
         }
     }
@@ -38,13 +41,16 @@ void Renderer::detach( View *myView)
 
 void Renderer::render(HDC hdc)
 {
-	/*vector<View*>::iterator iterator = myViews.begin();
-	while(iterator!=myViews.end())
+	if(numViews > 0)
 	{
-		View * view = *iterator;
-		view->draw(hdc);
-		iterator++;
-	}*/
+		vector<View*>::iterator iterator = myViews.begin();
+		while(iterator!=myViews.end())
+		{
+			View * view = *iterator;
+			view->draw(hdc);
+			iterator++;
+		}
+	}
 	RECT placeRect;
 	placeRect.left = 0;
 	placeRect.top = 0;

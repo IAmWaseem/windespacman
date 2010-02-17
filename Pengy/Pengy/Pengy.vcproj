@@ -189,6 +189,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Tile.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\View.cpp"
 				>
 			</File>
@@ -243,6 +247,10 @@
 			</File>
 			<File
 				RelativePath=".\Skeleton.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Tile.h"
 				>
 			</File>
 			<File

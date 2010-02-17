@@ -2,6 +2,7 @@
 #include "Observer.h"
 #include "MessageQueue.h"
 #include "LevelView.h"
+#include "Tile.h"
 
 class Level : public Observer
 {
@@ -15,4 +16,5 @@ protected:
 private:
     static Level* pInstance;
 	LevelView levelView;
+	vector<int*> GetLevel1Array();
 };

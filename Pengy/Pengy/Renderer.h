@@ -18,7 +18,7 @@ public:
 
 	void attach(View *myView);
 	void detach(View *myView);
-	void render(HDC hdc);
+	void render(HDC hdc, HWND m_hWnd);
 
   protected:
     Renderer();

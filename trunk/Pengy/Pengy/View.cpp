@@ -14,6 +14,11 @@ void View::registerToGraphics()
 	renderer->Inst()->attach(this);
 }
 
-void View::draw(HDC hDC)
+void View::unRegisterToGraphics()
+{
+	renderer->Inst()->detach(this);
+}
+
+void View::Draw(HDC hDC)
 {
 }

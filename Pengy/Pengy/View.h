@@ -12,7 +12,8 @@ class View
 public:
     View();
     void registerToGraphics();
-	virtual void draw(HDC hdc) = 0;
+	void unRegisterToGraphics();
+	virtual void Draw(HDC hdc) = 0;
     ~View();
 private:
 	Renderer* renderer;

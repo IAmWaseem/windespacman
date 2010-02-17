@@ -161,6 +161,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\LevelView.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\MessageQueue.cpp"
 				>
 			</File>
@@ -199,6 +203,10 @@
 			</File>
 			<File
 				RelativePath=".\Level.h"
+				>
+			</File>
+			<File
+				RelativePath=".\LevelView.h"
 				>
 			</File>
 			<File

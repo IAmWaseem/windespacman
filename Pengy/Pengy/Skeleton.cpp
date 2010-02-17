@@ -25,7 +25,6 @@ LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
 	case WM_CREATE:
 		messageQueue->Inst()->attach(level->Inst());
-		messageQueue->Inst()->attach(level->Inst());
 		break;
 	case WM_KEYDOWN:
 		messageQueue->Inst()->sendMessage(CM_KEY);

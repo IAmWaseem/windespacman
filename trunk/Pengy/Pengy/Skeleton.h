@@ -27,6 +27,8 @@ private:
 	void Render(HWND);
 	SYSTEMTIME st;
 	Bitmap bitmap;
+	HDC graphics;
+	HDC bufDC;
 };
 
 #endif

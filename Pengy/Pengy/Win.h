@@ -30,6 +30,9 @@ public:
 	 int Run();
 	 virtual ~CWin();
 	 virtual LRESULT MsgProc(HWND, UINT, WPARAM, LPARAM);
+	 virtual void GameInit() = 0;
+	 virtual void GameLoop(HWND) = 0;
+	 virtual void GameEnd() = 0;
 };
 
 #endif

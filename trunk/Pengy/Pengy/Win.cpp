@@ -24,16 +24,16 @@ CWin::CWin()
 
 	this->m_hWnd = NULL;
 	this->m_dwCreationFlags  = 0L;
-	this->m_dwWindowStyle	= WS_OVERLAPPEDWINDOW;
+	this->m_dwWindowStyle		= (WS_OVERLAPPEDWINDOW | WS_SYSMENU) & ~(WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_THICKFRAME) ;
 	this->m_dwExWindowStyle	= WS_EX_OVERLAPPEDWINDOW;
 	this->m_dwCreationFlags	= SW_SHOW;
 	this->m_PosX			= CW_USEDEFAULT;	
 	this->m_PosY			= CW_USEDEFAULT;	
-	this->m_dwCreationWidth	= CW_USEDEFAULT;
-	this->m_dwCreationHeight	= CW_USEDEFAULT;
+	this->m_dwCreationWidth		= 800;
+	this->m_dwCreationHeight	= 600;
 	this->m_hbrWindowColor	= (HBRUSH)(COLOR_WINDOW+1);
 	this->m_hIcon			= LoadIcon(m_hInstance, (LPCTSTR)IDI_APPLICATION);
-	this->m_strWindowTitle	= _T("Win32 OO Skeleton Program...");
+	this->m_strWindowTitle	= _T("Pengy the Pinguin");
 	this->m_hMenu			= NULL; 	
 }
 

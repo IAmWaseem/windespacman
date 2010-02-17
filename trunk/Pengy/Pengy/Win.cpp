@@ -49,15 +49,24 @@ int CWin::Run()
 {
 	MSG msg;
 
-	while (GetMessage(&msg, NULL, 0, 0)) 
+	ZeroMemory( &msg, sizeof(msg) );
+	
+	while( msg.message!=WM_QUIT )
 	{
-		if (!TranslateAccelerator(msg.hwnd, m_hAccelTable, &msg)) 
+		if( PeekMessage( &msg, NULL, 0U, 0U, PM_REMOVE ) )
 		{
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
+			TranslateMessage( &msg );
+			DispatchMessage( &msg );
+		} 
+		else 
+		{
+		  GameLoop(m_hWnd);
 		}
-
-	}	return msg.wParam;
+	}
+	
+	GameEnd();
+	
+	return msg.wParam;
 }
 
 HRESULT CWin::Create()
@@ -87,6 +96,8 @@ HRESULT CWin::Create()
 	{
 	  return FALSE;
 	}
+
+	GameInit();
 
 	::ShowWindow(m_hWnd, m_dwCreationFlags);
 	::UpdateWindow(m_hWnd);

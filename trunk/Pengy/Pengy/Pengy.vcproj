@@ -153,6 +153,10 @@
 			Filter="cpp"
 			>
 			<File
+				RelativePath=".\Bitmap.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Level.cpp"
 				>
 			</File>
@@ -189,6 +193,10 @@
 			Name="Header Files"
 			Filter="h"
 			>
+			<File
+				RelativePath=".\Bitmap.h"
+				>
+			</File>
 			<File
 				RelativePath=".\Level.h"
 				>

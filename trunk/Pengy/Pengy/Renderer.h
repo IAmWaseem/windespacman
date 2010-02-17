@@ -2,7 +2,11 @@
 
 #include <windows.h>
 #include <vector>
+#include "View.h"
+#include <iostream>
+#include "Bitmap.h"
 using namespace std;
+using namespace dotnetguy;
 
 class View;
 
@@ -19,6 +23,7 @@ public:
   protected:
     Renderer();
   private:
+    Bitmap bitmap;
     static Renderer* pInstance;
-	vector <View*> myViews;
+	vector<View*> myViews;
 };

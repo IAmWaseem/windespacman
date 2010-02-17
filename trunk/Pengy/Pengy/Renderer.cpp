@@ -1,5 +1,5 @@
 #include "Renderer.h"
-#include "View.h"
+
 
 Renderer* Renderer::pInstance = NULL;
 
@@ -10,7 +10,9 @@ Renderer* Renderer::Inst(){
   return pInstance;
 }
 
-Renderer::Renderer(){ 
+Renderer::Renderer()
+{
+	bitmap.LoadDIBFile("res/PengyAutumnLeft2.bmp");
 }
 
 Renderer::~Renderer(){
@@ -36,8 +38,17 @@ void Renderer::detach( View *myView)
 
 void Renderer::render(HDC hdc)
 {
-    for (int i= 0; i< myViews.size(); i++)
-    {
-        myViews[i]->draw(hdc);
-    }
+	/*vector<View*>::iterator iterator = myViews.begin();
+	while(iterator!=myViews.end())
+	{
+		View * view = *iterator;
+		view->draw(hdc);
+		iterator++;
+	}*/
+	RECT placeRect;
+	placeRect.left = 0;
+	placeRect.top = 0;
+	placeRect.right = 0+ 101;
+	placeRect.bottom = 0 + 134;	
+	bitmap.TransparentPaint(hdc, RGB(46, 46, 46), &placeRect, NULL);
 }

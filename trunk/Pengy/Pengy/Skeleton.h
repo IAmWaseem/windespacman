@@ -4,6 +4,7 @@
 #include "Win.h"
 #include "Bitmap.h"
 #include "Renderer.h"
+#include "Character.h"
 #include <sstream>
 using namespace dotnetguy;
 
@@ -18,6 +19,7 @@ public:
 	void GameLoop(HWND);
 	void GameEnd();
 private:
+	Character* character;
 	Renderer* renderer;
 	MessageQueue* messageQueue;
 	Level* level;

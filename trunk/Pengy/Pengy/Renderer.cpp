@@ -51,10 +51,4 @@ void Renderer::render(HDC hdc)
 			iterator++;
 		}
 	}
-	RECT placeRect;
-	placeRect.left = 0;
-	placeRect.top = 0;
-	placeRect.right = 0+ 101;
-	placeRect.bottom = 0 + 134;	
-	bitmap.TransparentPaint(hdc, RGB(46, 46, 46), &placeRect, NULL);
 }

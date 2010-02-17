@@ -38,6 +38,11 @@ void CSkeleton::GameInit()
 {
 	bitmap.LoadDIBFile("res/Summer2.bmp");
 	messageQueue->Inst()->sendMessage(CM_LEVEL_START);
+	graphics = ::GetDC(m_hWnd);
+	bufDC = CreateCompatibleDC(graphics);
+	HBITMAP bufBMP;
+	bufBMP = CreateCompatibleBitmap(graphics, 800, 600);
+	SelectObject(bufDC, bufBMP);
 }
 
 void CSkeleton::GameLoop(HWND hWnd)
@@ -58,22 +63,15 @@ void CSkeleton::Render(HWND hWnd)
 	placeRect.top = 0;
 	placeRect.right = 800;
 	placeRect.bottom = 600;	
-
-	HDC graphics = ::GetDC(m_hWnd);
-	HDC bufDC = CreateCompatibleDC(graphics);
-	HBITMAP bufBMP;
-	bufBMP = CreateCompatibleBitmap(graphics, 800, 600);
-	SelectObject(bufDC, bufBMP);
+	
 	::FillRect(bufDC, &placeRect, ::CreateSolidBrush(0x00FFFFFF));
 	renderer->Inst()->render(bufDC);
 	BitBlt(graphics, 0, 0, 800, 600, bufDC, 0, 0, SRCCOPY);
 	ReleaseDC(hWnd, bufDC);
-	DeleteDC(bufDC);
-	ReleaseDC(hWnd, graphics);
-	DeleteDC(graphics);
 }
 
 void CSkeleton::Update()
 {
-	
+	Character::Instance()->SetLocationX(Character::Instance()->GetLocationX() + 1);
+	Character::Instance()->SetLocationY(Character::Instance()->GetLocationY() + 1);
 }

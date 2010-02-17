@@ -65,8 +65,9 @@ void CSkeleton::Render(HWND hWnd)
 	placeRect.bottom = 600;	
 	
 	::FillRect(bufDC, &placeRect, ::CreateSolidBrush(0x00FFFFFF));
-	renderer->Inst()->render(bufDC);
+	renderer->Inst()->render(bufDC, m_hWnd);
 	BitBlt(graphics, 0, 0, 800, 600, bufDC, 0, 0, SRCCOPY);
+	
 	ReleaseDC(hWnd, bufDC);
 }
 

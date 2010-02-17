@@ -39,7 +39,7 @@ void Renderer::detach( View *myView)
     }
 }
 
-void Renderer::render(HDC hdc)
+void Renderer::render(HDC hdc, HWND m_hWnd) 
 {
 	if(numViews > 0)
 	{
@@ -47,7 +47,7 @@ void Renderer::render(HDC hdc)
 		while(iterator!=myViews.end())
 		{
 			View * view = *iterator;
-			view->Draw(hdc);
+			view->Draw(hdc, m_hWnd);
 			iterator++;
 		}
 	}

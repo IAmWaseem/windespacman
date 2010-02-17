@@ -11,7 +11,7 @@ CharacterView::~CharacterView(void)
 
 }
 
-void CharacterView::Draw(HDC hdc)
+void CharacterView::Draw(HDC hdc, HWND m_hWnd)
 {
 	Bitmap * bitmap = pImages->find(currentImage)->second;
 	RECT placeRect;

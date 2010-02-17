@@ -13,7 +13,7 @@ public:
     View();
     void registerToGraphics();
 	void unRegisterToGraphics();
-	virtual void Draw(HDC hdc) = 0;
+	virtual void Draw(HDC hdc, HWND m_hWnd) = 0;
     ~View();
 private:
 	Renderer* renderer;

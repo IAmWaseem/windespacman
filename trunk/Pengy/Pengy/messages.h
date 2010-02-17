@@ -1,1 +1,2 @@
 #define CM_KEY	1234
+#define CM_LEVEL_START 55555

@@ -1,5 +1,6 @@
 #include "Skeleton.h"
 #include "Bitmap.h"
+#include "Messages.h"
 using namespace dotnetguy;
 
 /////////////////////////////////////
@@ -24,6 +25,7 @@ LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
 	case WM_CREATE:
 		messageQueue->Inst()->attach(level->Inst());
+		messageQueue->Inst()->attach(level->Inst());
 		break;
 	case WM_KEYDOWN:
 		messageQueue->Inst()->sendMessage(CM_KEY);
@@ -35,6 +37,7 @@ LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 void CSkeleton::GameInit()
 {
 	bitmap.LoadDIBFile("res/Summer2.bmp");
+	messageQueue->Inst()->sendMessage(CM_LEVEL_START);
 }
 
 void CSkeleton::GameLoop(HWND hWnd)

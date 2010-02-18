@@ -16,7 +16,7 @@ Level::~Level(){
   if(pInstance != 0)delete pInstance;
 }
 
-void Level::recieveMessage(UINT message) 
+void Level::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam) 
 {
 	switch (message) 
 	{

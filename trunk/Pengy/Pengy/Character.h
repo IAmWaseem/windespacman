@@ -8,7 +8,7 @@ protected:
 	Character(void);
 public:
 	~Character(void);
-	void recieveMessage(UINT message);
+	void recieveMessage(UINT message, WPARAM wParam, LPARAM lParam);
 	static Character* Instance();
 	void Update();
 	int GetLocationX();

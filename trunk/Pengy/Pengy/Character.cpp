@@ -17,7 +17,7 @@ Character::~Character(void)
 {
 }
 
-void Character::recieveMessage(UINT message)
+void Character::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message) 
 	{

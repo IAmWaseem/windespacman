@@ -11,7 +11,7 @@ class Observer
 {
 public:
     Observer();
-    virtual void recieveMessage(UINT message)= 0;
+    virtual void recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)= 0;
     ~Observer();
 };
 

@@ -26,6 +26,7 @@ LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	case WM_CREATE:
 		messageQueue->Inst()->attach(level->Inst());
 		messageQueue->Inst()->attach(character->Instance());
+		messageQueue->Inst()->attach(renderer->Inst());
 		break;
 	}
 	return CWin::MsgProc(hWnd, uMsg, wParam, lParam);

@@ -16,7 +16,7 @@ public:
 
 	LRESULT MsgProc(HWND, UINT, WPARAM, LPARAM);
 	void GameInit();
-	void GameLoop(HWND);
+	void GameLoop();
 	void GameEnd();
 private:
 	Character* character;
@@ -25,8 +25,6 @@ private:
 	Level* level;
 	void Update();
 	void Render(HWND);
-	Bitmap bitmap;
-	HDC graphics;
 	HDC bufDC;
 	ULONGLONG previousUpdateTime;
 };

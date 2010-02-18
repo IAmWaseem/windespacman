@@ -23,6 +23,7 @@ protected:
 	HICON  m_hIcon;
 	HMENU  m_hMenu;
 	HACCEL m_hAccelTable;
+	HDC graphics;
 
 public:
 	 CWin();
@@ -31,7 +32,7 @@ public:
 	 virtual ~CWin();
 	 virtual LRESULT MsgProc(HWND, UINT, WPARAM, LPARAM);
 	 virtual void GameInit() = 0;
-	 virtual void GameLoop(HWND) = 0;
+	 virtual void GameLoop() = 0;
 	 virtual void GameEnd() = 0;
 };
 

@@ -34,10 +34,10 @@ void MessageQueue::detach( Observer *myObserver)
     }
 }
 
-void MessageQueue::sendMessage(UINT message)
+void MessageQueue::sendMessage(UINT message, WPARAM wParam, LPARAM lParam)
 {
     for (int i= 0; i< myObs.size(); i++)
     {
-        myObs[i]->recieveMessage(message);
+        myObs[i]->recieveMessage(message, wParam, lParam);
     }
 }

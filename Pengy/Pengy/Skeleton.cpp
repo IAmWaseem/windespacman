@@ -27,9 +27,6 @@ LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		messageQueue->Inst()->attach(level->Inst());
 		messageQueue->Inst()->attach(character->Instance());
 		break;
-	case WM_KEYDOWN:
-		messageQueue->Inst()->sendMessage(CM_KEY);
-		break;
 	}
 	return CWin::MsgProc(hWnd, uMsg, wParam, lParam);
 }
@@ -37,7 +34,7 @@ LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 void CSkeleton::GameInit()
 {
 	bitmap.LoadDIBFile("res/Summer2.bmp");
-	messageQueue->Inst()->sendMessage(CM_LEVEL_START);
+	messageQueue->Inst()->sendMessage(CM_LEVEL_START, NULL, NULL);
 	graphics = ::GetDC(m_hWnd);
 	bufDC = CreateCompatibleDC(graphics);
 	HBITMAP bufBMP;

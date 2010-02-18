@@ -52,3 +52,8 @@ void Renderer::render(HDC hdc, HWND m_hWnd)
 		}
 	}
 }
+
+void Renderer::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+}

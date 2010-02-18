@@ -14,7 +14,7 @@ public:
 
 	void attach( Observer *myObserver);
 	void detach( Observer *myObserver);
-    void sendMessage(UINT message);
+    void sendMessage(UINT message, WPARAM wParam, LPARAM lParam);
 
   protected:
     MessageQueue();

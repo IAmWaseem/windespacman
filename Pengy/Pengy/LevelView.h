@@ -11,11 +11,14 @@ using namespace dotnetguy;
 class LevelView : public View
 {
 private:
-	HANDLE tilemap;
-	vector<Tile*> myTiles;
+	static HANDLE tilemap;
+	static vector<Tile*> * myTiles;
+	void DrawTile(Tile * tile, HDC hdc, RECT rect);
+	void DrawTile(Tile * tile, HDC hdc, RECT rect, int offsetX);
+	void DrawTile(Tile * tile, HDC hdc, RECT rect, int offsetX, int offsetY);
 public:
 	void Draw(HDC hDC, HWND m_hWnd);
 	LevelView();
 	~LevelView();
-	void SetTiles(vector<Tile*> myTiles, LPCSTR path);
+	void SetTiles(vector<Tile> myTiles, LPCSTR path);	
 };

@@ -82,7 +82,8 @@ void CSkeleton::Render(HWND hWnd)
 	HBITMAP bufBMP;
 	bufBMP = CreateCompatibleBitmap(graphics, 800, 600);
 	SelectObject(bufDC, bufBMP);	
-	::FillRect(bufDC, &placeRect, ::CreateSolidBrush(0x00FFFFFF));
+	//::FillRect(bufDC, &placeRect, ::CreateSolidBrush(0x00FFFFFF));
+	::FillRect(bufDC, &placeRect, ::CreateSolidBrush(RGB(171, 207, 236)));
 	renderer->Inst()->render(bufDC, m_hWnd);
 	BitBlt(graphics, 0, 0, 800, 600, bufDC, 0, 0, SRCCOPY);
 	DeleteDC(bufDC);

@@ -36,11 +36,26 @@ void CSkeleton::GameInit()
 {
 	bitmap.LoadDIBFile("res/Summer2.bmp");
 	messageQueue->Inst()->sendMessage(CM_LEVEL_START, NULL, NULL);
-	graphics = ::GetDC(m_hWnd);
-	bufDC = CreateCompatibleDC(graphics);
-	HBITMAP bufBMP;
-	bufBMP = CreateCompatibleBitmap(graphics, 800, 600);
-	SelectObject(bufDC, bufBMP);
+
+	RECT rect;
+	rect.left = 0;
+	rect.top = 0;
+	rect.right = 800;
+	rect.bottom = 600;
+	
+	
+	SYSTEMTIME systemTime;
+	GetSystemTime( &systemTime );
+
+	FILETIME fileTime;
+	SystemTimeToFileTime( &systemTime, &fileTime );
+
+	ULARGE_INTEGER uli;
+	uli.LowPart = fileTime.dwLowDateTime;
+	uli.HighPart = fileTime.dwHighDateTime;
+
+	ULONGLONG systemTimeIn_ms( uli.QuadPart/10000 );
+	previousUpdateTime = systemTimeIn_ms;
 }
 
 void CSkeleton::GameLoop(HWND hWnd)
@@ -61,16 +76,34 @@ void CSkeleton::Render(HWND hWnd)
 	placeRect.top = 0;
 	placeRect.right = 800;
 	placeRect.bottom = 600;	
-	
+
+	graphics = ::GetDC(m_hWnd);
+	bufDC = CreateCompatibleDC(graphics);
+	HBITMAP bufBMP;
+	bufBMP = CreateCompatibleBitmap(graphics, 800, 600);
+	SelectObject(bufDC, bufBMP);	
 	::FillRect(bufDC, &placeRect, ::CreateSolidBrush(0x00FFFFFF));
 	renderer->Inst()->render(bufDC, m_hWnd);
 	BitBlt(graphics, 0, 0, 800, 600, bufDC, 0, 0, SRCCOPY);
-	
-	ReleaseDC(hWnd, bufDC);
+	DeleteDC(bufDC);
+	DeleteDC(graphics);
 }
 
 void CSkeleton::Update()
 {
-	Character::Instance()->SetLocationX(Character::Instance()->GetLocationX() + 1);
-	Character::Instance()->SetLocationY(Character::Instance()->GetLocationY() + 1);
+	SYSTEMTIME systemTime;
+	GetSystemTime( &systemTime );
+
+	FILETIME fileTime;
+	SystemTimeToFileTime( &systemTime, &fileTime );
+
+	ULARGE_INTEGER uli;
+	uli.LowPart = fileTime.dwLowDateTime;
+	uli.HighPart = fileTime.dwHighDateTime;
+
+	ULONGLONG systemTimeIn_ms( uli.QuadPart/10000 );
+	int elapsedTime = systemTimeIn_ms - previousUpdateTime;
+
+	messageQueue->Inst()->sendMessage(CM_UPDATE, elapsedTime, NULL);
+	previousUpdateTime = systemTimeIn_ms;
 }

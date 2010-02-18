@@ -1,6 +1,6 @@
 #include "Skeleton.h"
-#include "Bitmap.h"
-#include "Messages.h"
+//#include "Bitmap.h"
+//#include "Messages.h"
 using namespace dotnetguy;
 
 /////////////////////////////////////
@@ -34,7 +34,6 @@ LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 void CSkeleton::GameInit()
 {
-	bitmap.LoadDIBFile("res/Summer2.bmp");
 	messageQueue->Inst()->sendMessage(CM_LEVEL_START, NULL, NULL);
 
 	RECT rect;
@@ -43,6 +42,11 @@ void CSkeleton::GameInit()
 	rect.right = 800;
 	rect.bottom = 600;
 	
+	bufDC = CreateCompatibleDC(graphics);
+	HBITMAP bufBMP;
+	bufBMP = CreateCompatibleBitmap(graphics, 800, 600);
+	SelectObject(bufDC, bufBMP);
+	::FillRect(bufDC, &rect, ::CreateSolidBrush(0x00FFFFFF));
 	
 	SYSTEMTIME systemTime;
 	GetSystemTime( &systemTime );
@@ -58,10 +62,10 @@ void CSkeleton::GameInit()
 	previousUpdateTime = systemTimeIn_ms;
 }
 
-void CSkeleton::GameLoop(HWND hWnd)
+void CSkeleton::GameLoop()
 {
 	Update();
-	Render(hWnd);
+	Render(this->m_hWnd);
 }
 
 void CSkeleton::GameEnd()
@@ -71,23 +75,8 @@ void CSkeleton::GameEnd()
 
 void CSkeleton::Render(HWND hWnd)
 {
-	RECT placeRect;
-	placeRect.left = 0;
-	placeRect.top = 0;
-	placeRect.right = 800;
-	placeRect.bottom = 600;	
-
-	graphics = ::GetDC(m_hWnd);
-	bufDC = CreateCompatibleDC(graphics);
-	HBITMAP bufBMP;
-	bufBMP = CreateCompatibleBitmap(graphics, 800, 600);
-	SelectObject(bufDC, bufBMP);	
-	//::FillRect(bufDC, &placeRect, ::CreateSolidBrush(0x00FFFFFF));
-	::FillRect(bufDC, &placeRect, ::CreateSolidBrush(RGB(171, 207, 236)));
-	renderer->Inst()->render(bufDC, m_hWnd);
-	BitBlt(graphics, 0, 0, 800, 600, bufDC, 0, 0, SRCCOPY);
-	DeleteDC(bufDC);
-	DeleteDC(graphics);
+	renderer->Inst()->render(bufDC, hWnd);
+	BitBlt(graphics, 0,0, 800, 600,bufDC, 0, 0, SRCCOPY);
 }
 
 void CSkeleton::Update()

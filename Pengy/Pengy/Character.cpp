@@ -27,6 +27,11 @@ void Character::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		characterView->ChangeCurrentImage(CharacterView::CharacterImage::Left);
 		characterView->registerToGraphics();
 		break;
+
+	case CM_UPDATE:
+		ULONGLONG timeElapsed = wParam;
+		
+		break;
 	}
 }
 

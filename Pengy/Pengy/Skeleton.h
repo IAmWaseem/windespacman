@@ -25,10 +25,10 @@ private:
 	Level* level;
 	void Update();
 	void Render(HWND);
-	SYSTEMTIME st;
 	Bitmap bitmap;
 	HDC graphics;
 	HDC bufDC;
+	ULONGLONG previousUpdateTime;
 };
 
 #endif

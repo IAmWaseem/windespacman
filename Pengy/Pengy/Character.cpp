@@ -7,8 +7,8 @@ Character* Character::pInstance = NULL;
 
 Character::Character(void)
 {
-	locationX = 0;
-	locationY = 0;
+	locationX = 700;
+	locationY = 350;
 	width = 0;
 	height = 0;
 }
@@ -30,7 +30,11 @@ void Character::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 
 	case CM_UPDATE:
 		ULONGLONG timeElapsed = wParam;
-		
+		float pixelsPerMillisecond = -0.010;
+		float dX = timeElapsed * pixelsPerMillisecond;
+		locationX += dX;
+		if(locationX < 10) locationX = 10;
+			
 		break;
 	}
 }

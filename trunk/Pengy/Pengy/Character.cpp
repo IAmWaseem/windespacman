@@ -11,6 +11,7 @@ Character::Character(void)
 	locationY = 350;
 	width = 0;
 	height = 0;
+	characterStateMachine = new CharacterStateMachine();
 }
 
 Character::~Character(void)
@@ -19,6 +20,7 @@ Character::~Character(void)
 
 void Character::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 {
+	ULONGLONG timeElapsed;
 	switch (message) 
 	{
 	case CM_LEVEL_START:
@@ -29,12 +31,28 @@ void Character::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 
 	case CM_UPDATE:
-		ULONGLONG timeElapsed = wParam;
-		float pixelsPerMillisecond = -0.010;
-		float dX = timeElapsed * pixelsPerMillisecond;
-		locationX += dX;
-		if(locationX < 10) locationX = 10;
-			
+		timeElapsed = wParam;
+		characterStateMachine->Update(timeElapsed);
+		break;
+
+	case CM_CHARACTER_SPACEBAR:
+		characterStateMachine->Spacebar();
+		break;
+
+	case CM_CHARACTER_UP:
+		characterStateMachine->Up();
+		break;
+
+	case CM_CHARACTER_DOWN:
+		characterStateMachine->Down();
+		break;
+
+	case CM_CHARACTER_LEFT:
+		characterStateMachine->Left();
+		break;
+
+	case CM_CHARACTER_RIGHT:
+		characterStateMachine->Right();
 		break;
 	}
 }

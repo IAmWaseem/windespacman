@@ -1,6 +1,7 @@
 #pragma once
 #include "Observer.h"
 #include "CharacterView.h"
+#include "CharacterStateMachine.h"
 
 class Character : public Observer
 {
@@ -22,6 +23,7 @@ public:
 private:
 	static Character * pInstance;
 	CharacterView * characterView;
+	CharacterStateMachine * characterStateMachine;
 	int locationX;
 	int locationY;
 	int width;

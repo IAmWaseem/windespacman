@@ -161,7 +161,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\CharacterState.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\CharacterStateMachine.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\CharacterView.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Idle.cpp"
 				>
 			</File>
 			<File
@@ -218,7 +230,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\CharacterState.h"
+				>
+			</File>
+			<File
+				RelativePath=".\CharacterStateMachine.h"
+				>
+			</File>
+			<File
 				RelativePath=".\CharacterView.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Idle.h"
 				>
 			</File>
 			<File

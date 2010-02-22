@@ -28,6 +28,26 @@ LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		messageQueue->Inst()->attach(character->Instance());
 		messageQueue->Inst()->attach(renderer->Inst());
 		break;
+	case WM_KEYDOWN:
+			switch(wParam)
+			{
+			case 32:
+				messageQueue->Inst()->sendMessage(CM_CHARACTER_SPACEBAR, NULL, NULL);
+				break;
+			case 37:
+				messageQueue->Inst()->sendMessage(CM_CHARACTER_LEFT, NULL, NULL);
+				break;
+			case 38:
+				messageQueue->Inst()->sendMessage(CM_CHARACTER_UP, NULL, NULL);
+				break;
+			case 39:
+				messageQueue->Inst()->sendMessage(CM_CHARACTER_RIGHT, NULL, NULL);
+				break;
+			case 40:
+				messageQueue->Inst()->sendMessage(CM_CHARACTER_DOWN, NULL, NULL);
+				break;
+			}
+		break;
 	}
 	return CWin::MsgProc(hWnd, uMsg, wParam, lParam);
 }

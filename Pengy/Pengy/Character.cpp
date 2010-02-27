@@ -7,11 +7,12 @@ Character* Character::pInstance = NULL;
 
 Character::Character(void)
 {
-	locationX = 700;
-	locationY = 350;
-	width = 0;
-	height = 0;
-	characterStateMachine = new CharacterStateMachine();
+	location = new Location();
+	location->X = 680;
+	location->Y = 100;
+	location->width = 100;
+	location->height = 100;
+	pCharacterStateMachine = new CharacterStateMachine();
 }
 
 Character::~Character(void)
@@ -20,39 +21,51 @@ Character::~Character(void)
 
 void Character::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 {
+	this->pCharacterStateMachine->recieveMessage(message, wParam, lParam);
+
 	ULONGLONG timeElapsed;
 	switch (message) 
 	{
 	case CM_LEVEL_START:
-		characterView = new CharacterView();
-		characterView->LoadImage(CharacterView::CharacterImage::Left, "res/PengyAutumnLeft2.bmp");
-		characterView->ChangeCurrentImage(CharacterView::CharacterImage::Left);
-		characterView->registerToGraphics();
+		pCharacterView = new CharacterView();
+		pCharacterView->LoadImage(CharacterView::CharacterImage::Left, "res/PengyAutumnLeft.bmp");
+		pCharacterView->LoadImage(CharacterView::CharacterImage::Left2, "res/PengyAutumnLeft2.bmp");
+		pCharacterView->LoadImage(CharacterView::CharacterImage::Right, "res/PengyAutumnRight.bmp");
+		pCharacterView->LoadImage(CharacterView::CharacterImage::Right2, "res/PengyAutumnRight2.bmp");
+		pCharacterView->LoadImage(CharacterView::CharacterImage::Climb, "res/PengyClimb.bmp");
+		pCharacterView->LoadImage(CharacterView::CharacterImage::Climb2, "res/PengyClimb2.bmp");
+		pCharacterView->LoadImage(CharacterView::CharacterImage::Jump, "res/PengyJump.bmp");
+		pCharacterView->LoadImage(CharacterView::CharacterImage::Sliding, "res/PengySliding.bmp");
+		pCharacterView->LoadImage(CharacterView::CharacterImage::Sliding2, "res/PengySliding2.bmp");
+		pCharacterView->ChangeCurrentImage(CharacterView::CharacterImage::Left);
+		pCharacterView->registerToGraphics();
+		MessageQueue::Inst()->sendMessage(CM_CHARACTER_MOVE_X_FROM_TO, (int)location, (int)location);
+		MessageQueue::Inst()->sendMessage(CM_CHARACTER_MOVE_Y_FROM_TO, (int)location, (int)location);
 		break;
 
 	case CM_UPDATE:
 		timeElapsed = wParam;
-		characterStateMachine->Update(timeElapsed);
+		pCharacterStateMachine->Update(timeElapsed);
 		break;
 
 	case CM_CHARACTER_SPACEBAR:
-		characterStateMachine->Spacebar();
+		pCharacterStateMachine->Spacebar();
 		break;
 
 	case CM_CHARACTER_UP:
-		characterStateMachine->Up();
+		pCharacterStateMachine->Up();
 		break;
 
 	case CM_CHARACTER_DOWN:
-		characterStateMachine->Down();
+		pCharacterStateMachine->Down();
 		break;
 
 	case CM_CHARACTER_LEFT:
-		characterStateMachine->Left();
+		pCharacterStateMachine->Left();
 		break;
 
 	case CM_CHARACTER_RIGHT:
-		characterStateMachine->Right();
+		pCharacterStateMachine->Right();
 		break;
 	}
 }
@@ -70,42 +83,18 @@ void Character::Update()
 
 }
 
-int Character::GetLocationX()
+Location * Character::GetLocation()
 {
-	return locationX;
+	return location;
 }
 
-int Character::GetLocationY()
+
+void Character::SetLocation(Location * location)
 {
-	return locationY;
+	this->location = location;
 }
 
-void Character::SetLocationX(int x)
+CharacterView * Character::GetCharacterView()
 {
-	locationX = x;
-}
-
-void Character::SetLocationY(int y)
-{
-	locationY = y;
-}
-
-int Character::GetWidth()
-{
-	return width;
-}
-
-int Character::GetHeight()
-{
-	return height;
-}
-
-void Character::SetWidth(int width)
-{
-	this->width = width;
-}
-
-void Character::SetHeight(int height)
-{
-	this->height = height;
+	return this->pCharacterView;
 }

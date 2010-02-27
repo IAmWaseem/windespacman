@@ -1,10 +1,18 @@
 #pragma once
+#include "Win.h"
+#include "MessageQueue.h"
+
+enum Direction
+{
+	Left,
+	Right
+};
 
 class CharacterStateMachine;
 
 class CharacterState
 {
-private:
+protected:
 	CharacterStateMachine * pStateMachine;
 
 public:
@@ -16,5 +24,7 @@ public:
 	virtual void Left() = 0;
 	virtual void Right() = 0;
 	virtual void Spacebar() = 0;
+	virtual void Throw() = 0;
 	virtual void Update(int timeElapsed) = 0;
+	virtual void recieveMessage(UINT message, WPARAM wParam, LPARAM lParam) = 0;
 };

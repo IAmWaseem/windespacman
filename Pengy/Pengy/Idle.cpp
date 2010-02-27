@@ -1,4 +1,7 @@
 #include "Idle.h"
+#include "Walking.h"
+#include "Jumping.h"
+#include "CharacterStateMachine.h"
 
 Idle::Idle(void)
 {
@@ -17,17 +20,24 @@ void Idle::Up()
 
 void Idle::Down()
 {
-
+	
 }
 
 
 void Idle::Left()
 {
-
+	this->pStateMachine->walking->Left();
+	this->pStateMachine->Transition(this->pStateMachine->walking);
 }
 
 
 void Idle::Right()
+{
+	this->pStateMachine->walking->Right();
+	this->pStateMachine->Transition(this->pStateMachine->walking);
+}
+
+void Idle::Throw()
 {
 
 }
@@ -35,10 +45,21 @@ void Idle::Right()
 
 void Idle::Spacebar()
 {
-
+	this->pStateMachine->jumping->Spacebar();
+	this->pStateMachine->Transition(this->pStateMachine->jumping);
 }
 
 void Idle::Update(int timeElapsed)
 {
 
+}
+
+void Idle::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch(message)
+	{
+	case CM_CHARACTER_IS_FALLING:
+		this->pStateMachine->Transition(this->pStateMachine->falling);
+		break;
+	}
 }

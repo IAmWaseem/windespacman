@@ -1,11 +1,18 @@
 #pragma once
 #include "characterstate.h"
 
-class Idle : public CharacterState
+class Walking : public CharacterState
 {
+private:
+	Direction direction;
+	float distanceToMove;
+	float moved;
+	float speed;
+	void SwapPicture();
+
 public:
-	Idle(void);
-	Idle(CharacterStateMachine * pStateMachine);
+	Walking(void);
+	Walking(CharacterStateMachine * pStateMachine);
 	void Up();
 	void Down();
 	void Left();

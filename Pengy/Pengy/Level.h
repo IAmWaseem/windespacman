@@ -4,6 +4,14 @@
 #include "LevelView.h"
 #include "Tile.h"
 
+struct Surface
+{
+	int xFrom;
+	int xTo;
+	int yFrom;
+	int yTo;
+};
+
 class Level : public Observer
 {
 public:
@@ -14,6 +22,7 @@ public:
 protected:
 	Level();
 private:
+	vector<Surface*> * surfaces;
     static Level* pInstance;
 	LevelView levelView;
 	vector<int*> GetLevel1Array();

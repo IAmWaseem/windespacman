@@ -2,6 +2,7 @@
 #include "Observer.h"
 #include "CharacterView.h"
 #include "CharacterStateMachine.h"
+#include "Location.h"
 
 class Character : public Observer
 {
@@ -12,20 +13,12 @@ public:
 	void recieveMessage(UINT message, WPARAM wParam, LPARAM lParam);
 	static Character* Instance();
 	void Update();
-	int GetLocationX();
-	int GetLocationY();
-	void SetLocationX(int x);
-	void SetLocationY(int y);
-	int GetWidth();
-	int GetHeight();
-	void SetWidth(int width);
-	void SetHeight(int height);
+	Location * GetLocation();
+	void SetLocation(Location * location);
+	CharacterView * GetCharacterView();
 private:
 	static Character * pInstance;
-	CharacterView * characterView;
-	CharacterStateMachine * characterStateMachine;
-	int locationX;
-	int locationY;
-	int width;
-	int height;
+	CharacterView * pCharacterView;
+	CharacterStateMachine * pCharacterStateMachine;
+	Location * location;
 };

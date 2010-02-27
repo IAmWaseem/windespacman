@@ -1,4 +1,5 @@
 #include "Level.h"
+#include "Location.h"
 
 Level* Level::pInstance = NULL;
 
@@ -10,6 +11,36 @@ Level* Level::Inst(){
 }
 
 Level::Level(){ 
+	surfaces = new vector<Surface*>();
+
+	Surface * surface1 = new Surface();
+	surface1->xFrom = 0;
+	surface1->yFrom = 483;
+	surface1->xTo = 387;
+	surface1->yTo = 483;
+
+	Surface * surface2 = new Surface();
+	surface2->xFrom = 387;
+	surface2->yFrom = 483;
+	surface2->xTo = 440;
+	surface2->yTo = 413;
+
+	Surface * surface3 = new Surface();
+	surface3->xFrom = 523;
+	surface3->yFrom = 413;
+	surface3->xTo = 573;
+	surface3->yTo = 483;
+
+	Surface * surface4 = new Surface();
+	surface4->xFrom = 573;
+	surface4->yFrom = 483;
+	surface4->xTo = 800;
+	surface4->yTo = 483;
+
+	surfaces->push_back(surface1);
+	//surfaces->push_back(surface2);
+	//surfaces->push_back(surface3);
+	surfaces->push_back(surface4);
 }
 
 Level::~Level(){
@@ -18,12 +49,53 @@ Level::~Level(){
 
 void Level::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam) 
 {
+	Location * fromLocation;
+	Location * toLocation;
+	bool isFalling;
+	vector<Surface*>::iterator iterator;
+
 	switch (message) 
 	{
 	case CM_KEY:
 		break;
 	case CM_LEVEL_START:
 		LoadLevel(1);
+		break;
+	case CM_CHARACTER_MOVE_X_FROM_TO:
+		fromLocation = (Location*)wParam;
+		toLocation = (Location*)lParam;
+		iterator = surfaces->begin();
+		while(iterator != surfaces->end())
+		{
+			iterator++;
+		}
+		break;
+
+	case CM_CHARACTER_MOVE_Y_FROM_TO:
+		fromLocation = (Location*)wParam;
+		toLocation = (Location*)lParam;
+		isFalling = true;
+		iterator = surfaces->begin();
+		while(iterator != surfaces->end())
+		{
+			Surface * surface = *iterator;
+			if(surface->yFrom - (toLocation->Y + toLocation->height) < 1)
+			{
+				if(surface->xFrom <= toLocation->X && surface->xTo >= (toLocation->X + toLocation->width))
+				{
+					isFalling = false;
+				}
+			}
+			iterator++;
+		}
+		if(isFalling)
+		{
+			MessageQueue::Inst()->sendMessage(CM_CHARACTER_IS_FALLING, NULL, NULL);
+		}
+		else
+		{
+			MessageQueue::Inst()->sendMessage(CM_CHARACTER_IS_STANDING, NULL, NULL);
+		}
 		break;
 	}
 }

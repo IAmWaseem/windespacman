@@ -15,12 +15,12 @@ void CharacterView::Draw(HDC hdc, HWND m_hWnd)
 {
 	Bitmap * bitmap = pImages->find(currentImage)->second;
 	RECT placeRect;
-	placeRect.left = Character::Instance()->GetLocationX();
-	placeRect.top = Character::Instance()->GetLocationY();
+	placeRect.left = Character::Instance()->GetLocation()->X;
+	placeRect.top = Character::Instance()->GetLocation()->Y;
 	placeRect.right = placeRect.left + bitmap->Width();
 	placeRect.bottom = placeRect.top + bitmap->Height();
-	Character::Instance()->SetHeight(bitmap->Height());
-	Character::Instance()->SetWidth(bitmap->Width());
+	Character::Instance()->GetLocation()->width = bitmap->Width();
+	Character::Instance()->GetLocation()->height = bitmap->Height();
 	bitmap->TransparentPaint(hdc, RGB(46, 46, 46), &placeRect, NULL); 
 }
 

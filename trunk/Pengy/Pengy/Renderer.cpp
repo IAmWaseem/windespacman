@@ -12,7 +12,7 @@ Renderer* Renderer::Inst(){
 
 Renderer::Renderer()
 {
-	bitmap.LoadDIBFile("res/PengyAutumnLeft2.bmp");
+	bitmap.LoadDIBFile("res/background.bmp");
 	numViews = 0;
 }
 
@@ -41,6 +41,12 @@ void Renderer::detach( View *myView)
 
 void Renderer::render(HDC hdc, HWND m_hWnd) 
 {
+	RECT rect;
+	rect.left = 0;
+	rect.top = 0;
+	rect.bottom = 800;
+	rect.right = 800;
+	bitmap.PaintDIB(hdc, &rect, NULL);
 	if(numViews > 0)
 	{
 		vector<View*>::iterator iterator = myViews.begin();

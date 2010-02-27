@@ -1,10 +1,17 @@
 #include "CharacterStateMachine.h"
 #include "CharacterState.h"
 #include "Idle.h"
+#include "Jumping.h"
+#include "Walking.h"
+#include "Falling.h"
 
 CharacterStateMachine::CharacterStateMachine(void)
 {
-	pCurrentState = new Idle(this);
+	idle = new Idle(this);
+	walking = new Walking(this);
+	jumping = new Jumping(this);
+	falling = new Falling(this);
+	pCurrentState = idle;
 }
 
 CharacterStateMachine::~CharacterStateMachine(void)
@@ -32,6 +39,11 @@ void CharacterStateMachine::Right()
 	this->pCurrentState->Right();
 }
 
+void CharacterStateMachine::Throw()
+{
+	this->pCurrentState->Throw();
+}
+
 void CharacterStateMachine::Spacebar()
 {
 	this->pCurrentState->Spacebar();
@@ -45,4 +57,9 @@ void CharacterStateMachine::Update(int timeElapsed)
 void CharacterStateMachine::Transition(CharacterState * pCharacterState)
 {
 	this->pCurrentState = pCharacterState;
+}
+
+void CharacterStateMachine::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
+{
+	this->pCurrentState->recieveMessage(message, wParam, lParam);
 }

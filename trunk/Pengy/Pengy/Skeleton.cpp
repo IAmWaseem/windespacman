@@ -1,6 +1,7 @@
 #include "Skeleton.h"
 //#include "Bitmap.h"
 //#include "Messages.h"
+#include "Location.h"
 using namespace dotnetguy;
 
 /////////////////////////////////////
@@ -21,6 +22,7 @@ CSkeleton::~CSkeleton()
 
 LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
+	Location * loc1;
 	switch (uMsg) 
 	{
 	case WM_CREATE:

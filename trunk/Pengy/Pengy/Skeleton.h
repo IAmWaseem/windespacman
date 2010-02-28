@@ -5,6 +5,7 @@
 #include "Bitmap.h"
 #include "Renderer.h"
 #include "Character.h"
+#include "SurfaceLevel.h"
 #include <sstream>
 using namespace dotnetguy;
 
@@ -22,7 +23,7 @@ private:
 	Character* character;
 	Renderer* renderer;
 	MessageQueue* messageQueue;
-	Level* level;
+	SurfaceLevel* level;
 	void Update();
 	void Render(HWND);
 	HDC bufDC;

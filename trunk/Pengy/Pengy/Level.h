@@ -3,14 +3,8 @@
 #include "MessageQueue.h"
 #include "LevelView.h"
 #include "Tile.h"
+#include "Surface.h"
 
-struct Surface
-{
-	int xFrom;
-	int xTo;
-	int yFrom;
-	int yTo;
-};
 
 class Level : public Observer
 {

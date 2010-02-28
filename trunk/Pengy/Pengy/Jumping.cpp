@@ -61,13 +61,20 @@ void Jumping::Spacebar()
 
 void Jumping::Update(int timeElapsed)
 {
+	Location * oldLocation = Character::Instance()->GetLocation();
+	Location * newLocation = new Location();
+	newLocation->X = oldLocation->X;
+	newLocation->Y = oldLocation->Y;
+	newLocation->width = oldLocation->width;
+	newLocation->height = oldLocation->height;
+
 	if(upwardVelocity > 0)
 	{
-		float y = Character::Instance()->GetLocation()->Y;
+		float y = newLocation->Y;
 		float newUpwardVelocity = upwardVelocity  - (0.000120 * timeElapsed);
 		float averageVelocity = (upwardVelocity + newUpwardVelocity) / 2;
 		float distance = averageVelocity * timeElapsed;
-		Character::Instance()->GetLocation()->Y -= distance;
+		newLocation->Y -= distance;
 		upwardVelocity = newUpwardVelocity;
 
 		float distanceMoved = timeElapsed * this->speed;
@@ -77,13 +84,15 @@ void Jumping::Update(int timeElapsed)
 		switch(this->direction)
 		{
 		case Direction::Left:
-			Character::Instance()->GetLocation()->X -= distanceMoved;
+			newLocation->X -= distanceMoved;
 			break;
 		case Direction::Right:
-			Character::Instance()->GetLocation()->Y += distanceMoved;
+			newLocation->Y += distanceMoved;
 			break;
 		}
-
+		Character::Instance()->SetLocation(newLocation);
+		//MessageQueue::Inst()->sendMessage(CM_CHARACTER_MOVE_Y_FROM_TO, (int)oldLocation, (int)newLocation);
+		//MessageQueue::Inst()->sendMessage(CM_CHARACTER_MOVE_X_FROM_TO, (int)oldLocation, (int)newLocation);
 	}	
 	else
 	{

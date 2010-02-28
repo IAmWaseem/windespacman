@@ -13,10 +13,10 @@ LevelView::~LevelView(){
 	unRegisterToGraphics();
 }
 
-void LevelView::Draw(HDC hDC, HWND m_hWnd)
+void LevelView::Draw(HDC hDC, int xFrom, int xTo)
 {
 	RECT rect;
-	::GetClientRect(m_hWnd, &rect);
+	//::GetClientRect(m_hWnd, &rect);
 
 	// iterate trew all tiles
 	vector<Tile*>::iterator iterator = myTiles->begin();

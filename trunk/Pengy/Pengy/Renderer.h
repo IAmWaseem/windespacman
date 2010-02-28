@@ -19,7 +19,7 @@ public:
 
 	void attach(View *myView);
 	void detach(View *myView);
-	void render(HDC hdc, HWND m_hWnd);
+	void render(HDC hdc);
 	void recieveMessage(UINT message, WPARAM wParam, LPARAM lParam);
 
   protected:
@@ -29,4 +29,6 @@ public:
     static Renderer* pInstance;
 	vector<View*> myViews;
 	int numViews;
+	int levelLength;
+	int characterX;
 };

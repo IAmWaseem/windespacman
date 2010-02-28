@@ -11,11 +11,11 @@ CharacterView::~CharacterView(void)
 
 }
 
-void CharacterView::Draw(HDC hdc, HWND m_hWnd)
+void CharacterView::Draw(HDC hdc, int xFrom, int xTo)
 {
 	Bitmap * bitmap = pImages->find(currentImage)->second;
 	RECT placeRect;
-	placeRect.left = Character::Instance()->GetLocation()->X;
+	placeRect.left = Character::Instance()->GetLocation()->X - xFrom;
 	placeRect.top = Character::Instance()->GetLocation()->Y;
 	placeRect.right = placeRect.left + bitmap->Width();
 	placeRect.bottom = placeRect.top + bitmap->Height();

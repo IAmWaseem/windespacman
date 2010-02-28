@@ -8,7 +8,7 @@ Character* Character::pInstance = NULL;
 Character::Character(void)
 {
 	location = new Location();
-	location->X = 680;
+	location->X = 1000;
 	location->Y = 100;
 	location->width = 100;
 	location->height = 100;
@@ -28,16 +28,16 @@ void Character::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	{
 	case CM_LEVEL_START:
 		pCharacterView = new CharacterView();
-		pCharacterView->LoadImage(CharacterView::CharacterImage::Left, "res/PengyAutumnLeft.bmp");
-		pCharacterView->LoadImage(CharacterView::CharacterImage::Left2, "res/PengyAutumnLeft2.bmp");
-		pCharacterView->LoadImage(CharacterView::CharacterImage::Right, "res/PengyAutumnRight.bmp");
-		pCharacterView->LoadImage(CharacterView::CharacterImage::Right2, "res/PengyAutumnRight2.bmp");
+		pCharacterView->LoadImage(CharacterView::CharacterImage::Left, "res/PengyWinterLeft.bmp");
+		pCharacterView->LoadImage(CharacterView::CharacterImage::Left2, "res/PengyWinterLeft2.bmp");
+		pCharacterView->LoadImage(CharacterView::CharacterImage::Right, "res/PengyWinterRight.bmp");
+		pCharacterView->LoadImage(CharacterView::CharacterImage::Right2, "res/PengyWinterRight2.bmp");
 		pCharacterView->LoadImage(CharacterView::CharacterImage::Climb, "res/PengyClimb.bmp");
 		pCharacterView->LoadImage(CharacterView::CharacterImage::Climb2, "res/PengyClimb2.bmp");
 		pCharacterView->LoadImage(CharacterView::CharacterImage::Jump, "res/PengyJump.bmp");
 		pCharacterView->LoadImage(CharacterView::CharacterImage::Sliding, "res/PengySliding.bmp");
 		pCharacterView->LoadImage(CharacterView::CharacterImage::Sliding2, "res/PengySliding2.bmp");
-		pCharacterView->ChangeCurrentImage(CharacterView::CharacterImage::Left);
+		pCharacterView->ChangeCurrentImage(CharacterView::CharacterImage::Right);
 		pCharacterView->registerToGraphics();
 		MessageQueue::Inst()->sendMessage(CM_CHARACTER_MOVE_X_FROM_TO, (int)location, (int)location);
 		MessageQueue::Inst()->sendMessage(CM_CHARACTER_MOVE_Y_FROM_TO, (int)location, (int)location);

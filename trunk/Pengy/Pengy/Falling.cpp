@@ -1,5 +1,6 @@
 #include "Falling.h"
 #include "Character.h"
+#include "Surface.h"
 
 Falling::Falling(void)
 {
@@ -87,6 +88,7 @@ void Falling::Update(int timeElapsed)
 	newLocation->Y += distance;
 	Character::Instance()->SetLocation(newLocation);
 	MessageQueue::Inst()->sendMessage(CM_CHARACTER_MOVE_Y_FROM_TO, (int)oldLocation, (int)newLocation);
+	MessageQueue::Inst()->sendMessage(CM_CHARACTER_MOVE_X_FROM_TO, (int)oldLocation, (int)newLocation);
 }
 
 void Falling::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
@@ -95,6 +97,10 @@ void Falling::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	{
 	case CM_CHARACTER_IS_STANDING:
 		downwardVelocity = 0;
+		Surface * surface = (Surface*)wParam;
+		Location * characterLocation = Character::Instance()->GetLocation();
+		characterLocation->Y = surface->yFrom - characterLocation->height;
+		Character::Instance()->SetLocation(characterLocation);
 		this->pStateMachine->Transition(this->pStateMachine->idle);
 		break;
 	}

@@ -16,31 +16,17 @@ Level::Level(){
 	Surface * surface1 = new Surface();
 	surface1->xFrom = 0;
 	surface1->yFrom = 483;
-	surface1->xTo = 387;
+	surface1->xTo = 367;
 	surface1->yTo = 483;
 
 	Surface * surface2 = new Surface();
-	surface2->xFrom = 387;
+	surface2->xFrom = 586;
 	surface2->yFrom = 483;
-	surface2->xTo = 440;
-	surface2->yTo = 413;
-
-	Surface * surface3 = new Surface();
-	surface3->xFrom = 523;
-	surface3->yFrom = 413;
-	surface3->xTo = 573;
-	surface3->yTo = 483;
-
-	Surface * surface4 = new Surface();
-	surface4->xFrom = 573;
-	surface4->yFrom = 483;
-	surface4->xTo = 800;
-	surface4->yTo = 483;
+	surface2->xTo = 800;
+	surface2->yTo = 483;
 
 	surfaces->push_back(surface1);
-	//surfaces->push_back(surface2);
-	//surfaces->push_back(surface3);
-	surfaces->push_back(surface4);
+	surfaces->push_back(surface2);
 }
 
 Level::~Level(){
@@ -82,6 +68,18 @@ void Level::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 			if(surface->yFrom - (toLocation->Y + toLocation->height) < 1)
 			{
 				if(surface->xFrom <= toLocation->X && surface->xTo >= (toLocation->X + toLocation->width))
+				{
+					isFalling = false;
+				}
+				if(surface->xFrom >= toLocation->X && surface->xTo <= (toLocation->X + toLocation->width))
+				{
+					isFalling = false;
+				}
+				if(surface->xFrom <= toLocation->X && surface->xTo <= (toLocation->X + toLocation->width) && surface->xTo > toLocation->X)
+				{
+					isFalling = false;
+				}
+				if(surface->xFrom >= toLocation->X && surface->xFrom <= (toLocation->X + toLocation->width) && surface->xTo >= (toLocation->X + toLocation->width))
 				{
 					isFalling = false;
 				}

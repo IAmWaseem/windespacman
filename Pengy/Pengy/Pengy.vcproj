@@ -266,11 +266,23 @@
 				RelativePath=".\Level.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\SurfaceLevel.cpp"
+				>
+			</File>
 			<Filter
 				Name="Headers"
 				>
 				<File
 					RelativePath=".\Level.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Surface.h"
+					>
+				</File>
+				<File
+					RelativePath=".\SurfaceLevel.h"
 					>
 				</File>
 			</Filter>
@@ -288,6 +300,10 @@
 			</File>
 			<File
 				RelativePath=".\LevelView.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\SurfaceLevelView.cpp"
 				>
 			</File>
 			<File
@@ -311,6 +327,10 @@
 				</File>
 				<File
 					RelativePath=".\LevelView.h"
+					>
+				</File>
+				<File
+					RelativePath=".\SurfaceLevelView.h"
 					>
 				</File>
 				<File

@@ -17,7 +17,7 @@ private:
 	void DrawTile(Tile * tile, HDC hdc, RECT rect, int offsetX);
 	void DrawTile(Tile * tile, HDC hdc, RECT rect, int offsetX, int offsetY);
 public:
-	void Draw(HDC hDC, HWND m_hWnd);
+	void Draw(HDC hDC, int xFrom, int xTo);
 	LevelView();
 	~LevelView();
 	void SetTiles(vector<Tile> myTiles, LPCSTR path);	

@@ -19,6 +19,6 @@ void View::unRegisterToGraphics()
 	renderer->Inst()->detach(this);
 }
 
-void View::Draw(HDC hDC, HWND m_hWnd)
+void View::Draw(HDC hDC, int xFrom, int xTo)
 {
 }

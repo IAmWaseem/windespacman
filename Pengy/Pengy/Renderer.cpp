@@ -1,4 +1,5 @@
 #include "Renderer.h"
+#include "Location.h"
 
 
 Renderer* Renderer::pInstance = NULL;
@@ -39,7 +40,7 @@ void Renderer::detach( View *myView)
     }
 }
 
-void Renderer::render(HDC hdc, HWND m_hWnd) 
+void Renderer::render(HDC hdc) 
 {
 	RECT rect;
 	rect.left = 0;
@@ -47,13 +48,21 @@ void Renderer::render(HDC hdc, HWND m_hWnd)
 	rect.bottom = 800;
 	rect.right = 800;
 	bitmap.PaintDIB(hdc, &rect, NULL);
+	int xFrom = characterX - 400;
+	if(xFrom < 0) xFrom = 0;
+	int xTo = xFrom + 800;
+	if(xTo >= levelLength)
+	{
+		xTo = levelLength;
+		xFrom = levelLength - 800;
+	}
 	if(numViews > 0)
 	{
 		vector<View*>::iterator iterator = myViews.begin();
 		while(iterator!=myViews.end())
 		{
 			View * view = *iterator;
-			view->Draw(hdc, m_hWnd);
+			view->Draw(hdc, xFrom, xTo);
 			iterator++;
 		}
 	}
@@ -61,5 +70,25 @@ void Renderer::render(HDC hdc, HWND m_hWnd)
 
 void Renderer::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 {
+	Location * from;
+	Location * to;
 
+	switch(message)
+	{
+	case CM_LEVEL_LENGTH:
+		levelLength = (int)wParam;
+		break;
+	case CM_CHARACTER_MOVE_X_FROM_TO:
+		from = (Location*)wParam;
+		to = (Location*)lParam;
+		characterX = to->X;
+
+		break;
+	case CM_CHARACTER_MOVE_Y_FROM_TO:
+		from = (Location*)wParam;
+		to = (Location*)lParam;
+		characterX = to->X;
+
+		break;
+	}
 }

@@ -104,7 +104,7 @@ void CSkeleton::Render(HWND hWnd)
 	rect.bottom = 600;
 
 	//::FillRect(bufDC, &rect, ::CreateSolidBrush(RGB(200, 255, 255)));
-	renderer->Inst()->render(bufDC, hWnd);
+	renderer->Inst()->render(bufDC);
 	BitBlt(graphics, 0,0, 800, 600,bufDC, 0, 0, SRCCOPY);
 }
 

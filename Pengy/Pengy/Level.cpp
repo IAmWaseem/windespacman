@@ -77,18 +77,6 @@ Level::Level(){
 		surfaces->push_back(waterRight);
 	}
 
-	Surface * surface1 = new Surface();
-	surface1->xFrom = 0;
-	surface1->yFrom = 483;
-	surface1->xTo = 367;
-	surface1->yTo = 493;
-
-	Surface * surface2 = new Surface();
-	surface2->xFrom = 586;
-	surface2->yFrom = 483;
-	surface2->xTo = 800;
-	surface2->yTo = 493;
-
 	Surface * surface3 = new Surface();
 	surface3->xFrom = 800;
 	surface3->yFrom = 420;
@@ -119,8 +107,6 @@ Level::Level(){
 	surface7->xTo = 1100;
 	surface7->yTo = 240;
 
-	surfaces->push_back(surface1);
-	surfaces->push_back(surface2);
 	surfaces->push_back(surface3);
 	surfaces->push_back(surface4);
 	surfaces->push_back(surface5);

@@ -16,7 +16,8 @@ namespace closestPair
         int DELAY;
         int X_MAX, Y_MAX;
         int numComparisons = 0;
-        PointSet T;
+        PointSet North;
+        PointSet 
         Random rand;
 
         /************************************************************
@@ -28,7 +29,7 @@ namespace closestPair
             X_MAX = Panel1.Width + 10;
             Y_MAX = Panel1.Height + 10;
             DELAY = 100;
-            T = new PointSet();
+            North = new PointSet();
             rand = new Random();
         }
 
@@ -38,7 +39,7 @@ namespace closestPair
             X_MAX = Panel1.Width;
             Y_MAX = Panel1.Height;
             DELAY = delay;
-            T = new PointSet();
+            North = new PointSet();
             rand = new Random();
             distance.Left = 0;
             distance.Top = 0;
@@ -144,18 +145,18 @@ namespace closestPair
                     }
 
                     // update miniMUM distance
-                    if (S.dmin < T.dmin)
+                    if (S.dmin < North.dmin)
                     {
-                        T.dmin = S.dmin;
-                        if (T.closestPair.Count == 0)
+                        North.dmin = S.dmin;
+                        if (North.closestPair.Count == 0)
                         {
-                            T.closestPair.Add(S.closestPair[0]);
-                            T.closestPair.Add(S.closestPair[1]);
+                            North.closestPair.Add(S.closestPair[0]);
+                            North.closestPair.Add(S.closestPair[1]);
                         }
                         else
                         {
-                            T.closestPair[0] = S.closestPair[0];
-                            T.closestPair[1] = S.closestPair[1];
+                            North.closestPair[0] = S.closestPair[0];
+                            North.closestPair[1] = S.closestPair[1];
                         }
                     }
                 }
@@ -315,7 +316,7 @@ namespace closestPair
 
             SolidBrush brush = new SolidBrush(c);
             g.FillRectangle(brush, x, 0, w, Y_MAX);
-            drawPoints(T, Color.Black);
+            drawPoints(North, Color.Black);
         }
 
         public void eraseField(PointSet S)
@@ -328,7 +329,7 @@ namespace closestPair
 
             SolidBrush brush = new SolidBrush(Color.White);
             g.FillRectangle(brush, x, 0, w, Y_MAX);
-            drawPoints(T, Color.Black);
+            drawPoints(North, Color.Black);
         }
 
         public void drawPoints(PointSet S, Color c)
@@ -342,7 +343,7 @@ namespace closestPair
 
         public void reset()
         {
-            T = new PointSet();
+            North = new PointSet();
             Graphics g = Panel1.CreateGraphics();
             SolidBrush brush = new SolidBrush(Color.White);
             g.FillRectangle(brush, 0, 0, X_MAX, Y_MAX);
@@ -369,7 +370,7 @@ namespace closestPair
             SolidBrush brush = new SolidBrush(Color.Pink);
             g.FillRectangle(brush, x, 0, w, Y_MAX);
             drawVertical(M, Color.Blue);
-            drawPoints(T, Color.Black);
+            drawPoints(North, Color.Black);
         }
 
         public void drawDQBoundingBox(PointSet S, Point P, Point M, Boolean lookR)
@@ -407,7 +408,7 @@ namespace closestPair
             SolidBrush brush = new SolidBrush(Color.Yellow);
             g.FillRectangle(brush, x, y, w, h);
             drawVertical(M, Color.Blue);
-            drawPoints(T, Color.Black);
+            drawPoints(North, Color.Black);
         }
 
         /***********************************************************************
@@ -454,17 +455,25 @@ namespace closestPair
 
         private void Panel1_MouseDown(object sender, MouseEventArgs e)
         {
-            Point p = new Point(e.X, e.Y, rand.Next(0,2));
-            T.add(p);
-            drawPoint(p);
+            if (e.Button == MouseButtons.Left)
+            {
+                Point p = new Point(e.X, e.Y, rand.Next(0, 2));
+                North.add(p);
+                drawPoint(p);
+            }
+            else if (e.Button == MouseButtons.Right)
+            {
+
+            }
+            
         }
 
         private void start_Click(object sender, EventArgs e)
         {
-            double distancePoints = ClosestPairDQ(T);
-            if (T.closestPair.Count != 0)
+            double distancePoints = ClosestPairDQ(North);
+            if (North.closestPair.Count != 0)
             {
-                drawSegment(T.closestPair[0], T.closestPair[1], Color.Red);
+                drawSegment(North.closestPair[0], North.closestPair[1], Color.Red);
                 distance.Text = "Distance between points: " + distancePoints.ToString();
             }
         }

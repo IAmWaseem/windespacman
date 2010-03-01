@@ -583,12 +583,15 @@ namespace dotnetguy
 
         RECT rectDIBExtra;
 
+		int width = Width();
+		int height = Height();
+
         if( lpDIBRect == 0 )
         {
             rectDIBExtra.left = 0;
             rectDIBExtra.top = 0;
-            rectDIBExtra.right = Width();
-            rectDIBExtra.bottom = Height();
+            rectDIBExtra.right = width;
+            rectDIBExtra.bottom = height;
 
             lpDIBRect = &rectDIBExtra;
         }
@@ -601,8 +604,8 @@ namespace dotnetguy
         {
             rectDCExtra.left = 0;
             rectDCExtra.top = 0;
-            rectDCExtra.right = Width();
-            rectDCExtra.bottom = Height();
+            rectDCExtra.right = width;
+            rectDCExtra.bottom = height;
 
             lpDCRect = &rectDCExtra;
         }
@@ -637,12 +640,12 @@ namespace dotnetguy
         if(( dcWidth == dibWidth ) && ( dcHeight == dibHeight ))
             bSuccess = ::SetDIBitsToDevice( dc, lpDCRect -> left, lpDCRect -> top,
                     dcWidth, dcHeight, lpDIBRect -> left,
-                    Height() - lpDIBRect -> top - dibHeight, 0, Height(),
+                    height - lpDIBRect -> top - dibHeight, 0, height,
                     lpBits, GetDIBHeader(), DIB_RGB_COLORS ) ? true : false;
         else
             bSuccess = ::StretchDIBits( dc, lpDCRect -> left, lpDCRect -> top,
                     dcWidth, dcHeight, lpDIBRect -> left,
-                    Height() - lpDIBRect -> top - dibHeight, dibWidth, dibHeight,
+                    height - lpDIBRect -> top - dibHeight, dibWidth, dibHeight,
                     lpBits, GetDIBHeader(), DIB_RGB_COLORS, SRCCOPY ) ? true : false;
 
         //  Restore the old palette
@@ -788,7 +791,7 @@ namespace dotnetguy
         //  Create a monochrome memory DC for the mask
 
         HDC     hdcMask  = CreateCompatibleDC( hdc );
-        HBITMAP hbmpMask = CreateCompatibleBitmap( hdcMask, width, height );
+        HBITMAP hbmpMask = CreateBitmap(width, height, 1, 1, 0);
         HBITMAP hOldMask = (HBITMAP) SelectObject( hdcMask, hbmpMask );
 
         SetBkColor( hdcBmp, clrTransparent );

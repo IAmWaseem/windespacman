@@ -33,7 +33,7 @@ void LevelView::Draw(HDC hDC, int xFrom, int xTo)
 		}
 	}
 
-	bool drawSurf = true;
+	bool drawSurf = false;
 	if(surfaces != NULL && drawSurf)
 	{
 		HPEN hPen = CreatePen(PS_DASHDOTDOT, 1, RGB(255, 25, 5));

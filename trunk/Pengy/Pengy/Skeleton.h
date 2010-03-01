@@ -5,7 +5,6 @@
 #include "Bitmap.h"
 #include "Renderer.h"
 #include "Character.h"
-#include "SurfaceLevel.h"
 #include <sstream>
 using namespace dotnetguy;
 

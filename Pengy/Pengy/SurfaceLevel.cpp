@@ -45,10 +45,10 @@ SurfaceLevel::SurfaceLevel(){
 	surface5->yTo = 390;
 
 	Surface * surface6 = new Surface();
-	surface6->xFrom = 1000;
-	surface6->yFrom = 300;
-	surface6->xTo = 1200;
-	surface6->yTo = 327;
+	surface6->xFrom = 800;
+	surface6->yFrom = 350;
+	surface6->xTo = 1000;
+	surface6->yTo = 377;
 
 	Surface * surface7 = new Surface();
 	surface7->xFrom = 900;
@@ -137,7 +137,10 @@ void SurfaceLevel::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 				Surface * surface = *iterator;
 				if(LocationInSurfaceY(toLocation, surface))
 				{
-					//MessageQueue::Inst()->sendMessage(CM_CHARACTER_BUMPS_INTO, (int)onSurface, NULL);
+					if(fromLocation->X >= surface->xTo && toLocation->X <= surface->xTo)
+					{
+						MessageQueue::Inst()->sendMessage(CM_CHARACTER_BUMPS_INTO, (int)surface, NULL);
+					}
 				}
 				iterator++;
 			}		

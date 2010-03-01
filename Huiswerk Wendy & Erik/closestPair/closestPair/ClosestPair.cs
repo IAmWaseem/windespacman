@@ -78,7 +78,7 @@ namespace closestPair
         {
             return ClosestPairDQ(S, ref S);
         }
-
+        
         public double ClosestPairDQ(PointSet S, ref PointSet current)
         {
             if (S.points.Count <= 1)
@@ -234,36 +234,39 @@ namespace closestPair
         // Test a point Q in P's bounding box
         PointSet testBoundingBoxPoint(PointSet S, Point P, Point Q)
         {
-            double d = dist(P, Q);
 
-            if (d < S.dmin)
-            {
+                double d = dist(P, Q);
 
-                // update minimal distance
-                S.dmin = d;
-                if (S.closestPair.Count == 0)
+                if (d < S.dmin)
                 {
-                    S.closestPair.Add(P);
-                    S.closestPair.Add(Q);
-                }
-                else
-                {
-                    S.closestPair[0] = P;
-                    S.closestPair[1] = Q;
-                }
 
-                // flash the segment to show that a new minimal distance was found
-                if (DELAY > 50)
-                {
-                    for (int i = 0; i < 3; i++)
+                    // update minimal distance
+                    S.dmin = d;
+                    if (S.closestPair.Count == 0)
                     {
-                        eraseSegment(P, Q, Color.Yellow);
-                        pause((int)(DELAY / 2));
-                        drawSegment(P, Q);
-                        pause((int)(DELAY / 2));
+                        S.closestPair.Add(P);
+                        S.closestPair.Add(Q);
+                    }
+                    else
+                    {
+                        S.closestPair[0] = P;
+                        S.closestPair[1] = Q;
+                    }
+
+                    // flash the segment to show that a new minimal distance was found
+                    if (DELAY > 50)
+                    {
+                        for (int i = 0; i < 3; i++)
+                        {
+                            eraseSegment(P, Q, Color.Yellow);
+                            pause((int)(DELAY / 2));
+                            drawSegment(P, Q);
+                            pause((int)(DELAY / 2));
+                        }
                     }
                 }
-            }
+                
+            
             return S;
         }
 
@@ -474,10 +477,187 @@ namespace closestPair
             }
             catch (Exception e) { }
         }
-
-        private System.Drawing.Point findMidPoint()
+        private int pairs()
         {
-            return new System.Drawing.Point();
+            int tempblue = 0;
+            int tempred = 0;
+            foreach (Point p in North.points)
+            {
+                if (p.color == 0)
+                    tempred++;
+                else
+                    tempblue++;
+            }
+            if (tempblue > 1 || tempred > 1)
+                return (tempblue/2) + (tempred/2);
+            return 0;
+        }
+        private System.Drawing.Point lastPoint;
+        private System.Drawing.Point homePoint = new System.Drawing.Point(0, 0);
+        private System.Drawing.Point findAverage(PointSet ps, System.Drawing.Point point)
+        {
+            int tempx = 0;
+            int tempy = 0;
+            foreach (Point p in ps.points)
+            {
+                tempx += p.x;
+                tempy += p.y;
+            }
+            tempx = tempx / ps.points.Count;
+            tempy = tempy / ps.points.Count;
+            if (lastPoint.X == tempx && lastPoint.Y == tempy)
+            {
+                lastPoint = point;
+                homePoint.X = rand.Next(0, Panel1.Width);
+                homePoint.Y = rand.Next(0, Panel1.Height);
+                
+                return homePoint;
+            }
+            else
+            {
+                lastPoint = point;
+                return new System.Drawing.Point(tempx, tempy);
+            }
+        }
+        private void findMidPoint(int x, int y)
+        {
+            if (x <= Panel1.Width || y <= Panel1.Height)
+            {
+                if (pairs() >= 4)
+                {
+                    PointSet tempNorth = new PointSet();
+                    PointSet tempSouth = new PointSet();
+                    PointSet tempEast = new PointSet();
+                    PointSet tempWest = new PointSet();
+                    System.Drawing.Point temp = new System.Drawing.Point(x, y);
+                    PointSet tempSet = new PointSet();
+                    tempSet.points.AddRange(North.points);
+                    //North.points.Clear();
+                    foreach (Point point in tempSet.points)
+                    {
+                        if (point.x > 0 && point.x < temp.X)
+                        {
+                            //west
+                            if (point.y > 0 && point.y < temp.Y)
+                            {
+                                tempNorth.add(point);
+                            }
+                            else
+                            {
+                                tempWest.add(point);
+                            }
+                        }
+                        else
+                        {
+                            //east
+                            if (point.y > 0 && point.y < temp.Y)
+                            {
+                                tempEast.add(point);
+                            }
+                            else
+                            {
+                                tempSouth.add(point);
+                            }
+                        }
+                    }
+                    double distancePointsNorth = ClosestPairDQ(tempNorth);
+                    double distancePointsSouth = ClosestPairDQ(tempSouth);
+                    double distancePointsEast = ClosestPairDQ(tempEast);
+                    double distancePointsWest = ClosestPairDQ(tempWest);
+
+                    if (SameColor(tempNorth) && SameColor(tempEast) && SameColor(tempSouth) && SameColor(tempWest))
+                    {
+
+                        if (!Double.IsInfinity(distancePointsEast) && !Double.IsInfinity(distancePointsNorth)
+                            && !Double.IsInfinity(distancePointsSouth) && !Double.IsInfinity(distancePointsWest))
+                        {
+                            isSplit = temp;
+                            Graphics g = Panel1.CreateGraphics();
+                            Pen p = new Pen(Color.Black);
+                            g.DrawLine(p, 0, isSplit.Y, isSplit.X, isSplit.Y);
+                            g.DrawLine(p, isSplit.X, 0, isSplit.X, isSplit.Y);
+                            g.DrawLine(p, isSplit.X, isSplit.Y, isSplit.X, Panel1.Height);
+                            g.DrawLine(p, isSplit.X, isSplit.Y, Panel1.Width, isSplit.Y);
+                            tempSet.points.Clear();
+                            tempSet.points.AddRange(North.points);
+                            North.points.Clear();
+                            foreach (Point point in tempSet.points)
+                            {
+                                if (point.x > 0 && point.x < isSplit.X)
+                                {
+                                    //west
+                                    if (point.y > 0 && point.y < isSplit.Y)
+                                    {
+                                        North.add(point);
+                                    }
+                                    else
+                                    {
+                                        West.add(point);
+                                    }
+                                }
+                                else
+                                {
+                                    //east
+                                    if (point.y > 0 && point.y < isSplit.Y)
+                                    {
+                                        East.add(point);
+                                    }
+                                    else
+                                    {
+                                        South.add(point);
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            System.Drawing.Point point;
+                            if (tempEast.points.Count > tempNorth.points.Count)
+                            {
+                                if (tempEast.points.Count > tempSouth.points.Count)
+                                {
+                                    if (tempEast.points.Count > tempWest.points.Count)
+                                        point = findAverage(tempEast, temp);
+                                    else
+                                        point = findAverage(tempWest, temp);
+                                }
+                                else if (tempSouth.points.Count > tempWest.points.Count)
+                                    point = findAverage(tempSouth, temp);
+                                else
+                                    point = findAverage(tempWest, temp);
+                            }
+                            else if (tempNorth.points.Count > tempSouth.points.Count)
+                            {
+                                if (tempNorth.points.Count > tempWest.points.Count)
+                                    point = findAverage(tempNorth, temp);
+                                else
+                                    point = findAverage(tempWest, temp);
+                            }
+                            else if (tempSouth.points.Count > tempWest.points.Count)
+                            {
+                                point = findAverage(tempSouth, temp);
+                            }
+                            else
+                            {
+                                point = findAverage(tempWest, temp);
+                            }
+                            findMidPoint(point.X, point.Y);
+                        }
+                    }
+                    else
+                    {
+                        //niet dezelfde kleur
+                    }
+                }
+                else
+                {
+                    //niet genoeg paren
+                }
+            }
+            else
+            {
+                //niet gevonden
+            }
         }
 
         private void Panel1_MouseDown(object sender, MouseEventArgs e)
@@ -487,7 +667,19 @@ namespace closestPair
                 Point p;
                 if (isSplit.X != 0)
                 {
-                    p = new Point(e.X, e.Y, rand.Next(0, 2));
+                    if (radioButton1.Checked)
+                    {
+                        p = new Point(e.X, e.Y, 0);
+                    }
+                    else if (radioButton2.Checked)
+                    {
+                        p = new Point(e.X, e.Y, 1);
+                    }
+                    else
+                    {
+                        p = new Point(e.X, e.Y, rand.Next(0, 2));
+                    }
+                                        
                     if (e.X > 0 && e.X < isSplit.X)
                     {
                         //west
@@ -515,7 +707,18 @@ namespace closestPair
                 }
                 else
                 {
-                    p = new Point(e.X, e.Y, rand.Next(0, 2));
+                    if (radioButton1.Checked)
+                    {
+                        p = new Point(e.X, e.Y, 0);
+                    }
+                    else if (radioButton2.Checked)
+                    {
+                        p = new Point(e.X, e.Y, 1);
+                    }
+                    else
+                    {
+                        p = new Point(e.X, e.Y, rand.Next(0, 2));
+                    }
                     North.add(p);
                 }
                 drawPoint(p);
@@ -570,6 +773,8 @@ namespace closestPair
 
         private void start_Click(object sender, EventArgs e)
         {
+            System.Drawing.Point tempPoint = findAverage(North, new System.Drawing.Point(0, 0));
+            findMidPoint(tempPoint.X, tempPoint.Y);
             if (isSplit.X != 0)
             {
                 distance.Text = "";
@@ -577,25 +782,25 @@ namespace closestPair
                 if (North.closestPair.Count != 0)
                 {
                     drawSegment(North.closestPair[0], North.closestPair[1]);
-                    distance.Text += "Distance between points: " + distancePointsNorth.ToString() + Environment.NewLine;
+                    distance.Text += "North: distance between points: " + distancePointsNorth.ToString("0.0") + Environment.NewLine;
                 }
                 double distancePointsSouth = ClosestPairDQ(South);
                 if (South.closestPair.Count != 0)
                 {
                     drawSegment(South.closestPair[0], South.closestPair[1]);
-                    distance.Text += "Distance between points: " + distancePointsSouth.ToString() + Environment.NewLine;
+                    distance.Text += "South: distance between points: " + distancePointsSouth.ToString("0.0") + Environment.NewLine;
                 }
                 double distancePointsWest = ClosestPairDQ(West);
                 if (West.closestPair.Count != 0)
                 {
                     drawSegment(West.closestPair[0], West.closestPair[1]);
-                    distance.Text += "Distance between points: " + distancePointsWest.ToString() + Environment.NewLine;
+                    distance.Text += "West: distance between points: " + distancePointsWest.ToString("0.0") + Environment.NewLine;
                 }
                 double distancePointsEast = ClosestPairDQ(East);
                 if (East.closestPair.Count != 0)
                 {
                     drawSegment(East.closestPair[0], East.closestPair[1]);
-                    distance.Text += "Distance between points: " + distancePointsEast.ToString();
+                    distance.Text += "East: distance between points: " + distancePointsEast.ToString("0.0");
                 }
             }
             else
@@ -607,6 +812,17 @@ namespace closestPair
                     distance.Text = "Distance between points: " + distancePoints.ToString();
                 }
             }
+        }
+
+        private bool SameColor(PointSet ps)
+        {
+            if (ps.closestPair.Count > 1)
+            {
+                if (ps.closestPair[0].color == ps.closestPair[1].color)
+                    return true;
+            }
+
+            return false;
         }
 
         private void rst_Click(object sender, EventArgs e)

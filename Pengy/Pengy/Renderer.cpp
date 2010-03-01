@@ -84,7 +84,13 @@ void Renderer::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		characterX = to->X;
 
 		break;
-	case CM_CHARACTER_MOVE_Y_FROM_TO:
+	case CM_CHARACTER_FALL_Y_FROM_TO:
+		from = (Location*)wParam;
+		to = (Location*)lParam;
+		characterX = to->X;
+
+		break;
+	case CM_CHARACTER_JUMP_Y_FROM_TO:
 		from = (Location*)wParam;
 		to = (Location*)lParam;
 		characterX = to->X;

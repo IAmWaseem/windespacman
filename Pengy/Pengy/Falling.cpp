@@ -87,7 +87,7 @@ void Falling::Update(int timeElapsed)
 	newLocation->height = oldLocation->height;
 	newLocation->Y += distance;
 	Character::Instance()->SetLocation(newLocation);
-	MessageQueue::Inst()->sendMessage(CM_CHARACTER_MOVE_Y_FROM_TO, (int)oldLocation, (int)newLocation);
+	MessageQueue::Inst()->sendMessage(CM_CHARACTER_FALL_Y_FROM_TO, (int)oldLocation, (int)newLocation);
 	MessageQueue::Inst()->sendMessage(CM_CHARACTER_MOVE_X_FROM_TO, (int)oldLocation, (int)newLocation);
 }
 

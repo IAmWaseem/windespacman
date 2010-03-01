@@ -40,7 +40,7 @@ void Character::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		pCharacterView->ChangeCurrentImage(CharacterView::CharacterImage::Right);
 		pCharacterView->registerToGraphics();
 		MessageQueue::Inst()->sendMessage(CM_CHARACTER_MOVE_X_FROM_TO, (int)location, (int)location);
-		MessageQueue::Inst()->sendMessage(CM_CHARACTER_MOVE_Y_FROM_TO, (int)location, (int)location);
+		MessageQueue::Inst()->sendMessage(CM_CHARACTER_FALL_Y_FROM_TO, (int)location, (int)location);
 		break;
 
 	case CM_UPDATE:

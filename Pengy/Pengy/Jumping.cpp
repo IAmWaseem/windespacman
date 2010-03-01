@@ -87,12 +87,12 @@ void Jumping::Update(int timeElapsed)
 			newLocation->X -= distanceMoved;
 			break;
 		case Direction::Right:
-			newLocation->Y += distanceMoved;
+			newLocation->X += distanceMoved;
 			break;
 		}
 		Character::Instance()->SetLocation(newLocation);
-		//MessageQueue::Inst()->sendMessage(CM_CHARACTER_MOVE_Y_FROM_TO, (int)oldLocation, (int)newLocation);
-		//MessageQueue::Inst()->sendMessage(CM_CHARACTER_MOVE_X_FROM_TO, (int)oldLocation, (int)newLocation);
+		MessageQueue::Inst()->sendMessage(CM_CHARACTER_JUMP_Y_FROM_TO, (int)oldLocation, (int)newLocation);
+		MessageQueue::Inst()->sendMessage(CM_CHARACTER_MOVE_X_FROM_TO, (int)oldLocation, (int)newLocation);
 	}	
 	else
 	{
@@ -103,5 +103,12 @@ void Jumping::Update(int timeElapsed)
 
 void Jumping::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 {
-	
+	switch(message)
+	{
+	case CM_CHARACTER_JUMPING_BUMPS_HEAD:
+		Surface * surface = (Surface*)wParam;
+		Character::Instance()->GetLocation()->Y = surface->yTo;
+		this->pStateMachine->Transition(this->pStateMachine->falling);
+		break;
+	}
 }

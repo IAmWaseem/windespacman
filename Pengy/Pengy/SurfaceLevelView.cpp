@@ -23,7 +23,7 @@ void SurfaceLevelView::Draw(HDC hdc, int xFrom, int xTo)
 	while(iterator != surfaces->end())
 	{
 		Surface * surface = *iterator;
-		Rectangle(hdc, surface->xFrom - xFrom, surface->yFrom, surface->xTo - xFrom, surface->yFrom + 10);
+		Rectangle(hdc, surface->xFrom - xFrom, surface->yFrom, surface->xTo - xFrom, surface->yFrom + (surface->yTo - surface->yFrom));
 		iterator++;
 	}
 	DeleteObject(hPen);

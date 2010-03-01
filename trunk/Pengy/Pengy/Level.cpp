@@ -83,17 +83,12 @@ Level::Level(){
 	surface3->xTo = 1200;
 	surface3->yTo = 430;
 	
-	Surface * surface4 = new Surface();
-	surface4->xFrom = 50;
-	surface4->yFrom = 380;
-	surface4->xTo = 90;
-	surface4->yTo = 390;
 
-	Surface * surface5 = new Surface();
-	surface5->xFrom = 510;
-	surface5->yFrom = 380;
-	surface5->xTo = 560;
-	surface5->yTo = 390;
+	Surface * aboveWater = new Surface();
+	aboveWater->xFrom = 404;
+	aboveWater->yFrom = 406;
+	aboveWater->xTo = 492;
+	aboveWater->yTo = 420;
 
 	Surface * surface6 = new Surface();
 	surface6->xFrom = 800;
@@ -107,11 +102,10 @@ Level::Level(){
 	surface7->xTo = 1100;
 	surface7->yTo = 240;
 
-	surfaces->push_back(surface3);
-	surfaces->push_back(surface4);
-	surfaces->push_back(surface5);
-	surfaces->push_back(surface6);
-	surfaces->push_back(surface7);
+	//surfaces->push_back(surface3);
+	surfaces->push_back(aboveWater);
+	//surfaces->push_back(surface6);
+	//surfaces->push_back(surface7);
 	SetLevelLength();
 }
 
@@ -353,6 +347,16 @@ vector<int*> Level::GetLevel1Tiles()
 {
 	vector<int*> data;
 
+#pragma region structures
+
+	int* structure1 = new int[5]; structure1[0] = 6; structure1[1] = 6; structure1[2] = 5; structure1[3] = 3; structure1[4] = 1;
+	data.push_back(structure1);
+
+	int* structure2 = new int[5]; structure2[0] = 7; structure2[1] = 6; structure2[2] = 7; structure2[3] = 3; structure2[4] = 1;
+	data.push_back(structure2);
+
+#pragma endregion creation of struction tiles
+
 #pragma region bottom ground
 	// bottom data
 	for(int i = 0; i < 5; i++)
@@ -396,36 +400,85 @@ vector<int*> Level::GetLevel1Tiles()
 	data.push_back(water5); data.push_back(water6); data.push_back(water7); data.push_back(water8);
 
 #pragma endregion here is the creation of the water tiles
-//
-//#pragma region tree
-//
-//
-//
-//	
-//	int* tree1 = new int[5]; tree1[0] = 3; tree1[1] = 9; tree1[2] = 0; tree1[3] = 2; tree1[4] = 0;
-//	int* tree2 = new int[5]; tree2[0] = 3; tree2[1] = 8; tree2[2] = 1; tree2[3] = 2; tree2[4] = 0;	
-//	int* tree3 = new int[5]; tree3[0] = 3; tree3[1] = 7; tree3[2] = 2; tree3[3] = 2; tree3[4] = 0;
-//	int* tree4 = new int[5]; tree4[0] = 3; tree4[1] = 6; tree4[2] = 3; tree4[3] = 2; tree4[4] = 0;
-//	int* tree5 = new int[5]; tree5[0] = 3; tree5[1] = 5; tree5[2] = 4; tree5[3] = 2; tree5[4] = 0;
-//	int* tree6 = new int[5]; tree6[0] = 3; tree6[1] = 4; tree6[2] = 1; tree6[3] = 3; tree6[4] = 0;
-//
-//	int* tree7 = new int[5]; tree7[0] = 2; tree7[1] = 5; tree7[2] = 5; tree7[3] = 2; tree7[4] = 0;
-//	int* tree8 = new int[5]; tree8[0] = 0; tree8[1] = 9; tree8[2] = 0; tree8[3] = 2; tree8[4] = 0;
-//	int* tree9 = new int[5]; tree9[0] = 0; tree9[1] = 9; tree9[2] = 0; tree9[3] = 2; tree9[4] = 0;
-//	int* tree10 = new int[5]; tree10[0] = 0; tree10[1] = 9; tree10[2] = 0; tree10[3] = 2; tree10[4] = 0;
-//	int* tree11 = new int[5]; tree11[0] = 0; tree11[1] = 9; tree11[2] = 0; tree11[3] = 2; tree11[4] = 0;
-//	int* tree12 = new int[5]; tree12[0] = 0; tree12[1] = 9; tree12[2] = 0; tree12[3] = 2; tree12[4] = 0;
-//	int* tree13 = new int[5]; tree13[0] = 0; tree13[1] = 9; tree13[2] = 0; tree13[3] = 2; tree13[4] = 0;
-//	int* tree14 = new int[5]; tree14[0] = 0; tree14[1] = 9; tree14[2] = 0; tree14[3] = 2; tree14[4] = 0;
-//	int* tree15 = new int[5]; tree15[0] = 0; tree15[1] = 9; tree15[2] = 0; tree15[3] = 2; tree15[4] = 0;
-//	int* tree16 = new int[5]; tree16[0] = 0; tree16[1] = 9; tree16[2] = 0; tree16[3] = 2; tree16[4] = 0;
-//	
-//	data.push_back(tree1); data.push_back(tree2); data.push_back(tree3); data.push_back(tree4);
-//	data.push_back(tree5); data.push_back(tree6); data.push_back(tree7); data.push_back(tree8);
-//	data.push_back(tree9); data.push_back(tree10); data.push_back(tree11); data.push_back(tree12);
-//	data.push_back(tree13); data.push_back(tree14); data.push_back(tree15); data.push_back(tree16);
-//#pragma endregion here is the creation of the tree tiles
-//
+
+#pragma region tree
+	// note:
+	// i is where the middle of the tree is!
+
+	// big tree
+	for(int i = 0; i < 20; i++)
+	{
+		if(i == 0 || i == 16)
+		{
+			// treeleaves
+			int* tree1 = new int[5]; tree1[0] = -1 + (i); tree1[1] = 2; tree1[2] = 1; tree1[3] = 0; tree1[4] = 0;
+			int* tree2 = new int[5]; tree2[0] =  0 + (i); tree2[1] = 2; tree2[2] = 2; tree2[3] = 0; tree2[4] = 0;	
+			int* tree3 = new int[5]; tree3[0] =  1 + (i); tree3[1] = 2; tree3[2] = 3; tree3[3] = 0; tree3[4] = 0;
+			int* tree4 = new int[5]; tree4[0] = -1 + (i); tree4[1] = 3; tree4[2] = 1; tree4[3] = 1; tree4[4] = 0;
+			int* tree5 = new int[5]; tree5[0] =  0 + (i); tree5[1] = 3; tree5[2] = 2; tree5[3] = 1; tree5[4] = 0;
+			int* tree6 = new int[5]; tree6[0] =  1 + (i); tree6[1] = 3; tree6[2] = 3; tree6[3] = 1; tree6[4] = 0;
+			int* tree7 = new int[5]; tree7[0] = -1 + (i); tree7[1] = 4; tree7[2] = 1; tree7[3] = 2; tree7[4] = 0;
+			int* tree8 = new int[5]; tree8[0] =  0 + (i); tree8[1] = 4; tree8[2] = 2; tree8[3] = 2; tree8[4] = 0;
+			int* tree9 = new int[5]; tree9[0] =  1 + (i); tree9[1] = 4; tree9[2] = 3; tree9[3] = 2; tree9[4] = 0;
+
+			// treelog
+			int* tree10 = new int[5]; tree10[0] = 0 + (i); tree10[1] = 5; tree10[2] = 2; tree10[3] = 3; tree10[4] = 0;
+			int* tree11 = new int[5]; tree11[0] = 0 + (i); tree11[1] = 6; tree11[2] = 2; tree11[3] = 4; tree11[4] = 0;
+			
+			data.push_back(tree1); data.push_back(tree2); data.push_back(tree3); 
+			data.push_back(tree4); data.push_back(tree5); data.push_back(tree6); 
+			data.push_back(tree7); data.push_back(tree8); data.push_back(tree9); 
+			data.push_back(tree10); data.push_back(tree11);
+		}
+	}
+
+	// medium tree
+	for(int i = 0; i < 20; i++)
+	{
+		if(i == 10 || i == 19)
+		{
+			// treeleaves
+			int* tree1 = new int[5]; tree1[0] = -1 + (i); tree1[1] = 3; tree1[2] = 5; tree1[3] = 4; tree1[4] = 0;
+			int* tree2 = new int[5]; tree2[0] =  0 + (i); tree2[1] = 3; tree2[2] = 6; tree2[3] = 4; tree2[4] = 0;	
+			int* tree3 = new int[5]; tree3[0] =  1 + (i); tree3[1] = 3; tree3[2] = 7; tree3[3] = 4; tree3[4] = 0;
+			int* tree4 = new int[5]; tree4[0] = -1 + (i); tree4[1] = 4; tree4[2] = 5; tree4[3] = 5; tree4[4] = 0;
+			int* tree5 = new int[5]; tree5[0] =  0 + (i); tree5[1] = 4; tree5[2] = 6; tree5[3] = 5; tree5[4] = 0;
+			int* tree6 = new int[5]; tree6[0] =  1 + (i); tree6[1] = 4; tree6[2] = 7; tree6[3] = 5; tree6[4] = 0;
+
+			// treelog
+			int* tree10 = new int[5]; tree10[0] = 0 + (i); tree10[1] = 5; tree10[2] = 6; tree10[3] = 6; tree10[4] = 0;
+			int* tree11 = new int[5]; tree11[0] = 0 + (i); tree11[1] = 6; tree11[2] = 6; tree11[3] = 7; tree11[4] = 0;
+			
+			data.push_back(tree1); data.push_back(tree2); data.push_back(tree3); 
+			data.push_back(tree4); data.push_back(tree5); data.push_back(tree6); 
+			data.push_back(tree10); data.push_back(tree11);
+		}
+	}
+
+	// smallest tree
+	for(int i = 0; i < 20; i++)
+	{
+		if(i == 2)
+		{
+			// treeleaves
+			int* tree1 = new int[5]; tree1[0] = 0 + (i); tree1[1] = 3; tree1[2] = 0; tree1[3] = 3; tree1[4] = 0;
+			int* tree2 = new int[5]; tree2[0] = 1 + (i); tree2[1] = 3; tree2[2] = 1; tree2[3] = 3; tree2[4] = 0;	
+			int* tree3 = new int[5]; tree3[0] = 0 + (i); tree3[1] = 4; tree3[2] = 0; tree3[3] = 4; tree3[4] = 0;
+			int* tree4 = new int[5]; tree4[0] = 1 + (i); tree4[1] = 4; tree4[2] = 1; tree4[3] = 4; tree4[4] = 0;
+			int* tree5 = new int[5]; tree5[0] = 0 + (i); tree5[1] = 5; tree5[2] = 0; tree5[3] = 5; tree5[4] = 0;
+			int* tree6 = new int[5]; tree6[0] = 1 + (i); tree6[1] = 5; tree6[2] = 1; tree6[3] = 5; tree6[4] = 0;
+
+			// treelog
+			int* tree10 = new int[5]; tree10[0] = 0 + (i); tree10[1] = 6; tree10[2] = 0; tree10[3] = 6; tree10[4] = 0;
+			int* tree11 = new int[5]; tree11[0] = 1 + (i); tree11[1] = 6; tree11[2] = 1; tree11[3] = 6; tree11[4] = 0;
+			
+			data.push_back(tree1); data.push_back(tree2); data.push_back(tree3); 
+			data.push_back(tree4); data.push_back(tree5); data.push_back(tree6); 
+			data.push_back(tree10); data.push_back(tree11);
+		}
+	}
+#pragma endregion here is the creation of the tree tiles
+
 
 	return data;
 }

@@ -183,11 +183,11 @@ void CSkeleton::GameLoop(HWND hWnd)
 	placeRect.top = positionY;
 	placeRect.right = positionX+80;
 	placeRect.bottom = positionY + 111;	
-	//tm.RenderTiles(bufDC, rect);
+	tm.RenderTiles(bufDC, rect);
 
-	//bitmap2.TransparentPaint(bufDC, RGB(255, 255, 0), &placeRect, NULL);
-	bitmap3.TransparentPaint(bufDC, RGB(0, 255, 0), NULL, NULL);
-	TextOut(bufDC, 10,10, fps, 20);
+	bitmap2.TransparentPaint(bufDC, RGB(255, 255, 0), &placeRect, NULL);
+	//bitmap3.TransparentPaint(bufDC, RGB(0, 255, 0), NULL, NULL);
+	TextOut(bufDC, 10,550, fps, 20);
 
 	BitBlt(bufDC, 300 + positionX, 50 + positionY ,imgSize.cx, imgSize.cy, hImageDC, 0, 0, SRCCOPY);
 	ReleaseDC(hWnd, hImageDC);

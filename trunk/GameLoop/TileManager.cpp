@@ -1,5 +1,15 @@
 #include "TileManager.h"
 
+// stuff that _should_ have been defined in some header :-/
+#ifndef C1_TRANSPARENT
+    #define C1_TRANSPARENT 0x0001
+#endif 
+#ifndef CAPS1
+    #define CAPS1 94
+#endif 
+#ifndef NEWTRANSPARENT
+    #define NEWTRANSPARENT 3
+#endif
 
 TileManager::TileManager(void)
 {
@@ -40,7 +50,7 @@ void TileManager::RenderTiles(HDC hdc, RECT rect)
 		tilemap.LoadDIBFile(Path);
 		for each (Tile lTile in mTiles)
 		{
-			if(lTile.Transparant == true && false)
+			if(lTile.Transparant == true)
 				tilemap.TransparentPaintTile(hdc, RGB(0,0,0), lTile.GridX, lTile.GridY, lTile.TileX, lTile.TileY);
 			else
 				DrawTile(lTile.GridX, lTile.GridY, lTile.TileX, lTile.TileY, hdc, rect);

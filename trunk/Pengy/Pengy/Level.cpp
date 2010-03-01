@@ -1,5 +1,7 @@
 #include "Level.h"
 #include "Location.h"
+#include "Math.h"
+
 
 Level* Level::pInstance = NULL;
 
@@ -11,68 +13,98 @@ Level* Level::Inst(){
 }
 
 Level::Level(){ 
-	surfaces = new vector<Surface>();
+	surfaces = new vector<Surface*>();
 
-	Surface borderBottom;
-	borderBottom.xFrom = 0;
-	borderBottom.xTo = 1200;
-	borderBottom.yFrom = 568;
-	borderBottom.yTo = 600;
-	surfaces->push_back(borderBottom);
+	Surface * borderBottom = new Surface();
+	borderBottom->xFrom = 0;
+	borderBottom->xTo = 1200;
+	borderBottom->yFrom = 568;
+	borderBottom->yTo = 600;
+	//surfaces->push_back(borderBottom);
 	
-	Surface borderLeft;
-	borderLeft.xFrom = 0;
-	borderLeft.xTo = 8;
-	borderLeft.yFrom = 0;
-	borderLeft.yTo = 600;
+	Surface * borderLeft = new Surface();
+	borderLeft->xFrom = 0;
+	borderLeft->xTo = 8;
+	borderLeft->yFrom = 0;
+	borderLeft->yTo = 600;
 	surfaces->push_back(borderLeft);	
 
-	Surface borderRight;
-	borderRight.xFrom = 1181;
-	borderRight.xTo = 1189;
-	borderRight.yFrom = 0;
-	borderRight.yTo = 600;
+	Surface * borderRight = new Surface();
+	borderRight->xFrom = 1181;
+	borderRight->xTo = 1189;
+	borderRight->yFrom = 0;
+	borderRight->yTo = 600;
 	surfaces->push_back(borderRight);
 
-	Surface borderTop;
-	borderTop.xFrom = 0;
-	borderTop.xTo = 1200;
-	borderTop.yFrom = 0;
-	borderTop.yTo = 8;
+	Surface * borderTop = new Surface();
+	borderTop->xFrom = 0;
+	borderTop->xTo = 1200;
+	borderTop->yFrom = 0;
+	borderTop->yTo = 8;
 	surfaces->push_back(borderTop);
 
-	Surface surface1;
-	surface1.xFrom = 0;
-	surface1.xTo = 320;
-	surface1.yFrom = 448;
-	surface1.yTo = 600;
+	Surface * surface1 = new Surface();
+	surface1->xFrom = 0;
+	surface1->yFrom = 483;
+	surface1->xTo = 367;
+	surface1->yTo = 493;
+
+	Surface * surface2 = new Surface();
+	surface2->xFrom = 586;
+	surface2->yFrom = 483;
+	surface2->xTo = 800;
+	surface2->yTo = 493;
+
+	Surface * surface3 = new Surface();
+	surface3->xFrom = 800;
+	surface3->yFrom = 420;
+	surface3->xTo = 1200;
+	surface3->yTo = 430;
+
+	Surface * surface4 = new Surface();
+	surface4->xFrom = 50;
+	surface4->yFrom = 380;
+	surface4->xTo = 90;
+	surface4->yTo = 390;
+
+	Surface * surface5 = new Surface();
+	surface5->xFrom = 510;
+	surface5->yFrom = 380;
+	surface5->xTo = 560;
+	surface5->yTo = 390;
+
+	Surface * surface6 = new Surface();
+	surface6->xFrom = 800;
+	surface6->yFrom = 350;
+	surface6->xTo = 1000;
+	surface6->yTo = 377;
+
+	Surface * surface7 = new Surface();
+	surface7->xFrom = 900;
+	surface7->yFrom = 230;
+	surface7->xTo = 1100;
+	surface7->yTo = 240;
+
 	surfaces->push_back(surface1);
-
-	Surface surface2;
-	surface2.xFrom = 576;
-	surface2.xTo = 1200;
-	surface2.yFrom = 448;
-	surface2.yTo = 600;
 	surfaces->push_back(surface2);
-
-	
-	
-
-
-
+	surfaces->push_back(surface3);
+	surfaces->push_back(surface4);
+	surfaces->push_back(surface5);
+	surfaces->push_back(surface6);
+	surfaces->push_back(surface7);
 	SetLevelLength();
 }
 
 void Level::SetLevelLength()
 {
 	int maxX = 0;
-	vector<Surface>::iterator iterator = surfaces->begin();
+	vector<Surface*>::iterator iterator = surfaces->begin();
 	while(iterator != surfaces->end())
 	{
-		Surface surface = *iterator;
-		if(maxX < surface.xTo)
+		Surface * surface = *iterator;
+		if(maxX < surface->xTo)
 		{
-			maxX = surface.xTo;
+			maxX = surface->xTo;
 		}
 		iterator++;
 	}
@@ -89,10 +121,13 @@ void Level::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	Location * toLocation;
 	float fromLocationY;
 	float toLocationY;
+	float fromLocationYdiff;
+	float toLocationYdiff;
 	bool isFalling;
-	bool hitHead;
-	Surface onSurface;
-	vector<Surface>::iterator iterator;
+	bool bumpHead;
+	bool hit;
+	Surface * onSurface;
+	vector<Surface*>::iterator iterator;
 
 	switch (message) 
 	{
@@ -106,10 +141,38 @@ void Level::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		fromLocation = (Location*)wParam;
 		toLocation = (Location*)lParam;
 		iterator = surfaces->begin();
-		while(iterator != surfaces->end())
+		hit = false;
+		if(fromLocation->X < toLocation->X)
 		{
-			iterator++;
+			while(iterator != surfaces->end())
+			{
+				Surface * surface = *iterator;
+				if(LocationInSurfaceY(toLocation, surface))
+				{
+					if((fromLocation->X + fromLocation->width) <= surface->xFrom && (toLocation->X + toLocation->width) >= surface->xFrom)
+					{
+						MessageQueue::Inst()->sendMessage(CM_CHARACTER_BUMPS_INTO, (int)surface, NULL);
+					}
+				}
+				iterator++;
+			}
 		}
+		else
+		{
+			while(iterator != surfaces->end())
+			{
+				Surface * surface = *iterator;
+				if(LocationInSurfaceY(toLocation, surface))
+				{
+					if(fromLocation->X >= surface->xTo && toLocation->X <= surface->xTo)
+					{
+						MessageQueue::Inst()->sendMessage(CM_CHARACTER_BUMPS_INTO, (int)surface, NULL);
+					}
+				}
+				iterator++;
+			}		
+		}
+		
 		break;
 
 	case CM_CHARACTER_FALL_Y_FROM_TO:
@@ -117,61 +180,106 @@ void Level::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		toLocation = (Location*)lParam;
 		fromLocationY = fromLocation->Y + fromLocation->height;
 		toLocationY = toLocation->Y + toLocation->height;
-		
-		if(toLocationY > fromLocationY || toLocationY == fromLocationY)
+
+		isFalling = true;
+		iterator = surfaces->begin();
+		while(iterator != surfaces->end())
 		{
-			isFalling = true;
-			iterator = surfaces->begin();
-			while(iterator != surfaces->end())
+			Surface * surface = *iterator;
+			fromLocationYdiff = fabs(fromLocationY - surface->xFrom);
+			toLocationYdiff = fabs(toLocationY - surface->yFrom);
+			
+			if(LocationInSurfaceX(toLocation, surface))
 			{
-				Surface surface = *iterator;
-				
-				if((surface.yFrom <= toLocationY && surface.yFrom >= fromLocationY) || (toLocationY > fromLocationY && surface.yFrom < toLocationY) )
+				if((surface->yFrom <= toLocationY && surface->yFrom >= fromLocationY) || toLocationYdiff < 5)
 				{
-					if(surface.xFrom <= toLocation->X && surface.xTo >= (toLocation->X + toLocation->width))
-					{
-						isFalling = false;
-						onSurface = surface;
-					}
-					if(surface.xFrom >= toLocation->X && surface.xTo <= (toLocation->X + toLocation->width))
-					{
-						isFalling = false;
-						onSurface = surface;
-					}
-					if(surface.xFrom <= toLocation->X && surface.xTo <= (toLocation->X + toLocation->width) && surface.xTo > toLocation->X)
-					{
-						isFalling = false;
-						onSurface = surface;
-					}
-					if(surface.xFrom >= toLocation->X && surface.xFrom <= (toLocation->X + toLocation->width) && surface.xTo >= (toLocation->X + toLocation->width))
-					{
-						isFalling = false;
-						onSurface = surface;
-					}
+					isFalling = false;
+					onSurface = surface;
 				}
-		
-				iterator++;
 			}
-			if(isFalling)
-			{
-				MessageQueue::Inst()->sendMessage(CM_CHARACTER_IS_FALLING, NULL, NULL);
-			}
-			else
-			{
-				MessageQueue::Inst()->sendMessage(CM_CHARACTER_IS_STANDING, (int)&onSurface, NULL);
-			}
+			
+			iterator++;
+		}
+		if(isFalling)
+		{
+			MessageQueue::Inst()->sendMessage(CM_CHARACTER_IS_FALLING, NULL, NULL);
 		}
 		else
 		{
-			hitHead = false;
-			iterator = surfaces->begin();
-			while(iterator != surfaces->end())
-			{
+			MessageQueue::Inst()->sendMessage(CM_CHARACTER_IS_STANDING, (int)onSurface, NULL);
+		}
+		break;
+	case CM_CHARACTER_JUMP_Y_FROM_TO:
+		fromLocation = (Location*)wParam;
+		toLocation = (Location*)lParam;
+		fromLocationY = fromLocation->Y;
+		toLocationY = toLocation->Y;
 
+		bumpHead = false;
+		iterator = surfaces->begin();
+		while(iterator != surfaces->end())
+		{
+			Surface * surface = *iterator;
+			fromLocationYdiff = fabs(fromLocationY - surface->xTo);
+			toLocationYdiff = fabs(toLocationY - surface->yTo);
+			
+			if(LocationInSurfaceX(toLocation, surface))
+			{
+				if((surface->yTo >= toLocationY && surface->yTo <= fromLocationY) || toLocationYdiff < 5)
+				{
+					bumpHead = true;
+					onSurface = surface;
+				}
 			}
+			
+			iterator++;
+		}
+		if(bumpHead)
+		{
+			MessageQueue::Inst()->sendMessage(CM_CHARACTER_JUMPING_BUMPS_HEAD, (int)onSurface, NULL);
 		}
 		break;
 	}
+}
+
+bool Level::LocationInSurfaceX(Location * location, Surface * surface)
+{
+	bool inSurface = false;
+	if(surface->xFrom <= location->X && surface->xTo >= (location->X + location->width))
+	{
+		inSurface = true;
+	}
+	if(surface->xFrom >= location->X && surface->xTo <= (location->X + location->width))
+	{
+		inSurface = true;
+	}
+	if(surface->xFrom <= location->X && surface->xTo <= (location->X + location->width) && surface->xTo > location->X)
+	{
+		inSurface = true;
+	}
+	if(surface->xFrom >= location->X && surface->xFrom <= (location->X + location->width) && surface->xTo >= (location->X + location->width))
+	{
+		inSurface = true;
+	}
+	return inSurface;
+}
+
+bool Level::LocationInSurfaceY(Location * location, Surface * surface)
+{
+	bool inSurface = false;
+	if(surface->yFrom  >= location->Y && surface->yTo <= (location->Y + location->height))
+	{
+		inSurface = true;
+	}
+	if(surface->yFrom  <= location->Y && surface->yTo >= (location->Y + location->height))
+	{
+		inSurface = true;
+	}
+	if(location->Y >= surface->yFrom && location->Y <= surface->yTo)
+	{
+		inSurface = true;
+	}
+	return inSurface;
 }
 
 void Level::LoadLevel(int level)

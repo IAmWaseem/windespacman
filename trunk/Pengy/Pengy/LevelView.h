@@ -22,6 +22,6 @@ public:
 	void Draw(HDC hDC, int xFrom, int xTo);
 	LevelView();
 	~LevelView();
-	void SetSurface(vector<Surface> * theSurface);
+	void SetSurface(vector<Surface*> * theSurface);
 	void SetTiles(vector<Tile> myTiles, LPCSTR path);	
 };

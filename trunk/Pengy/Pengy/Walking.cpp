@@ -154,7 +154,14 @@ void Walking::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 	case CM_CHARACTER_BUMPS_INTO:
 		Surface * surface = (Surface*)wParam;
-		Character::Instance()->GetLocation()->X = surface->xFrom - Character::Instance()->GetLocation()->width;
+		if(Character::Instance()->getDirection() == Direction::Right)
+		{
+			Character::Instance()->GetLocation()->X = surface->xFrom - Character::Instance()->GetLocation()->width;
+		}
+		else
+		{
+			Character::Instance()->GetLocation()->X = surface->xTo;
+		}
 		break;
 	}
 }

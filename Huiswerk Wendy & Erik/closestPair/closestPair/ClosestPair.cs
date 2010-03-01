@@ -475,6 +475,11 @@ namespace closestPair
             catch (Exception e) { }
         }
 
+        private System.Drawing.Point findMidPoint()
+        {
+            return new System.Drawing.Point();
+        }
+
         private void Panel1_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -567,10 +572,31 @@ namespace closestPair
         {
             if (isSplit.X != 0)
             {
+                distance.Text = "";
                 double distancePointsNorth = ClosestPairDQ(North);
+                if (North.closestPair.Count != 0)
+                {
+                    drawSegment(North.closestPair[0], North.closestPair[1]);
+                    distance.Text += "Distance between points: " + distancePointsNorth.ToString() + Environment.NewLine;
+                }
                 double distancePointsSouth = ClosestPairDQ(South);
+                if (South.closestPair.Count != 0)
+                {
+                    drawSegment(South.closestPair[0], South.closestPair[1]);
+                    distance.Text += "Distance between points: " + distancePointsSouth.ToString() + Environment.NewLine;
+                }
                 double distancePointsWest = ClosestPairDQ(West);
+                if (West.closestPair.Count != 0)
+                {
+                    drawSegment(West.closestPair[0], West.closestPair[1]);
+                    distance.Text += "Distance between points: " + distancePointsWest.ToString() + Environment.NewLine;
+                }
                 double distancePointsEast = ClosestPairDQ(East);
+                if (East.closestPair.Count != 0)
+                {
+                    drawSegment(East.closestPair[0], East.closestPair[1]);
+                    distance.Text += "Distance between points: " + distancePointsEast.ToString();
+                }
             }
             else
             {
@@ -587,6 +613,8 @@ namespace closestPair
         {
             reset();
             resetComparisons();
+            isSplit = new System.Drawing.Point();
+
         }
 
         private void Panel1_Resize(object sender, EventArgs e)

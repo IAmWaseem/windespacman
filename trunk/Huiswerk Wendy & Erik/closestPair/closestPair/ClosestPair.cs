@@ -483,10 +483,10 @@ namespace closestPair
                 if (isSplit.X != 0)
                 {
                     p = new Point(e.X, e.Y, rand.Next(0, 2));
-                    if (e.X > 0 && e.X < 225)
+                    if (e.X > 0 && e.X < isSplit.X)
                     {
                         //west
-                        if (e.Y > 0 && e.Y < 150)
+                        if (e.Y > 0 && e.Y < isSplit.Y)
                         {
                             North.add(p);
                         }
@@ -498,7 +498,7 @@ namespace closestPair
                     else
                     {
                         //east
-                        if (e.Y > 0 && e.Y < 150)
+                        if (e.Y > 0 && e.Y < isSplit.Y)
                         {
                             East.add(p);
                         }
@@ -527,6 +527,37 @@ namespace closestPair
                     g.DrawLine(p, e.X, 0, e.X, e.Y);
                     g.DrawLine(p, e.X, e.Y, e.X, Panel1.Height);
                     g.DrawLine(p, e.X, e.Y, Panel1.Width, e.Y);
+
+                    PointSet temp = new PointSet();
+                    temp.points.AddRange(North.points);
+                    North.points.Clear();
+                    foreach (Point point in temp.points)
+                    {
+                        if (point.x > 0 && point.x < isSplit.X)
+                        {
+                            //west
+                            if (point.y > 0 && point.y < isSplit.Y)
+                            {
+                                North.add(point);
+                            }
+                            else
+                            {
+                                West.add(point);
+                            }
+                        }
+                        else
+                        {
+                            //east
+                            if (point.y > 0 && point.y < isSplit.Y)
+                            {
+                                East.add(point);
+                            }
+                            else
+                            {
+                                South.add(point);
+                            }
+                        }
+                    }
                 }
             }
 

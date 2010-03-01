@@ -20,7 +20,7 @@ Level::Level(){
 	borderBottom->xTo = 1200;
 	borderBottom->yFrom = 568;
 	borderBottom->yTo = 600;
-	//surfaces->push_back(borderBottom);
+	surfaces->push_back(borderBottom);
 	
 	Surface * borderLeft = new Surface();
 	borderLeft->xFrom = 0;
@@ -43,6 +43,40 @@ Level::Level(){
 	borderTop->yTo = 8;
 	surfaces->push_back(borderTop);
 
+	Surface * landLeft = new Surface();
+	landLeft->xFrom = 0;
+	landLeft->xTo = 320;
+	landLeft->yFrom = 448;
+	landLeft->yTo = 600;
+	surfaces->push_back(landLeft);
+
+	Surface * landRight = new Surface();
+	landRight->xFrom = 576;
+	landRight->xTo = 1200;
+	landRight->yFrom = 448;
+	landRight->yTo = 600;
+	surfaces->push_back(landRight);	
+
+	for(int i = 0; i < 64; i++)
+	{
+		Surface * waterLeft = new Surface();
+		waterLeft->xFrom = 320 + i;
+		waterLeft->xTo = 321 + i;
+		waterLeft->yFrom = 460 + i;
+		waterLeft->yTo = 600;
+		surfaces->push_back(waterLeft);
+	}
+
+	for(int i = 0; i < 64; i++)
+	{
+		Surface * waterRight = new Surface();
+		waterRight->xFrom = 512 + i;
+		waterRight->xTo = 513 + i;
+		waterRight->yFrom = 460 + (64-i);
+		waterRight->yTo = 600;
+		surfaces->push_back(waterRight);
+	}
+
 	Surface * surface1 = new Surface();
 	surface1->xFrom = 0;
 	surface1->yFrom = 483;
@@ -60,7 +94,7 @@ Level::Level(){
 	surface3->yFrom = 420;
 	surface3->xTo = 1200;
 	surface3->yTo = 430;
-
+	
 	Surface * surface4 = new Surface();
 	surface4->xFrom = 50;
 	surface4->yFrom = 380;

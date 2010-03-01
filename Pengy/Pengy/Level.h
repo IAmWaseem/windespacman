@@ -1,9 +1,9 @@
 #pragma once
+#include "Surface.h"
 #include "Observer.h"
 #include "MessageQueue.h"
 #include "LevelView.h"
-#include "Tile.h"
-#include "Surface.h"
+#include "Location.h"
 
 
 class Level : public Observer
@@ -16,11 +16,13 @@ public:
 protected:
 	Level();
 private:
-	vector<Surface> * surfaces;
+	vector<Surface*> * surfaces;
     static Level* pInstance;
 	LevelView levelView;
 	vector<int*> GetLevel1Tiles();
 	vector<int*> GetLevel1Surfaces();
 	int levelLength;
 	void SetLevelLength();
+	bool LocationInSurfaceX(Location * location, Surface * surface);
+	bool LocationInSurfaceY(Location * location, Surface * surface);
 };

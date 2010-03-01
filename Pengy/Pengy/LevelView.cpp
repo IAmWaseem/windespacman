@@ -50,24 +50,18 @@ void LevelView::Draw(HDC hDC, int xFrom, int xTo)
 	}
 }
 
-void LevelView::SetSurface(vector<Surface> * theSurface)
+void LevelView::SetSurface(vector<Surface*> * theSurface)
 {
-	vector<Surface>::iterator iterator = theSurface->begin();
+	vector<Surface*>::iterator iterator = theSurface->begin();
 	
 	if(surfaces == NULL)
 		surfaces = new vector<Surface *>();
 
 	while(iterator!=theSurface->end())
 	{
-		Surface surf = *iterator;
-		Surface * newSurf = new Surface();
-		
-		newSurf->xFrom = surf.xFrom;
-		newSurf->xTo = surf.xTo;
-		newSurf->yFrom = surf.yFrom;
-		newSurf->yTo = surf.yTo;
+		Surface * surf = *iterator;
 
-		surfaces->push_back(newSurf);
+		surfaces->push_back(surf);
 
 		iterator++;
 	}

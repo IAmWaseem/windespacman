@@ -567,7 +567,10 @@ namespace closestPair
         {
             if (isSplit.X != 0)
             {
-                
+                double distancePointsNorth = ClosestPairDQ(North);
+                double distancePointsSouth = ClosestPairDQ(South);
+                double distancePointsWest = ClosestPairDQ(West);
+                double distancePointsEast = ClosestPairDQ(East);
             }
             else
             {

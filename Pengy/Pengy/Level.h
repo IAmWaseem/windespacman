@@ -16,8 +16,11 @@ public:
 protected:
 	Level();
 private:
-	vector<Surface*> * surfaces;
+	vector<Surface> * surfaces;
     static Level* pInstance;
 	LevelView levelView;
-	vector<int*> GetLevel1Array();
+	vector<int*> GetLevel1Tiles();
+	vector<int*> GetLevel1Surfaces();
+	int levelLength;
+	void SetLevelLength();
 };

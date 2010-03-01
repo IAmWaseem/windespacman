@@ -23,7 +23,7 @@ private:
 	Character* character;
 	Renderer* renderer;
 	MessageQueue* messageQueue;
-	SurfaceLevel* level;
+	Level* level;
 	void Update();
 	void Render(HWND);
 	HDC bufDC;

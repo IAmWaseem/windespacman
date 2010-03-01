@@ -3,13 +3,14 @@
 class Tile
 {
 private:
-
+	static int tileW;
+	static int tileH;
 public:
 	Tile(void);
 	Tile(int pGridX, int pGridY, int pTileX, int pTileY);
 	Tile(int pGridX, int pGridY, int pTileX, int pTileY, bool pTransparant);
-	static const int TileWidth = 48;
-	static const int TileHeight = 48;
+	int TileWidth();
+	int TileHeight();
 	int GridX;
 	int GridY;
 	int TileX;

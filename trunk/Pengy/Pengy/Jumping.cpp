@@ -28,7 +28,7 @@ void Jumping::Left()
 {
 	if(this->direction != Direction::Left)
 	{
-		Character::Instance()->GetCharacterView()->ChangeCurrentImage(CharacterView::CharacterImage::Left);
+		Character::Instance()->GetCharacterView()->ChangeCurrentImage(CharacterView::CharacterImage::JumpLeft);
 	}
 	this->direction = Direction::Left;
 	this->distanceToMove = 5;
@@ -39,7 +39,7 @@ void Jumping::Right()
 {
 	if(this->direction != Direction::Right) 
 	{
-		Character::Instance()->GetCharacterView()->ChangeCurrentImage(CharacterView::CharacterImage::Right);
+		Character::Instance()->GetCharacterView()->ChangeCurrentImage(CharacterView::CharacterImage::JumpRight);
 	}
 	this->direction = Direction::Right;
 	this->distanceToMove = 5;
@@ -53,6 +53,14 @@ void Jumping::Throw()
 
 void Jumping::Spacebar()
 {
+	if(Character::Instance()->getDirection() == Direction::Right)
+	{
+		Character::Instance()->GetCharacterView()->ChangeCurrentImage(CharacterView::CharacterImage::JumpRight);
+	}
+	else {
+		Character::Instance()->GetCharacterView()->ChangeCurrentImage(CharacterView::CharacterImage::JumpLeft);
+	}
+	
 	if(upwardVelocity == 0)
 	{
 		upwardVelocity = 0.160;
@@ -98,6 +106,13 @@ void Jumping::Update(int timeElapsed)
 	{
 		upwardVelocity = 0;
 		this->pStateMachine->Transition(this->pStateMachine->falling);
+		if(Character::Instance()->getDirection() == Direction::Right)
+		{
+			Character::Instance()->GetCharacterView()->ChangeCurrentImage(CharacterView::CharacterImage::FallingRight);
+		}
+		else {
+			Character::Instance()->GetCharacterView()->ChangeCurrentImage(CharacterView::CharacterImage::FallingLeft);
+		}
 	}
 }
 

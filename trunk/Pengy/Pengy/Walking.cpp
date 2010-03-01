@@ -142,7 +142,15 @@ void Walking::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	switch(message)
 	{
 	case CM_CHARACTER_IS_FALLING:
+		if(Character::Instance()->getDirection() == Direction::Left)
+		{
+			Character::Instance()->GetCharacterView()->ChangeCurrentImage(CharacterView::CharacterImage::FallingLeft);
+		}
+		else {	
+			Character::Instance()->GetCharacterView()->ChangeCurrentImage(CharacterView::CharacterImage::FallingRight);
+		}
 		this->pStateMachine->Transition(this->pStateMachine->falling);
+
 		break;
 	case CM_CHARACTER_BUMPS_INTO:
 		Surface * surface = (Surface*)wParam;

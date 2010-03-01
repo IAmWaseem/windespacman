@@ -35,7 +35,10 @@ void Character::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		pCharacterView->LoadImage(CharacterView::CharacterImage::Right2, "res/PengyWinterRight2.bmp");
 		pCharacterView->LoadImage(CharacterView::CharacterImage::Climb, "res/PengyClimb.bmp");
 		pCharacterView->LoadImage(CharacterView::CharacterImage::Climb2, "res/PengyClimb2.bmp");
-		pCharacterView->LoadImage(CharacterView::CharacterImage::Jump, "res/PengyJump.bmp");
+		pCharacterView->LoadImage(CharacterView::CharacterImage::JumpLeft, "res/PengyJump2.bmp");
+		pCharacterView->LoadImage(CharacterView::CharacterImage::JumpRight, "res/PengyJump.bmp");
+		pCharacterView->LoadImage(CharacterView::CharacterImage::FallingLeft, "res/PengyFallingLeft.bmp");
+		pCharacterView->LoadImage(CharacterView::CharacterImage::FallingRight, "res/PengyFallingRight.bmp");
 		pCharacterView->LoadImage(CharacterView::CharacterImage::Sliding, "res/PengySliding.bmp");
 		pCharacterView->LoadImage(CharacterView::CharacterImage::Sliding2, "res/PengySliding2.bmp");
 		pCharacterView->ChangeCurrentImage(CharacterView::CharacterImage::Right);

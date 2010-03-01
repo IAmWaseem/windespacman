@@ -20,9 +20,12 @@ public:
 		Right2,
 		Climb,
 		Climb2,
-		Jump,
+		JumpLeft,
+		JumpRight,
 		Sliding,
-		Sliding2
+		Sliding2,
+		FallingLeft,
+		FallingRight
 	};
 
 	void Update();

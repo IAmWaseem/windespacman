@@ -76,6 +76,11 @@ namespace closestPair
 
         public double ClosestPairDQ(PointSet S)
         {
+            return ClosestPairDQ(S, ref S);
+        }
+
+        public double ClosestPairDQ(PointSet S, ref PointSet current)
+        {
             if (S.points.Count <= 1)
             {
                 S.dmin = inf;
@@ -101,7 +106,7 @@ namespace closestPair
                 }
 
                 // recursively calculate solutions to sub-problems
-                S.dmin = Math.Min(ClosestPairDQ(S1), ClosestPairDQ(S2));
+                S.dmin = Math.Min(ClosestPairDQ(S1, ref current), ClosestPairDQ(S2, ref current));
 
                 // highlight the whole set, and solutions for each subset
                 if (DELAY > 50)
@@ -112,7 +117,7 @@ namespace closestPair
                 }
 
                 // merge two sub-solutions
-                S = merge(S, S1, S2);
+                S = merge(S, S1, S2, ref current);
 
                 // highlight set in gray b/c solution has been computed
                 if (DELAY > 50)
@@ -126,7 +131,7 @@ namespace closestPair
             return S.dmin;
         }
 
-        PointSet merge(PointSet S, PointSet S1, PointSet S2)
+        PointSet merge(PointSet S, PointSet S1, PointSet S2, ref PointSet WorkSet)
         {
             Point M = S1.pointAt(S1.points.Count - 1);
 
@@ -154,46 +159,25 @@ namespace closestPair
                     {
                         S = testStripPoint(S, P, S1, M, false);
                     }
-                    if (isSplit.X != 0)
+
+                    // update miniMUM distance
+                    if (S.dmin < WorkSet.dmin)
                     {
-                        // update miniMUM distance
-                        if (S.dmin < North.dmin)
+
+                        WorkSet.dmin = S.dmin;
+                        if (WorkSet.closestPair.Count == 0)
                         {
-
-                            North.dmin = S.dmin;
-                            if (North.closestPair.Count == 0)
-                            {
-                                North.closestPair.Add(S.closestPair[0]);
-                                North.closestPair.Add(S.closestPair[1]);
-                            }
-                            else
-                            {
-                                North.closestPair[0] = S.closestPair[0];
-                                North.closestPair[1] = S.closestPair[1];
-                            }
-
+                            WorkSet.closestPair.Add(S.closestPair[0]);
+                            WorkSet.closestPair.Add(S.closestPair[1]);
                         }
-                    }
-                    else
-                    {
-                        // update miniMUM distance
-                        if (S.dmin < North.dmin)
+                        else
                         {
-
-                            North.dmin = S.dmin;
-                            if (North.closestPair.Count == 0)
-                            {
-                                North.closestPair.Add(S.closestPair[0]);
-                                North.closestPair.Add(S.closestPair[1]);
-                            }
-                            else
-                            {
-                                North.closestPair[0] = S.closestPair[0];
-                                North.closestPair[1] = S.closestPair[1];
-                            }
-
+                            WorkSet.closestPair[0] = S.closestPair[0];
+                            WorkSet.closestPair[1] = S.closestPair[1];
                         }
+
                     }
+
                 }
             }
             return S;
@@ -224,7 +208,7 @@ namespace closestPair
                 // draw a red segment to show that it is being compared
                 if (DELAY > 50)
                 {
-                    drawSegment(P, Q, Color.Red);
+                    drawSegment(P, Q);
                     pause(DELAY);
                 }
 
@@ -275,7 +259,7 @@ namespace closestPair
                     {
                         eraseSegment(P, Q, Color.Yellow);
                         pause((int)(DELAY / 2));
-                        drawSegment(P, Q, Color.Green);
+                        drawSegment(P, Q);
                         pause((int)(DELAY / 2));
                     }
                 }
@@ -301,7 +285,7 @@ namespace closestPair
             //g.DrawEllipse(pen, rect);
         }
 
-        public void drawSegment(Point p1, Point p2, Color c)
+        public void drawSegment(Point p1, Point p2)
         {
             Graphics g = Panel1.CreateGraphics();
             drawPoint(p1);
@@ -552,14 +536,14 @@ namespace closestPair
         {
             if (isSplit.X != 0)
             {
-
+                
             }
             else
             {
                 double distancePoints = ClosestPairDQ(North);
                 if (North.closestPair.Count != 0)
                 {
-                    drawSegment(North.closestPair[0], North.closestPair[1], Color.Red);
+                    drawSegment(North.closestPair[0], North.closestPair[1]);
                     distance.Text = "Distance between points: " + distancePoints.ToString();
                 }
             }

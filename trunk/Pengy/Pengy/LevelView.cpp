@@ -1,6 +1,7 @@
 #include "LevelView.h"
 
 vector<Tile*>* LevelView::myTiles = NULL;
+vector<Surface*>* LevelView::surfaces = NULL;
 HANDLE LevelView::tilemap = NULL;
 
 LevelView::LevelView(){ 
@@ -18,14 +19,56 @@ void LevelView::Draw(HDC hDC, int xFrom, int xTo)
 	RECT rect;
 	//::GetClientRect(m_hWnd, &rect);
 
-	// iterate trew all tiles
-	vector<Tile*>::iterator iterator = myTiles->begin();
-	while(iterator!=myTiles->end())
+	if(myTiles != NULL)
 	{
-		Tile * tile = *iterator;
+		// iterate trew all tiles
+		vector<Tile*>::iterator iterator = myTiles->begin();
+		while(iterator!=myTiles->end())
+		{
+			Tile * tile = *iterator;
+			
+			// draw the tile non-transparent
+			DrawTile(tile, hDC, rect, -1*xFrom);
+			iterator++;
+		}
+	}
+
+	bool drawSurf = true;
+	if(surfaces != NULL && drawSurf)
+	{
+		HPEN hPen = CreatePen(PS_DASHDOTDOT, 1, RGB(255, 25, 5));
+		SelectObject(hDC, hPen);
+
+		vector<Surface*>::iterator surfIterator = surfaces->begin();
+		while(surfIterator != surfaces->end())
+		{
+			Surface * surface = *surfIterator;
+			Rectangle(hDC, surface->xFrom - xFrom, surface->yFrom, surface->xTo - xFrom, surface->yFrom + (surface->yTo - surface->yFrom));
+			surfIterator++;
+		}
+		DeleteObject(hPen);
+	}
+}
+
+void LevelView::SetSurface(vector<Surface> * theSurface)
+{
+	vector<Surface>::iterator iterator = theSurface->begin();
+	
+	if(surfaces == NULL)
+		surfaces = new vector<Surface *>();
+
+	while(iterator!=theSurface->end())
+	{
+		Surface surf = *iterator;
+		Surface * newSurf = new Surface();
 		
-		// draw the tile non-transparent
-		DrawTile(tile, hDC, rect);
+		newSurf->xFrom = surf.xFrom;
+		newSurf->xTo = surf.xTo;
+		newSurf->yFrom = surf.yFrom;
+		newSurf->yTo = surf.yTo;
+
+		surfaces->push_back(newSurf);
+
 		iterator++;
 	}
 }
@@ -61,6 +104,6 @@ void LevelView::DrawTile(Tile * tile, HDC hdc, RECT rect, int offsetX, int offse
 	HDC hTileDC = CreateCompatibleDC(hdc);
 	FillRect(hTileDC, &rect, (HBRUSH)GetStockObject(WHITE_BRUSH));
 	SelectObject(hTileDC, tilemap);
-	BitBlt(hdc, (tile->GridX * tile->TileWidth) + offsetX, (tile->GridY * tile->TileHeight) + offsetY, tile->TileWidth, tile->TileHeight, hTileDC, tile->TileX * tile->TileWidth, tile->TileY * tile->TileHeight, SRCCOPY);	
+	BitBlt(hdc, (tile->GridX * tile->TileWidth()) + offsetX, (tile->GridY * tile->TileHeight()) + offsetY, tile->TileWidth(), tile->TileHeight(), hTileDC, tile->TileX * tile->TileWidth(), tile->TileY * tile->TileHeight(), SRCCOPY);	
 	DeleteDC(hTileDC);
 }

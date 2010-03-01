@@ -8,8 +8,8 @@ Character* Character::pInstance = NULL;
 Character::Character(void)
 {
 	location = new Location();
-	location->X = 1000;
-	location->Y = 100;
+	location->X = 250;
+	location->Y = 250;
 	location->width = 100;
 	location->height = 100;
 	pCharacterStateMachine = new CharacterStateMachine();

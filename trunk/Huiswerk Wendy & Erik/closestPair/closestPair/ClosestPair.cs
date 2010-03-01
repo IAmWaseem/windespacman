@@ -28,7 +28,6 @@ namespace closestPair
             Y_MAX = Panel1.Height + 10;
             DELAY = 100;
             T = new PointSet();
-            
         }
 
         public ClosestPair(int delay)
@@ -37,7 +36,10 @@ namespace closestPair
             X_MAX = Panel1.Width;
             Y_MAX = Panel1.Height;
             DELAY = delay;
-            T = new PointSet();         
+            T = new PointSet();
+
+            distance.Left = 0;
+            distance.Top = 0;
         }
 
         public void setDelay(int delay)
@@ -330,6 +332,7 @@ namespace closestPair
             Graphics g = Panel1.CreateGraphics();
             SolidBrush brush = new SolidBrush(Color.White);
             g.FillRectangle(brush, 0, 0, X_MAX, Y_MAX);
+            distance.Text = "";
         }
 
         /************************************************************

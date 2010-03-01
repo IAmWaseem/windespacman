@@ -4,12 +4,14 @@
 
 Falling::Falling(void)
 {
+	this->distanceToMove = 0;
 	this->downwardVelocity = 0;
 	this->speed = 0.3f;
 }
 
 Falling::Falling(CharacterStateMachine * pStateMachine) : CharacterState(pStateMachine)
 {
+	this->distanceToMove = 0;
 	this->downwardVelocity = 0;
 	this->speed = 0.3f;
 }
@@ -27,22 +29,22 @@ void Falling::Down()
 
 void Falling::Left()
 {
-	if(this->direction != Direction::Left)
+	if(Character::Instance()->getDirection() != Direction::Left)
 	{
 		Character::Instance()->GetCharacterView()->ChangeCurrentImage(CharacterView::CharacterImage::FallingLeft);
 	}
-	this->direction = Direction::Left;
+	Character::Instance()->setDirection(Direction::Left);
 	this->distanceToMove = 5;
 }
 
 
 void Falling::Right()
 {
-	if(this->direction != Direction::Right) 
+	if(Character::Instance()->getDirection() != Direction::Right) 
 	{
 		Character::Instance()->GetCharacterView()->ChangeCurrentImage(CharacterView::CharacterImage::FallingRight);
 	}
-	this->direction = Direction::Right;
+	Character::Instance()->setDirection(Direction::Right);
 	this->distanceToMove = 5;
 }
 
@@ -62,14 +64,20 @@ void Falling::Update(int timeElapsed)
 	float distanceMoved = timeElapsed * this->speed;
 	if(distanceMoved > this->distanceToMove) distanceMoved = distanceToMove;
 	this->distanceToMove -= distanceMoved;
+	Location * oldLocation = Character::Instance()->GetLocation();
+	Location * newLocation = new Location();
+	newLocation->X = oldLocation->X;
+	newLocation->Y = oldLocation->Y;
+	newLocation->width = oldLocation->width;
+	newLocation->height = oldLocation->height;
 
-	switch(this->direction)
+	switch(Character::Instance()->getDirection())
 	{
 	case Direction::Left:
-		Character::Instance()->GetLocation()->X -= distanceMoved;
+		newLocation->X -= distanceMoved;
 		break;
 	case Direction::Right:
-		Character::Instance()->GetLocation()->X += distanceMoved;
+		newLocation->X += distanceMoved;
 		break;
 	}
 
@@ -79,16 +87,10 @@ void Falling::Update(int timeElapsed)
 	Character::Instance()->GetLocation()->Y += distance;
 	float newCharacterLocation = Character::Instance()->GetLocation()->Y + distance;
 	downwardVelocity = newDownwardVelocity;
-	Location * oldLocation = Character::Instance()->GetLocation();
-	Location * newLocation = new Location();
-	newLocation->X = oldLocation->X;
-	newLocation->Y = oldLocation->Y;
-	newLocation->width = oldLocation->width;
-	newLocation->height = oldLocation->height;
 	newLocation->Y += distance;
 	Character::Instance()->SetLocation(newLocation);
-	MessageQueue::Inst()->sendMessage(CM_CHARACTER_FALL_Y_FROM_TO, (int)oldLocation, (int)newLocation);
 	MessageQueue::Inst()->sendMessage(CM_CHARACTER_MOVE_X_FROM_TO, (int)oldLocation, (int)newLocation);
+	MessageQueue::Inst()->sendMessage(CM_CHARACTER_FALL_Y_FROM_TO, (int)oldLocation, (int)newLocation);
 }
 
 void Falling::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)

@@ -26,22 +26,22 @@ void Jumping::Down()
 
 void Jumping::Left()
 {
-	if(this->direction != Direction::Left)
+	if(Character::Instance()->getDirection() != Direction::Left)
 	{
 		Character::Instance()->GetCharacterView()->ChangeCurrentImage(CharacterView::CharacterImage::JumpLeft);
 	}
-	this->direction = Direction::Left;
+	Character::Instance()->setDirection(Direction::Left);
 	this->distanceToMove = 5;
 }
 
 
 void Jumping::Right()
 {
-	if(this->direction != Direction::Right) 
+	if(Character::Instance()->getDirection()!= Direction::Right) 
 	{
 		Character::Instance()->GetCharacterView()->ChangeCurrentImage(CharacterView::CharacterImage::JumpRight);
 	}
-	this->direction = Direction::Right;
+	Character::Instance()->setDirection(Direction::Right);
 	this->distanceToMove = 5;
 }
 
@@ -89,7 +89,7 @@ void Jumping::Update(int timeElapsed)
 		if(distanceMoved > this->distanceToMove) distanceMoved = distanceToMove;
 		this->distanceToMove -= distanceMoved;
 
-		switch(this->direction)
+		switch(Character::Instance()->getDirection())
 		{
 		case Direction::Left:
 			newLocation->X -= distanceMoved;
@@ -98,9 +98,9 @@ void Jumping::Update(int timeElapsed)
 			newLocation->X += distanceMoved;
 			break;
 		}
-		Character::Instance()->SetLocation(newLocation);
-		MessageQueue::Inst()->sendMessage(CM_CHARACTER_JUMP_Y_FROM_TO, (int)oldLocation, (int)newLocation);
+		Character::Instance()->SetLocation(newLocation);	
 		MessageQueue::Inst()->sendMessage(CM_CHARACTER_MOVE_X_FROM_TO, (int)oldLocation, (int)newLocation);
+		MessageQueue::Inst()->sendMessage(CM_CHARACTER_JUMP_Y_FROM_TO, (int)oldLocation, (int)newLocation);
 	}	
 	else
 	{

@@ -299,6 +299,10 @@ bool Level::LocationInSurfaceY(Location * location, Surface * surface)
 	{
 		inSurface = true;
 	}
+	if((location->Y + location->height) >= surface->yFrom && (location->Y + location->height) <= surface->yTo)
+	{
+		inSurface = true;
+	}
 	return inSurface;
 }
 

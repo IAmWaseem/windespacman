@@ -5,7 +5,6 @@ class Jumping : public CharacterState
 {
 private:
 	float upwardVelocity;
-	Direction direction;
 	float distanceToMove;
 	float speed;
 

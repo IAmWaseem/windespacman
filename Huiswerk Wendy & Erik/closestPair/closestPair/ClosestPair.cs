@@ -42,7 +42,7 @@ namespace closestPair
 
         public ClosestPair(int delay)
         {
-            InitializeComponent();   
+            InitializeComponent();
             X_MAX = Panel1.Width;
             Y_MAX = Panel1.Height;
             DELAY = delay;
@@ -154,20 +154,44 @@ namespace closestPair
                     {
                         S = testStripPoint(S, P, S1, M, false);
                     }
-
-                    // update miniMUM distance
-                    if (S.dmin < North.dmin)
+                    if (isSplit)
                     {
-                        North.dmin = S.dmin;
-                        if (North.closestPair.Count == 0)
+                        // update miniMUM distance
+                        if (S.dmin < North.dmin)
                         {
-                            North.closestPair.Add(S.closestPair[0]);
-                            North.closestPair.Add(S.closestPair[1]);
+
+                            North.dmin = S.dmin;
+                            if (North.closestPair.Count == 0)
+                            {
+                                North.closestPair.Add(S.closestPair[0]);
+                                North.closestPair.Add(S.closestPair[1]);
+                            }
+                            else
+                            {
+                                North.closestPair[0] = S.closestPair[0];
+                                North.closestPair[1] = S.closestPair[1];
+                            }
+
                         }
-                        else
+                    }
+                    else
+                    {
+                        // update miniMUM distance
+                        if (S.dmin < North.dmin)
                         {
-                            North.closestPair[0] = S.closestPair[0];
-                            North.closestPair[1] = S.closestPair[1];
+
+                            North.dmin = S.dmin;
+                            if (North.closestPair.Count == 0)
+                            {
+                                North.closestPair.Add(S.closestPair[0]);
+                                North.closestPair.Add(S.closestPair[1]);
+                            }
+                            else
+                            {
+                                North.closestPair[0] = S.closestPair[0];
+                                North.closestPair[1] = S.closestPair[1];
+                            }
+
                         }
                     }
                 }
@@ -197,22 +221,22 @@ namespace closestPair
                 //(Math.Abs(P.y - Q.y) <= S.dmin))
                 //{
 
-                    // draw a red segment to show that it is being compared
-                    if (DELAY > 50)
-                    {
-                        drawSegment(P, Q, Color.Red);
-                        pause(DELAY);
-                    }
+                // draw a red segment to show that it is being compared
+                if (DELAY > 50)
+                {
+                    drawSegment(P, Q, Color.Red);
+                    pause(DELAY);
+                }
 
-                    numComparisons++;
-                    S = testBoundingBoxPoint(S, P, Q);
+                numComparisons++;
+                S = testBoundingBoxPoint(S, P, Q);
 
-                    // erase the red segment after the comparison
-                    if (DELAY > 50)
-                    {
-                        eraseSegment(P, Q, Color.Yellow);
-                        pause(DELAY);
-                    }
+                // erase the red segment after the comparison
+                if (DELAY > 50)
+                {
+                    eraseSegment(P, Q, Color.Yellow);
+                    pause(DELAY);
+                }
 
                 //}
             }
@@ -268,7 +292,7 @@ namespace closestPair
             Graphics g = Panel1.CreateGraphics();
             //Pen pen = new Pen(Color.Black);
             SolidBrush brush;
-            if(p.color == 0)
+            if (p.color == 0)
                 brush = new SolidBrush(Color.Red);
             else
                 brush = new SolidBrush(Color.Blue);
@@ -283,7 +307,7 @@ namespace closestPair
             drawPoint(p1);
             if (p1.color == p2.color)
             {
-                if(p1.color ==0)
+                if (p1.color == 0)
                     g.DrawLine(new Pen(Color.Red), p1.x, p1.y, p2.x, p2.y);
                 else
                     g.DrawLine(new Pen(Color.Blue), p1.x, p1.y, p2.x, p2.y);
@@ -327,7 +351,7 @@ namespace closestPair
 
             SolidBrush brush = new SolidBrush(c);
             g.FillRectangle(brush, x, 0, w, Y_MAX);
-            drawPoints(North, Color.Black);
+            drawPoints(S, Color.Black);
         }
 
         public void eraseField(PointSet S)
@@ -340,7 +364,7 @@ namespace closestPair
 
             SolidBrush brush = new SolidBrush(Color.White);
             g.FillRectangle(brush, x, 0, w, Y_MAX);
-            drawPoints(North, Color.Black);
+            drawPoints(S, Color.Black);
         }
 
         public void drawPoints(PointSet S, Color c)
@@ -355,6 +379,9 @@ namespace closestPair
         public void reset()
         {
             North = new PointSet();
+            South = new PointSet();
+            West = new PointSet();
+            East = new PointSet();
             Graphics g = Panel1.CreateGraphics();
             SolidBrush brush = new SolidBrush(Color.White);
             g.FillRectangle(brush, 0, 0, X_MAX, Y_MAX);
@@ -381,7 +408,7 @@ namespace closestPair
             SolidBrush brush = new SolidBrush(Color.Pink);
             g.FillRectangle(brush, x, 0, w, Y_MAX);
             drawVertical(M, Color.Blue);
-            drawPoints(North, Color.Black);
+            drawPoints(S, Color.Black);
         }
 
         public void drawDQBoundingBox(PointSet S, Point P, Point M, Boolean lookR)
@@ -419,7 +446,7 @@ namespace closestPair
             SolidBrush brush = new SolidBrush(Color.Yellow);
             g.FillRectangle(brush, x, y, w, h);
             drawVertical(M, Color.Blue);
-            drawPoints(North, Color.Black);
+            drawPoints(S, Color.Black);
         }
 
         /***********************************************************************
@@ -482,7 +509,7 @@ namespace closestPair
             {
                 isSplit = true;
             }
-            
+
         }
 
         private void start_Click(object sender, EventArgs e)

@@ -118,12 +118,24 @@ void Jumping::Update(int timeElapsed)
 
 void Jumping::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 {
+	Surface * surface;
 	switch(message)
 	{
 	case CM_CHARACTER_JUMPING_BUMPS_HEAD:
-		Surface * surface = (Surface*)wParam;
+		surface = (Surface*)wParam;
 		Character::Instance()->GetLocation()->Y = surface->yTo;
 		this->pStateMachine->Transition(this->pStateMachine->falling);
+		break;
+	case CM_CHARACTER_BUMPS_INTO:
+		surface = (Surface*)wParam;
+		if(Character::Instance()->getDirection() == Direction::Right)
+		{
+			Character::Instance()->GetLocation()->X = surface->xFrom - Character::Instance()->GetLocation()->width;
+		}
+		else
+		{
+			Character::Instance()->GetLocation()->X = surface->xTo;
+		}
 		break;
 	}
 }

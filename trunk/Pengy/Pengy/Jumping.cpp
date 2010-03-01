@@ -5,12 +5,14 @@ Jumping::Jumping(void)
 {
 	this->upwardVelocity = 0;
 	this->speed = 0.3f;
+	this->distanceToMove = 0;
 }
 
 Jumping::Jumping(CharacterStateMachine * pStateMachine) : CharacterState(pStateMachine)
 {
 	this->upwardVelocity = 0;
 	this->speed = 0.3f;
+	this->distanceToMove = 0;
 }
 
 void Jumping::Up()

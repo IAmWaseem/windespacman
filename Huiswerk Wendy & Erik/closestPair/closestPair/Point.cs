@@ -9,16 +9,19 @@ namespace closestPair
     {
         public int x;
         public int y;
+        public int color;
 
-        public Point(int xc, int yc)
+        public Point(int xc, int yc, int colorc)
         { 
             x = xc; 
-            y = yc; 
+            y = yc;
+            color = colorc;
         }
         public Point(Point p) 
         { 
             x = p.x; 
-            y = p.y; 
+            y = p.y;
+            color = p.color;
         }
 
         public Boolean equals(Point p)

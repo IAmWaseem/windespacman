@@ -55,10 +55,11 @@ namespace closestPair
                 points.Insert(i, p);
             }
         }
-
+        private Random rand = new Random();
         public void add(int x, int y)
         {
-            Point p = new Point(x, y);
+
+            Point p = new Point(x, y, rand.Next(0,2));
             if (points.Count == 0)
             {
                 points.Add(p);

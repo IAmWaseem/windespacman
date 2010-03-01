@@ -17,6 +17,7 @@ namespace closestPair
         int X_MAX, Y_MAX;
         int numComparisons = 0;
         PointSet T;
+        Random rand;
 
         /************************************************************
         *  CONSTRUCTORS/DESTRUCTORS AND FIELD MANIPULATORS          *
@@ -28,6 +29,7 @@ namespace closestPair
             Y_MAX = Panel1.Height + 10;
             DELAY = 100;
             T = new PointSet();
+            rand = new Random();
         }
 
         public ClosestPair(int delay)
@@ -37,7 +39,7 @@ namespace closestPair
             Y_MAX = Panel1.Height;
             DELAY = delay;
             T = new PointSet();
-
+            rand = new Random();
             distance.Left = 0;
             distance.Top = 0;
         }
@@ -249,11 +251,15 @@ namespace closestPair
         *  GENERAL GRAPHICS FUNCTIONS                               *
         ************************************************************/
 
-        public void drawPoint(Point p, Color c)
+        public void drawPoint(Point p)
         {
             Graphics g = Panel1.CreateGraphics();
             //Pen pen = new Pen(Color.Black);
-            SolidBrush brush = new SolidBrush(c);
+            SolidBrush brush;
+            if(p.color == 0)
+                brush = new SolidBrush(Color.Red);
+            else
+                brush = new SolidBrush(Color.Blue);
             g.FillEllipse(brush, p.x - 3, p.y - 3, 6, 6);
             //Rectangle rect = new Rectangle(p.x - 3, p.x - 3, 6, 6);
             //g.DrawEllipse(pen, rect);
@@ -262,9 +268,17 @@ namespace closestPair
         public void drawSegment(Point p1, Point p2, Color c)
         {
             Graphics g = Panel1.CreateGraphics();
-            drawPoint(p1, c);
-            g.DrawLine(new Pen(c), p1.x, p1.y, p2.x, p2.y);
-            drawPoint(p2, c);
+            drawPoint(p1);
+            if (p1.color == p2.color)
+            {
+                if(p1.color ==0)
+                    g.DrawLine(new Pen(Color.Red), p1.x, p1.y, p2.x, p2.y);
+                else
+                    g.DrawLine(new Pen(Color.Blue), p1.x, p1.y, p2.x, p2.y);
+            }
+            else
+                g.DrawLine(new Pen(Color.Purple), p1.x, p1.y, p2.x, p2.y);
+            drawPoint(p2);
         }
 
         public void eraseSegment(Point p1, Point p2, Color c)
@@ -272,8 +286,8 @@ namespace closestPair
             Graphics g = Panel1.CreateGraphics();
             Pen pen = new Pen(c);
             g.DrawLine(pen, p1.x, p1.y, p2.x, p2.y);
-            drawPoint(p1, Color.Black);
-            drawPoint(p2, Color.Black);
+            drawPoint(p1);
+            drawPoint(p2);
         }
 
         public void drawVertical(Point M, Color c)
@@ -288,7 +302,7 @@ namespace closestPair
             Graphics g = Panel1.CreateGraphics();
             Pen pen = new Pen(Color.White);
             g.DrawLine(pen, M.x, 0, M.x, Y_MAX);
-            drawPoint(M, Color.Black);
+            drawPoint(M);
         }
 
         public void drawField(PointSet S, Color c)
@@ -322,7 +336,7 @@ namespace closestPair
             for (int i = 0; i < S.points.Count; i++)
             {
                 Point P = S.pointAt(i);
-                drawPoint(P, c);
+                drawPoint(P);
             }
         }
 
@@ -440,9 +454,9 @@ namespace closestPair
 
         private void Panel1_MouseDown(object sender, MouseEventArgs e)
         {
-            Point p = new Point(e.X, e.Y);
+            Point p = new Point(e.X, e.Y, rand.Next(0,2));
             T.add(p);
-            drawPoint(p, Color.Black);
+            drawPoint(p);
         }
 
         private void start_Click(object sender, EventArgs e)

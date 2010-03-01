@@ -21,7 +21,7 @@ namespace closestPair
         PointSet West;
         PointSet East;
         Random rand;
-        Boolean isSplit;
+        System.Drawing.Point isSplit;
 
         /************************************************************
         *  CONSTRUCTORS/DESTRUCTORS AND FIELD MANIPULATORS          *
@@ -37,7 +37,7 @@ namespace closestPair
             East = new PointSet();
             West = new PointSet();
             rand = new Random();
-            isSplit = false;
+            isSplit = new System.Drawing.Point();
         }
 
         public ClosestPair(int delay)
@@ -53,7 +53,7 @@ namespace closestPair
             rand = new Random();
             distance.Left = 0;
             distance.Top = 0;
-            isSplit = false;
+            isSplit = new System.Drawing.Point();
         }
 
         public void setDelay(int delay)
@@ -154,7 +154,7 @@ namespace closestPair
                     {
                         S = testStripPoint(S, P, S1, M, false);
                     }
-                    if (isSplit)
+                    if (isSplit.X != 0)
                     {
                         // update miniMUM distance
                         if (S.dmin < North.dmin)
@@ -495,30 +495,73 @@ namespace closestPair
         {
             if (e.Button == MouseButtons.Left)
             {
-                if (isSplit)
+                Point p;
+                if (isSplit.X != 0)
                 {
+                    p = new Point(e.X, e.Y, rand.Next(0, 2));
+                    if (e.X > 0 && e.X < 225)
+                    {
+                        //west
+                        if (e.Y > 0 && e.Y < 150)
+                        {
+                            North.add(p);
+                        }
+                        else
+                        {
+                            West.add(p);
+                        }
+                    }
+                    else
+                    {
+                        //east
+                        if (e.Y > 0 && e.Y < 150)
+                        {
+                            East.add(p);
+                        }
+                        else
+                        {
+                            South.add(p);
+                        }
+                    }
                 }
                 else
                 {
-                    Point p = new Point(e.X, e.Y, rand.Next(0, 2));
+                    p = new Point(e.X, e.Y, rand.Next(0, 2));
                     North.add(p);
-                    drawPoint(p);
                 }
+                drawPoint(p);
             }
             else if (e.Button == MouseButtons.Right)
             {
-                isSplit = true;
+                if (isSplit.X == 0)
+                {
+                    isSplit.X = e.X;
+                    isSplit.Y = e.Y;
+                    Graphics g = Panel1.CreateGraphics();
+                    Pen p = new Pen(Color.Black);
+                    g.DrawLine(p, 0, e.Y, e.X, e.Y);
+                    g.DrawLine(p, e.X, 0, e.X, e.Y);
+                    g.DrawLine(p, e.X, e.Y, e.X, Panel1.Height);
+                    g.DrawLine(p, e.X, e.Y, Panel1.Width, e.Y);
+                }
             }
 
         }
 
         private void start_Click(object sender, EventArgs e)
         {
-            double distancePoints = ClosestPairDQ(North);
-            if (North.closestPair.Count != 0)
+            if (isSplit.X != 0)
             {
-                drawSegment(North.closestPair[0], North.closestPair[1], Color.Red);
-                distance.Text = "Distance between points: " + distancePoints.ToString();
+
+            }
+            else
+            {
+                double distancePoints = ClosestPairDQ(North);
+                if (North.closestPair.Count != 0)
+                {
+                    drawSegment(North.closestPair[0], North.closestPair[1], Color.Red);
+                    distance.Text = "Distance between points: " + distancePoints.ToString();
+                }
             }
         }
 

@@ -5,7 +5,6 @@ class Falling : public CharacterState
 {
 private:
 	float downwardVelocity;
-	Direction direction;
 	float distanceToMove;
 	float speed;
 

@@ -13,6 +13,7 @@ Character::Character(void)
 	location->width = 100;
 	location->height = 100;
 	pCharacterStateMachine = new CharacterStateMachine();
+	direction = Direction::Right;
 }
 
 Character::~Character(void)
@@ -97,4 +98,14 @@ void Character::SetLocation(Location * location)
 CharacterView * Character::GetCharacterView()
 {
 	return this->pCharacterView;
+}
+
+Direction Character::getDirection()
+{
+	return direction;
+}
+
+void Character::setDirection(Direction direction)
+{
+	this->direction = direction;
 }

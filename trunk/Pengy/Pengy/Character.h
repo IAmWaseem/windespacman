@@ -4,6 +4,12 @@
 #include "CharacterStateMachine.h"
 #include "Location.h"
 
+enum Direction
+{
+	Left,
+	Right
+};
+
 class Character : public Observer
 {
 protected:
@@ -16,7 +22,10 @@ public:
 	Location * GetLocation();
 	void SetLocation(Location * location);
 	CharacterView * GetCharacterView();
+	Direction getDirection();
+	void setDirection(Direction direction);
 private:
+	Direction direction;
 	static Character * pInstance;
 	CharacterView * pCharacterView;
 	CharacterStateMachine * pCharacterStateMachine;

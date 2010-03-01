@@ -30,22 +30,22 @@ void Walking::Down()
 
 void Walking::Left()
 {
-	if(this->direction != Direction::Left)
+	if(Character::Instance()->getDirection() != Direction::Left)
 	{
 		Character::Instance()->GetCharacterView()->ChangeCurrentImage(CharacterView::CharacterImage::Left);
 	}
-	this->direction = Direction::Left;
+	Character::Instance()->setDirection(Direction::Left);
 	this->distanceToMove = 5;
 }
 
 
 void Walking::Right()
 {
-	if(this->direction != Direction::Right) 
+	if(Character::Instance()->getDirection() != Direction::Right) 
 	{
 		Character::Instance()->GetCharacterView()->ChangeCurrentImage(CharacterView::CharacterImage::Right);
 	}
-	this->direction = Direction::Right;
+	Character::Instance()->setDirection(Direction::Right);
 	this->distanceToMove = 5;
 }
 
@@ -60,7 +60,7 @@ void Walking::Spacebar()
 	this->pStateMachine->jumping->Spacebar();
 	if(this->distanceToMove > 0.5)
 	{
-		if(this->direction == Direction::Left)
+		if(Character::Instance()->getDirection()  == Direction::Left)
 			this->pStateMachine->jumping->Left();
 		else
 			this->pStateMachine->jumping->Right();
@@ -79,7 +79,7 @@ void Walking::Update(int timeElapsed)
 	if(distanceMoved > this->distanceToMove) distanceMoved = distanceToMove;
 	this->distanceToMove -= distanceMoved;
 	this->moved += distanceMoved;
-	switch(this->direction)
+	switch(Character::Instance()->getDirection())
 	{
 	case Direction::Left:
 		newLocation->X = oldLocation->X - distanceMoved;
@@ -108,7 +108,7 @@ void Walking::SwapPicture()
 {
 	if((int)this->moved % 20 < 1)
 	{
-		if(this->direction == Direction::Left)
+		if(Character::Instance()->getDirection() == Direction::Left)
 		{
 			if(Character::Instance()->GetCharacterView()->GetCurrentImage() == CharacterView::CharacterImage::Left)
 			{

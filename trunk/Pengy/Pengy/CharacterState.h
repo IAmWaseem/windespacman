@@ -1,12 +1,7 @@
 #pragma once
 #include "Win.h"
 #include "MessageQueue.h"
-
-enum Direction
-{
-	Left,
-	Right
-};
+#include "Character.h"
 
 class CharacterStateMachine;
 

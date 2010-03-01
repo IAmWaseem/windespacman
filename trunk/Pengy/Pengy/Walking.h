@@ -4,7 +4,6 @@
 class Walking : public CharacterState
 {
 private:
-	Direction direction;
 	float distanceToMove;
 	float moved;
 	float speed;

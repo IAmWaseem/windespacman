@@ -57,21 +57,21 @@ Level::Level(){
 	landRight->yTo = 600;
 	surfaces->push_back(landRight);	
 
-	for(int i = 0; i < 64; i++)
+	for(int i = 0; i < 64; i=i+4)
 	{
 		Surface * waterLeft = new Surface();
 		waterLeft->xFrom = 320 + i;
-		waterLeft->xTo = 321 + i;
+		waterLeft->xTo = 324 + i;
 		waterLeft->yFrom = 460 + i;
 		waterLeft->yTo = 600;
 		surfaces->push_back(waterLeft);
 	}
 
-	for(int i = 0; i < 64; i++)
+	for(int i = 0; i < 64; i=i+4)
 	{
 		Surface * waterRight = new Surface();
 		waterRight->xFrom = 512 + i;
-		waterRight->xTo = 513 + i;
+		waterRight->xTo = 516 + i;
 		waterRight->yFrom = 460 + (64-i);
 		waterRight->yTo = 600;
 		surfaces->push_back(waterRight);

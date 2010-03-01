@@ -93,12 +93,14 @@ void Falling::Update(int timeElapsed)
 
 void Falling::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 {
+	Surface * surface;
+	Location * characterLocation;
 	switch(message)
 	{
 	case CM_CHARACTER_IS_STANDING:
 		downwardVelocity = 0;
-		Surface * surface = (Surface*)wParam;
-		Location * characterLocation = Character::Instance()->GetLocation();
+		surface = (Surface*)wParam;
+		characterLocation = Character::Instance()->GetLocation();
 		characterLocation->Y = surface->yFrom - characterLocation->height;
 		Character::Instance()->SetLocation(characterLocation);
 		this->pStateMachine->Transition(this->pStateMachine->idle);
@@ -108,6 +110,17 @@ void Falling::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		}
 		else {
 			Character::Instance()->GetCharacterView()->ChangeCurrentImage(CharacterView::CharacterImage::Left);
+		}
+		break;
+	case CM_CHARACTER_BUMPS_INTO:
+		surface = (Surface*)wParam;
+		if(Character::Instance()->getDirection() == Direction::Right)
+		{
+			Character::Instance()->GetLocation()->X = surface->xFrom - Character::Instance()->GetLocation()->width;
+		}
+		else
+		{
+			Character::Instance()->GetLocation()->X = surface->xTo;
 		}
 		break;
 	}

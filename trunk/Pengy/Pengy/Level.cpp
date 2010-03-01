@@ -57,7 +57,7 @@ void Level::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		}
 		break;
 
-	case CM_CHARACTER_MOVE_Y_FROM_TO:
+	case CM_CHARACTER_FALL_Y_FROM_TO:
 		fromLocation = (Location*)wParam;
 		toLocation = (Location*)lParam;
 		isFalling = true;

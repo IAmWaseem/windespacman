@@ -94,7 +94,7 @@ void Walking::Update(int timeElapsed)
 	}
 	
 	MessageQueue::Inst()->sendMessage(CM_CHARACTER_MOVE_X_FROM_TO,  (int)oldLocation, (int)newLocation);
-	MessageQueue::Inst()->sendMessage(CM_CHARACTER_MOVE_Y_FROM_TO,  (int)oldLocation, (int)newLocation);
+	MessageQueue::Inst()->sendMessage(CM_CHARACTER_FALL_Y_FROM_TO,  (int)oldLocation, (int)newLocation);
 
 	SwapPicture();
 	
@@ -143,6 +143,10 @@ void Walking::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	{
 	case CM_CHARACTER_IS_FALLING:
 		this->pStateMachine->Transition(this->pStateMachine->falling);
+		break;
+	case CM_CHARACTER_BUMPS_INTO:
+		Surface * surface = (Surface*)wParam;
+		Character::Instance()->GetLocation()->X = surface->xFrom - Character::Instance()->GetLocation()->width;
 		break;
 	}
 }

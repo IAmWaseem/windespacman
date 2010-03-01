@@ -17,8 +17,11 @@ namespace closestPair
         int X_MAX, Y_MAX;
         int numComparisons = 0;
         PointSet North;
-        PointSet 
+        PointSet South;
+        PointSet West;
+        PointSet East;
         Random rand;
+        Boolean isSplit;
 
         /************************************************************
         *  CONSTRUCTORS/DESTRUCTORS AND FIELD MANIPULATORS          *
@@ -30,7 +33,11 @@ namespace closestPair
             Y_MAX = Panel1.Height + 10;
             DELAY = 100;
             North = new PointSet();
+            South = new PointSet();
+            East = new PointSet();
+            West = new PointSet();
             rand = new Random();
+            isSplit = false;
         }
 
         public ClosestPair(int delay)
@@ -40,9 +47,13 @@ namespace closestPair
             Y_MAX = Panel1.Height;
             DELAY = delay;
             North = new PointSet();
+            South = new PointSet();
+            East = new PointSet();
+            West = new PointSet();
             rand = new Random();
             distance.Left = 0;
             distance.Top = 0;
+            isSplit = false;
         }
 
         public void setDelay(int delay)
@@ -457,13 +468,19 @@ namespace closestPair
         {
             if (e.Button == MouseButtons.Left)
             {
-                Point p = new Point(e.X, e.Y, rand.Next(0, 2));
-                North.add(p);
-                drawPoint(p);
+                if (isSplit)
+                {
+                }
+                else
+                {
+                    Point p = new Point(e.X, e.Y, rand.Next(0, 2));
+                    North.add(p);
+                    drawPoint(p);
+                }
             }
             else if (e.Button == MouseButtons.Right)
             {
-
+                isSplit = true;
             }
             
         }

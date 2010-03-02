@@ -65,7 +65,7 @@ void Jumping::Spacebar()
 	
 	if(upwardVelocity == 0)
 	{
-		upwardVelocity = 0.160;
+		upwardVelocity = 0.320;
 	}
 }
 
@@ -81,7 +81,7 @@ void Jumping::Update(int timeElapsed)
 	if(upwardVelocity > 0)
 	{
 		float y = newLocation->Y;
-		float newUpwardVelocity = upwardVelocity  - (0.000120 * timeElapsed);
+		float newUpwardVelocity = upwardVelocity  - (0.000400 * timeElapsed);
 		float averageVelocity = (upwardVelocity + newUpwardVelocity) / 2;
 		float distance = averageVelocity * timeElapsed;
 		newLocation->Y -= distance;

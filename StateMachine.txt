@@ -1,13 +1,12 @@
 CharacterState
--> Fall
--> Walk
--> Jump
--> Fly
--> Slide
--> Crouched
--> PoweredUp
+-> Falling
+-> Walking
+-> Jumping
+-> Flying
+-> Slideing
+-> Crouching
 -> Idle
--> Climb
+-> Climbing
 
 CharacterEvents:
 -> Up();

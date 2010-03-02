@@ -1,4 +1,4 @@
--> UML class diagram
+	-> UML class diagram
 -> FO
 -> State diagrams
 -> Code versioning (.CVS)

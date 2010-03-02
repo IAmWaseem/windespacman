@@ -18,6 +18,7 @@ private:
 	void DrawTile(Tile * tile, HDC hdc, RECT rect);
 	void DrawTile(Tile * tile, HDC hdc, RECT rect, int offsetX);
 	void DrawTile(Tile * tile, HDC hdc, RECT rect, int offsetX, int offsetY);
+	HBITMAP CreateBitmapMask(HBITMAP hbmColour, COLORREF crTransparent);
 public:
 	void Draw(HDC hDC, int xFrom, int xTo);
 	LevelView();

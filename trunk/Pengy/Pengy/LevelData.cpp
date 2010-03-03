@@ -12,6 +12,7 @@ void LevelData::LoadGadgets()
 {
 }
 
+
 vector<Surface*> LevelData::getSurfaces()
 {
 	vector<Surface*> data;

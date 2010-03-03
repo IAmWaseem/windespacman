@@ -4,6 +4,7 @@
 #include "MessageQueue.h"
 #include "LevelView.h"
 #include "Location.h"
+#include "BeachLevel.h"
 
 
 class Level : public Observer
@@ -16,11 +17,10 @@ public:
 protected:
 	Level();
 private:
-	vector<Surface*> * surfaces;
+	vector<Surface*> surfaces;
     static Level* pInstance;
 	LevelView levelView;
-	vector<int*> GetLevel1Tiles();
-	vector<int*> GetLevel1Surfaces();
+	BeachLevel beach;
 	int levelLength;
 	void SetLevelLength();
 	bool LocationInSurfaceX(Location * location, Surface * surface);

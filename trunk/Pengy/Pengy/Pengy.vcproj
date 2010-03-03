@@ -263,14 +263,30 @@
 			Name="Level"
 			>
 			<File
+				RelativePath=".\BeachLevel.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Level.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\LevelData.cpp"
 				>
 			</File>
 			<Filter
 				Name="Headers"
 				>
 				<File
+					RelativePath=".\BeachLevel.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Level.h"
+					>
+				</File>
+				<File
+					RelativePath=".\LevelData.h"
 					>
 				</File>
 				<File

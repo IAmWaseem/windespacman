@@ -33,21 +33,35 @@ LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	case WM_KEYDOWN:
 			switch(wParam)
 			{
-			case 32:
-				messageQueue->Inst()->sendMessage(CM_CHARACTER_SPACEBAR, NULL, NULL);
-				break;
-			case 37:
-				messageQueue->Inst()->sendMessage(CM_CHARACTER_LEFT, NULL, NULL);
-				break;
-			case 38:
-				messageQueue->Inst()->sendMessage(CM_CHARACTER_UP, NULL, NULL);
-				break;
-			case 39:
-				messageQueue->Inst()->sendMessage(CM_CHARACTER_RIGHT, NULL, NULL);
-				break;
-			case 40:
-				messageQueue->Inst()->sendMessage(CM_CHARACTER_DOWN, NULL, NULL);
-				break;
+				case 32:
+					messageQueue->Inst()->sendMessage(CM_CHARACTER_SPACEBAR, NULL, NULL);
+					break;
+				case 37:
+					messageQueue->Inst()->sendMessage(CM_CHARACTER_LEFT, NULL, NULL);
+					break;
+				case 38:
+					messageQueue->Inst()->sendMessage(CM_CHARACTER_UP, NULL, NULL);
+					break;
+				case 39:
+					messageQueue->Inst()->sendMessage(CM_CHARACTER_RIGHT, NULL, NULL);
+					break;
+				case 40:
+					messageQueue->Inst()->sendMessage(CM_CHARACTER_DOWN, NULL, NULL);
+					break;
+				case 'f':
+				case 'F':
+					if(LevelView::ShowFps)
+						LevelView::ShowFps = false;
+					else
+						LevelView::ShowFps = true;
+					break;
+				case 'd':
+				case 'D':
+					if(LevelView::ShowDebug)
+						LevelView::ShowDebug = false;
+					else
+						LevelView::ShowDebug = true;
+					break;
 			}
 		break;
 	}

@@ -46,25 +46,19 @@ BeachLevel::BeachLevel(void)
 	landRight->yTo = 600;
 	surfaces->push_back(landRight);	
 
-	for(int i = 0; i < 64; i=i+4)
-	{
-		Surface * waterLeft = new Surface();
-		waterLeft->xFrom = 320 + i;
-		waterLeft->xTo = 324 + i;
-		waterLeft->yFrom = 460 + i;
-		waterLeft->yTo = 600;
-		surfaces->push_back(waterLeft);
-	}
+	Surface * waterLeft = new Surface();
+	waterLeft->xFrom = 320;
+	waterLeft->xTo = 384;
+	waterLeft->yFrom = 530;
+	waterLeft->yTo = 600;
+	surfaces->push_back(waterLeft);
 
-	for(int i = 0; i < 64; i=i+4)
-	{
-		Surface * waterRight = new Surface();
-		waterRight->xFrom = 512 + i;
-		waterRight->xTo = 516 + i;
-		waterRight->yFrom = 460 + (64-i);
-		waterRight->yTo = 600;
-		surfaces->push_back(waterRight);
-	}
+	Surface * waterRight = new Surface();
+	waterRight->xFrom = 512;
+	waterRight->xTo = 576;
+	waterRight->yFrom = 530;
+	waterRight->yTo = 600;
+	surfaces->push_back(waterRight);
 
 	Surface * surface3 = new Surface();
 	surface3->xFrom = 800;
@@ -128,30 +122,30 @@ vector<int*> BeachLevel::getTiles()
 
 #pragma region bottom ground
 	// bottom data
-	for(int i = 0; i < 5; i++)
+	for(int i = 0; i < 39; i++)
 	{
 		int* temp = new int[5]; temp[0] = i; temp[1] = 7; temp[2] = 0; temp[3] = 7; temp[4] = 0;
 		data.push_back(temp);
 	}
 	// bottom data
-	for(int i = 0; i < 5; i++)
+	for(int i = 0; i < 39; i++)
 	{
 		int* temp = new int[5]; temp[0] = i; temp[1] = 8; temp[2] = 0; temp[3] = 8; temp[4] = 0;
 		data.push_back(temp);
 	}
 
-	// bottom data
-	for(int i = 9; i < 20; i++)
-	{
-		int* temp = new int[5]; temp[0] = i; temp[1] = 7; temp[2] = 0; temp[3] = 7; temp[4] = 0;
-		data.push_back(temp);
-	}
-	// bottom data
-	for(int i = 9; i < 20; i++)
-	{
-		int* temp = new int[5]; temp[0] = i; temp[1] = 8; temp[2] = 0; temp[3] = 8; temp[4] = 0;
-		data.push_back(temp);
-	}
+	//// bottom data
+	//for(int i = 9; i < 20; i++)
+	//{
+	//	int* temp = new int[5]; temp[0] = i; temp[1] = 7; temp[2] = 0; temp[3] = 7; temp[4] = 0;
+	//	data.push_back(temp);
+	//}
+	//// bottom data
+	//for(int i = 9; i < 20; i++)
+	//{
+	//	int* temp = new int[5]; temp[0] = i; temp[1] = 8; temp[2] = 0; temp[3] = 8; temp[4] = 0;
+	//	data.push_back(temp);
+	//}
 #pragma endregion here is the creation of the ground tiles
 
 #pragma region waterpart

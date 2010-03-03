@@ -65,8 +65,10 @@ void LevelView::Draw(HDC hDC, int xFrom, int xTo)
 
 		ostringstream s;
 		s << "FPS: ";
-
-		s << (1000 / difInMSec);
+		if(difInMSec == 0)
+			s << "1000+";
+		else
+			s << (1000 / difInMSec);
 
 		// cast to c_string
 		LPCSTR fps = "";

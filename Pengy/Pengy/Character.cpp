@@ -8,8 +8,8 @@ Character* Character::pInstance = NULL;
 Character::Character(void)
 {
 	location = new Location();
-	location->X = 250;
-	location->Y = 250;
+	location->X = 50;
+	location->Y = 200;
 	location->width = 100;
 	location->height = 100;
 	pCharacterStateMachine = new CharacterStateMachine();
@@ -70,6 +70,17 @@ void Character::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 
 	case CM_CHARACTER_RIGHT:
 		pCharacterStateMachine->Right();
+		break;
+
+	case CM_CHARACTER_RESET_POSITION:
+		if(wParam != NULL)
+			location->X = (int)wParam;
+
+		if(lParam != NULL)
+			location->Y = (int)lParam;
+
+		MessageQueue::Inst()->sendMessage(CM_CHARACTER_MOVE_X_FROM_TO, (int)location, (int)location);
+		MessageQueue::Inst()->sendMessage(CM_CHARACTER_FALL_Y_FROM_TO, (int)location, (int)location);
 		break;
 	}
 }

@@ -10,7 +10,7 @@ using namespace dotnetguy;
 /////////////////////////////////////
 CSkeleton::CSkeleton()
 {
-	
+
 }
 
 CSkeleton::~CSkeleton()
@@ -32,46 +32,61 @@ LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		messageQueue->Inst()->attach(renderer->Inst());
 		break;
 	case WM_KEYDOWN:
-			switch(wParam)
-			{
-				case 32:
-					messageQueue->Inst()->sendMessage(CM_CHARACTER_SPACEBAR, NULL, NULL);
-					break;
-				case 37:
-					messageQueue->Inst()->sendMessage(CM_CHARACTER_LEFT, NULL, NULL);
-					break;
-				case 38:
-					messageQueue->Inst()->sendMessage(CM_CHARACTER_UP, NULL, NULL);
-					break;
-				case 39:
-					messageQueue->Inst()->sendMessage(CM_CHARACTER_RIGHT, NULL, NULL);
-					break;
-				case 40:
-					messageQueue->Inst()->sendMessage(CM_CHARACTER_DOWN, NULL, NULL);
-					break;
+		switch(wParam)
+		{
+		case 32:
+			messageQueue->Inst()->sendMessage(CM_CHARACTER_SPACEBAR, NULL, NULL);
+			break;
+		case 37:
+			messageQueue->Inst()->sendMessage(CM_CHARACTER_LEFT, NULL, NULL);
+			break;
+		case 38:
+			messageQueue->Inst()->sendMessage(CM_CHARACTER_UP, NULL, NULL);
+			break;
+		case 39:
+			messageQueue->Inst()->sendMessage(CM_CHARACTER_RIGHT, NULL, NULL);
+			break;
+		case 40:
+			messageQueue->Inst()->sendMessage(CM_CHARACTER_DOWN, NULL, NULL);
+			break;
 
-				case 'f':
-				case 'F':
-					if(Renderer::ShowFps)
-						Renderer::ShowFps = false;
-					else
-						Renderer::ShowFps = true;
-					break;
-				case 's':
-				case 'S':
-					if(Renderer::ShowSurfaces)
-						Renderer::ShowSurfaces = false;
-					else
-						Renderer::ShowSurfaces = true;
-					break;
-				case 'd':
-				case 'D':
-					if(Renderer::ShowDebug)
-						Renderer::ShowDebug = false;
-					else
-						Renderer::ShowDebug = true;
-					break;
-			}
+		case 't':
+		case 'T':
+			messageQueue->Inst()->sendMessage(CM_CHARACTER_RESET_POSITION, NULL, 50);
+			break;
+
+		case 'r':
+		case 'R':
+			messageQueue->Inst()->sendMessage(CM_CHARACTER_RESET_POSITION, 50, 200);
+			break;
+
+			// show the fps
+		case 'f':
+		case 'F':
+			if(Renderer::ShowFps)
+				Renderer::ShowFps = false;
+			else
+				Renderer::ShowFps = true;
+			break;
+
+			// show the surfaces
+		case 's':
+		case 'S':
+			if(Renderer::ShowSurfaces)
+				Renderer::ShowSurfaces = false;
+			else
+				Renderer::ShowSurfaces = true;
+			break;
+
+			// show the debug
+		case 'd':
+		case 'D':
+			if(Renderer::ShowDebug)
+				Renderer::ShowDebug = false;
+			else
+				Renderer::ShowDebug = true;
+			break;
+		}
 		break;
 	}
 	return CWin::MsgProc(hWnd, uMsg, wParam, lParam);
@@ -86,13 +101,13 @@ void CSkeleton::GameInit()
 	rect.top = 0;
 	rect.right = 800;
 	rect.bottom = 600;
-	
+
 	bufDC = CreateCompatibleDC(graphics);
 	HBITMAP bufBMP;
 	bufBMP = CreateCompatibleBitmap(graphics, 800, 600);
 	SelectObject(bufDC, bufBMP);
 	::FillRect(bufDC, &rect, ::CreateSolidBrush(0x00FFFFFF));
-	
+
 	SYSTEMTIME systemTime;
 	GetSystemTime( &systemTime );
 

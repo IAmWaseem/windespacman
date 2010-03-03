@@ -22,6 +22,9 @@ public:
 	void render(HDC hdc);
 	void recieveMessage(UINT message, WPARAM wParam, LPARAM lParam);
 
+	static bool ShowDebug;
+	static bool ShowFps;
+	static bool ShowSurfaces;
   protected:
     Renderer();
   private:

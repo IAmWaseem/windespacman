@@ -5,6 +5,7 @@
 #include "Bitmap.h"
 #include <windows.h>
 #include "Surface.h"
+#include "Renderer.h"
 #include "Tile.h"
 #include <sstream>
 using namespace std;
@@ -28,8 +29,6 @@ public:
 	void Draw(HDC hDC, int xFrom, int xTo);
 	LevelView();
 	~LevelView();
-	static bool ShowDebug;
-	static bool ShowFps;
 	void SetSurface(vector<Surface*> * theSurface);
 	void SetTiles(vector<Tile> myTiles, LPCSTR path);	
 };

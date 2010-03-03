@@ -14,6 +14,8 @@ public:
 	CSkeleton();
 	~CSkeleton();
 
+
+
 	LRESULT MsgProc(HWND, UINT, WPARAM, LPARAM);
 	void GameInit();
 	void GameLoop();

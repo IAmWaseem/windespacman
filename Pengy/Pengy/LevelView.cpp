@@ -5,8 +5,6 @@ vector<Surface*>* LevelView::surfaces = NULL;
 HANDLE LevelView::tilemap = NULL;
 int LevelView::tilemapWidth = 1024;
 int LevelView::tilemapHeight = 1024;
-bool LevelView::ShowFps = true;
-bool LevelView::ShowDebug = false;
 HANDLE LevelView::hbmMask = NULL;
 
 LevelView::LevelView(){ 
@@ -37,8 +35,8 @@ void LevelView::Draw(HDC hDC, int xFrom, int xTo)
 			iterator++;
 		}
 	}
-
-	if(surfaces != NULL && ShowDebug)
+	
+	if(surfaces != NULL && Renderer::ShowSurfaces)
 	{
 		HPEN hPen = CreatePen(PS_DASHDOTDOT, 1, RGB(255, 25, 5));
 		SelectObject(hDC, hPen);
@@ -52,8 +50,8 @@ void LevelView::Draw(HDC hDC, int xFrom, int xTo)
 		}
 		DeleteObject(hPen);
 	}
-
-	if(ShowFps)
+	
+	if(Renderer::ShowFps)
 	{
 		SYSTEMTIME now;
 		GetSystemTime(&now);
@@ -79,7 +77,7 @@ void LevelView::Draw(HDC hDC, int xFrom, int xTo)
 		// set the time of the last update to this
 		st = now;
 
-		TextOut(hDC, 10,10, fps, strlen(fps));
+		TextOut(hDC, 15, 15, fps, strlen(fps));
 	}
 }
 

@@ -1,6 +1,9 @@
 #include "Renderer.h"
 #include "Location.h"
 
+bool Renderer::ShowFps = true;
+bool Renderer::ShowDebug = true;
+bool Renderer::ShowSurfaces = false;
 
 Renderer* Renderer::pInstance = NULL;
 

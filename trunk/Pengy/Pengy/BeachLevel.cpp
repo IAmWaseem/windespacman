@@ -6,7 +6,7 @@ BeachLevel::BeachLevel(void)
 
 	Surface * borderBottom = new Surface();
 	borderBottom->xFrom = 0;
-	borderBottom->xTo = 1200;
+	borderBottom->xTo = 2500;
 	borderBottom->yFrom = 568;
 	borderBottom->yTo = 600;
 	surfaces->push_back(borderBottom);
@@ -19,15 +19,15 @@ BeachLevel::BeachLevel(void)
 	surfaces->push_back(borderLeft);	
 
 	Surface * borderRight = new Surface();
-	borderRight->xFrom = 1181;
-	borderRight->xTo = 1189;
+	borderRight->xFrom = 2481;
+	borderRight->xTo = 2489;
 	borderRight->yFrom = 0;
 	borderRight->yTo = 600;
 	surfaces->push_back(borderRight);
 
 	Surface * borderTop = new Surface();
 	borderTop->xFrom = 0;
-	borderTop->xTo = 1200;
+	borderTop->xTo = 2500;
 	borderTop->yFrom = 0;
 	borderTop->yTo = 8;
 	surfaces->push_back(borderTop);
@@ -41,7 +41,7 @@ BeachLevel::BeachLevel(void)
 
 	Surface * landRight = new Surface();
 	landRight->xFrom = 576;
-	landRight->xTo = 1200;
+	landRight->xTo = 2500;
 	landRight->yFrom = 448;
 	landRight->yTo = 600;
 	surfaces->push_back(landRight);	
@@ -91,10 +91,10 @@ BeachLevel::BeachLevel(void)
 	surface7->xTo = 1100;
 	surface7->yTo = 240;
 
-	//surfaces->push_back(surface3);
+	surfaces->push_back(surface3);
 	surfaces->push_back(aboveWater);
-	//surfaces->push_back(surface6);
-	//surfaces->push_back(surface7);
+	surfaces->push_back(surface6);
+	surfaces->push_back(surface7);
 
 }
 

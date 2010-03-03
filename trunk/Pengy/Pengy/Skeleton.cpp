@@ -31,6 +31,7 @@ LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		messageQueue->Inst()->attach(level->Inst());
 		messageQueue->Inst()->attach(character->Instance());
 		messageQueue->Inst()->attach(renderer->Inst());
+		messageQueue->Inst()->attach(sound->Inst());
 		messageQueue->Inst()->attach(new Gadget());
 		break;
 	case WM_KEYDOWN:

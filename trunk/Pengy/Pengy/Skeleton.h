@@ -5,6 +5,7 @@
 #include "Bitmap.h"
 #include "Renderer.h"
 #include "Character.h"
+#include "Sound.h"
 #include <sstream>
 using namespace dotnetguy;
 
@@ -25,6 +26,7 @@ private:
 	Renderer* renderer;
 	MessageQueue* messageQueue;
 	Level* level;
+	Sound* sound;
 	void Update();
 	void Render(HWND);
 	HDC bufDC;

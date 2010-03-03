@@ -30,4 +30,5 @@ private:
 	CharacterView * pCharacterView;
 	CharacterStateMachine * pCharacterStateMachine;
 	Location * location;
+	int pickedupFish;
 };

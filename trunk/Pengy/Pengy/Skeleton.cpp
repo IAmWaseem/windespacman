@@ -2,6 +2,7 @@
 //#include "Bitmap.h"
 //#include "Messages.h"
 #include "Location.h"
+#include "Gadget.h"
 using namespace dotnetguy;
 
 
@@ -30,6 +31,7 @@ LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		messageQueue->Inst()->attach(level->Inst());
 		messageQueue->Inst()->attach(character->Instance());
 		messageQueue->Inst()->attach(renderer->Inst());
+		messageQueue->Inst()->attach(new Gadget());
 		break;
 	case WM_KEYDOWN:
 		switch(wParam)

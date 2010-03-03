@@ -89,7 +89,6 @@ void CharacterView::Update()
 
 }
 
-
 void CharacterView::LoadImage(CharacterImage image, LPCSTR path)
 {
 	Bitmap * bitmap = new Bitmap();
@@ -97,16 +96,12 @@ void CharacterView::LoadImage(CharacterImage image, LPCSTR path)
 	pImages->insert(make_pair(image, bitmap));
 }
 
-
 CharacterView::CharacterImage CharacterView::GetCurrentImage()
 {
 	return currentImage;
 }
 
-
 void CharacterView::ChangeCurrentImage(CharacterImage image)
 {
 	currentImage = image;
 }
-
-

@@ -14,6 +14,7 @@ Character::Character(void)
 	location->height = 100;
 	pCharacterStateMachine = new CharacterStateMachine();
 	direction = Direction::Right;
+	pickedupFish = 0;
 }
 
 Character::~Character(void)
@@ -29,10 +30,10 @@ void Character::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	{
 	case CM_LEVEL_START:
 		pCharacterView = new CharacterView();
-		pCharacterView->LoadImage(CharacterView::CharacterImage::Left, "res/PengyWinterLeft.bmp");
-		pCharacterView->LoadImage(CharacterView::CharacterImage::Left2, "res/PengyWinterLeft2.bmp");
-		pCharacterView->LoadImage(CharacterView::CharacterImage::Right, "res/PengyWinterRight.bmp");
-		pCharacterView->LoadImage(CharacterView::CharacterImage::Right2, "res/PengyWinterRight2.bmp");
+		pCharacterView->LoadImage(CharacterView::CharacterImage::Left, "res/PengySummerLeft.bmp");
+		pCharacterView->LoadImage(CharacterView::CharacterImage::Left2, "res/PengySummerLeft2.bmp");
+		pCharacterView->LoadImage(CharacterView::CharacterImage::Right, "res/PengySummerRight.bmp");
+		pCharacterView->LoadImage(CharacterView::CharacterImage::Right2, "res/PengySummerRight2.bmp");
 		pCharacterView->LoadImage(CharacterView::CharacterImage::Climb, "res/PengyClimb.bmp");
 		pCharacterView->LoadImage(CharacterView::CharacterImage::Climb2, "res/PengyClimb2.bmp");
 		pCharacterView->LoadImage(CharacterView::CharacterImage::JumpLeft, "res/PengyJump2.bmp");
@@ -70,6 +71,9 @@ void Character::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 
 	case CM_CHARACTER_RIGHT:
 		pCharacterStateMachine->Right();
+		break;
+	case CM_GADGET_GOLDFISH_PICKEDUP:
+		pickedupFish++;
 		break;
 
 	case CM_CHARACTER_RESET_POSITION:

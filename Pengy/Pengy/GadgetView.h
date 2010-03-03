@@ -1,0 +1,38 @@
+#pragma once
+#include <map>
+#include "Windows.h"
+#include "Bitmap.h"
+#include "View.h"
+#include "Location.h"
+using namespace std;
+using namespace dotnetguy;
+
+class Gadget;
+
+class GadgetView : public View
+{
+public:
+	enum GadgetImage
+	{
+		SnowBall,
+		Goldfish,
+		RottenFish,
+		ExtraLife,
+		Powerup,
+		Balloons,
+		Piranha,
+		Ladybug
+	};
+
+	GadgetView(void);
+	GadgetView(GadgetImage image, LPCSTR path, Gadget * gadget);
+	~GadgetView(void);
+
+	void Update();
+	void Draw(HDC hdc, int xFrom, int xTo);
+
+private:
+	GadgetImage currentImage;
+	Bitmap * currentBitmap;
+	Gadget * pGadget;
+};

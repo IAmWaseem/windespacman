@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="Pengy"
 	ProjectGUID="{D9792256-FBF2-4E04-A095-D180715C6649}"
 	RootNamespace="Pengy"
@@ -307,6 +307,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\GadgetView.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\LevelView.cpp"
 				>
 			</File>
@@ -327,6 +331,10 @@
 				</File>
 				<File
 					RelativePath=".\CharacterView.h"
+					>
+				</File>
+				<File
+					RelativePath=".\GadgetView.h"
 					>
 				</File>
 				<File
@@ -385,6 +393,62 @@
 					RelativePath=".\Observer.h"
 					>
 				</File>
+			</Filter>
+		</Filter>
+		<Filter
+			Name="Gadget"
+			>
+			<File
+				RelativePath=".\Gadget.cpp"
+				>
+			</File>
+			<Filter
+				Name="Headers"
+				>
+				<File
+					RelativePath=".\Gadget.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="States"
+				>
+				<File
+					RelativePath=".\Available.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\GadgetState.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\GadgetStateMachine.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\PickedUp.cpp"
+					>
+				</File>
+				<Filter
+					Name="Headers"
+					>
+					<File
+						RelativePath=".\Available.h"
+						>
+					</File>
+					<File
+						RelativePath=".\GadgetState.h"
+						>
+					</File>
+					<File
+						RelativePath=".\GadgetStateMachine.h"
+						>
+					</File>
+					<File
+						RelativePath=".\PickedUp.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 	</Files>

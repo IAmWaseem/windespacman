@@ -4,6 +4,7 @@
 #include "Location.h"
 using namespace dotnetguy;
 
+
 /////////////////////////////////////
 // Constructors / Destructors      //
 /////////////////////////////////////
@@ -48,19 +49,27 @@ LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				case 40:
 					messageQueue->Inst()->sendMessage(CM_CHARACTER_DOWN, NULL, NULL);
 					break;
+
 				case 'f':
 				case 'F':
-					if(LevelView::ShowFps)
-						LevelView::ShowFps = false;
+					if(Renderer::ShowFps)
+						Renderer::ShowFps = false;
 					else
-						LevelView::ShowFps = true;
+						Renderer::ShowFps = true;
+					break;
+				case 's':
+				case 'S':
+					if(Renderer::ShowSurfaces)
+						Renderer::ShowSurfaces = false;
+					else
+						Renderer::ShowSurfaces = true;
 					break;
 				case 'd':
 				case 'D':
-					if(LevelView::ShowDebug)
-						LevelView::ShowDebug = false;
+					if(Renderer::ShowDebug)
+						Renderer::ShowDebug = false;
 					else
-						LevelView::ShowDebug = true;
+						Renderer::ShowDebug = true;
 					break;
 			}
 		break;

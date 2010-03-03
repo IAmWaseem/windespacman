@@ -2,7 +2,9 @@
 #include <map>
 #include "Windows.h"
 #include "Bitmap.h"
+#include "Renderer.h"
 #include "View.h"
+#include <sstream>
 using namespace std;
 using namespace dotnetguy;
 

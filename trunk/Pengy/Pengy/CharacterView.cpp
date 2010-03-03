@@ -22,6 +22,30 @@ void CharacterView::Draw(HDC hdc, int xFrom, int xTo)
 	Character::Instance()->GetLocation()->width = bitmap->Width();
 	Character::Instance()->GetLocation()->height = bitmap->Height();
 	bitmap->TransparentPaint(hdc, RGB(46, 46, 46), &placeRect, NULL); 
+
+	if(Renderer::ShowDebug)
+	{
+		ostringstream s;
+		int x = Character::Instance()->GetLocation()->X;
+		int y = Character::Instance()->GetLocation()->Y;
+		s << "Location = ( " << x << ", " << y << " )";
+		
+		LPCSTR PengyDirection = "";
+		if(Character::Instance()->getDirection() == Direction::Left)
+			PengyDirection = "left";
+		else
+			PengyDirection = "right";
+
+		s << " & direction = " << PengyDirection;
+		
+		// cast to c_string
+		LPCSTR character = "";
+		string temp; 
+		temp = s.str();
+		character = temp.c_str();
+
+		TextOut(hdc, 15, 35, character, strlen(character));
+	}
 }
 
 void CharacterView::Update()

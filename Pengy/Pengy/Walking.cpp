@@ -106,16 +106,13 @@ void Walking::Update(int timeElapsed)
 
 void Walking::SwapPicture()
 {
-	if((int)this->moved % 20 < 1)
+	if((int)this->moved % 15 < 1)
 	{
+		this->moved = 0;
 		if(Character::Instance()->getDirection() == Direction::Left)
 		{
 			if(Character::Instance()->GetCharacterView()->GetCurrentImage() == CharacterView::CharacterImage::Left)
 			{
-				if(moved > 100)
-				{
-					Character::Instance()->GetCharacterView()->ChangeCurrentImage(CharacterView::CharacterImage::Left2);
-				}
 				Character::Instance()->GetCharacterView()->ChangeCurrentImage(CharacterView::CharacterImage::Left2);
 			}
 			else

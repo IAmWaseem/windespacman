@@ -32,7 +32,7 @@ void Renderer::attach( View *myView)
 
 void Renderer::detach( View *myView)
 {
-    for (int i= 0; i< myViews.size(); i++)
+    for (unsigned int i= 0; i< myViews.size(); i++)
     {
         if (myViews[i]== myView)
         {
@@ -84,19 +84,19 @@ void Renderer::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	case CM_CHARACTER_MOVE_X_FROM_TO:
 		from = (Location*)wParam;
 		to = (Location*)lParam;
-		characterX = to->X;
+		characterX = (int)to->X;
 
 		break;
 	case CM_CHARACTER_FALL_Y_FROM_TO:
 		from = (Location*)wParam;
 		to = (Location*)lParam;
-		characterX = to->X;
+		characterX = (int)to->X;
 
 		break;
 	case CM_CHARACTER_JUMP_Y_FROM_TO:
 		from = (Location*)wParam;
 		to = (Location*)lParam;
-		characterX = to->X;
+		characterX = (int)to->X;
 
 		break;
 	}

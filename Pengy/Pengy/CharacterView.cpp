@@ -15,22 +15,22 @@ void CharacterView::Draw(HDC hdc, int xFrom, int xTo)
 {
 	Bitmap * bitmap = pImages->find(currentImage)->second;
 	RECT placeRect;
-	placeRect.left = Character::Instance()->GetLocation()->X - xFrom;
-	placeRect.top = Character::Instance()->GetLocation()->Y;
+	placeRect.left = (long)(Character::Instance()->GetLocation()->X - xFrom);
+	placeRect.top = (long)(Character::Instance()->GetLocation()->Y);
 	placeRect.right = placeRect.left + bitmap->Width();
 	placeRect.bottom = placeRect.top + bitmap->Height();
-	Character::Instance()->GetLocation()->width = bitmap->Width();
-	Character::Instance()->GetLocation()->height = bitmap->Height();
+	Character::Instance()->GetLocation()->width = (float)bitmap->Width();
+	Character::Instance()->GetLocation()->height = (float)bitmap->Height();
 	bitmap->TransparentPaint(hdc, RGB(46, 46, 46), &placeRect, NULL); 
 
 	if(Renderer::ShowDebug)
 	{
 		ostringstream s;
 		ostringstream s2;
-		int x = Character::Instance()->GetLocation()->X;
-		int y = Character::Instance()->GetLocation()->Y;
-		int width = Character::Instance()->GetLocation()->width;
-		int height = Character::Instance()->GetLocation()->height;
+		int x = (float)(Character::Instance()->GetLocation()->X);
+		int y = (float)(Character::Instance()->GetLocation()->Y);
+		int width = (float)(Character::Instance()->GetLocation()->width);
+		int height = (float)(Character::Instance()->GetLocation()->height);
 		s << "Location = ( " << x << ", " << y << " )";
 		s2 << "Location = ( " << (int)(x / 64) << ", " << (int)(y / 64) << " )";
 		

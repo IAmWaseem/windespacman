@@ -81,7 +81,7 @@ void Jumping::Update(int timeElapsed)
 	if(upwardVelocity > 0)
 	{
 		float y = newLocation->Y;
-		float newUpwardVelocity = upwardVelocity  - (0.000400 * timeElapsed);
+		float newUpwardVelocity = (float)(upwardVelocity  - (0.000400 * timeElapsed));
 		float averageVelocity = (upwardVelocity + newUpwardVelocity) / 2;
 		float distance = averageVelocity * timeElapsed;
 		newLocation->Y -= distance;
@@ -125,7 +125,7 @@ void Jumping::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	{
 	case CM_CHARACTER_JUMPING_BUMPS_HEAD:
 		surface = (Surface*)wParam;
-		Character::Instance()->GetLocation()->Y = surface->yTo;
+		Character::Instance()->GetLocation()->Y = (float)surface->yTo;
 		this->pStateMachine->Transition(this->pStateMachine->falling);
 		break;
 	case CM_CHARACTER_BUMPS_INTO:
@@ -136,7 +136,7 @@ void Jumping::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		}
 		else
 		{
-			Character::Instance()->GetLocation()->X = surface->xTo;
+			Character::Instance()->GetLocation()->X = (float)surface->xTo;
 		}
 		break;
 	}

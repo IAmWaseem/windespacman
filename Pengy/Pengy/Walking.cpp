@@ -160,7 +160,7 @@ void Walking::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		}
 		else
 		{
-			Character::Instance()->GetLocation()->X = surface->xTo;
+			Character::Instance()->GetLocation()->X = (float)surface->xTo;
 		}
 		break;
 	}

@@ -15,6 +15,8 @@ GadgetStateMachine::GadgetStateMachine(Gadget * gadget)
 
 GadgetStateMachine::~GadgetStateMachine(void)
 {
+	delete available;
+	delete pickedUp;
 }
 
 void GadgetStateMachine::Update(int timeElapsed) 

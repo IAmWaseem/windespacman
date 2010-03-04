@@ -4,6 +4,7 @@
 #include "Bitmap.h"
 #include "View.h"
 #include "Location.h"
+#include "GadgetImages.h"
 using namespace std;
 using namespace dotnetguy;
 
@@ -25,7 +26,7 @@ public:
 	};
 
 	GadgetView(void);
-	GadgetView(GadgetImage image, LPCSTR path, Gadget * gadget);
+	GadgetView(GadgetImage image, Gadget * gadget);
 	~GadgetView(void);
 
 	void Update();

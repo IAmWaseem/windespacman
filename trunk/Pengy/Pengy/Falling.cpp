@@ -81,7 +81,7 @@ void Falling::Update(int timeElapsed)
 		break;
 	}
 
-	float newDownwardVelocity = downwardVelocity + (0.000400 * timeElapsed);
+	float newDownwardVelocity = (float)(downwardVelocity + (0.000400 * timeElapsed));
 	float averageVelocity = (downwardVelocity + newDownwardVelocity) / 2;
 	float distance = averageVelocity * timeElapsed;
 	Character::Instance()->GetLocation()->Y += distance;
@@ -122,7 +122,7 @@ void Falling::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		}
 		else
 		{
-			Character::Instance()->GetLocation()->X = surface->xTo;
+			Character::Instance()->GetLocation()->X = (float)surface->xTo;
 		}
 		break;
 	}

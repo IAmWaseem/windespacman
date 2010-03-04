@@ -31,7 +31,7 @@ void Available::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 			if(LocationInGadgetX(toLocation, gadgetLocation) && LocationInGadgetY(toLocation, gadgetLocation))
 			{
 				pStateMachine->Transition(pStateMachine->pickedUp);
-				MessageQueue::Inst()->sendMessage(CM_GADGET_GOLDFISH_PICKEDUP, NULL, NULL);
+				pStateMachine->pickedUp->PickUp();
 			}
 			break;
 	}

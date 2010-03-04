@@ -31,4 +31,5 @@ private:
 	CharacterStateMachine * pCharacterStateMachine;
 	Location * location;
 	int pickedupFish;
+	int pickedupWeapons;
 };

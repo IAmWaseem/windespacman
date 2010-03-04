@@ -15,6 +15,7 @@ Character::Character(void)
 	pCharacterStateMachine = new CharacterStateMachine();
 	direction = Direction::Right;
 	pickedupFish = 0;
+	pickedupWeapons = 0;
 }
 
 Character::~Character(void)
@@ -25,7 +26,7 @@ void Character::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 {
 	this->pCharacterStateMachine->recieveMessage(message, wParam, lParam);
 
-	ULONGLONG timeElapsed;
+	int timeElapsed;
 	switch (message) 
 	{
 	case CM_LEVEL_START:
@@ -78,13 +79,17 @@ void Character::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 
 	case CM_CHARACTER_RESET_POSITION:
 		if(wParam != NULL)
-			location->X = (int)wParam;
+			location->X = (float)wParam;
 
 		if(lParam != NULL)
-			location->Y = (int)lParam;
+			location->Y = (float)lParam;
 
 		MessageQueue::Inst()->sendMessage(CM_CHARACTER_MOVE_X_FROM_TO, (int)location, (int)location);
 		MessageQueue::Inst()->sendMessage(CM_CHARACTER_FALL_Y_FROM_TO, (int)location, (int)location);
+		break;
+
+	case CM_GADGET_PIRANHA_PICKEDUP:
+		pickedupWeapons++;
 		break;
 	}
 }

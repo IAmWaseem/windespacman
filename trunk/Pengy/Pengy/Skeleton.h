@@ -6,6 +6,7 @@
 #include "Renderer.h"
 #include "Character.h"
 #include "Sound.h"
+#include "GadgetFactory.h"
 #include <sstream>
 using namespace dotnetguy;
 

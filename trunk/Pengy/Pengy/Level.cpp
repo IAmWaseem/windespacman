@@ -41,6 +41,21 @@ Level::~Level(){
 
 void Level::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam) 
 {
+
+	Location * gL1 = new Location();
+	Location * gL2 = new Location();
+	Location * gL3 = new Location();
+	Location * gL4 = new Location();
+
+	gL1->X = 400;
+	gL1->Y = 300;
+
+	gL2->X = 200;
+	gL2->Y = 300;
+
+	gL3->X = 300;
+	gL3->Y = 300;
+
 	Location * fromLocation;
 	Location * toLocation;
 	float fromLocationY;
@@ -60,6 +75,9 @@ void Level::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	case CM_LEVEL_START:
 		LoadLevel(1);
 		MessageQueue::Inst()->sendMessage(CM_LEVEL_LENGTH, levelLength, NULL);
+		MessageQueue::Inst()->sendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)gL1, NULL);
+		MessageQueue::Inst()->sendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)gL2, NULL);
+		MessageQueue::Inst()->sendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)gL3, NULL);
 		break;
 	case CM_CHARACTER_MOVE_X_FROM_TO:
 		fromLocation = (Location*)wParam;

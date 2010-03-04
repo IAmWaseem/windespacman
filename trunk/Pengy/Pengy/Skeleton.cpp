@@ -24,7 +24,6 @@ CSkeleton::~CSkeleton()
 
 LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-	Location * loc1;
 	switch (uMsg) 
 	{
 	case WM_CREATE:
@@ -32,7 +31,7 @@ LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		messageQueue->Inst()->attach(character->Instance());
 		messageQueue->Inst()->attach(renderer->Inst());
 		messageQueue->Inst()->attach(sound->Inst());
-		messageQueue->Inst()->attach(new Gadget());
+		messageQueue->Inst()->attach(new GadgetFactory());
 		break;
 	case WM_KEYDOWN:
 		switch(wParam)
@@ -162,7 +161,7 @@ void CSkeleton::Update()
 	uli.HighPart = fileTime.dwHighDateTime;
 
 	ULONGLONG systemTimeIn_ms( uli.QuadPart/10000 );
-	int elapsedTime = systemTimeIn_ms - previousUpdateTime;
+	int elapsedTime = (int)(systemTimeIn_ms - previousUpdateTime);
 
 	messageQueue->Inst()->sendMessage(CM_UPDATE, elapsedTime, NULL);
 	previousUpdateTime = systemTimeIn_ms;

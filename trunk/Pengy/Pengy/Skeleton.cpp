@@ -54,12 +54,17 @@ LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 		case 't':
 		case 'T':
-			messageQueue->Inst()->sendMessage(CM_CHARACTER_RESET_POSITION, 1600, 50);
+			messageQueue->Inst()->sendMessage(CM_CHARACTER_RESET_POSITION, NULL, 10);
 			break;
 
 		case 'r':
 		case 'R':
 			messageQueue->Inst()->sendMessage(CM_CHARACTER_RESET_POSITION, 50, 200);
+			break;
+		
+		case 'g':
+		case 'G':
+			MessageQueue::Inst()->sendMessage(CM_SOUND_EVENT,(WPARAM)(LPCTSTR)"res/pengy.wav", 0);
 			break;
 
 			// show the fps

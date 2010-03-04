@@ -26,11 +26,13 @@ void CharacterView::Draw(HDC hdc, int xFrom, int xTo)
 	if(Renderer::ShowDebug)
 	{
 		ostringstream s;
-		int x = Character::Instance()->GetLocation()->X - xFrom;
+		ostringstream s2;
+		int x = Character::Instance()->GetLocation()->X;
 		int y = Character::Instance()->GetLocation()->Y;
 		int width = Character::Instance()->GetLocation()->width;
 		int height = Character::Instance()->GetLocation()->height;
 		s << "Location = ( " << x << ", " << y << " )";
+		s2 << "Location = ( " << (int)(x / 64) << ", " << (int)(y / 64) << " )";
 		
 		LPCSTR PengyDirection = "";
 		if(Character::Instance()->getDirection() == Direction::Left)
@@ -46,31 +48,38 @@ void CharacterView::Draw(HDC hdc, int xFrom, int xTo)
 		temp = s.str();
 		character = temp.c_str();
 
+		LPCSTR character2 = "";
+		string temp2; 
+		temp2 = s2.str();
+		character2 = temp2.c_str();
+
 		TextOut(hdc, 15, 35, character, strlen(character));
+
+		TextOut(hdc, 15, 55, character2, strlen(character2));
 		
 		// lines of the border of the image current used by pengy
 		POINT leftOfPengy[2];	
-		leftOfPengy[0].x = x;
+		leftOfPengy[0].x = x - xFrom;
 		leftOfPengy[0].y = y;
-		leftOfPengy[1].x = x;
+		leftOfPengy[1].x = x - xFrom;
 		leftOfPengy[1].y = y + height;
 		
 		POINT bottomOfPengy[2]; 
-		bottomOfPengy[0].x = x;
+		bottomOfPengy[0].x = x - xFrom;
 		bottomOfPengy[0].y = y + height;
-		bottomOfPengy[1].x = x + width;
+		bottomOfPengy[1].x = x + width - xFrom;
 		bottomOfPengy[1].y = y + height;
 		
 		POINT topOfPengy[2];	
-		topOfPengy[0].x = x;
+		topOfPengy[0].x = x - xFrom;
 		topOfPengy[0].y = y;
-		topOfPengy[1].x = x + width;
+		topOfPengy[1].x = x + width - xFrom;
 		topOfPengy[1].y = y;
 		
 		POINT rightOfPengy[2];	
-		rightOfPengy[0].x = x + width;
+		rightOfPengy[0].x = x + width - xFrom;
 		rightOfPengy[0].y = y;
-		rightOfPengy[1].x= x + width;
+		rightOfPengy[1].x= x + width - xFrom;
 		rightOfPengy[1].y = y + height;
 
 		HPEN hPen = CreatePen(PS_SOLID, 1, RGB(255, 0, 255));

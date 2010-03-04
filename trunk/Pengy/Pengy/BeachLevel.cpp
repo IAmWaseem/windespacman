@@ -205,16 +205,16 @@ vector<int*> BeachLevel::getTiles()
 		if(i == 11 || i == 19 || i == 25)
 		{
 			// treeleaves
-			int* tree1 = new int[6]; tree1[0] = -1 + (i); tree1[1] = 3; tree1[2] = 5; tree1[3] = 4; tree1[4] = 1; tree1[5] = 1;
-			int* tree2 = new int[6]; tree2[0] =  0 + (i); tree2[1] = 3; tree2[2] = 6; tree2[3] = 4; tree2[4] = 1; tree2[5] = 1;	
-			int* tree3 = new int[6]; tree3[0] =  1 + (i); tree3[1] = 3; tree3[2] = 7; tree3[3] = 4; tree3[4] = 1; tree3[5] = 1;
-			int* tree4 = new int[6]; tree4[0] = -1 + (i); tree4[1] = 4; tree4[2] = 5; tree4[3] = 5; tree4[4] = 1; tree4[5] = 1;
-			int* tree5 = new int[6]; tree5[0] =  0 + (i); tree5[1] = 4; tree5[2] = 6; tree5[3] = 5; tree5[4] = 1; tree5[5] = 1;
-			int* tree6 = new int[6]; tree6[0] =  1 + (i); tree6[1] = 4; tree6[2] = 7; tree6[3] = 5; tree6[4] = 1; tree6[5] = 1;
+			int* tree1 = new int[6]; tree1[0] = -1 + (i); tree1[1] = 3; tree1[2] = 5; tree1[3] = 4; tree1[4] = 0; tree1[5] = 2;
+			int* tree2 = new int[6]; tree2[0] =  0 + (i); tree2[1] = 3; tree2[2] = 6; tree2[3] = 4; tree2[4] = 0; tree2[5] = 2;	
+			int* tree3 = new int[6]; tree3[0] =  1 + (i); tree3[1] = 3; tree3[2] = 7; tree3[3] = 4; tree3[4] = 0; tree3[5] = 2;
+			int* tree4 = new int[6]; tree4[0] = -1 + (i); tree4[1] = 4; tree4[2] = 5; tree4[3] = 5; tree4[4] = 0; tree4[5] = 2;
+			int* tree5 = new int[6]; tree5[0] =  0 + (i); tree5[1] = 4; tree5[2] = 6; tree5[3] = 5; tree5[4] = 0; tree5[5] = 2;
+			int* tree6 = new int[6]; tree6[0] =  1 + (i); tree6[1] = 4; tree6[2] = 7; tree6[3] = 5; tree6[4] = 0; tree6[5] = 2;
 
 			// treelog
-			int* tree10 = new int[6]; tree10[0] = 0 + (i); tree10[1] = 5; tree10[2] = 6; tree10[3] = 6; tree10[4] = 1; tree10[5] = 1;
-			int* tree11 = new int[6]; tree11[0] = 0 + (i); tree11[1] = 6; tree11[2] = 6; tree11[3] = 7; tree11[4] = 1; tree11[5] = 1;
+			int* tree10 = new int[6]; tree10[0] = 0 + (i); tree10[1] = 5; tree10[2] = 6; tree10[3] = 6; tree10[4] = 0; tree10[5] = 2;
+			int* tree11 = new int[6]; tree11[0] = 0 + (i); tree11[1] = 6; tree11[2] = 6; tree11[3] = 7; tree11[4] = 0; tree11[5] = 2;
 
 			data.push_back(tree1); data.push_back(tree2); data.push_back(tree3); 
 			data.push_back(tree4); data.push_back(tree5); data.push_back(tree6); 
@@ -228,16 +228,16 @@ vector<int*> BeachLevel::getTiles()
 		if(i == 2 || i == 17 || i == 24|| i == 27 || i == 34)
 		{
 			// treeleaves
-			int* tree1 = new int[6]; tree1[0] = 0 + (i); tree1[1] = 3; tree1[2] = 0; tree1[3] = 3; tree1[4] = 1;tree1[5] = 0;
-			int* tree2 = new int[6]; tree2[0] = 1 + (i); tree2[1] = 3; tree2[2] = 1; tree2[3] = 3; tree2[4] = 1;tree2[5] = 0;
-			int* tree3 = new int[6]; tree3[0] = 0 + (i); tree3[1] = 4; tree3[2] = 0; tree3[3] = 4; tree3[4] = 1;tree3[5] = 0;
-			int* tree4 = new int[6]; tree4[0] = 1 + (i); tree4[1] = 4; tree4[2] = 1; tree4[3] = 4; tree4[4] = 1;tree4[5] = 0;
-			int* tree5 = new int[6]; tree5[0] = 0 + (i); tree5[1] = 5; tree5[2] = 0; tree5[3] = 5; tree5[4] = 1;tree5[5] = 0;
-			int* tree6 = new int[6]; tree6[0] = 1 + (i); tree6[1] = 5; tree6[2] = 1; tree6[3] = 5; tree6[4] = 1;tree6[5] = 0;
+			int* tree1 = new int[6]; tree1[0] = 0 + (i); tree1[1] = 3; tree1[2] = 0; tree1[3] = 3; tree1[4] = 1;tree1[5] = 1;
+			int* tree2 = new int[6]; tree2[0] = 1 + (i); tree2[1] = 3; tree2[2] = 1; tree2[3] = 3; tree2[4] = 1;tree2[5] = 1;
+			int* tree3 = new int[6]; tree3[0] = 0 + (i); tree3[1] = 4; tree3[2] = 0; tree3[3] = 4; tree3[4] = 1;tree3[5] = 1;
+			int* tree4 = new int[6]; tree4[0] = 1 + (i); tree4[1] = 4; tree4[2] = 1; tree4[3] = 4; tree4[4] = 1;tree4[5] = 1;
+			int* tree5 = new int[6]; tree5[0] = 0 + (i); tree5[1] = 5; tree5[2] = 0; tree5[3] = 5; tree5[4] = 1;tree5[5] = 1;
+			int* tree6 = new int[6]; tree6[0] = 1 + (i); tree6[1] = 5; tree6[2] = 1; tree6[3] = 5; tree6[4] = 1;tree6[5] = 1;
 
 			// treelog
-			int* tree10 = new int[6]; tree10[0] = 0 + (i); tree10[1] = 6; tree10[2] = 0; tree10[3] = 6; tree10[4] = 1;tree10[5] = 0;
-			int* tree11 = new int[6]; tree11[0] = 1 + (i); tree11[1] = 6; tree11[2] = 1; tree11[3] = 6; tree11[4] = 1;tree11[5] = 0;
+			int* tree10 = new int[6]; tree10[0] = 0 + (i); tree10[1] = 6; tree10[2] = 0; tree10[3] = 6; tree10[4] = 1;tree10[5] = 1;
+			int* tree11 = new int[6]; tree11[0] = 1 + (i); tree11[1] = 6; tree11[2] = 1; tree11[3] = 6; tree11[4] = 1;tree11[5] = 1;
 
 			data.push_back(tree1); data.push_back(tree2); data.push_back(tree3); 
 			data.push_back(tree4); data.push_back(tree5); data.push_back(tree6); 

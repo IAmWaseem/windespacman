@@ -483,10 +483,6 @@
 				</File>
 			</Filter>
 		</Filter>
-		<File
-			RelativePath=".\Pengy.rc"
-			>
-		</File>
 	</Files>
 	<Globals>
 	</Globals>

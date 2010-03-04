@@ -7,8 +7,11 @@ using namespace std;
 
 class LevelData
 {
+private:
+
 public:
     LevelData();
+	vector<int*> sortTiles(vector<int*> data);
 	virtual void LoadGadgets() = 0;
     virtual vector<Surface*> getSurfaces() = 0;
 	virtual vector<int*> getTiles() = 0;

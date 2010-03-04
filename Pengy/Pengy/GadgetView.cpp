@@ -2,11 +2,42 @@
 #include "Gadget.h"
 using namespace dotnetguy;
 
-GadgetView::GadgetView(GadgetImage image, LPCSTR path, Gadget * gadget)
+GadgetView::GadgetView(GadgetImage image, Gadget * gadget)
 {
 	currentImage = image;
 	Bitmap * bitmap = new Bitmap();
-	bitmap->LoadDIBFile(path);
+	switch(image)
+	{
+	case GadgetImage::Goldfish:
+		bitmap->LoadDIBFile(GOLDFISH_IMAGE);
+		break;
+	case GadgetImage::SnowBall:
+
+		break;
+	case GadgetImage::Balloons:
+
+		break;
+	case GadgetImage::ExtraLife:
+
+		break;
+
+	case GadgetImage::RottenFish:
+
+		break;
+
+	case GadgetImage::Powerup:
+
+		break;
+
+	case GadgetImage::Piranha:
+		bitmap->LoadDIBFile(PIRANHA_IMAGE);
+		break;
+
+	case GadgetImage::Ladybug:
+
+		break;
+
+	}
 	currentBitmap = bitmap;
 	this->pGadget = gadget;
 }

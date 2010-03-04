@@ -2,7 +2,7 @@
 #include "Location.h"
 
 bool Renderer::ShowFps = true;
-bool Renderer::ShowDebug = true;
+bool Renderer::ShowDebug = false;
 bool Renderer::ShowSurfaces = false;
 
 Renderer* Renderer::pInstance = NULL;

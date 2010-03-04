@@ -68,7 +68,11 @@ void LevelView::Draw(HDC hDC, int xFrom, int xTo)
 		if(difInMSec == 0)
 			s << "1000+";
 		else
-			s << (1000 / difInMSec);
+		{
+			float temp_fps = 1000 / difInMSec;
+			int temp2_fps = temp_fps;
+			s << (temp2_fps);
+		}
 
 		// cast to c_string
 		LPCSTR fps = "";
@@ -76,10 +80,14 @@ void LevelView::Draw(HDC hDC, int xFrom, int xTo)
 		temp = s.str();
 		fps = temp.c_str();
 
+		
+		if(st.wSecond == now.wSecond)
+			TextOut(hDC, 15, 15, fps, strlen(fps));
+		else
+			TextOut(hDC, 15, 15, "FPS:", strlen("FPS:"));
+
 		// set the time of the last update to this
 		st = now;
-
-		TextOut(hDC, 15, 15, fps, strlen(fps));
 	}
 }
 

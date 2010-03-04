@@ -3,6 +3,8 @@
 //#include "Messages.h"
 #include "Location.h"
 #include "Gadget.h"
+#include "SPLASH.h"
+#include "resource.h"
 using namespace dotnetguy;
 
 
@@ -24,9 +26,15 @@ CSkeleton::~CSkeleton()
 
 LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
+	SPLASH splash;
 	switch (uMsg) 
 	{
 	case WM_CREATE:
+		splash.Init(hWnd, this->m_hInstance, IDB_BITMAP2 );
+		splash.Show();
+		Sleep(3000);
+		splash.Hide();
+
 		messageQueue->Inst()->attach(level->Inst());
 		messageQueue->Inst()->attach(character->Instance());
 		messageQueue->Inst()->attach(renderer->Inst());

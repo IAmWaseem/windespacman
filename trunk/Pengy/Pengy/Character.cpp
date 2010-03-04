@@ -10,8 +10,8 @@ Character::Character(void)
 	location = new Location();
 	location->X = 50;
 	location->Y = 200;
-	location->width = 100;
-	location->height = 100;
+	location->width = 50;
+	location->height = 96;
 	pCharacterStateMachine = new CharacterStateMachine();
 	direction = Direction::Right;
 	pickedupFish = 0;

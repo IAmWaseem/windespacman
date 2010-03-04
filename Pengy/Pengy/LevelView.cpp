@@ -148,6 +148,8 @@ void LevelView::DrawTile(Tile * tile, HDC hdc, RECT rect, int offsetX, int offse
 		depthFactor = 1.20f;
 	else if(tile->Depth == 2)
 		depthFactor = 1.50f;
+	else if(tile->Depth == 3)
+		depthFactor = 2.00f;
 
 	if(tile->Transparant == true)
 	{	

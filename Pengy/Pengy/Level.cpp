@@ -245,12 +245,16 @@ void Level::LoadLevel(int level)
 	vector<int*>::iterator iterator = data.begin();
 	while(iterator!=data.end())
 	{
+		
+
 		int* dataRow = *iterator;
 
+		int i = dataRow[5];
+
 		if(dataRow[4] == 1)
-			myTiles.push_back(Tile(dataRow[0], dataRow[1], dataRow[2], dataRow[3], true));
+			myTiles.push_back(Tile(dataRow[0], dataRow[1], dataRow[2], dataRow[3], true, dataRow[5]));
 		else
-			myTiles.push_back(Tile(dataRow[0], dataRow[1], dataRow[2], dataRow[3], false));
+			myTiles.push_back(Tile(dataRow[0], dataRow[1], dataRow[2], dataRow[3], false, dataRow[5]));
 
 		iterator++;
 	}

@@ -14,6 +14,7 @@ Tile::Tile(int pGridX, int pGridY, int pTileX, int pTileY)
 	TileX = pTileX;
 	TileY = pTileY;
 	Transparant = false;
+	Depth = 0;
 }
 Tile::Tile(int pGridX, int pGridY, int pTileX, int pTileY, bool pTransparant)
 {
@@ -22,6 +23,16 @@ Tile::Tile(int pGridX, int pGridY, int pTileX, int pTileY, bool pTransparant)
 	TileX = pTileX;
 	TileY = pTileY;
 	Transparant = pTransparant;
+	Depth = 0;
+}
+Tile::Tile(int pGridX, int pGridY, int pTileX, int pTileY, bool pTransparant, int pDepth)
+{
+	GridX = pGridX;
+	GridY = pGridY;
+	TileX = pTileX;
+	TileY = pTileY;
+	Transparant = pTransparant;
+	Depth = pDepth;
 }
 int Tile::PixelPositionX()
 {

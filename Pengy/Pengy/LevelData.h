@@ -1,6 +1,7 @@
 #include "messages.h"
 #include "Surface.h"
 #include <string>
+#include <algorithm>
 #include <vector>
 using namespace std;
 

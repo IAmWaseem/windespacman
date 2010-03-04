@@ -25,6 +25,7 @@ void GadgetFactory::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		gadgets->push_back(gadget);
 		break;
 	case CM_GADGETFACTORY_CREATE_PIRANHA:
+		location = (Location*)wParam;
 		gadget = new Gadget(gadgets->size(), location, GadgetView::GadgetImage::Piranha);
 		gadgets->push_back(gadget);
 		break;

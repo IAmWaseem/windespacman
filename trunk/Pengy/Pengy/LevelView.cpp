@@ -69,8 +69,8 @@ void LevelView::Draw(HDC hDC, int xFrom, int xTo)
 			s << "1000+";
 		else
 		{
-			float temp_fps = 1000 / difInMSec;
-			int temp2_fps = temp_fps;
+			float temp_fps = (float)(1000 / difInMSec);
+			int temp2_fps = (int)temp_fps;
 			s << (temp2_fps);
 		}
 

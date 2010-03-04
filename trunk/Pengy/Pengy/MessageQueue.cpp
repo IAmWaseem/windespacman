@@ -24,7 +24,7 @@ void MessageQueue::attach( Observer *myObserver)
 
 void MessageQueue::detach( Observer *myObserver)
 {
-    for (int i= 0; i< myObs.size(); i++)
+    for (unsigned int i= 0; i< myObs.size(); i++)
     {
         if (myObs[i]== myObserver)
         {
@@ -36,7 +36,7 @@ void MessageQueue::detach( Observer *myObserver)
 
 void MessageQueue::sendMessage(UINT message, WPARAM wParam, LPARAM lParam)
 {
-    for (int i= 0; i< myObs.size(); i++)
+    for (unsigned int i= 0; i< myObs.size(); i++)
     {
         myObs[i]->recieveMessage(message, wParam, lParam);
     }

@@ -65,5 +65,8 @@ void GadgetView::Draw(HDC hdc, int xFrom, int xTo)
 	placeRect.bottom = placeRect.top + bitmap->Height();
 	pGadget->GetLocation()->width = bitmap->Width();
 	pGadget->GetLocation()->height = bitmap->Height();
-	bitmap->TransparentPaint(hdc, RGB(0, 0, 0), &placeRect, NULL); 
+	if(pGadget->GetLocation()->X + pGadget->GetLocation()->width >= xFrom && pGadget->GetLocation()->X + pGadget->GetLocation()->width <= xTo)
+	{
+		bitmap->TransparentPaint(hdc, RGB(0, 0, 0), &placeRect, NULL); 
+	}
 }

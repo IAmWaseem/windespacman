@@ -117,7 +117,7 @@ void LevelView::SetTiles(vector<Tile> tiles, LPCSTR path)
 	while(iterator!=tiles.end())
 	{
 		Tile tile = *iterator;
-		myTiles->push_back(new Tile(tile.GridX, tile.GridY, tile.TileX, tile.TileY, tile.Transparant));
+		myTiles->push_back(new Tile(tile.GridX, tile.GridY, tile.TileX, tile.TileY, tile.Transparant, tile.Depth));
 
 		iterator++;
 	}
@@ -140,16 +140,24 @@ void LevelView::DrawTile(Tile * tile, HDC hdc, RECT rect, int offsetX, int offse
 	HDC hTileDC = CreateCompatibleDC(hdc);
 	FillRect(hTileDC, &rect, (HBRUSH)GetStockObject(WHITE_BRUSH));
 
+	double depthFactor = 1;
+
+	if(tile->Depth == 0)
+		depthFactor = 1;
+	else if(tile->Depth == 1)
+		depthFactor = 1.5;
+	else if(tile->Depth == 2)
+		depthFactor = 2;
 
 	if(tile->Transparant == true)
 	{	
 		HANDLE hbmOld;
 		hbmOld = SelectObject(hTileDC, hbmMask);
 
-		BitBlt(hdc, (tile->GridX * tile->TileWidth()) + offsetX, (tile->GridY * tile->TileHeight()) + offsetY, tile->TileWidth(), tile->TileHeight(), hTileDC, tile->TileX * tile->TileWidth(), tile->TileY * tile->TileHeight(), SRCAND);
+		BitBlt(hdc, (tile->GridX * tile->TileWidth()) + (offsetX / depthFactor) , (tile->GridY * tile->TileHeight()) + offsetY, tile->TileWidth(), tile->TileHeight(), hTileDC, tile->TileX * tile->TileWidth(), tile->TileY * tile->TileHeight(), SRCAND);
 
 		SelectObject(hTileDC, tilemap);	
-		BitBlt(hdc, (tile->GridX * tile->TileWidth()) + offsetX, (tile->GridY * tile->TileHeight()) + offsetY, tile->TileWidth(), tile->TileHeight(), hTileDC, tile->TileX * tile->TileWidth(), tile->TileY * tile->TileHeight(), SRCPAINT);
+		BitBlt(hdc, (tile->GridX * tile->TileWidth()) + (offsetX / depthFactor), (tile->GridY * tile->TileHeight()) + offsetY, tile->TileWidth(), tile->TileHeight(), hTileDC, tile->TileX * tile->TileWidth(), tile->TileY * tile->TileHeight(), SRCPAINT);
 
 		SelectObject(hTileDC, tilemap);		
 		SelectObject(hTileDC, hbmOld);
@@ -157,8 +165,9 @@ void LevelView::DrawTile(Tile * tile, HDC hdc, RECT rect, int offsetX, int offse
 	else
 	{
 		SelectObject(hTileDC, tilemap);
-		BitBlt(hdc, (tile->GridX * tile->TileWidth()) + offsetX, (tile->GridY * tile->TileHeight()) + offsetY, tile->TileWidth(), tile->TileHeight(), hTileDC, tile->TileX * tile->TileWidth(), tile->TileY * tile->TileHeight(), SRCCOPY);	
+		BitBlt(hdc, (tile->GridX * tile->TileWidth()) + (offsetX / depthFactor), (tile->GridY * tile->TileHeight()) + offsetY, tile->TileWidth(), tile->TileHeight(), hTileDC, tile->TileX * tile->TileWidth(), tile->TileY * tile->TileHeight(), SRCCOPY);	
 	}
+
 
 	DeleteDC(hTileDC);
 }

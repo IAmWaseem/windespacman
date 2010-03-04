@@ -225,7 +225,7 @@ vector<int*> BeachLevel::getTiles()
 	// smallest tree
 	for(int i = 0; i < 40; i++)
 	{
-		if(i == 2 || i == 17 || i == 24|| i == 27 || i == 34)
+		if(i == 2 || i == 17 || i == 24 || i == 34)
 		{
 			// treeleaves
 			int* tree1 = new int[6]; tree1[0] = 0 + (i); tree1[1] = 3; tree1[2] = 0; tree1[3] = 3; tree1[4] = 1;tree1[5] = 1;
@@ -245,6 +245,38 @@ vector<int*> BeachLevel::getTiles()
 		}
 	}
 #pragma endregion here is the creation of the tree tiles
+
+#pragma region decals
+
+	int* decal1 = new int[6]; decal1[0] = 4; decal1[1] = 4; decal1[2] = 12; decal1[3] = 4; decal1[4] = 1; decal1[5] = 0;
+	int* decal2 = new int[6]; decal2[0] = 4; decal2[1] = 5; decal2[2] = 12; decal2[3] = 5; decal2[4] = 1; decal2[5] = 0;
+	int* decal3 = new int[6]; decal3[0] = 4; decal3[1] = 6; decal3[2] = 12; decal3[3] = 6; decal3[4] = 1; decal3[5] = 0;
+
+	int* decal4 = new int[6]; decal4[0] = 5; decal4[1] = 4; decal4[2] = 13; decal4[3] = 4; decal4[4] = 1; decal4[5] = 0;
+	int* decal5 = new int[6]; decal5[0] = 5; decal5[1] = 5; decal5[2] = 13; decal5[3] = 5; decal5[4] = 1; decal5[5] = 0;
+	int* decal6 = new int[6]; decal6[0] = 5; decal6[1] = 6; decal6[2] = 13; decal6[3] = 6; decal6[4] = 1; decal6[5] = 0;
+	data.push_back(decal1);data.push_back(decal2);data.push_back(decal3);
+	data.push_back(decal4);data.push_back(decal5);data.push_back(decal6);
+
+	for(int i = 0; i < 4; i++)
+	{
+		int* parasol3 = new int[6]; parasol3[0] = 24+i; parasol3[1] = 3; parasol3[2] = 12+i; parasol3[3] = 0; parasol3[4] = 1; parasol3[5] = 0;
+		int* parasol4 = new int[6]; parasol4[0] = 24+i; parasol4[1] = 4; parasol4[2] = 12+i; parasol4[3] = 1; parasol4[4] = 1; parasol4[5] = 0;
+		
+		if(i > 0)
+		{
+			int* parasol5 = new int[6]; parasol5[0] = 24+i; parasol5[1] = 5; parasol5[2] = 12+i; parasol5[3] = 2; parasol5[4] = 1; parasol5[5] = 0;
+			data.push_back(parasol5); 
+		}
+		if(i == 1)
+		{
+			int* parasol6 = new int[6]; parasol6[0] = 24+i; parasol6[1] = 6; parasol6[2] = 12+i; parasol6[3] = 3; parasol6[4] = 1; parasol6[5] = 0;
+			data.push_back(parasol6);
+		}		
+		data.push_back(parasol3); data.push_back(parasol4); 
+	}
+	
+#pragma endregion here is the creation of the decals
 
 #pragma region structures
 

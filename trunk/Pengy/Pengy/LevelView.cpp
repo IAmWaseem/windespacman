@@ -140,14 +140,14 @@ void LevelView::DrawTile(Tile * tile, HDC hdc, RECT rect, int offsetX, int offse
 	HDC hTileDC = CreateCompatibleDC(hdc);
 	FillRect(hTileDC, &rect, (HBRUSH)GetStockObject(WHITE_BRUSH));
 
-	double depthFactor = 1;
+	float depthFactor = 1;
 
 	if(tile->Depth == 0)
-		depthFactor = 1;
+		depthFactor = 1.00f;
 	else if(tile->Depth == 1)
-		depthFactor = 1.5;
+		depthFactor = 1.20f;
 	else if(tile->Depth == 2)
-		depthFactor = 2;
+		depthFactor = 1.50f;
 
 	if(tile->Transparant == true)
 	{	

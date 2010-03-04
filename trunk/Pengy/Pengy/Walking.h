@@ -5,7 +5,7 @@ class Walking : public CharacterState
 {
 private:
 	float distanceToMove;
-	float moved;
+	long moved;
 	float speed;
 	void SwapPicture();
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="9,00"
 	Name="Pengy"
 	ProjectGUID="{D9792256-FBF2-4E04-A095-D180715C6649}"
 	RootNamespace="Pengy"
@@ -39,6 +39,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
+				AdditionalIncludeDirectories="&quot;SDL\include&quot;"
 				MinimalRebuild="true"
 				RuntimeLibrary="3"
 				WarningLevel="3"
@@ -501,6 +502,14 @@
 		</File>
 		<File
 			RelativePath=".\Pengy.rc"
+			>
+		</File>
+		<File
+			RelativePath=".\SDL\lib\SDL.lib"
+			>
+		</File>
+		<File
+			RelativePath=".\SDL\lib\SDL_mixer.lib"
 			>
 		</File>
 	</Files>

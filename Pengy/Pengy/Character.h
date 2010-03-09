@@ -32,4 +32,5 @@ private:
 	Location * location;
 	int pickedupFish;
 	int pickedupWeapons;
+	World* world;
 };

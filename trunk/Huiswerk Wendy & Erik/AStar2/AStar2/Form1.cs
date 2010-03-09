@@ -32,7 +32,8 @@ namespace AStar2
             //{
             //    return;
             //}
-            List<Node> nextNodes = getMoves(n);
+            Node temp = new Node(n.Id, n.persons);
+            List<Node> nextNodes = getMoves(temp);
             if (nextNodes != null)
             {
                 if (nextNodes.Count > 0)
@@ -275,6 +276,7 @@ namespace AStar2
                             boatPerson.state = b.state;
                             temp.persons.Add(boatPerson);
                             addNode = new Node(id, temp.persons);
+                            
                             if (graph.DoesContain(addNode))
                                 nextNodes.Add(addNode);
                         }

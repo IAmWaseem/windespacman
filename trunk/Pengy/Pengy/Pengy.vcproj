@@ -169,6 +169,10 @@
 				RelativePath=".\WinMain.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\World.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -192,6 +196,10 @@
 			</File>
 			<File
 				RelativePath=".\Win.h"
+				>
+			</File>
+			<File
+				RelativePath=".\World.h"
 				>
 			</File>
 		</Filter>

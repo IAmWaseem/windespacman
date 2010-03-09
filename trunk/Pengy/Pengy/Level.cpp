@@ -41,7 +41,6 @@ Level::~Level(){
 
 void Level::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam) 
 {
-
 	Location * gL1 = new Location();
 	Location * gL2 = new Location();
 	Location * gL3 = new Location();
@@ -72,8 +71,8 @@ void Level::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	{
 	case CM_KEY:
 		break;
-	case CM_LEVEL_START:
-		LoadLevel(1);
+	case CM_LEVEL_LOAD:
+		LoadLevel(world->Inst()->level);
 		MessageQueue::Inst()->sendMessage(CM_LEVEL_LENGTH, levelLength, NULL);
 		MessageQueue::Inst()->sendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)gL1, NULL);
 		MessageQueue::Inst()->sendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)gL2, NULL);

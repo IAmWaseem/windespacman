@@ -5,6 +5,7 @@
 #include "LevelView.h"
 #include "Location.h"
 #include "BeachLevel.h"
+#include "World.h"
 
 
 class Level : public Observer
@@ -23,6 +24,7 @@ private:
 	BeachLevel beach;
 	int levelLength;
 	void SetLevelLength();
+	World* world;
 	bool LocationInSurfaceX(Location * location, Surface * surface);
 	bool LocationInSurfaceY(Location * location, Surface * surface);
 };

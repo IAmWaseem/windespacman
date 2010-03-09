@@ -27,6 +27,7 @@ private:
 	Renderer* renderer;
 	MessageQueue* messageQueue;
 	Level* level;
+	World* world;
 	Sound* sound;
 	void Update();
 	void Render(HWND);

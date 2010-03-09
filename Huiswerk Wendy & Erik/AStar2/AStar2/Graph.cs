@@ -39,7 +39,6 @@ namespace AStar2
         }
         public bool HasFinish()
         {
-            
             foreach (Node n in Nodes)
             {
                 bool finish = true;
@@ -68,8 +67,6 @@ namespace AStar2
                     Person tempPerson = tempList.FirstOrDefault(per => per.type == p.type && per.state == p.state);
                     if (!(tempPerson.state == p.state && tempPerson.type == p.type))
                     {
-                        //t = true;
-                        //else
                         t = false;
                     }
                     tempList.Remove(tempPerson);

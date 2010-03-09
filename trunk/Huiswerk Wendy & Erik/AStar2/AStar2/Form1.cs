@@ -18,7 +18,7 @@ namespace AStar2
             graph = new Graph();
             Node n = new Node(0, State.right, State.right, State.right, State.right, State.right, State.right, State.left);
             graph.AddNode(n);
-            generateGraph(n, 0);
+            generateGraph(n);
             bool succes = graph.HasFinish();
 
             AStar astar = new AStar(graph);
@@ -26,12 +26,8 @@ namespace AStar2
             List<Node> path = astar.total;
         }
 
-        private void generateGraph(Node n, int depth)
+        private void generateGraph(Node n)
         {
-            //if (depth >= 6000)
-            //{
-            //    return;
-            //}
             Node temp = new Node(n.Id, n.persons);
             List<Node> nextNodes = getMoves(temp);
             if (nextNodes != null)
@@ -42,7 +38,7 @@ namespace AStar2
                     {
                         graph.AddNode(tempNode);
                         graph.AddEdge(n.Id, tempNode.Id, true, 1);
-                        generateGraph(tempNode, depth + 1);
+                        generateGraph(tempNode);
                     }
                 }
                 else

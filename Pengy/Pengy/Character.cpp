@@ -123,6 +123,10 @@ void Character::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	case CM_CHARACTER_GET_LOCATION:
 		MessageQueue::Inst()->sendMessage(CM_CHARACTER_RETURN_LOCATION, (int)location, NULL);
 		break;
+
+	case CM_CHARACTER_KILLED:
+		pCharacterView->unRegisterToGraphics();
+		break;
 	}
 }
 

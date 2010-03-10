@@ -67,6 +67,8 @@ void Jumping::Spacebar()
 	{
 		upwardVelocity = 0.320f;
 	}
+
+	
 }
 
 void Jumping::Update(int timeElapsed)

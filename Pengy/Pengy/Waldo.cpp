@@ -14,6 +14,8 @@ Waldo::Waldo(Location * pLocation)
 	pWaldoStateMachine->Transition(pWaldoStateMachine->pWander);
 
 	this->isVulnerable = false;
+	this->pengyJumping = false;
+	this->isAlive = true;
 }
 
 Waldo::Waldo(Surface * pSurface)
@@ -34,6 +36,8 @@ Waldo::Waldo(Surface * pSurface)
 	pWaldoStateMachine->Transition(pWaldoStateMachine->pPatrol);
 
 	this->isVulnerable = false;
+	this->pengyJumping = false;
+	this->isAlive = true;
 }
 
 Waldo::~Waldo(void)
@@ -42,17 +46,39 @@ Waldo::~Waldo(void)
 
 void Waldo::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 {
+	if(!this->isAlive)
+		return;
+
 	switch(message)
 	{
 	case CM_UPDATE:
 		MessageQueue::Inst()->sendMessage(CM_CHARACTER_GET_LOCATION, NULL, NULL);
 		break;
+
 	case CM_CHARACTER_RETURN_LOCATION:
 		this->pPengyLocation = (Location*)wParam;
 		CheckPengyCollision();
 		break;
+
+	case CM_CHARACTER_JUMP_Y_FROM_TO:
+		this->pengyJumping = true;
+		break;
+
+	case CM_CHARACTER_IS_FALLING:
+	case CM_CHARACTER_FALL_Y_FROM_TO:
+		if(this->pengyJumping)
+			this->isVulnerable = true;
+		else
+			this->isVulnerable = false;
+		break;
+
+	case CM_CHARACTER_IS_STANDING:
+		this->isVulnerable = false;
+		this->pengyJumping = false;
+		break;
 	}
-	this->pWaldoStateMachine->recieveMessage(message, wParam, lParam);
+	if(this->isAlive)
+		this->pWaldoStateMachine->recieveMessage(message, wParam, lParam);
 }
 
 Location * Waldo::GetLocation()
@@ -77,5 +103,71 @@ void Waldo::SetDirection(Direction direction)
 
 void Waldo::CheckPengyCollision()
 {
+	bool collision = false;
+	if(LocationInWaldoX(pPengyLocation, pLocation) && LocationInWaldoY(pPengyLocation, pLocation))
+	{
+		collision = true;
+	}
 
+	if(collision)
+	{
+		if(this->isVulnerable)
+		{
+			this->pWaldoView->unRegisterToGraphics();
+			MessageQueue::Inst()->sendMessage(CM_WALDO_KILLED, NULL, NULL);
+			this->isAlive = false;
+			delete this->pLocation;
+			delete this->pWaldoStateMachine;
+			delete this->pWaldoView;
+		}
+		else
+		{
+			MessageQueue::Inst()->sendMessage(CM_CHARACTER_KILLED, NULL, NULL);
+		}
+	}
 }
+
+bool Waldo::LocationInWaldoX(Location * locationPengy, Location * locationGadget)
+{
+	bool inGadget = false;
+	if(locationGadget->X <= locationPengy->X && (locationGadget->X + locationGadget->width) >= (locationPengy->X + locationPengy->width))
+	{
+		inGadget = true;
+	}
+	if(locationGadget->X >= locationPengy->X && (locationGadget->X + locationGadget->width) <= (locationPengy->X + locationPengy->width))
+	{
+		inGadget = true;
+	}
+	if(locationGadget->X <= locationPengy->X && (locationGadget->X + locationGadget->width) <= (locationPengy->X + locationPengy->width) && (locationGadget->X + locationGadget->width) > locationPengy->X)
+	{
+		inGadget = true;
+	}
+	if(locationGadget->X >= locationPengy->X && locationGadget->X <= (locationPengy->X + locationPengy->width) && (locationGadget->X + locationGadget->width) >= (locationPengy->X + locationPengy->width))
+	{
+		inGadget = true;
+	}
+	return inGadget;
+}
+
+bool Waldo::LocationInWaldoY(Location * locationPengy, Location * locationGadget)
+{
+	bool inGadget = false;
+	if(locationGadget->Y  >= locationPengy->Y && (locationGadget->Y + locationGadget->height) <= (locationPengy->Y + locationPengy->height))
+	{
+		inGadget = true;
+	}
+	if(locationGadget->Y  <= locationPengy->Y && (locationGadget->Y + locationGadget->height) >= (locationPengy->Y + locationPengy->height))
+	{
+		inGadget = true;
+	}
+	if(locationPengy->Y >= locationGadget->Y && locationPengy->Y <= (locationGadget->Y + locationGadget->height))
+	{
+		inGadget = true;
+	}
+	if((locationPengy->Y + locationPengy->height) >= locationGadget->Y && (locationPengy->Y + locationPengy->height) <= (locationGadget->Y + locationGadget->height))
+	{
+		inGadget = true;
+	}
+	return inGadget;
+}
+

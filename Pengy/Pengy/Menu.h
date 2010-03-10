@@ -19,6 +19,7 @@ private:
 	World * world;
 	MessageQueue * messageQueue;
 	void OpenDialog();
+	void DeleteGameMenu();
 };
 
 

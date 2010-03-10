@@ -34,6 +34,8 @@ public:
 
 private:
 	GadgetImage currentImage;
-	Bitmap * currentBitmap;
+	HANDLE currentBitmap;
+	HANDLE currentMask;
+	int* width_height;
 	Gadget * pGadget;
 };

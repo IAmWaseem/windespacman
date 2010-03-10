@@ -5,11 +5,20 @@ using namespace dotnetguy;
 GadgetView::GadgetView(GadgetImage image, Gadget * gadget)
 {
 	currentImage = image;
-	Bitmap * bitmap = new Bitmap();
+	HANDLE bitmap;
+	HANDLE mask;
+	Bitmap * b = new Bitmap();
+	width_height = new int[2];
+	width_height[0] = 0;
+	width_height[1] = 0;
 	switch(image)
 	{
 	case GadgetImage::Goldfish:
-		bitmap->LoadDIBFile(GOLDFISH_IMAGE);
+		bitmap = LoadImage(NULL, GOLDFISH_IMAGE, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+		b->LoadDIBFile(GOLDFISH_IMAGE);
+		width_height[0] = b->Width();
+		width_height[1] = b->Height();
+		mask = CreateBitmapMask(bitmap, RGB(0, 0, 0), width_height[0], width_height[1]);
 		break;
 	case GadgetImage::SnowBall:
 
@@ -30,7 +39,11 @@ GadgetView::GadgetView(GadgetImage image, Gadget * gadget)
 		break;
 
 	case GadgetImage::Piranha:
-		bitmap->LoadDIBFile(PIRANHA_IMAGE);
+		bitmap = LoadImage(NULL, PIRANHA_IMAGE, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+		b->LoadDIBFile(PIRANHA_IMAGE);
+		width_height[0] = b->Width();
+		width_height[1] = b->Height();
+		mask = CreateBitmapMask(bitmap, RGB(0, 0, 0), width_height[0], width_height[1]);
 		break;
 
 	case GadgetImage::Ladybug:
@@ -38,8 +51,10 @@ GadgetView::GadgetView(GadgetImage image, Gadget * gadget)
 		break;
 
 	}
+	b->~Bitmap();
+	currentMask = mask;
 	currentBitmap = bitmap;
-	this->pGadget = gadget;
+	this->pGadget = gadget;	
 }
 
 GadgetView::GadgetView(void)
@@ -59,17 +74,25 @@ void GadgetView::Draw(HDC hdc, RECT rect, int xFrom, int xTo)
 {
 	if(!world->Inst()->menu)
 	{
-		Bitmap * bitmap = currentBitmap;
-		RECT placeRect;
-		placeRect.left = (LONG)(pGadget->GetLocation()->X - xFrom);
-		placeRect.top = (LONG)(pGadget->GetLocation()->Y);
-		placeRect.right = placeRect.left + bitmap->Width();
-		placeRect.bottom = placeRect.top + bitmap->Height();
-		pGadget->GetLocation()->width = (float)bitmap->Width();
-		pGadget->GetLocation()->height = (float)bitmap->Height();
-		if(pGadget->GetLocation()->X + pGadget->GetLocation()->width >= xFrom && pGadget->GetLocation()->X + pGadget->GetLocation()->width <= xTo)
+		HANDLE bitmap = currentBitmap;
+		HANDLE mask = currentMask;
+		HDC bufDC = CreateCompatibleDC(hdc);
+		SelectObject(bufDC, bitmap);
+
+		int x = pGadget->GetLocation()->X;
+		int y = pGadget->GetLocation()->Y;
+		int width = pGadget->GetLocation()->width;
+		int height = pGadget->GetLocation()->height;
+		int imageW = width_height[0];
+		int imageH = width_height[1];
+		int difWidth = (width - imageW) / 2;
+		int difHeight = height - imageH;
+
+		if(x + width >= xFrom && x + width <= xTo)
 		{
-			bitmap->TransparentPaint(hdc, RGB(0, 0, 0), &placeRect, NULL); 
+			BitBltTransparant(hdc, x + difWidth - xFrom, y + difHeight, imageW, imageH, bufDC, 0, 0, bitmap, mask);
 		}
+
+		DeleteDC(bufDC);
 	}
 }

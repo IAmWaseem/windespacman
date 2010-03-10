@@ -3,12 +3,20 @@
 #include "WaldoStateMachine.h"
 #include "MessageQueue.h"
 
-Waldo::Waldo(Location * pLocation)
+Waldo::Waldo(Surface * pSurface, int x)
 {
-	this->direction = Direction::Right;
-	this->pLocation = pLocation;
+	this->pOnSurface = pSurface;
+	RandomDirection();
+	
+	this->pLocation = new Location();
 	this->pWaldoView = new WaldoView(this);
 	this->pWaldoView->registerToGraphics();
+
+	this->pLocation->width = 60;
+	this->pLocation->height = 60;
+
+	this->pLocation->X = x;
+	this->pLocation->Y = pSurface->yFrom - this->pLocation->height;
 
 	this->pWaldoStateMachine = new WaldoStateMachine(this);
 	pWaldoStateMachine->Transition(pWaldoStateMachine->pWander);
@@ -21,7 +29,8 @@ Waldo::Waldo(Location * pLocation)
 Waldo::Waldo(Surface * pSurface)
 {
 	this->pOnSurface = pSurface;
-	this->direction = Direction::Right;
+	RandomDirection();
+	
 	this->pLocation = new Location();
 	this->pWaldoView = new WaldoView(this);
 	this->pWaldoView->registerToGraphics();
@@ -171,3 +180,11 @@ bool Waldo::LocationInWaldoY(Location * locationPengy, Location * locationGadget
 	return inGadget;
 }
 
+void Waldo::RandomDirection()
+{
+	int randomNumber = rand() % 10 + 1;
+	if(randomNumber <=5)
+		this->direction = Direction::Right;
+	else
+		this->direction = Direction::Left;
+}

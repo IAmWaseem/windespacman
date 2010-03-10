@@ -1,7 +1,7 @@
 #include "Level.h"
 #include "Location.h"
 #include "Math.h"
-
+#include "Waldo.h"
 
 Level* Level::pInstance = NULL;
 
@@ -66,7 +66,8 @@ void Level::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	bool hit;
 	Surface * onSurface;
 	vector<Surface*>::iterator iterator;
-
+	Waldo * waldo;
+	
 	switch (message) 
 	{
 	case CM_KEY:
@@ -77,6 +78,9 @@ void Level::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		MessageQueue::Inst()->sendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)gL1, NULL);
 		MessageQueue::Inst()->sendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)gL2, NULL);
 		MessageQueue::Inst()->sendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)gL3, NULL);
+
+		waldo = new Waldo(surfaces.at(4));
+		MessageQueue::Inst()->attach(waldo);
 		break;
 	case CM_CHARACTER_MOVE_X_FROM_TO:
 		fromLocation = (Location*)wParam;

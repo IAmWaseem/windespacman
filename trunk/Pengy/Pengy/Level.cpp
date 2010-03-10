@@ -79,7 +79,7 @@ void Level::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		MessageQueue::Inst()->sendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)gL2, NULL);
 		MessageQueue::Inst()->sendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)gL3, NULL);
 
-		waldo = new Waldo(surfaces.at(4));
+		waldo = new Waldo(surfaces.at(9));
 		MessageQueue::Inst()->attach(waldo);
 		break;
 	case CM_CHARACTER_MOVE_X_FROM_TO:

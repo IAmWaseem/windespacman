@@ -45,7 +45,6 @@ void Idle::Throw()
 
 void Idle::Spacebar()
 {
-	//MessageQueue::Inst()->sendMessage(CM_SOUND_EVENT,(WPARAM)(LPCTSTR)"res/pengy.wav", 0);
 	this->pStateMachine->jumping->Spacebar();
 	this->pStateMachine->Transition(this->pStateMachine->jumping);
 }

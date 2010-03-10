@@ -5,7 +5,6 @@
 #include "Gadget.h"
 #include "SPLASH.h"
 #include "resource.h"
-#include "Waldo.h"
 using namespace dotnetguy;
 
 
@@ -27,7 +26,6 @@ CSkeleton::~CSkeleton()
 
 LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-	Waldo * waldo;
 	SPLASH splash;
 	Location * location;
 	switch (uMsg) 
@@ -41,14 +39,12 @@ LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		location = new Location();
 		location->X = 200;
 		location->Y = 300;
-		waldo = new Waldo(location);
 		
 		messageQueue->Inst()->attach(level->Inst());
 		messageQueue->Inst()->attach(character->Instance());
 		messageQueue->Inst()->attach(renderer->Inst());
 		messageQueue->Inst()->attach(sound->Inst());
 		messageQueue->Inst()->attach(new GadgetFactory());
-		messageQueue->Inst()->attach(waldo);
 		messageQueue->Inst()->attach(world->Inst());
 		break;
 	case WM_KEYDOWN:

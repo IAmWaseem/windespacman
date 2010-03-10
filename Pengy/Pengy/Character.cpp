@@ -112,6 +112,10 @@ void Character::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	case CM_GADGET_PIRANHA_PICKEDUP:
 		pickedupWeapons++;
 		break;
+
+	case CM_CHARACTER_GET_LOCATION:
+
+		break;
 	}
 }
 

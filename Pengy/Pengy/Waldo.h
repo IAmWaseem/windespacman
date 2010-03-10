@@ -16,6 +16,7 @@ class Waldo : public Observer
 		WaldoStateMachine * pWaldoStateMachine;
 		Surface * pOnSurface;
 		Direction direction;
+		Location * pPengyLocation;
 
 	public:
 		Waldo(Location * pLocation);

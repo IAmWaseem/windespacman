@@ -36,17 +36,25 @@ void LevelView::Draw(HDC hDC, RECT rect, int xFrom, int xTo)
 
 		if(surfaces != NULL && Renderer::ShowSurfaces)
 		{
-			HPEN hPen = CreatePen(PS_DASHDOTDOT, 1, RGB(255, 25, 5));
+			HPEN hPen = CreatePen(PS_SOLID, 1, RGB(255, 25, 5));
+			HPEN cloud = CreatePen(PS_DOT, 1, RGB(255, 25, 5));
 			SelectObject(hDC, hPen);
 
 			vector<Surface*>::iterator surfIterator = surfaces->begin();
 			while(surfIterator != surfaces->end())
-			{
+			{				
 				Surface * surface = *surfIterator;
+
+				if(surface->isCloud)
+					SelectObject(hDC, cloud);
+				else
+					SelectObject(hDC, hPen);
+
 				Rectangle(hDC, surface->xFrom - xFrom, surface->yFrom, surface->xTo - xFrom, surface->yFrom + (surface->yTo - surface->yFrom));
 				surfIterator++;
 			}
 			DeleteObject(hPen);
+			DeleteObject(cloud);
 		}
 
 		if(Renderer::ShowFps)

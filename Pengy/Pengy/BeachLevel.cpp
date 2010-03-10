@@ -81,6 +81,7 @@ BeachLevel::BeachLevel(void)
 	firstObstacle->xTo = 940;
 	firstObstacle->yFrom = 340;
 	firstObstacle->yTo = 364;
+	firstObstacle->isCloud = true;
 	surfaces->push_back(firstObstacle);
 
 	Surface * secondObstacle = new Surface();
@@ -88,6 +89,7 @@ BeachLevel::BeachLevel(void)
 	secondObstacle->xTo = 1068;
 	secondObstacle->yFrom = 276;
 	secondObstacle->yTo = 300;
+	secondObstacle->isCloud = true;
 	surfaces->push_back(secondObstacle);
 
 	Surface * thirdObstacle = new Surface();
@@ -95,6 +97,7 @@ BeachLevel::BeachLevel(void)
 	thirdObstacle->xTo = 1132;
 	thirdObstacle->yFrom = 340;
 	thirdObstacle->yTo = 364;
+	thirdObstacle->isCloud = true;
 	surfaces->push_back(thirdObstacle);
 
 	Surface * fourthObstacle = new Surface();
@@ -102,6 +105,7 @@ BeachLevel::BeachLevel(void)
 	fourthObstacle->xTo = 1323;
 	fourthObstacle->yFrom = 276;
 	fourthObstacle->yTo = 300;
+	fourthObstacle->isCloud = true;
 	surfaces->push_back(fourthObstacle);
 
 	Surface * fifthObstacle = new Surface();
@@ -109,6 +113,7 @@ BeachLevel::BeachLevel(void)
 	fifthObstacle->xTo = 1516;
 	fifthObstacle->yFrom = 148;
 	fifthObstacle->yTo = 172;
+	fifthObstacle->isCloud = true;
 	surfaces->push_back(fifthObstacle);
 }
 
@@ -305,16 +310,16 @@ vector<int*> BeachLevel::getTiles()
 
 #pragma region structures
 
-	int* structure1 = new int[6]; structure1[0] = 6; structure1[1] = 6; structure1[2] = 5; structure1[3] = 3; structure1[4] = 1; structure1[5] = 0;
+	int* structure1 = new int[6]; structure1[0] = 6; structure1[1] = 6; structure1[2] = 12; structure1[3] = 7; structure1[4] = 1; structure1[5] = 0;
 	data.push_back(structure1);
 
-	int* structure2 = new int[6]; structure2[0] = 7; structure2[1] = 6; structure2[2] = 7; structure2[3] = 3; structure2[4] = 1; structure2[5] = 0;
+	int* structure2 = new int[6]; structure2[0] = 7; structure2[1] = 6; structure2[2] = 14; structure2[3] = 7; structure2[4] = 1; structure2[5] = 0;
 	data.push_back(structure2);
 
-	int* structure3 = new int[6]; structure3[0] = 8; structure3[1] = 6; structure3[2] = 5; structure3[3] = 3; structure3[4] = 1; structure3[5] = 0;
+	int* structure3 = new int[6]; structure3[0] = 8; structure3[1] = 6; structure3[2] = 12; structure3[3] = 7; structure3[4] = 1; structure3[5] = 0;
 	data.push_back(structure3);
 
-	int* structure4 = new int[6]; structure4[0] = 9; structure4[1] = 6; structure4[2] = 7; structure4[3] = 3; structure4[4] = 1; structure4[5] = 0;
+	int* structure4 = new int[6]; structure4[0] = 9; structure4[1] = 6; structure4[2] = 14; structure4[3] = 7; structure4[4] = 1; structure4[5] = 0;
 	data.push_back(structure4);
 
 	int* structure5 = new int[6]; structure5[0] = 15; structure5[1] = 4; structure5[2] = 5; structure5[3] = 3; structure5[4] = 1; structure5[5] = 0;

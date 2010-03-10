@@ -6,4 +6,5 @@ struct Surface
 	int xTo;
 	int yFrom;
 	int yTo;
+	bool isCloud;
 };

@@ -162,6 +162,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Waldo.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\WaldoView.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Win.cpp"
 				>
 			</File>
@@ -192,6 +200,14 @@
 			</File>
 			<File
 				RelativePath=".\SPLASH.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Waldo.h"
+				>
+			</File>
+			<File
+				RelativePath=".\WaldoView.h"
 				>
 			</File>
 			<File
@@ -498,6 +514,22 @@
 					RelativePath=".\Sound.h"
 					>
 				</File>
+			</Filter>
+		</Filter>
+		<Filter
+			Name="Enemies"
+			>
+			<Filter
+				Name="States"
+				>
+				<Filter
+					Name="Header"
+					>
+				</Filter>
+			</Filter>
+			<Filter
+				Name="Headers"
+				>
 			</Filter>
 		</Filter>
 		<File

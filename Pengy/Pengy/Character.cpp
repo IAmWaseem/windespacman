@@ -30,11 +30,9 @@ void Character::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	switch (message) 
 	{
 	case CM_LEVEL_LOAD:
-		//level nummer uit world halen
 		pCharacterView = new CharacterView();
 		switch(world->Inst()->level)
 		{
-			
 		case 1:
 			pCharacterView->LoadCVImage(CharacterView::CharacterImage::Left, "res/PengySummerLeft.bmp");
 			pCharacterView->LoadCVImage(CharacterView::CharacterImage::Left2, "res/PengySummerLeft2.bmp");

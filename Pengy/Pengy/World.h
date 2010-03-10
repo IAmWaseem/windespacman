@@ -3,6 +3,8 @@
 
 #pragma once
 
+class Menu;
+
 class World : public Observer
 {
 public:
@@ -17,4 +19,5 @@ private:
 	static World* pInstance;
 	void LoadNextLevel();
 	MessageQueue* messageQueue;
+	Menu* menuObject;
 };

@@ -1,4 +1,5 @@
 #include "World.h"
+#include "Menu.h"
 
 World* World::pInstance = NULL;
 
@@ -27,17 +28,25 @@ void World::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		LoadNextLevel();
 		break;
 	case CM_MENU_LOAD:
-		//LoadMenu();
 		if(menu)
+		{
 			menu = false;
+			menuObject->Inst()->DeleteGameMenu();
+		}
 		else
+		{
 			menu = true;
+			menuObject->Inst()->LoadGameMenu();
+		}
 		break;
 	}
 }
 
 void World::LoadNextLevel()
 {
-	level++;
-	messageQueue->Inst()->sendMessage(CM_LEVEL_LOAD, NULL, NULL);
+	if(level<3)
+	{
+		level++;
+		messageQueue->Inst()->sendMessage(CM_LEVEL_LOAD, NULL, NULL);
+	}
 }

@@ -31,18 +31,28 @@ void Character::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	{
 	case CM_LEVEL_LOAD:
 		//level nummer uit world halen
+		pCharacterView = new CharacterView();
 		switch(world->Inst()->level)
 		{
+			
 		case 1:
-			pCharacterView = new CharacterView();
+			
 			pCharacterView->LoadImage(CharacterView::CharacterImage::Left, "res/PengySummerLeft.bmp");
 			pCharacterView->LoadImage(CharacterView::CharacterImage::Left2, "res/PengySummerLeft2.bmp");
 			pCharacterView->LoadImage(CharacterView::CharacterImage::Right, "res/PengySummerRight.bmp");
 			pCharacterView->LoadImage(CharacterView::CharacterImage::Right2, "res/PengySummerRight2.bmp");
 			break;
 		case 2:
+			pCharacterView->LoadImage(CharacterView::CharacterImage::Left, "res/PengyAutumnLeft.bmp");
+			pCharacterView->LoadImage(CharacterView::CharacterImage::Left2, "res/PengyAutumnLeft2.bmp");
+			pCharacterView->LoadImage(CharacterView::CharacterImage::Right, "res/PengyAutumnRight.bmp");
+			pCharacterView->LoadImage(CharacterView::CharacterImage::Right2, "res/PengyAutumnRight2.bmp");
 			break;
 		case 3:
+			pCharacterView->LoadImage(CharacterView::CharacterImage::Left, "res/PengyWinterLeft.bmp");
+			pCharacterView->LoadImage(CharacterView::CharacterImage::Left2, "res/PengyWinterLeft2.bmp");
+			pCharacterView->LoadImage(CharacterView::CharacterImage::Right, "res/PengyWinterRight.bmp");
+			pCharacterView->LoadImage(CharacterView::CharacterImage::Right2, "res/PengyWinterRight2.bmp");
 			break;
 		}
 		

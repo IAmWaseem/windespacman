@@ -64,9 +64,8 @@ void Level::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	bool isFalling;
 	bool bumpHead;
 	bool hit;
-	Surface * onSurface;
 	vector<Surface*>::iterator iterator;
-	Waldo * waldo;
+	Surface * onSurface;
 	
 	switch (message) 
 	{
@@ -78,9 +77,9 @@ void Level::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		MessageQueue::Inst()->sendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)gL1, NULL);
 		MessageQueue::Inst()->sendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)gL2, NULL);
 		MessageQueue::Inst()->sendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)gL3, NULL);
-
-		waldo = new Waldo(surfaces.at(9));
-		MessageQueue::Inst()->attach(waldo);
+		MessageQueue::Inst()->sendMessage(CM_ENEMYFACTORY_CREATE_WALDO_PATROL, (int)surfaces.at(4), NULL);
+		MessageQueue::Inst()->sendMessage(CM_ENEMYFACTORY_CREATE_WALDO_PATROL, (int)surfaces.at(9), NULL);
+		MessageQueue::Inst()->sendMessage(CM_ENEMYFACTORY_CREATE_WALDO_PATROL, (int)surfaces.at(11), NULL);
 		break;
 	case CM_CHARACTER_MOVE_X_FROM_TO:
 		fromLocation = (Location*)wParam;

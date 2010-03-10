@@ -1,4 +1,5 @@
 #include "Skeleton.h"
+#include "EnemyFactory.h"
 //#include "Bitmap.h"
 //#include "Messages.h"
 #include "Location.h"
@@ -44,7 +45,8 @@ LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		messageQueue->Inst()->attach(character->Instance());
 		messageQueue->Inst()->attach(renderer->Inst());
 		messageQueue->Inst()->attach(sound->Inst());
-		messageQueue->Inst()->attach(new GadgetFactory());
+		messageQueue->Inst()->attach(GadgetFactory::Instance());
+		messageQueue->Inst()->attach(EnemyFactory::Instance());
 		messageQueue->Inst()->attach(world->Inst());
 		messageQueue->Inst()->attach(menu->Inst());
 		menu->Inst()->windowHandle = hWnd;
@@ -193,6 +195,7 @@ void CSkeleton::Render(HWND hWnd)
 
 void CSkeleton::Update()
 {
+
 	SYSTEMTIME systemTime;
 	GetSystemTime( &systemTime );
 
@@ -205,7 +208,7 @@ void CSkeleton::Update()
 
 	ULONGLONG systemTimeIn_ms( uli.QuadPart/10000 );
 	int elapsedTime = (int)(systemTimeIn_ms - previousUpdateTime);
-
+	
 	messageQueue->Inst()->sendMessage(CM_UPDATE, elapsedTime, NULL);
 	previousUpdateTime = systemTimeIn_ms;
 }

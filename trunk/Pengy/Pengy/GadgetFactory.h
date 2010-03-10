@@ -7,9 +7,12 @@ using namespace std;
 class GadgetFactory : public Observer
 {
 public:
-	GadgetFactory(void);
 	~GadgetFactory(void);
 	void recieveMessage(UINT message, WPARAM wParam, LPARAM lParam);
+	static GadgetFactory * Instance();
+protected:
+	GadgetFactory(void);
 private:
 	vector<Gadget*> * gadgets; 
+	static GadgetFactory * pInstance;
 };

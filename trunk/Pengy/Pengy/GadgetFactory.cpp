@@ -1,9 +1,18 @@
 #include "GadgetFactory.h"
 #include "Gadget.h"
 
+GadgetFactory * GadgetFactory::pInstance = NULL;
+
 GadgetFactory::GadgetFactory(void)
 {
 	gadgets = new vector<Gadget*>();
+}
+
+GadgetFactory * GadgetFactory::Instance()
+{
+	if(pInstance == NULL)
+		pInstance = new GadgetFactory();
+	return pInstance;
 }
 
 GadgetFactory::~GadgetFactory(void)

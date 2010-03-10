@@ -33,7 +33,7 @@ LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	case WM_CREATE:
 		splash.Init(hWnd, this->m_hInstance, IDB_BITMAP2 );
 		splash.Show();
-		Sleep(100);
+		Sleep(300);
 		splash.Hide();
 		
 		location = new Location();
@@ -114,13 +114,32 @@ LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			break;
 		}
 		break;
+	case WM_COMMAND:  
+		switch(LOWORD(wParam)) {  
+		case CM_GAME_NEW:  
+			messageQueue->Inst()->sendMessage(CM_GAME_NEW, NULL, NULL);
+			break;  
+		case CM_GAME_OPEN:  
+			messageQueue->Inst()->sendMessage(CM_GAME_OPEN, NULL, NULL);
+			break;  
+		case CM_GAME_SAVE:  
+			messageQueue->Inst()->sendMessage(CM_GAME_SAVE, NULL, NULL);
+			break;  
+		case CM_GAME_EXIT:  
+			messageQueue->Inst()->sendMessage(CM_GAME_EXIT, NULL, NULL); 
+			break;
+		case CM_GAME_ABOUT:  
+			messageQueue->Inst()->sendMessage(CM_GAME_ABOUT, NULL, NULL);
+			break;  
+		}  
+		break;  
 	}
 	return CWin::MsgProc(hWnd, uMsg, wParam, lParam);
 }
 
 void CSkeleton::GameInit()
 {
-	messageQueue->Inst()->sendMessage(CM_LEVEL_START, NULL, NULL);
+	messageQueue->Inst()->sendMessage(CM_MENU_LOAD, NULL, NULL);
 
 	RECT rect;
 	rect.left = 0;

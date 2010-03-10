@@ -11,15 +11,15 @@ public:
     ~Menu();
     void recieveMessage(UINT message, WPARAM wParam, LPARAM lParam);
 	HWND windowHandle;
+	void LoadGameMenu();
+	void DeleteGameMenu();
 protected:
 	Menu();
 private:
 	static Menu* pInstance;
-	void LoadGameMenu();
 	World * world;
 	MessageQueue * messageQueue;
-	void OpenDialog();
-	void DeleteGameMenu();
+	void OpenFileDialog();
 };
 
 

@@ -607,10 +607,14 @@
 				RelativePath=".\Menu.cpp"
 				>
 			</File>
-			<File
-				RelativePath=".\Menu.h"
+			<Filter
+				Name="Header"
 				>
-			</File>
+				<File
+					RelativePath=".\Menu.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<File
 			RelativePath=".\res\Intro.bmp"

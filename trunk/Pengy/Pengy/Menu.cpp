@@ -21,16 +21,13 @@ void Menu::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
  {
 	 switch (message) 
 	 {
-	 case CM_MENU_LOAD:
-		 LoadGameMenu();
-		 break;
 	 case CM_GAME_NEW:
 		 messageQueue->Inst()->sendMessage(CM_LEVEL_START, NULL, NULL);
 		 DeleteGameMenu();
 		 world->Inst()->menu = false;
 		 break;
 	 case CM_GAME_OPEN:
-		 OpenDialog();
+		 OpenFileDialog();
 		 break;
 	 case CM_GAME_SAVE:
 		 MessageBox(windowHandle, "Save", "Menu", 0); 
@@ -74,7 +71,7 @@ void Menu::DeleteGameMenu()
 	SetMenu(windowHandle, emptyMenu);
 }
 
-void Menu::OpenDialog()
+void Menu::OpenFileDialog()
 {
 	OPENFILENAME ofn;
     char szFileName[MAX_PATH] = "";
@@ -92,5 +89,6 @@ void Menu::OpenDialog()
     if(GetOpenFileName(&ofn))
     {
         // Do something usefull with the filename stored in szFileName 
+		DeleteGameMenu();
     }
 }

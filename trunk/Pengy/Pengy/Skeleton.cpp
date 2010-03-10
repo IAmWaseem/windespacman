@@ -99,6 +99,7 @@ LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		case 'm':
 		case 'M':
 			messageQueue->Inst()->sendMessage(CM_MENU_LOAD, NULL, NULL);
+
 		case 't':
 		case 'T':
 			messageQueue->Inst()->sendMessage(CM_CHARACTER_RESET_POSITION, NULL, 10);

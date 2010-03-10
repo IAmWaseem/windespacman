@@ -1,5 +1,6 @@
 #include "GadgetView.h"
 #include "Gadget.h"
+#include "Renderer.h"
 using namespace dotnetguy;
 
 GadgetView::GadgetView(GadgetImage image, Gadget * gadget)
@@ -11,6 +12,7 @@ GadgetView::GadgetView(GadgetImage image, Gadget * gadget)
 	width_height = new int[2];
 	width_height[0] = 0;
 	width_height[1] = 0;
+
 	switch(image)
 	{
 	case GadgetImage::Goldfish:
@@ -94,5 +96,45 @@ void GadgetView::Draw(HDC hdc, RECT rect, int xFrom, int xTo)
 		}
 
 		DeleteDC(bufDC);
+
+		#pragma region debug
+		if(Renderer::ShowDebug)
+		{	
+			// lines of the border of the image current used by pengy
+			POINT leftOfPengy[2];	
+			leftOfPengy[0].x = x - xFrom;
+			leftOfPengy[0].y = y;
+			leftOfPengy[1].x = x - xFrom;
+			leftOfPengy[1].y = y + height;
+			
+			POINT bottomOfPengy[2]; 
+			bottomOfPengy[0].x = x - xFrom;
+			bottomOfPengy[0].y = y + height;
+			bottomOfPengy[1].x = x + width - xFrom;
+			bottomOfPengy[1].y = y + height;
+			
+			POINT topOfPengy[2];	
+			topOfPengy[0].x = x - xFrom;
+			topOfPengy[0].y = y;
+			topOfPengy[1].x = x + width - xFrom;
+			topOfPengy[1].y = y;
+			
+			POINT rightOfPengy[2];	
+			rightOfPengy[0].x = x + width - xFrom;
+			rightOfPengy[0].y = y;
+			rightOfPengy[1].x= x + width - xFrom;
+			rightOfPengy[1].y = y + height;
+
+			HPEN hPen = CreatePen(PS_SOLID, 1, RGB(255, 0, 255));
+			SelectObject(hdc, hPen);
+
+			// draw the lines
+			Polyline(hdc, leftOfPengy, 2);
+			Polyline(hdc, bottomOfPengy, 2);
+			Polyline(hdc, topOfPengy, 2);
+			Polyline(hdc, rightOfPengy, 2);
+		}
+#pragma endregion
+
 	}
 }

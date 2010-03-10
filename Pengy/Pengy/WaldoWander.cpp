@@ -11,6 +11,7 @@ WaldoWander::~WaldoWander(void)
 
 void WaldoWander::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam) 
 {
+	int timeElapsed;
 	switch(message) 
 	{
 	case CM_UPDATE:

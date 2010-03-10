@@ -10,12 +10,13 @@ class WaldoView;
 class Waldo : public Observer
 {
 	private:
-		Location * location;
-		WaldoView * waldoView;
+		Location * pLocation;
+		WaldoView * pWaldoView;
 		WaldoStateMachine * pWaldoStateMachine;
+		Surface * pOnSurface;
 	public:
-		Waldo(Location * location);
-		Waldo(Surface * surface);
+		Waldo(Location * pLocation);
+		Waldo(Surface * pSurface);
 		~Waldo(void);
 		void recieveMessage(UINT message, WPARAM wParam, LPARAM lParam);
 		Location * GetLocation();

@@ -9,7 +9,8 @@ WaldoPatrol::~WaldoPatrol(void)
 {
 }
 
-void WaldoPatrol::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam) {
+void WaldoPatrol::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam) 
+{
 	int timeElapsed;
 
 	switch(message) {
@@ -20,5 +21,7 @@ void WaldoPatrol::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam) {
 	}
 }
 
-void WaldoPatrol::Update(int timeElapsed) {
+void WaldoPatrol::Update(int timeElapsed) 
+{
+
 }

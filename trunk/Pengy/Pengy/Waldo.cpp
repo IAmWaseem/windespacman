@@ -2,24 +2,27 @@
 #include "WaldoView.h"
 #include "WaldoStateMachine.h"
 
-Waldo::Waldo(Location * location)
+Waldo::Waldo(Location * pLocation)
 {
-	this->location = location;
-	this->waldoView = new WaldoView(this);
-	this->waldoView->registerToGraphics();
+	this->pLocation = pLocation;
+	this->pWaldoView = new WaldoView(this);
+	this->pWaldoView->registerToGraphics();
 
 	this->pWaldoStateMachine = new WaldoStateMachine(this);
 	pWaldoStateMachine->Transition(pWaldoStateMachine->pWander);
 }
 
-Waldo::Waldo(Surface * surface)
+Waldo::Waldo(Surface * pSurface)
 {
-	location = new Location();
-	this->waldoView = new WaldoView(this);
-	this->waldoView->registerToGraphics();
+	this->pLocation = new Location();
+	this->pWaldoView = new WaldoView(this);
+	this->pWaldoView->registerToGraphics();
 
-	this->location->X = (int)(0.5 * (surface->xFrom + surface->xTo));
-	this->location->Y = surface->yFrom - 60;
+	this->pLocation->width = 60;
+	this->pLocation->height = 60;
+
+	this->pLocation->X = (int)((0.5 * (pSurface->xFrom + pSurface->xTo) - (0.5*this->pLocation->width)));
+	this->pLocation->Y = pSurface->yFrom - this->pLocation->height;
 
 	this->pWaldoStateMachine = new WaldoStateMachine(this);
 	pWaldoStateMachine->Transition(pWaldoStateMachine->pPatrol);
@@ -36,5 +39,5 @@ void Waldo::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 
 Location * Waldo::GetLocation()
 {
-	return location;
+	return pLocation;
 }

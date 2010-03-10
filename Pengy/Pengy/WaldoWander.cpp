@@ -9,9 +9,18 @@ WaldoWander::~WaldoWander(void)
 }
 
 
-void WaldoWander::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam) {
-
+void WaldoWander::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam) 
+{
+	switch(message) 
+	{
+	case CM_UPDATE:
+		timeElapsed = wParam;
+		this->Update(timeElapsed);
+		break;
+	}
 }
 
-void WaldoWander::Update(int timeElapsed) {
+void WaldoWander::Update(int timeElapsed) 
+{
+
 }

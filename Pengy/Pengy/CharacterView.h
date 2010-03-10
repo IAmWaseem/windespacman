@@ -1,10 +1,12 @@
 #pragma once
-#include <map>
-#include "Windows.h"
-#include "Bitmap.h"
-#include "Renderer.h"
+
 #include "View.h"
+#include <map>
+#include <windows.h>
+
+#include "Renderer.h"
 #include <sstream>
+
 using namespace std;
 using namespace dotnetguy;
 
@@ -31,12 +33,14 @@ public:
 	};
 
 	void Update();
-	void LoadImage(CharacterImage image, LPCSTR path);
+	void LoadCVImage(CharacterImage image, LPCSTR path);
 	CharacterImage GetCurrentImage();
 	void ChangeCurrentImage(CharacterImage image);
-	void Draw(HDC hdc, int xFrom, int xTo);
+	void Draw(HDC hdc, RECT rect, int xFrom, int xTo);
 
 private:
-	map<CharacterImage, Bitmap*> * pImages;
+	map<CharacterImage, HANDLE> * pImages;
+	map<CharacterImage, HANDLE> * pMasks;
+	map<CharacterImage, int*> * pWidthHeight;
 	CharacterImage currentImage;
 };

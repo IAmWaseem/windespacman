@@ -14,7 +14,7 @@ WaldoView::~WaldoView(void)
 {
 }
 
-void WaldoView::Draw(HDC hDC, int xFrom, int xTo)
+void WaldoView::Draw(HDC hDC, RECT rect, int xFrom, int xTo)
 {
 	RECT placeRect;
 	placeRect.left = (LONG)(pWaldo->GetLocation()->X - xFrom);

@@ -16,7 +16,7 @@ SPLASH::SPLASH()
 
 SPLASH::~SPLASH()
 {
- DestroyWindow(hSplashWnd);
+ //DestroyWindow(hSplashWnd);
 }
 
 void SPLASH::Init(HWND hWnd,HINSTANCE hInst,int resid)

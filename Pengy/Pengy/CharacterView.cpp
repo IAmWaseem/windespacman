@@ -1,9 +1,12 @@
 #include "CharacterView.h"
 #include "Character.h"
+#include "Bitmap.h"
 
 CharacterView::CharacterView(void)
 {
-	pImages = new map<CharacterImage, Bitmap*>();
+	pImages = new map<CharacterImage, HANDLE>();
+	pMasks = new map<CharacterImage, HANDLE>();
+	pWidthHeight = new map<CharacterImage, int*>();
 }
 
 CharacterView::~CharacterView(void)
@@ -11,16 +14,30 @@ CharacterView::~CharacterView(void)
 
 }
 
-void CharacterView::Draw(HDC hdc, int xFrom, int xTo)
+void CharacterView::Draw(HDC hdc, RECT rect, int xFrom, int xTo)
 {
-	Bitmap * bitmap = pImages->find(currentImage)->second;
-	RECT placeRect;
-	placeRect.left = (long)((Character::Instance()->GetLocation()->X - xFrom) - 0.5*(bitmap->Width() - Character::Instance()->GetLocation()->width));
-	placeRect.top = (long)((Character::Instance()->GetLocation()->Y) - 0.5*(bitmap->Height() - Character::Instance()->GetLocation()->height) + 5);
-	placeRect.right = placeRect.left + bitmap->Width();
-	placeRect.bottom = placeRect.top + bitmap->Height();
-	bitmap->TransparentPaint(hdc, RGB(46, 46, 46), &placeRect, NULL); 
+	HANDLE bitmap = pImages->find(currentImage)->second;
+	HANDLE mask = pMasks->find(currentImage)->second;
+	int* wh = pWidthHeight->find(currentImage)->second;
+	
+	HDC bufDC = CreateCompatibleDC(hdc);
+	SelectObject(bufDC, bitmap);
 
+	int x = Character::Instance()->GetLocation()->X - xFrom;
+	int y = Character::Instance()->GetLocation()->Y;
+	int width = Character::Instance()->GetLocation()->width;
+	int height = Character::Instance()->GetLocation()->height;
+	int imageW = wh[0];
+	int imageH = wh[1];
+
+	int difWidth = (width - imageW) / 2;
+	int difHeight = height - imageH;
+
+	BitBltTransparant(hdc, x + difWidth, y + difHeight, imageW, imageH, bufDC, 0, 0, bitmap, mask);
+
+	DeleteDC(bufDC);
+
+#pragma region debug
 	if(Renderer::ShowDebug)
 	{
 		ostringstream s;
@@ -89,6 +106,7 @@ void CharacterView::Draw(HDC hdc, int xFrom, int xTo)
 		Polyline(hdc, topOfPengy, 2);
 		Polyline(hdc, rightOfPengy, 2);
 	}
+#pragma endregion
 }
 
 void CharacterView::Update()
@@ -96,11 +114,24 @@ void CharacterView::Update()
 
 }
 
-void CharacterView::LoadImage(CharacterImage image, LPCSTR path)
+void CharacterView::LoadCVImage(CharacterImage image, LPCSTR path)
 {
-	Bitmap * bitmap = new Bitmap();
-	bitmap->LoadDIBFile(path);
+	Bitmap * b = new Bitmap();
+	b->LoadDIBFile(path);
+	int width = b->Width();
+	int height = b->Height();
+	b->~Bitmap();	
+
+	HANDLE bitmap;
+	bitmap = LoadImage(NULL, path, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);	
 	pImages->insert(make_pair(image, bitmap));
+
+	HANDLE mask;
+	mask = CreateBitmapMask(bitmap, RGB(46, 46, 46), 200, 200);
+	pMasks->insert(make_pair(image, mask));
+
+	int* widthheight = new int[2]; widthheight[0] = width; widthheight[1] = height;
+	pWidthHeight->insert(make_pair(image, widthheight));
 }
 
 CharacterView::CharacterImage CharacterView::GetCurrentImage()

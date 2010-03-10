@@ -33,7 +33,7 @@ LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	case WM_CREATE:
 		splash.Init(hWnd, this->m_hInstance, IDB_BITMAP2 );
 		splash.Show();
-		Sleep(3000);
+		Sleep(100);
 		splash.Hide();
 		
 		location = new Location();

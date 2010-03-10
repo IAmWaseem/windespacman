@@ -13,5 +13,5 @@ private:
 public:
 	WaldoView(Waldo * pWaldo);
 	~WaldoView(void);
-	void Draw(HDC hDC, int xFrom, int xTo);
+	void Draw(HDC hDC, RECT rect, int xFrom, int xTo);
 };

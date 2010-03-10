@@ -29,12 +29,36 @@ LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	SPLASH splash;
 	Location * location;
+
+	short keystateLeft;
+	short keystateUp;
+	short keystateRight;
+	short keystateDown;
+	short keystateSpace;
+
+	keystateSpace = GetAsyncKeyState(32);
+	keystateLeft = GetAsyncKeyState(37);
+	keystateUp = GetAsyncKeyState(38);
+	keystateRight = GetAsyncKeyState(39);
+	keystateDown = GetAsyncKeyState(40);
+	if(keystateSpace != 0)
+		messageQueue->Inst()->sendMessage(CM_CHARACTER_SPACEBAR, NULL, NULL);
+	if(keystateLeft != 0)
+		messageQueue->Inst()->sendMessage(CM_CHARACTER_LEFT, NULL, NULL);
+	if(keystateUp != 0)
+		messageQueue->Inst()->sendMessage(CM_CHARACTER_UP, NULL, NULL);
+	if(keystateRight != 0)
+		messageQueue->Inst()->sendMessage(CM_CHARACTER_RIGHT, NULL, NULL);
+	if(keystateDown != 0)
+		messageQueue->Inst()->sendMessage(CM_CHARACTER_DOWN, NULL, NULL);	
+		
+
 	switch (uMsg) 
 	{
 	case WM_CREATE:
 		splash.Init(hWnd, this->m_hInstance, IDB_BITMAP2 );
 		splash.Show();
-		Sleep(300);
+		Sleep(3000);
 		splash.Hide();
 		
 		location = new Location();
@@ -52,24 +76,26 @@ LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		menu->Inst()->windowHandle = hWnd;
 		break;
 	case WM_KEYDOWN:
-		switch(wParam)
-		{
-		case 32:
-			messageQueue->Inst()->sendMessage(CM_CHARACTER_SPACEBAR, NULL, NULL);
-			break;
-		case 37:
-			messageQueue->Inst()->sendMessage(CM_CHARACTER_LEFT, NULL, NULL);
-			break;
-		case 38:
-			messageQueue->Inst()->sendMessage(CM_CHARACTER_UP, NULL, NULL);
-			break;
-		case 39:
-			messageQueue->Inst()->sendMessage(CM_CHARACTER_RIGHT, NULL, NULL);
-			break;
-		case 40:
-			messageQueue->Inst()->sendMessage(CM_CHARACTER_DOWN, NULL, NULL);
-			break;
 
+		
+
+		//case 32:
+		//	messageQueue->Inst()->sendMessage(CM_CHARACTER_SPACEBAR, NULL, NULL);
+		//	break;
+		//case 37:
+		//	messageQueue->Inst()->sendMessage(CM_CHARACTER_LEFT, NULL, NULL);
+		//	break;
+		//case 38:
+		//	messageQueue->Inst()->sendMessage(CM_CHARACTER_UP, NULL, NULL);
+		//	break;
+		//case 39:
+		//	messageQueue->Inst()->sendMessage(CM_CHARACTER_RIGHT, NULL, NULL);
+		//	break;
+		//case 40:
+		//	messageQueue->Inst()->sendMessage(CM_CHARACTER_DOWN, NULL, NULL);
+		//	break;
+	switch(wParam)
+	{
 		case 'm':
 		case 'M':
 			messageQueue->Inst()->sendMessage(CM_MENU_LOAD, NULL, NULL);

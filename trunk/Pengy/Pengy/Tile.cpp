@@ -34,6 +34,19 @@ Tile::Tile(int pGridX, int pGridY, int pTileX, int pTileY, bool pTransparant, in
 	Transparant = pTransparant;
 	Depth = pDepth;
 }
+float Tile::DepthFactor()
+{
+	if(Depth == 0)
+		return 1.00f;
+	else if(Depth == 1)
+		return 1.20f;
+	else if(Depth == 2)
+		return 1.50f;
+	else if(Depth == 3)
+		return 4.00f;
+	else
+		return 1.00f;
+}
 int Tile::PixelPositionX()
 {
 	return GridX * tileW;

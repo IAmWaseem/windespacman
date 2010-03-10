@@ -18,6 +18,7 @@ public:
 	int TileX;
 	int TileY;
 	int Depth;
+	float DepthFactor();
 	bool Transparant;
 	int PixelPositionX();
 	int PixelPositionY();

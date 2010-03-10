@@ -94,7 +94,7 @@ void Level::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 				Surface * surface = *iterator;
 				if(LocationInSurfaceY(toLocation, surface))
 				{
-					if((fromLocation->X + fromLocation->width) <= surface->xFrom && (toLocation->X + toLocation->width) >= surface->xFrom)
+					if(!surface->isCloud && ((fromLocation->X + fromLocation->width) <= surface->xFrom && (toLocation->X + toLocation->width) >= surface->xFrom))
 					{
 						MessageQueue::Inst()->sendMessage(CM_CHARACTER_BUMPS_INTO, (int)surface, NULL);
 					}
@@ -109,7 +109,7 @@ void Level::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 				Surface * surface = *iterator;
 				if(LocationInSurfaceY(toLocation, surface))
 				{
-					if(fromLocation->X >= surface->xTo && toLocation->X <= surface->xTo)
+					if(!surface->isCloud && (fromLocation->X >= surface->xTo && toLocation->X <= surface->xTo))
 					{
 						MessageQueue::Inst()->sendMessage(CM_CHARACTER_BUMPS_INTO, (int)surface, NULL);
 					}
@@ -172,7 +172,8 @@ void Level::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 			{
 				if((surface->yTo >= toLocationY && surface->yTo <= fromLocationY) || toLocationYdiff < 5)
 				{
-					bumpHead = true;
+					if(!surface->isCloud)
+						bumpHead = true;
 					onSurface = surface;
 				}
 			}

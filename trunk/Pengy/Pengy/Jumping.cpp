@@ -130,7 +130,7 @@ void Jumping::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 	case CM_CHARACTER_BUMPS_INTO:
 		Surface * surface = (Surface*)wParam;
-		if(((Character::Instance()->GetLocation()->X + Character::Instance()->GetLocation()->width) >= surface->xFrom) && surface->xTo > (Character::Instance()->GetLocation()->X + Character::Instance()->GetLocation()->width))
+		if((((Character::Instance()->GetLocation()->X + Character::Instance()->GetLocation()->width) >= surface->xFrom) && surface->xTo > (Character::Instance()->GetLocation()->X + Character::Instance()->GetLocation()->width)))
 		{
 			Character::Instance()->GetLocation()->X = surface->xFrom - Character::Instance()->GetLocation()->width;
 		}

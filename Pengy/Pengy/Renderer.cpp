@@ -45,12 +45,17 @@ void Renderer::detach( View *myView)
 
 void Renderer::render(HDC hdc) 
 {
+	HBRUSH backBrush;
+	backBrush = CreateSolidBrush(RGB(171, 207, 236));
+
 	RECT rect;
 	rect.left = 0;
 	rect.top = 0;
-	rect.bottom = 800;
+	rect.bottom = 600;
 	rect.right = 800;
-	bitmap.PaintDIB(hdc, &rect, NULL);
+	
+	FillRect(hdc, &rect, backBrush);
+
 	int xFrom = characterX - 400;
 	if(xFrom < 0) xFrom = 0;
 	int xTo = xFrom + 800;
@@ -69,6 +74,8 @@ void Renderer::render(HDC hdc)
 			iterator++;
 		}
 	}
+
+	DeleteObject(backBrush);
 }
 
 void Renderer::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)

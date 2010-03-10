@@ -1,6 +1,7 @@
 #include "Waldo.h"
 #include "WaldoView.h"
 #include "WaldoStateMachine.h"
+#include "MessageQueue.h"
 
 Waldo::Waldo(Location * pLocation)
 {
@@ -37,6 +38,12 @@ Waldo::~Waldo(void)
 
 void Waldo::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 {
+	switch(message)
+	{
+	case CM_UPDATE:
+		MessageQueue::Inst()->sendMessage(CM_CHARACTER_GET_LOCATION, NULL, NULL);
+		break;
+	}
 	this->pWaldoStateMachine->recieveMessage(message, wParam, lParam);
 }
 

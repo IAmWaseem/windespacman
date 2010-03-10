@@ -35,13 +35,6 @@ namespace dotnetguy
         bool     LoadDIBFile( LPCTSTR lpszFilename );
         bool     SaveDIBFile( LPCTSTR lpszFilename );
         void     DeleteObject();
-        bool     PaintDIB( HDC hdc, LPRECT lpDCRect = 0, LPRECT lpDIBRect = 0 );
-        bool     TransparentPaint
-                     ( HDC hdc, COLORREF clrTransparent,
-                       LPRECT lpDCRect = 0, LPRECT lpDIBRect = 0 );
-		bool     TransparentPaintTile
-                     ( HDC hdc, COLORREF clrTransparent,
-					   int screenColX = 0, int screenColY = 0, int tileColX = 0, int tileColY = 0);
         HRGN     GenerateWindowRegion
                      ( COLORREF clrTransparent, int x = 0, int y = 0,
                        int cx = -1, int cy = -1 );

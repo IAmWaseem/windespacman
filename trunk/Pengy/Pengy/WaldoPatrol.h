@@ -3,6 +3,8 @@
 
 class WaldoPatrol : public WaldoState
 {
+private: 
+	float speed;
 public:
 	WaldoPatrol(Waldo * pWaldo, WaldoStateMachine * pWaldoStateMachine);
 	~WaldoPatrol(void);

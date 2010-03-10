@@ -4,6 +4,7 @@
 
 Waldo::Waldo(Location * pLocation)
 {
+	this->direction = Direction::Right;
 	this->pLocation = pLocation;
 	this->pWaldoView = new WaldoView(this);
 	this->pWaldoView->registerToGraphics();
@@ -14,6 +15,8 @@ Waldo::Waldo(Location * pLocation)
 
 Waldo::Waldo(Surface * pSurface)
 {
+	this->pOnSurface = pSurface;
+	this->direction = Direction::Right;
 	this->pLocation = new Location();
 	this->pWaldoView = new WaldoView(this);
 	this->pWaldoView->registerToGraphics();
@@ -40,4 +43,19 @@ void Waldo::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 Location * Waldo::GetLocation()
 {
 	return pLocation;
+}
+
+Direction Waldo::GetDirection()
+{
+	return this->direction;
+}
+
+Surface * Waldo::GetOnSurface()
+{
+	return this->pOnSurface;
+}
+
+void Waldo::SetDirection(Direction direction)
+{
+	this->direction = direction;
 }

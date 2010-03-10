@@ -162,23 +162,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Waldo.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\WaldoView.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\Win.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\WinMain.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\World.cpp"
 				>
 			</File>
 		</Filter>
@@ -203,19 +191,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Waldo.h"
-				>
-			</File>
-			<File
-				RelativePath=".\WaldoView.h"
-				>
-			</File>
-			<File
 				RelativePath=".\Win.h"
-				>
-			</File>
-			<File
-				RelativePath=".\World.h"
 				>
 			</File>
 		</Filter>
@@ -359,6 +335,10 @@
 				RelativePath=".\View.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\WaldoView.cpp"
+				>
+			</File>
 			<Filter
 				Name="Headers"
 				>
@@ -384,6 +364,10 @@
 				</File>
 				<File
 					RelativePath=".\View.h"
+					>
+				</File>
+				<File
+					RelativePath=".\WaldoView.h"
 					>
 				</File>
 			</Filter>
@@ -519,6 +503,10 @@
 		<Filter
 			Name="Enemies"
 			>
+			<File
+				RelativePath=".\Waldo.cpp"
+				>
+			</File>
 			<Filter
 				Name="States"
 				>
@@ -530,6 +518,26 @@
 			<Filter
 				Name="Headers"
 				>
+				<File
+					RelativePath=".\Waldo.h"
+					>
+				</File>
+			</Filter>
+		</Filter>
+		<Filter
+			Name="World"
+			>
+			<File
+				RelativePath=".\World.cpp"
+				>
+			</File>
+			<Filter
+				Name="Header"
+				>
+				<File
+					RelativePath=".\World.h"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<File

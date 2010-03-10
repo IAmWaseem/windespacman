@@ -17,9 +17,13 @@ class Waldo : public Observer
 		Surface * pOnSurface;
 		Direction direction;
 		Location * pPengyLocation;
+		bool pengyJumping;
 		bool isVulnerable;
+		bool isAlive;
 
 		void CheckPengyCollision();
+		bool LocationInWaldoX(Location * locationPengy, Location * locationGadget);
+		bool LocationInWaldoY(Location * locationPengy, Location * locationGadget);
 
 	public:
 		Waldo(Location * pLocation);

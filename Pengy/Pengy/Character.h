@@ -3,12 +3,7 @@
 #include "CharacterView.h"
 #include "CharacterStateMachine.h"
 #include "Location.h"
-
-enum Direction
-{
-	Left,
-	Right
-};
+#include "Direction.h"
 
 class Character : public Observer
 {

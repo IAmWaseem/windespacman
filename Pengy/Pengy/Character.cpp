@@ -114,7 +114,7 @@ void Character::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 
 	case CM_CHARACTER_GET_LOCATION:
-
+		MessageQueue::Inst()->sendMessage(CM_CHARACTER_RETURN_LOCATION, (int)location, NULL);
 		break;
 	}
 }

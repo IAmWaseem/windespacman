@@ -57,16 +57,19 @@ void GadgetView::Update()
 
 void GadgetView::Draw(HDC hdc, RECT rect, int xFrom, int xTo)
 {
-	Bitmap * bitmap = currentBitmap;
-	RECT placeRect;
-	placeRect.left = (LONG)(pGadget->GetLocation()->X - xFrom);
-	placeRect.top = (LONG)(pGadget->GetLocation()->Y);
-	placeRect.right = placeRect.left + bitmap->Width();
-	placeRect.bottom = placeRect.top + bitmap->Height();
-	pGadget->GetLocation()->width = (float)bitmap->Width();
-	pGadget->GetLocation()->height = (float)bitmap->Height();
-	if(pGadget->GetLocation()->X + pGadget->GetLocation()->width >= xFrom && pGadget->GetLocation()->X + pGadget->GetLocation()->width <= xTo)
+	if(!world->Inst()->menu)
 	{
-		bitmap->TransparentPaint(hdc, RGB(0, 0, 0), &placeRect, NULL); 
+		Bitmap * bitmap = currentBitmap;
+		RECT placeRect;
+		placeRect.left = (LONG)(pGadget->GetLocation()->X - xFrom);
+		placeRect.top = (LONG)(pGadget->GetLocation()->Y);
+		placeRect.right = placeRect.left + bitmap->Width();
+		placeRect.bottom = placeRect.top + bitmap->Height();
+		pGadget->GetLocation()->width = (float)bitmap->Width();
+		pGadget->GetLocation()->height = (float)bitmap->Height();
+		if(pGadget->GetLocation()->X + pGadget->GetLocation()->width >= xFrom && pGadget->GetLocation()->X + pGadget->GetLocation()->width <= xTo)
+		{
+			bitmap->TransparentPaint(hdc, RGB(0, 0, 0), &placeRect, NULL); 
+		}
 	}
 }

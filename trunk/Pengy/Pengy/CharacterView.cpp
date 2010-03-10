@@ -16,6 +16,8 @@ CharacterView::~CharacterView(void)
 
 void CharacterView::Draw(HDC hdc, RECT rect, int xFrom, int xTo)
 {
+	if(!world->Inst()->menu)
+	{
 	HANDLE bitmap = pImages->find(currentImage)->second;
 	HANDLE mask = pMasks->find(currentImage)->second;
 	int* wh = pWidthHeight->find(currentImage)->second;
@@ -107,6 +109,7 @@ void CharacterView::Draw(HDC hdc, RECT rect, int xFrom, int xTo)
 		Polyline(hdc, rightOfPengy, 2);
 	}
 #pragma endregion
+	}
 }
 
 void CharacterView::Update()

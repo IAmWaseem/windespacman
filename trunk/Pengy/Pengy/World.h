@@ -10,6 +10,7 @@ public:
     ~World();
     void recieveMessage(UINT message, WPARAM wParam, LPARAM lParam);
 	int level;
+	bool menu;
 protected:
 	World();
 private:

@@ -12,6 +12,7 @@ World* World::Inst(){
 World::World()
 { 
 	level = 0;
+	menu = false;
 }
 
 World::~World(){
@@ -24,6 +25,13 @@ void World::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	{
 	case CM_LEVEL_START:
 		LoadNextLevel();
+		break;
+	case CM_MENU_LOAD:
+		//LoadMenu();
+		if(menu)
+			menu = false;
+		else
+			menu = true;
 		break;
 	}
 }

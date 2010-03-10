@@ -28,9 +28,8 @@ void LevelView::Draw(HDC hDC, RECT rect, int xFrom, int xTo)
 			while(iterator!=myTiles->end())
 			{
 				Tile * tile = *iterator;
-
-				// draw the tile non-transparent
-				DrawTile(tile, hDC, rect, -1*xFrom);
+				if(tile->PixelPositionX() + tile->TileWidth() >= xFrom && tile->PixelPositionX() <= xTo && tile->Depth == 0 || tile->Depth > 0)
+					DrawTile(tile, hDC, rect, -1 * xFrom);
 				iterator++;
 			}
 		}
@@ -140,26 +139,15 @@ void LevelView::DrawTile(Tile * tile, HDC hdc, RECT rect, int offsetX, int offse
 	HDC hTileDC = CreateCompatibleDC(hdc);
 	//FillRect(hTileDC, &rect, (HBRUSH)GetStockObject(WHITE_BRUSH));
 
-	float depthFactor = 1;
-
-	if(tile->Depth == 0)
-		depthFactor = 1.00f;
-	else if(tile->Depth == 1)
-		depthFactor = 1.20f;
-	else if(tile->Depth == 2)
-		depthFactor = 1.50f;
-	else if(tile->Depth == 3)
-		depthFactor = 4.00f;
-
 	SelectObject(hTileDC, tilemap);
 
 	if(tile->Transparant == true)
 	{	
-		BitBltTransparant(hdc, (tile->GridX * tile->TileWidth()) + (offsetX / depthFactor), (tile->GridY * tile->TileHeight()) + offsetY, tile->TileWidth(), tile->TileHeight(), hTileDC, tile->TileX * tile->TileWidth(), tile->TileY * tile->TileHeight(), tilemap, myMask);
+		BitBltTransparant(hdc, (tile->GridX * tile->TileWidth()) + (offsetX / tile->DepthFactor()), (tile->GridY * tile->TileHeight()) + offsetY, tile->TileWidth(), tile->TileHeight(), hTileDC, tile->TileX * tile->TileWidth(), tile->TileY * tile->TileHeight(), tilemap, myMask);
 	}
 	else
 	{
-		BitBlt(hdc, (tile->GridX * tile->TileWidth()) + (offsetX / depthFactor), (tile->GridY * tile->TileHeight()) + offsetY, tile->TileWidth(), tile->TileHeight(), hTileDC, tile->TileX * tile->TileWidth(), tile->TileY * tile->TileHeight(), SRCCOPY);	
+		BitBlt(hdc, (tile->GridX * tile->TileWidth()) + (offsetX / tile->DepthFactor()), (tile->GridY * tile->TileHeight()) + offsetY, tile->TileWidth(), tile->TileHeight(), hTileDC, tile->TileX * tile->TileWidth(), tile->TileY * tile->TileHeight(), SRCCOPY);	
 	}
 
 	DeleteDC(hTileDC);

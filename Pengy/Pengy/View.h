@@ -3,6 +3,7 @@
 #include <windows.h>
 #include "messages.h"
 #include <string>
+#include "world.h"
 using namespace std;
 
 class Renderer;
@@ -17,6 +18,8 @@ public:
 	void BitBltTransparant(HDC hdc, int x, int y, int cx, int cy, HDC source, int x1, int y1, HANDLE image, HANDLE transparantMask);
 	HANDLE CreateBitmapMask(HANDLE hbmColour, COLORREF crTransparent, int width, int height);
     ~View();
+protected:
+	World* world;
 private:
 	
 	Renderer* renderer;

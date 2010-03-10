@@ -584,6 +584,18 @@
 				</File>
 			</Filter>
 		</Filter>
+		<Filter
+			Name="Menu"
+			>
+			<File
+				RelativePath=".\Menu.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Menu.h"
+				>
+			</File>
+		</Filter>
 		<File
 			RelativePath=".\res\Intro.bmp"
 			>

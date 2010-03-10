@@ -1,6 +1,7 @@
 #pragma once
 
 #include "View.h"
+#include "World.h"
 #include <map>
 #include <windows.h>
 
@@ -43,4 +44,5 @@ private:
 	map<CharacterImage, HANDLE> * pMasks;
 	map<CharacterImage, int*> * pWidthHeight;
 	CharacterImage currentImage;
+	World * world;
 };

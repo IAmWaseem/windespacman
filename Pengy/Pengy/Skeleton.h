@@ -6,6 +6,7 @@
 #include "Renderer.h"
 #include "Character.h"
 #include "Sound.h"
+#include "Menu.h"
 #include "GadgetFactory.h"
 #include <sstream>
 using namespace dotnetguy;
@@ -28,6 +29,7 @@ private:
 	MessageQueue* messageQueue;
 	Level* level;
 	World* world;
+	Menu* menu;
 	Sound* sound;
 	void Update();
 	void Render(HWND);

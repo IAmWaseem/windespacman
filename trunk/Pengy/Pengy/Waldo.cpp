@@ -12,6 +12,8 @@ Waldo::Waldo(Location * pLocation)
 
 	this->pWaldoStateMachine = new WaldoStateMachine(this);
 	pWaldoStateMachine->Transition(pWaldoStateMachine->pWander);
+
+	this->isVulnerable = false;
 }
 
 Waldo::Waldo(Surface * pSurface)
@@ -30,6 +32,8 @@ Waldo::Waldo(Surface * pSurface)
 
 	this->pWaldoStateMachine = new WaldoStateMachine(this);
 	pWaldoStateMachine->Transition(pWaldoStateMachine->pPatrol);
+
+	this->isVulnerable = false;
 }
 
 Waldo::~Waldo(void)
@@ -42,6 +46,10 @@ void Waldo::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	{
 	case CM_UPDATE:
 		MessageQueue::Inst()->sendMessage(CM_CHARACTER_GET_LOCATION, NULL, NULL);
+		break;
+	case CM_CHARACTER_RETURN_LOCATION:
+		this->pPengyLocation = (Location*)wParam;
+		CheckPengyCollision();
 		break;
 	}
 	this->pWaldoStateMachine->recieveMessage(message, wParam, lParam);
@@ -65,4 +73,9 @@ Surface * Waldo::GetOnSurface()
 void Waldo::SetDirection(Direction direction)
 {
 	this->direction = direction;
+}
+
+void Waldo::CheckPengyCollision()
+{
+
 }

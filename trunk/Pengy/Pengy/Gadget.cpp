@@ -5,7 +5,16 @@ Gadget::Gadget(int id, Location * location, GadgetView::GadgetImage gadgetImage)
 	pGadgetView = new GadgetView(gadgetImage, this);
 	pGadgetView->registerToGraphics();
 
+	if(location->width <= 0)
+	{
+		location->width = 60;
+	}
+	if(location->height <= 0)
+	{
+		location->height = 30;
+	}
 	this->location = location;
+
 
 	pGadgetStateMachine = new GadgetStateMachine(this);
 	this->id = id;

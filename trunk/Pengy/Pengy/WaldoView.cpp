@@ -72,7 +72,7 @@ void WaldoView::Draw(HDC hDC, RECT rect, int xFrom, int xTo)
 			rightOfPengy[1].x= x + width - xFrom;
 			rightOfPengy[1].y = y + height;
 
-			HPEN hPen = CreatePen(PS_SOLID, 1, RGB(255, 50, 255));
+			HPEN hPen = CreatePen(PS_SOLID, 1, RGB(255, 0, 255));
 			SelectObject(hDC, hPen);
 
 			// draw the lines

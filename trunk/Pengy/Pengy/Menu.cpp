@@ -26,6 +26,7 @@ void Menu::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		 break;
 	 case CM_GAME_NEW:
 		 messageQueue->Inst()->sendMessage(CM_LEVEL_START, NULL, NULL);
+		 DeleteGameMenu();
 		 world->Inst()->menu = false;
 		 break;
 	 case CM_GAME_OPEN:
@@ -48,7 +49,7 @@ void Menu::LoadGameMenu()
 	{
 		HMENU hMenu;
 		HMENU hSubMenu;
-
+		
 		hMenu = CreateMenu();  
 
 		hSubMenu = CreatePopupMenu();  
@@ -64,6 +65,13 @@ void Menu::LoadGameMenu()
 		AppendMenu(hMenu, MF_STRING | MF_POPUP, (UINT)hSubMenu, "&Help");  
 		SetMenu(windowHandle, hMenu);  
 	}
+}
+
+void Menu::DeleteGameMenu()
+{
+	HMENU emptyMenu;
+	emptyMenu = CreateMenu();
+	SetMenu(windowHandle, emptyMenu);
 }
 
 void Menu::OpenDialog()

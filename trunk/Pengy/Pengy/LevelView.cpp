@@ -3,9 +3,9 @@
 vector<Tile*>* LevelView::myTiles = NULL;
 vector<Surface*>* LevelView::surfaces = NULL;
 HANDLE LevelView::tilemap = NULL;
-int LevelView::tilemapWidth = 1024;
-int LevelView::tilemapHeight = 1024;
-HANDLE LevelView::hbmMask = NULL;
+int LevelView::tilemapWidth = 2048;
+int LevelView::tilemapHeight = 2048;
+HANDLE LevelView::myMask = NULL;
 
 LevelView::LevelView(){ 
 	if(myTiles == NULL)
@@ -17,11 +17,8 @@ LevelView::~LevelView(){
 	unRegisterToGraphics();
 }
 
-void LevelView::Draw(HDC hDC, int xFrom, int xTo)
+void LevelView::Draw(HDC hDC, RECT rect, int xFrom, int xTo)
 {
-	RECT rect;
-	//::GetClientRect(m_hWnd, &rect);
-
 	if(myTiles != NULL)
 	{
 		// iterate trew all tiles
@@ -121,8 +118,8 @@ void LevelView::SetTiles(vector<Tile> tiles, LPCSTR path)
 
 		iterator++;
 	}
-	tilemap = LoadImage(NULL, path, IMAGE_BITMAP, 0, 0,LR_LOADFROMFILE);
-	hbmMask = CreateBitmapMask(tilemap, RGB(0,0,0));
+	tilemap = LoadImage(NULL, path, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+	myMask = CreateBitmapMask(tilemap, RGB(0,0,0), tilemapWidth, tilemapHeight);
 }
 
 void LevelView::DrawTile(Tile * tile, HDC hdc, RECT rect)
@@ -138,7 +135,7 @@ void LevelView::DrawTile(Tile * tile, HDC hdc, RECT rect, int offsetX)
 void LevelView::DrawTile(Tile * tile, HDC hdc, RECT rect, int offsetX, int offsetY)
 {
 	HDC hTileDC = CreateCompatibleDC(hdc);
-	FillRect(hTileDC, &rect, (HBRUSH)GetStockObject(WHITE_BRUSH));
+	//FillRect(hTileDC, &rect, (HBRUSH)GetStockObject(WHITE_BRUSH));
 
 	float depthFactor = 1;
 
@@ -149,66 +146,18 @@ void LevelView::DrawTile(Tile * tile, HDC hdc, RECT rect, int offsetX, int offse
 	else if(tile->Depth == 2)
 		depthFactor = 1.50f;
 	else if(tile->Depth == 3)
-		depthFactor = 2.00f;
+		depthFactor = 4.00f;
+
+	SelectObject(hTileDC, tilemap);
 
 	if(tile->Transparant == true)
 	{	
-		HANDLE hbmOld;
-		hbmOld = SelectObject(hTileDC, hbmMask);
-
-		BitBlt(hdc, (tile->GridX * tile->TileWidth()) + (offsetX / depthFactor) , (tile->GridY * tile->TileHeight()) + offsetY, tile->TileWidth(), tile->TileHeight(), hTileDC, tile->TileX * tile->TileWidth(), tile->TileY * tile->TileHeight(), SRCAND);
-
-		SelectObject(hTileDC, tilemap);	
-		BitBlt(hdc, (tile->GridX * tile->TileWidth()) + (offsetX / depthFactor), (tile->GridY * tile->TileHeight()) + offsetY, tile->TileWidth(), tile->TileHeight(), hTileDC, tile->TileX * tile->TileWidth(), tile->TileY * tile->TileHeight(), SRCPAINT);
-
-		SelectObject(hTileDC, tilemap);		
-		SelectObject(hTileDC, hbmOld);
+		BitBltTransparant(hdc, (tile->GridX * tile->TileWidth()) + (offsetX / depthFactor), (tile->GridY * tile->TileHeight()) + offsetY, tile->TileWidth(), tile->TileHeight(), hTileDC, tile->TileX * tile->TileWidth(), tile->TileY * tile->TileHeight(), tilemap, myMask);
 	}
 	else
 	{
-		SelectObject(hTileDC, tilemap);
 		BitBlt(hdc, (tile->GridX * tile->TileWidth()) + (offsetX / depthFactor), (tile->GridY * tile->TileHeight()) + offsetY, tile->TileWidth(), tile->TileHeight(), hTileDC, tile->TileX * tile->TileWidth(), tile->TileY * tile->TileHeight(), SRCCOPY);	
 	}
 
-
 	DeleteDC(hTileDC);
-}
-
-HANDLE LevelView::CreateBitmapMask(HANDLE hbmColour, COLORREF crTransparent)
-{
-	HDC hdcMem, hdcMem2;
-	HANDLE hbmMask;
-
-	// Create monochrome (1 bit) mask bitmap.  
-	hbmMask = CreateBitmap(tilemapWidth, tilemapHeight, 1, 1, NULL);
-
-	// Get some HDCs that are compatible with the display driver
-
-	hdcMem = CreateCompatibleDC(0);
-	hdcMem2 = CreateCompatibleDC(0);
-
-	SelectObject(hdcMem, hbmColour);
-	SelectObject(hdcMem2, hbmMask);
-
-	// Set the background colour of the colour image to the colour
-	// you want to be transparent.
-	SetBkColor(hdcMem, crTransparent);
-
-	// Copy the bits from the colour image to the B+W mask... everything
-	// with the background colour ends up white while everythig else ends up
-	// black...Just what we wanted.
-
-	BitBlt(hdcMem2, 0, 0, tilemapWidth, tilemapHeight, hdcMem, 0, 0, SRCCOPY);
-
-	// Take our new mask and use it to turn the transparent colour in our
-	// original colour image to black so the transparency effect will
-	// work right.
-	BitBlt(hdcMem, 0, 0, tilemapWidth, tilemapHeight, hdcMem2, 0, 0, SRCINVERT);
-
-	// Clean up.
-
-	DeleteDC(hdcMem);
-	DeleteDC(hdcMem2);
-
-	return hbmMask;
 }

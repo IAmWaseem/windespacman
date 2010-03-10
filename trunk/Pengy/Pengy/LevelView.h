@@ -2,20 +2,18 @@
 
 #include "View.h"
 #include <vector>
-#include "Bitmap.h"
 #include <windows.h>
 #include "Surface.h"
 #include "Renderer.h"
 #include "Tile.h"
 #include <sstream>
 using namespace std;
-using namespace dotnetguy;
 
 class LevelView : public View
 {
 private:
 	static HANDLE tilemap;
-	static HANDLE hbmMask;
+	static HANDLE myMask;
 	static int tilemapWidth;
 	static int tilemapHeight;
 	SYSTEMTIME st;
@@ -24,9 +22,8 @@ private:
 	void DrawTile(Tile * tile, HDC hdc, RECT rect);
 	void DrawTile(Tile * tile, HDC hdc, RECT rect, int offsetX);
 	void DrawTile(Tile * tile, HDC hdc, RECT rect, int offsetX, int offsetY);
-	HANDLE CreateBitmapMask(HANDLE hbmColour, COLORREF crTransparent);
 public:
-	void Draw(HDC hDC, int xFrom, int xTo);
+	void Draw(HDC hDC, RECT rect, int xFrom, int xTo);
 	LevelView();
 	~LevelView();
 	void SetSurface(vector<Surface*> * theSurface);

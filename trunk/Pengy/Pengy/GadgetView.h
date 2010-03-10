@@ -30,7 +30,7 @@ public:
 	~GadgetView(void);
 
 	void Update();
-	void Draw(HDC hdc, int xFrom, int xTo);
+	void Draw(HDC hdc, RECT rect, int xFrom, int xTo);
 
 private:
 	GadgetImage currentImage;

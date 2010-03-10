@@ -37,33 +37,33 @@ void Character::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 			
 		case 1:
 			
-			pCharacterView->LoadImage(CharacterView::CharacterImage::Left, "res/PengySummerLeft.bmp");
-			pCharacterView->LoadImage(CharacterView::CharacterImage::Left2, "res/PengySummerLeft2.bmp");
-			pCharacterView->LoadImage(CharacterView::CharacterImage::Right, "res/PengySummerRight.bmp");
-			pCharacterView->LoadImage(CharacterView::CharacterImage::Right2, "res/PengySummerRight2.bmp");
+			pCharacterView->LoadCVImage(CharacterView::CharacterImage::Left, "res/PengySummerLeft.bmp");
+			pCharacterView->LoadCVImage(CharacterView::CharacterImage::Left2, "res/PengySummerLeft2.bmp");
+			pCharacterView->LoadCVImage(CharacterView::CharacterImage::Right, "res/PengySummerRight.bmp");
+			pCharacterView->LoadCVImage(CharacterView::CharacterImage::Right2, "res/PengySummerRight2.bmp");
 			break;
 		case 2:
-			pCharacterView->LoadImage(CharacterView::CharacterImage::Left, "res/PengyAutumnLeft.bmp");
-			pCharacterView->LoadImage(CharacterView::CharacterImage::Left2, "res/PengyAutumnLeft2.bmp");
-			pCharacterView->LoadImage(CharacterView::CharacterImage::Right, "res/PengyAutumnRight.bmp");
-			pCharacterView->LoadImage(CharacterView::CharacterImage::Right2, "res/PengyAutumnRight2.bmp");
+			pCharacterView->LoadCVImage(CharacterView::CharacterImage::Left, "res/PengyAutumnLeft.bmp");
+			pCharacterView->LoadCVImage(CharacterView::CharacterImage::Left2, "res/PengyAutumnLeft2.bmp");
+			pCharacterView->LoadCVImage(CharacterView::CharacterImage::Right, "res/PengyAutumnRight.bmp");
+			pCharacterView->LoadCVImage(CharacterView::CharacterImage::Right2, "res/PengyAutumnRight2.bmp");
 			break;
 		case 3:
-			pCharacterView->LoadImage(CharacterView::CharacterImage::Left, "res/PengyWinterLeft.bmp");
-			pCharacterView->LoadImage(CharacterView::CharacterImage::Left2, "res/PengyWinterLeft2.bmp");
-			pCharacterView->LoadImage(CharacterView::CharacterImage::Right, "res/PengyWinterRight.bmp");
-			pCharacterView->LoadImage(CharacterView::CharacterImage::Right2, "res/PengyWinterRight2.bmp");
+			pCharacterView->LoadCVImage(CharacterView::CharacterImage::Left, "res/PengyWinterLeft.bmp");
+			pCharacterView->LoadCVImage(CharacterView::CharacterImage::Left2, "res/PengyWinterLeft2.bmp");
+			pCharacterView->LoadCVImage(CharacterView::CharacterImage::Right, "res/PengyWinterRight.bmp");
+			pCharacterView->LoadCVImage(CharacterView::CharacterImage::Right2, "res/PengyWinterRight2.bmp");
 			break;
 		}
 		
-		pCharacterView->LoadImage(CharacterView::CharacterImage::Climb, "res/PengyClimb.bmp");
-		pCharacterView->LoadImage(CharacterView::CharacterImage::Climb2, "res/PengyClimb2.bmp");
-		pCharacterView->LoadImage(CharacterView::CharacterImage::JumpLeft, "res/PengyJump2.bmp");
-		pCharacterView->LoadImage(CharacterView::CharacterImage::JumpRight, "res/PengyJump.bmp");
-		pCharacterView->LoadImage(CharacterView::CharacterImage::FallingLeft, "res/PengyFallingLeft.bmp");
-		pCharacterView->LoadImage(CharacterView::CharacterImage::FallingRight, "res/PengyFallingRight.bmp");
-		pCharacterView->LoadImage(CharacterView::CharacterImage::Sliding, "res/PengySliding.bmp");
-		pCharacterView->LoadImage(CharacterView::CharacterImage::Sliding2, "res/PengySliding2.bmp");
+		pCharacterView->LoadCVImage(CharacterView::CharacterImage::Climb, "res/PengyClimb.bmp");
+		pCharacterView->LoadCVImage(CharacterView::CharacterImage::Climb2, "res/PengyClimb2.bmp");
+		pCharacterView->LoadCVImage(CharacterView::CharacterImage::JumpLeft, "res/PengyJump2.bmp");
+		pCharacterView->LoadCVImage(CharacterView::CharacterImage::JumpRight, "res/PengyJump.bmp");
+		pCharacterView->LoadCVImage(CharacterView::CharacterImage::FallingLeft, "res/PengyFallingLeft.bmp");
+		pCharacterView->LoadCVImage(CharacterView::CharacterImage::FallingRight, "res/PengyFallingRight.bmp");
+		pCharacterView->LoadCVImage(CharacterView::CharacterImage::Sliding, "res/PengySliding.bmp");
+		pCharacterView->LoadCVImage(CharacterView::CharacterImage::Sliding2, "res/PengySliding2.bmp");
 		pCharacterView->ChangeCurrentImage(CharacterView::CharacterImage::Right);
 		pCharacterView->registerToGraphics();
 		MessageQueue::Inst()->sendMessage(CM_CHARACTER_MOVE_X_FROM_TO, (int)location, (int)location);

@@ -65,7 +65,7 @@ void Renderer::render(HDC hdc)
 		while(iterator!=myViews.end())
 		{
 			View * view = *iterator;
-			view->Draw(hdc, xFrom, xTo);
+			view->Draw(hdc, rect, xFrom, xTo);
 			iterator++;
 		}
 	}

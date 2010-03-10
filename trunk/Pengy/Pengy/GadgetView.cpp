@@ -55,7 +55,7 @@ void GadgetView::Update()
 
 }
 
-void GadgetView::Draw(HDC hdc, int xFrom, int xTo)
+void GadgetView::Draw(HDC hdc, RECT rect, int xFrom, int xTo)
 {
 	Bitmap * bitmap = currentBitmap;
 	RECT placeRect;

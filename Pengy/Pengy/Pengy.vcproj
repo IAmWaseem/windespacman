@@ -508,6 +508,14 @@
 			Name="Enemies"
 			>
 			<File
+				RelativePath=".\Enemy.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\EnemyFactory.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Waldo.cpp"
 				>
 			</File>
@@ -562,6 +570,14 @@
 			<Filter
 				Name="Headers"
 				>
+				<File
+					RelativePath=".\Enemy.h"
+					>
+				</File>
+				<File
+					RelativePath=".\EnemyFactory.h"
+					>
+				</File>
 				<File
 					RelativePath=".\Waldo.h"
 					>

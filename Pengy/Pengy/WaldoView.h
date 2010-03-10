@@ -9,7 +9,9 @@ class WaldoView : public View
 {
 private:
 	Waldo * pWaldo;
-	Bitmap * pBitmap;
+	HANDLE pBitmap;
+	HANDLE pMask;
+	int* width_height;
 public:
 	WaldoView(Waldo * pWaldo);
 	~WaldoView(void);

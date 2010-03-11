@@ -209,6 +209,7 @@ void Character::startGame()
 	location->height = 96;
 	pCharacterStateMachine = new CharacterStateMachine();
 	direction = Direction::Right;
+	lives=4;
 	pickedupFish = 0;
 	pickedupWeapons = 0;
 }

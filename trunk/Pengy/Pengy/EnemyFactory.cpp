@@ -2,6 +2,7 @@
 #include "Surface.h"
 #include "Location.h"
 #include "Waldo.h"
+#include "Enemy.h"
 
 EnemyFactory * EnemyFactory::pInstance = NULL;
 
@@ -14,7 +15,7 @@ EnemyFactory * EnemyFactory::Instance()
 
 EnemyFactory::EnemyFactory(void)
 {
-	enemies = new vector<Waldo*>();
+	enemies = new vector<Enemy*>();
 }
 
 EnemyFactory::~EnemyFactory(void)
@@ -23,7 +24,7 @@ EnemyFactory::~EnemyFactory(void)
 
 void EnemyFactory::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 {
-	Waldo * waldo;
+	Enemy * enemy;
 	Surface * surface;
 	Location * location;
 	int x;
@@ -34,34 +35,34 @@ void EnemyFactory::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 	case CM_ENEMYFACTORY_CREATE_WALDO_PATROL:
 		surface = (Surface*)wParam;
-		waldo = new Waldo(surface);
-		enemies->push_back(waldo);
+		enemy = new Waldo(surface);
+		enemies->push_back(enemy);
 		break;
 	case CM_ENEMYFACTORY_CREATE_WALDO_WANDER:
 		surface = (Surface*)wParam;
 		x = lParam;
-		waldo = new Waldo(surface, x);
-		enemies->push_back(waldo);
+		enemy = new Waldo(surface, x);
+		enemies->push_back(enemy);
 
 		break;
 	}
 
-	vector<Waldo*>::iterator iterator = enemies->begin();
+	vector<Enemy*>::iterator iterator = enemies->begin();
 	while(iterator != enemies->end())
 	{
-		waldo = *iterator;
-		waldo->recieveMessage(message, wParam, lParam);
+		enemy = *iterator;
+		enemy->recieveMessage(message, wParam, lParam);
 		iterator++;
 	}
 }
 void EnemyFactory::startGame()
 {
-	Waldo * waldo;
-	vector<Waldo*>::iterator iterator = enemies->begin();
+	Enemy * enemy;
+	vector<Enemy*>::iterator iterator = enemies->begin();
 	while(iterator != enemies->end())
 	{
-		waldo = *iterator;
-		waldo->~Waldo();
+		enemy = *iterator;
+		delete enemy;
 		iterator++;
 	}
 	enemies->clear();

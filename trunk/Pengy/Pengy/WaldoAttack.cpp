@@ -1,5 +1,6 @@
 #include "WaldoAttack.h"
 #include "math.h"
+#include "messages.h"
 
 WaldoAttack::WaldoAttack(Waldo * pWaldo, WaldoStateMachine * pWaldoStateMachine):WaldoState(pWaldo, pWaldoStateMachine)
 {

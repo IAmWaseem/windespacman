@@ -15,4 +15,5 @@ protected:
 private:
 	vector<Gadget*> * gadgets; 
 	static GadgetFactory * pInstance;
+	void startGame();
 };

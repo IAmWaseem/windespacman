@@ -18,6 +18,7 @@ protected:
 private:
 	static World* pInstance;
 	void LoadNextLevel();
+	void StartGame();
 	MessageQueue* messageQueue;
 	Menu* menuObject;
 };

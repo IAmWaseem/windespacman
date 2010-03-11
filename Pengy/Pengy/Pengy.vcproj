@@ -154,6 +154,10 @@
 			Filter="cpp"
 			>
 			<File
+				RelativePath=".\Physics.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Skeleton.cpp"
 				>
 			</File>
@@ -180,6 +184,10 @@
 			</File>
 			<File
 				RelativePath=".\Location.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Physics.h"
 				>
 			</File>
 			<File

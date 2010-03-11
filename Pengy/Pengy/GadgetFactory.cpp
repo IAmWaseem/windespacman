@@ -23,11 +23,13 @@ void GadgetFactory::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 {
 	Location * location;
 	Gadget * gadget;
-	vector<Gadget*>::iterator iterator;
 	int id;
 
 	switch(message)
 	{
+	case CM_GAME_START:
+		startGame();
+		break;
 	case CM_GADGETFACTORY_CREATE_GOLDFISH:
 		location = (Location*)wParam;
 		gadget = new Gadget(gadgets->size(), location, GadgetView::GadgetImage::Goldfish);
@@ -44,7 +46,7 @@ void GadgetFactory::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 
 	default:
-		iterator = gadgets->begin();
+		vector<Gadget*>::iterator iterator = gadgets->begin();
 		while(iterator != gadgets->end())
 		{
 			gadget = *iterator;
@@ -56,5 +58,17 @@ void GadgetFactory::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		}
 		break;
 	}
+}
 
+void GadgetFactory::startGame()
+{
+	Gadget * gadget;
+	vector<Gadget*>::iterator iterator = gadgets->begin();
+	while(iterator != gadgets->end())
+	{
+		gadget = *iterator;
+		gadget->~Gadget();
+		iterator++;
+	}
+	gadgets->clear();
 }

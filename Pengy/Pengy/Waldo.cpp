@@ -51,6 +51,7 @@ Waldo::Waldo(Surface * pSurface)
 
 Waldo::~Waldo(void)
 {
+	this->pWaldoView->unRegisterToGraphics();
 }
 
 void Waldo::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)

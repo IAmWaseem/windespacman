@@ -29,6 +29,9 @@ void EnemyFactory::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	int x;
 	switch(message)
 	{
+	case CM_GAME_START:
+		startGame();
+		break;
 	case CM_ENEMYFACTORY_CREATE_WALDO_PATROL:
 		surface = (Surface*)wParam;
 		waldo = new Waldo(surface);
@@ -50,4 +53,16 @@ void EnemyFactory::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		waldo->recieveMessage(message, wParam, lParam);
 		iterator++;
 	}
+}
+void EnemyFactory::startGame()
+{
+	Waldo * waldo;
+	vector<Waldo*>::iterator iterator = enemies->begin();
+	while(iterator != enemies->end())
+	{
+		waldo = *iterator;
+		waldo->~Waldo();
+		iterator++;
+	}
+	enemies->clear();
 }

@@ -30,8 +30,10 @@ void Character::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	int timeElapsed;
 	switch (message) 
 	{
+	case CM_GAME_START:
+		startGame();
+		break;
 	case CM_LEVEL_LOAD:
-		pCharacterView = new CharacterView();
 		switch(world->Inst()->level)
 		{
 		case 1:
@@ -165,4 +167,19 @@ Direction Character::getDirection()
 void Character::setDirection(Direction direction)
 {
 	this->direction = direction;
+}
+
+void Character::startGame()
+{
+	pCharacterView->unRegisterToGraphics();
+	pCharacterView = new CharacterView();
+	location = new Location();
+	location->X = 50;
+	location->Y = 200;
+	location->width = 50;
+	location->height = 96;
+	pCharacterStateMachine = new CharacterStateMachine();
+	direction = Direction::Right;
+	pickedupFish = 0;
+	pickedupWeapons = 0;
 }

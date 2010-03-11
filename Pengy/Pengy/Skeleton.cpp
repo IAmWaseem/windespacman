@@ -179,8 +179,6 @@ void CSkeleton::GameInit()
 
 void CSkeleton::GameLoop()
 {
-	
-
 	Update();
 	Render(this->m_hWnd);
 }

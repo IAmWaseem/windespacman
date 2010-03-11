@@ -27,6 +27,9 @@ void World::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	case CM_LEVEL_START:
 		LoadNextLevel();
 		break;
+	case CM_GAME_START:
+		StartGame();
+		break;
 	case CM_MENU_LOAD:
 		if(menu)
 		{
@@ -49,4 +52,10 @@ void World::LoadNextLevel()
 		level++;
 		messageQueue->Inst()->sendMessage(CM_LEVEL_LOAD, NULL, NULL);
 	}
+}
+
+void World::StartGame()
+{
+	level = 1;
+	messageQueue->Inst()->sendMessage(CM_LEVEL_LOAD, NULL, NULL);
 }

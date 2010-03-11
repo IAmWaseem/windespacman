@@ -22,7 +22,7 @@ void Menu::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	 switch (message) 
 	 {
 	 case CM_GAME_NEW:
-		 messageQueue->Inst()->sendMessage(CM_LEVEL_START, NULL, NULL);
+		 messageQueue->Inst()->sendMessage(CM_GAME_START, NULL, NULL);
 		 DeleteGameMenu();
 		 world->Inst()->menu = false;
 		 break;

@@ -29,4 +29,5 @@ private:
 	int pickedupFish;
 	int pickedupWeapons;
 	World* world;
+	void startGame();
 };

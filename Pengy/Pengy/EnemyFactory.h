@@ -16,4 +16,5 @@ protected:
 private:
 	vector<Waldo*> * enemies;
 	static EnemyFactory * pInstance;
+	void startGame();
 };

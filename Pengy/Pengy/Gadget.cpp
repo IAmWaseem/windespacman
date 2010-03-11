@@ -29,7 +29,7 @@ int Gadget::GetId()
 
 Gadget::~Gadget(void)
 {
-	
+	pGadgetView->unRegisterToGraphics();
 }
 
 void Gadget::Update()

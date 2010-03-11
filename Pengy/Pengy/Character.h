@@ -20,6 +20,11 @@ public:
 	CharacterView * GetCharacterView();
 	Direction getDirection();
 	void setDirection(Direction direction);
+	int GetPickedWeapons();
+	int GetPickedGoldFish();
+	int GetAmountLives();
+	bool isKilled;
+	int timeToStayKilled;
 private:
 	Direction direction;
 	static Character * pInstance;
@@ -28,6 +33,7 @@ private:
 	Location * location;
 	int pickedupFish;
 	int pickedupWeapons;
+	int lives;
 	World* world;
 	void startGame();
 };

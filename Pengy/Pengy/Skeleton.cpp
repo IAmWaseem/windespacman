@@ -14,7 +14,7 @@ using namespace dotnetguy;
 /////////////////////////////////////
 CSkeleton::CSkeleton()
 {
-
+	paused = false;
 }
 
 CSkeleton::~CSkeleton()
@@ -79,6 +79,7 @@ LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		case 'm':
 		case 'M':
 			messageQueue->Inst()->sendMessage(CM_MENU_LOAD, NULL, NULL);
+			paused = true;
 
 		case 't':
 		case 'T':
@@ -149,7 +150,7 @@ LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 void CSkeleton::GameInit()
 {
 	messageQueue->Inst()->sendMessage(CM_MENU_LOAD, NULL, NULL);
-
+	paused = true;
 	RECT rect;
 	rect.left = 0;
 	rect.top = 0;
@@ -218,6 +219,9 @@ void CSkeleton::Update()
 	ULONGLONG systemTimeIn_ms( uli.QuadPart/10000 );
 	int elapsedTime = (int)(systemTimeIn_ms - previousUpdateTime);
 	
-	messageQueue->Inst()->sendMessage(CM_UPDATE, elapsedTime, NULL);
+	if(!paused == true)
+		messageQueue->Inst()->sendMessage(CM_UPDATE, elapsedTime, NULL);
 	previousUpdateTime = systemTimeIn_ms;
+	if(world->Inst()->menu == false && paused == true)
+		paused = false;
 }

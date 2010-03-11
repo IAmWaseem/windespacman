@@ -3,14 +3,12 @@
 #include "WaldoStateMachine.h"
 #include "MessageQueue.h"
 
-Waldo::Waldo(Surface * pSurface, int x)
+Waldo::Waldo(Surface * pSurface, int x) : Enemy(pSurface)
 {
-	this->pOnSurface = pSurface;
 	RandomDirection();
 	
-	this->pLocation = new Location();
-	this->pWaldoView = new WaldoView(this);
-	this->pWaldoView->registerToGraphics();
+	this->pView = new WaldoView(this);
+	this->pView->registerToGraphics();
 
 	this->pLocation->width = 60;
 	this->pLocation->height = 60;
@@ -23,17 +21,14 @@ Waldo::Waldo(Surface * pSurface, int x)
 
 	this->isVulnerable = false;
 	this->pengyJumping = false;
-	this->isAlive = true;
 }
 
-Waldo::Waldo(Surface * pSurface)
+Waldo::Waldo(Surface * pSurface) : Enemy(pSurface)
 {
-	this->pOnSurface = pSurface;
 	RandomDirection();
-	
-	this->pLocation = new Location();
-	this->pWaldoView = new WaldoView(this);
-	this->pWaldoView->registerToGraphics();
+
+	this->pView = new WaldoView(this);
+	this->pView->registerToGraphics();
 
 	this->pLocation->width = 60;
 	this->pLocation->height = 60;
@@ -46,27 +41,22 @@ Waldo::Waldo(Surface * pSurface)
 
 	this->isVulnerable = false;
 	this->pengyJumping = false;
-	this->isAlive = true;
 }
 
 Waldo::~Waldo(void)
 {
-	this->pWaldoView->unRegisterToGraphics();
+
 }
 
-void Waldo::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
+void Waldo::recieveMessageInternal(UINT message, WPARAM wParam, LPARAM lParam)
 {
 	if(!this->isAlive)
 		return;
 
 	switch(message)
 	{
-	case CM_UPDATE:
-		MessageQueue::Inst()->sendMessage(CM_CHARACTER_GET_LOCATION, NULL, NULL);
-		break;
 
-	case CM_CHARACTER_RETURN_LOCATION:
-		this->pPengyLocation = (Location*)wParam;
+	case CM_UPDATE:
 		CheckPengyCollision();
 		break;
 
@@ -91,25 +81,6 @@ void Waldo::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		this->pWaldoStateMachine->recieveMessage(message, wParam, lParam);
 }
 
-Location * Waldo::GetLocation()
-{
-	return pLocation;
-}
-
-Direction Waldo::GetDirection()
-{
-	return this->direction;
-}
-
-Surface * Waldo::GetOnSurface()
-{
-	return this->pOnSurface;
-}
-
-void Waldo::SetDirection(Direction direction)
-{
-	this->direction = direction;
-}
 
 void Waldo::CheckPengyCollision()
 {
@@ -123,12 +94,12 @@ void Waldo::CheckPengyCollision()
 	{
 		if(this->isVulnerable)
 		{
-			this->pWaldoView->unRegisterToGraphics();
+			this->pView->unRegisterToGraphics();
 			MessageQueue::Inst()->sendMessage(CM_WALDO_KILLED, NULL, NULL);
 			this->isAlive = false;
 			delete this->pLocation;
 			delete this->pWaldoStateMachine;
-			delete this->pWaldoView;
+			delete this->pView;
 		}
 		else
 		{
@@ -188,9 +159,4 @@ void Waldo::RandomDirection()
 		this->direction = Direction::Right;
 	else
 		this->direction = Direction::Left;
-}
-
-Location * Waldo::GetPengyLocation()
-{
-	return this->pPengyLocation;
 }

@@ -1,5 +1,6 @@
 #include "WaldoPatrol.h"
 #include "math.h"
+#include "messages.h"
 
 WaldoPatrol::WaldoPatrol(Waldo * pWaldo, WaldoStateMachine * pWaldoStateMachine):WaldoState(pWaldo, pWaldoStateMachine)
 {

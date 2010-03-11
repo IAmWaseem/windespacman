@@ -1,5 +1,6 @@
 #include "WaldoWander.h"
 #include "math.h"
+#include "messages.h"
 
 WaldoWander::WaldoWander(Waldo * pWaldo, WaldoStateMachine * pWaldoStateMachine):WaldoState(pWaldo, pWaldoStateMachine)
 {

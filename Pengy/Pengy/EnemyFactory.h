@@ -3,7 +3,7 @@
 #include <vector>
 using namespace std;
 
-class Waldo;
+class Enemy;
 
 class EnemyFactory : public Observer
 {
@@ -14,7 +14,7 @@ public:
 protected:
 	EnemyFactory(void);
 private:
-	vector<Waldo*> * enemies;
+	vector<Enemy*> * enemies;
 	static EnemyFactory * pInstance;
 	void startGame();
 };

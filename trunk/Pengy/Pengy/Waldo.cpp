@@ -45,7 +45,8 @@ Waldo::Waldo(Surface * pSurface) : Enemy(pSurface)
 
 Waldo::~Waldo(void)
 {
-
+	pView->unRegisterToGraphics();
+	delete pView;
 }
 
 void Waldo::recieveMessageInternal(UINT message, WPARAM wParam, LPARAM lParam)

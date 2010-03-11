@@ -7,13 +7,13 @@
 
 Walking::Walking(void)
 {
-	this->speed = 0.2f;
+	this->speed = 0.15f;
 	this->moved = 0;
 }
 
 Walking::Walking(CharacterStateMachine * pStateMachine) : CharacterState(pStateMachine)
 {
-	this->speed = 0.2f;
+	this->speed = 0.15f;
 	this->moved = 0;
 }
 

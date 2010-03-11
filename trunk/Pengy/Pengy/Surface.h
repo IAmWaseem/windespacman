@@ -7,4 +7,7 @@ struct Surface
 	int yFrom;
 	int yTo;
 	bool isCloud;
+	bool isIce;
+	bool isSurfaceOfDeath;
+	bool isSlope;
 };

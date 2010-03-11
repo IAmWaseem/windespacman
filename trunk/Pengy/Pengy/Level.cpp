@@ -45,6 +45,11 @@ void Level::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	Location * gL2 = new Location();
 	Location * gL3 = new Location();
 	Location * gL4 = new Location();
+	Location * gL5 = new Location();
+	Location * gL6 = new Location();
+	Location * gL7 = new Location();
+	Location * gL8 = new Location();
+	Location * gL9 = new Location();
 
 	gL1->X = 400;
 	gL1->Y = 300;
@@ -54,6 +59,24 @@ void Level::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 
 	gL3->X = 300;
 	gL3->Y = 300;
+
+	gL4->X = 600;
+	gL4->Y = 100;
+
+	gL5->X = 900;
+	gL5->Y = 100;
+
+	gL6->X = 1000;
+	gL6->Y = 300;
+
+	gL7->X = 760;
+	gL7->Y = 300;
+
+	gL8->X = 1050;
+	gL8->Y = 300;
+
+	gL9->X = 500;
+	gL9->Y = 900;
 
 	switch (message) 
 	{
@@ -65,6 +88,12 @@ void Level::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		MessageQueue::Inst()->sendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)gL1, NULL);
 		MessageQueue::Inst()->sendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)gL2, NULL);
 		MessageQueue::Inst()->sendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)gL3, NULL);
+		MessageQueue::Inst()->sendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)gL4, NULL);
+		MessageQueue::Inst()->sendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)gL5, NULL);
+		MessageQueue::Inst()->sendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)gL6, NULL);
+		MessageQueue::Inst()->sendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)gL7, NULL);
+		MessageQueue::Inst()->sendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)gL8, NULL);
+		MessageQueue::Inst()->sendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)gL9, NULL);
 		MessageQueue::Inst()->sendMessage(CM_ENEMYFACTORY_CREATE_WALDO_WANDER, (int)surfaces.at(5), ((surfaces.at(5)->xFrom + surfaces.at(5)->xTo) / 2) + 10 );
 		MessageQueue::Inst()->sendMessage(CM_ENEMYFACTORY_CREATE_WALDO_PATROL, (int)surfaces.at(9), NULL);
 		MessageQueue::Inst()->sendMessage(CM_ENEMYFACTORY_CREATE_WALDO_PATROL, (int)surfaces.at(11), NULL);

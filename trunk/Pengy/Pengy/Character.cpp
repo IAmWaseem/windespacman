@@ -17,6 +17,9 @@ Character::Character(void)
 	direction = Direction::Right;
 	pickedupFish = 0;
 	pickedupWeapons = 0;
+	lives = 4;
+	timeToStayKilled = 0;
+	isKilled = false;
 }
 
 Character::~Character(void)
@@ -81,6 +84,12 @@ void Character::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	case CM_UPDATE:
 		timeElapsed = wParam;
 		pCharacterStateMachine->Update(timeElapsed);
+		if(isKilled) {
+			this->timeToStayKilled = timeToStayKilled - timeElapsed;
+			if(timeToStayKilled < 0) {
+				isKilled = false;
+			}
+		}
 		break;
 
 	case CM_CHARACTER_SPACEBAR:
@@ -126,7 +135,15 @@ void Character::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 
 	case CM_CHARACTER_KILLED:
-		pCharacterView->unRegisterToGraphics();
+		if(!isKilled) {
+			this->lives--;
+			this->isKilled = true;
+			this->timeToStayKilled = 2000;
+
+			if(this->lives == 0) {
+				pCharacterView->unRegisterToGraphics();
+			}
+		}
 		break;
 	}
 }
@@ -141,7 +158,7 @@ Character* Character::Instance()
 
 void Character::Update()
 {
-
+	
 }
 
 Location * Character::GetLocation()
@@ -162,6 +179,18 @@ CharacterView * Character::GetCharacterView()
 Direction Character::getDirection()
 {
 	return direction;
+}
+
+int Character::GetPickedWeapons() {
+	return this->pickedupWeapons;
+}
+
+int Character::GetPickedGoldFish() {
+	return this->pickedupFish;
+}
+
+int Character::GetAmountLives() {
+	return this->lives;
 }
 
 void Character::setDirection(Direction direction)

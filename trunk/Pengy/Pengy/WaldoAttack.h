@@ -8,4 +8,8 @@ public:
 	~WaldoAttack(void);
 	virtual void Update(int timeElapsed);
 	virtual void recieveMessage(UINT message, WPARAM wParam, LPARAM lParam);
+private:
+	float speed;
+	bool IsPengyOnMySurface();
+	bool IsPengyTooFarAway();
 };

@@ -35,4 +35,5 @@ class Waldo : public Observer
 		Direction GetDirection();
 		void SetDirection(Direction direction);
 		Surface * GetOnSurface();
+		Location * GetPengyLocation();
 };

@@ -188,3 +188,8 @@ void Waldo::RandomDirection()
 	else
 		this->direction = Direction::Left;
 }
+
+Location * Waldo::GetPengyLocation()
+{
+	return this->pPengyLocation;
+}

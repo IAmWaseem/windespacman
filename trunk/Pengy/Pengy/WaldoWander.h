@@ -3,6 +3,11 @@
 
 class WaldoWander : public WaldoState
 {
+private:
+	float distanceToWander;
+	float distanceWandered;
+	float speed;
+
 public:
 	WaldoWander(Waldo * pWaldo, WaldoStateMachine * pWaldoStateMachine);
 	~WaldoWander(void);

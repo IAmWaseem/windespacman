@@ -35,6 +35,7 @@ private:
 	void Render(HWND);
 	HDC bufDC;
 	ULONGLONG previousUpdateTime;
+	bool paused;
 };
 
 #endif

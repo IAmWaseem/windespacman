@@ -616,22 +616,6 @@
 				</File>
 			</Filter>
 		</Filter>
-		<Filter
-			Name="Physics"
-			>
-			<File
-				RelativePath=".\Physics.cpp"
-				>
-			</File>
-			<Filter
-				Name="Headers"
-				>
-				<File
-					RelativePath=".\Physics.h"
-					>
-				</File>
-			</Filter>
-		</Filter>
 		<File
 			RelativePath=".\res\Intro.bmp"
 			>

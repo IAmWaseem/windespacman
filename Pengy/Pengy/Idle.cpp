@@ -5,7 +5,7 @@
 
 Idle::Idle(void)
 {
-
+	
 }
 
 Idle::Idle(CharacterStateMachine * pStateMachine) : CharacterState(pStateMachine)

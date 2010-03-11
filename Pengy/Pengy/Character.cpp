@@ -4,6 +4,7 @@
 using namespace std;
 
 Character* Character::pInstance = NULL;
+float Character::DistanceToMove = 1.5f;
 
 Character::Character(void)
 {
@@ -145,7 +146,6 @@ Location * Character::GetLocation()
 {
 	return location;
 }
-
 
 void Character::SetLocation(Location * location)
 {

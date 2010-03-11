@@ -37,7 +37,7 @@ void WaldoView::Draw(HDC hDC, RECT rect, int xFrom, int xTo)
 		HDC bufDC = CreateCompatibleDC(hDC);
 		SelectObject(bufDC, pBitmap);
 
-		if(x + width >= xFrom && x + width <= xTo)
+		if(x + width >= xFrom && x <= xTo)
 		{
 			BitBltTransparant(hDC, x + difWidth - xFrom, y + difHeight, imageW, imageH, bufDC, 0, 0, pBitmap, pMask);
 		}

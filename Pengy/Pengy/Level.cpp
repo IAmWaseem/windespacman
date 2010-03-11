@@ -61,12 +61,11 @@ void Level::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	float toLocationY;
 	float fromLocationYdiff;
 	float toLocationYdiff;
-
-	//bool isFalling;
-	//bool bumpHead;
-	//bool hit;
+	bool isFalling;
+	bool bumpHead;
+	bool hit;
 	vector<Surface*>::iterator iterator;
-	//Surface * onSurface;
+	Surface * onSurface;
 	
 	switch (message) 
 	{
@@ -87,24 +86,19 @@ void Level::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	case CM_CHARACTER_MOVE_X_FROM_TO:
 		fromLocation = (Location*)wParam;
 		toLocation = (Location*)lParam;
-		
 		iterator = surfaces.begin();
-		//hit = false;
-
+		hit = false;
 		if(fromLocation->X < toLocation->X)
 		{
 			while(iterator != surfaces.end())
 			{
 				Surface * surface = *iterator;
-				if(physic_behavior.LocationInSurfaceY(toLocation, surface))
+				if(LocationInSurfaceY(toLocation, surface))
 				{
-					/*if(physic_behavior.Move_X_From_To_Right(fromLocation,toLocation,surfaces,surface)==true)
-						MessageQueue::Inst()->sendMessage(CM_CHARACTER_BUMPS_INTO, (int)surface, NULL);*/
 					if(!surface->isCloud && ((fromLocation->X + fromLocation->width) <= surface->xFrom && (toLocation->X + toLocation->width) >= surface->xFrom))
 					{
 						MessageQueue::Inst()->sendMessage(CM_CHARACTER_BUMPS_INTO, (int)surface, NULL);
 					}
-
 				}
 				iterator++;
 			}
@@ -114,17 +108,13 @@ void Level::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 			while(iterator != surfaces.end())
 			{
 				Surface * surface = *iterator;
-				
-				if(physic_behavior.LocationInSurfaceY(toLocation, surface))
+				if(LocationInSurfaceY(toLocation, surface))
 				{
-					/*if(physic_behavior.Move_X_From_To_Left(fromLocation,toLocation,surfaces,surface)==true)
-						MessageQueue::Inst()->sendMessage(CM_CHARACTER_BUMPS_INTO, (int)surface, NULL);*/
 					if(!surface->isCloud && (fromLocation->X >= surface->xTo && toLocation->X <= surface->xTo))
 					{
 						MessageQueue::Inst()->sendMessage(CM_CHARACTER_BUMPS_INTO, (int)surface, NULL);
 					}
 				}
-
 				iterator++;
 			}		
 		}
@@ -134,18 +124,12 @@ void Level::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	case CM_CHARACTER_FALL_Y_FROM_TO:
 		fromLocation = (Location*)wParam;
 		toLocation = (Location*)lParam;
+		fromLocationY = fromLocation->Y + fromLocation->height;
+		toLocationY = toLocation->Y + toLocation->height;
 
-		/*fromLocationY = fromLocation->Y + fromLocation->height;
-		toLocationY = toLocation->Y + toLocation->height;*/
-		
-		if(physic_behavior.Fall_Y_From_To(fromLocation,toLocation,surfaces)==false)
-			MessageQueue::Inst()->sendMessage(CM_CHARACTER_IS_FALLING, NULL, NULL);
-		else
-			MessageQueue::Inst()->sendMessage(CM_CHARACTER_IS_STANDING, (int)physic_behavior.onSurface_final, NULL);
-		
-		//isFalling = true;
-		//iterator = surfaces.begin();
-		/*while(iterator != surfaces.end())
+		isFalling = true;
+		iterator = surfaces.begin();
+		while(iterator != surfaces.end())
 		{
 			Surface * surface = *iterator;
 			fromLocationYdiff = fabs(fromLocationY - surface->xFrom);
@@ -159,6 +143,7 @@ void Level::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 					onSurface = surface;
 				}
 			}
+			
 			iterator++;
 		}
 		if(isFalling)
@@ -168,22 +153,17 @@ void Level::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		else
 		{
 			MessageQueue::Inst()->sendMessage(CM_CHARACTER_IS_STANDING, (int)onSurface, NULL);
-		}*/
-
+		}
 		break;
-
 	case CM_CHARACTER_JUMP_Y_FROM_TO:
 		fromLocation = (Location*)wParam;
 		toLocation = (Location*)lParam;
-		/*fromLocationY = fromLocation->Y;
-		toLocationY = toLocation->Y;*/
+		fromLocationY = fromLocation->Y;
+		toLocationY = toLocation->Y;
 
-		if(physic_behavior.Fall_Y_From_To(fromLocation,toLocation,surfaces)==true)
-			MessageQueue::Inst()->sendMessage(CM_CHARACTER_JUMPING_BUMPS_HEAD, (int)physic_behavior.onSurface_final, NULL);
-
-		//bumpHead = false;
+		bumpHead = false;
 		iterator = surfaces.begin();
-		/*while(iterator != surfaces.end())
+		while(iterator != surfaces.end())
 		{
 			Surface * surface = *iterator;
 			fromLocationYdiff = fabs(fromLocationY - surface->xTo);
@@ -204,55 +184,54 @@ void Level::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		if(bumpHead)
 		{
 			MessageQueue::Inst()->sendMessage(CM_CHARACTER_JUMPING_BUMPS_HEAD, (int)onSurface, NULL);
-		}*/
-
+		}
 		break;
 	}
 }
 
-//bool Level::LocationInSurfaceX(Location * location, Surface * surface)
-//{
-//	bool inSurface = false;
-//	if(surface->xFrom <= location->X && surface->xTo >= (location->X + location->width))
-//	{
-//		inSurface = true;
-//	}
-//	if(surface->xFrom >= location->X && surface->xTo <= (location->X + location->width))
-//	{
-//		inSurface = true;
-//	}
-//	if(surface->xFrom <= location->X && surface->xTo <= (location->X + location->width) && surface->xTo > location->X)
-//	{
-//		inSurface = true;
-//	}
-//	if(surface->xFrom >= location->X && surface->xFrom <= (location->X + location->width) && surface->xTo >= (location->X + location->width))
-//	{
-//		inSurface = true;
-//	}
-//	return inSurface;
-//}
+bool Level::LocationInSurfaceX(Location * location, Surface * surface)
+{
+	bool inSurface = false;
+	if(surface->xFrom <= location->X && surface->xTo >= (location->X + location->width))
+	{
+		inSurface = true;
+	}
+	if(surface->xFrom >= location->X && surface->xTo <= (location->X + location->width))
+	{
+		inSurface = true;
+	}
+	if(surface->xFrom <= location->X && surface->xTo <= (location->X + location->width) && surface->xTo > location->X)
+	{
+		inSurface = true;
+	}
+	if(surface->xFrom >= location->X && surface->xFrom <= (location->X + location->width) && surface->xTo >= (location->X + location->width))
+	{
+		inSurface = true;
+	}
+	return inSurface;
+}
 
-//bool Level::LocationInSurfaceY(Location * location, Surface * surface)
-//{
-//	bool inSurface = false;
-//	if(surface->yFrom  >= location->Y && surface->yTo <= (location->Y + location->height))
-//	{
-//		inSurface = true;
-//	}
-//	if(surface->yFrom  <= location->Y && surface->yTo >= (location->Y + location->height))
-//	{
-//		inSurface = true;
-//	}
-//	if(location->Y >= surface->yFrom && location->Y <= surface->yTo)
-//	{
-//		inSurface = true;
-//	}
-//	if((location->Y + location->height) >= surface->yFrom && (location->Y + location->height) <= surface->yTo)
-//	{
-//		inSurface = true;
-//	}
-//	return inSurface;
-//}
+bool Level::LocationInSurfaceY(Location * location, Surface * surface)
+{
+	bool inSurface = false;
+	if(surface->yFrom  >= location->Y && surface->yTo <= (location->Y + location->height))
+	{
+		inSurface = true;
+	}
+	if(surface->yFrom  <= location->Y && surface->yTo >= (location->Y + location->height))
+	{
+		inSurface = true;
+	}
+	if(location->Y >= surface->yFrom && location->Y <= surface->yTo)
+	{
+		inSurface = true;
+	}
+	if((location->Y + location->height) >= surface->yFrom && (location->Y + location->height) <= surface->yTo)
+	{
+		inSurface = true;
+	}
+	return inSurface;
+}
 
 void Level::LoadLevel(int level)
 {

@@ -6,7 +6,6 @@
 #include "Location.h"
 #include "BeachLevel.h"
 #include "World.h"
-#include "Physics.h"
 
 
 class Level : public Observer
@@ -23,10 +22,9 @@ private:
     static Level* pInstance;
 	LevelView levelView;
 	BeachLevel beach;
-	Physics physic_behavior;
 	int levelLength;
 	void SetLevelLength();
 	World* world;
-	/*bool LocationInSurfaceX(Location * location, Surface * surface);
-	bool LocationInSurfaceY(Location * location, Surface * surface);*/
+	bool LocationInSurfaceX(Location * location, Surface * surface);
+	bool LocationInSurfaceY(Location * location, Surface * surface);
 };

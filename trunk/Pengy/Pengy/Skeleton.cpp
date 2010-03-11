@@ -30,27 +30,7 @@ LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	SPLASH splash;
 	Location * location;
 
-	short keystateLeft;
-	short keystateUp;
-	short keystateRight;
-	short keystateDown;
-	short keystateSpace;
-
-	keystateSpace = GetAsyncKeyState(32);
-	keystateLeft = GetAsyncKeyState(37);
-	keystateUp = GetAsyncKeyState(38);
-	keystateRight = GetAsyncKeyState(39);
-	keystateDown = GetAsyncKeyState(40);
-	if(keystateSpace != 0)
-		messageQueue->Inst()->sendMessage(CM_CHARACTER_SPACEBAR, NULL, NULL);
-	if(keystateLeft != 0)
-		messageQueue->Inst()->sendMessage(CM_CHARACTER_LEFT, NULL, NULL);
-	if(keystateUp != 0)
-		messageQueue->Inst()->sendMessage(CM_CHARACTER_UP, NULL, NULL);
-	if(keystateRight != 0)
-		messageQueue->Inst()->sendMessage(CM_CHARACTER_RIGHT, NULL, NULL);
-	if(keystateDown != 0)
-		messageQueue->Inst()->sendMessage(CM_CHARACTER_DOWN, NULL, NULL);	
+		
 		
 
 	switch (uMsg) 
@@ -198,6 +178,8 @@ void CSkeleton::GameInit()
 
 void CSkeleton::GameLoop()
 {
+	
+
 	Update();
 	Render(this->m_hWnd);
 }

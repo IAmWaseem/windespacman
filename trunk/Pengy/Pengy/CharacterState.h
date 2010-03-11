@@ -9,7 +9,6 @@ class CharacterState
 {
 protected:
 	CharacterStateMachine * pStateMachine;
-
 public:
 	CharacterState(void);
 	CharacterState(CharacterStateMachine * pStateMachine);

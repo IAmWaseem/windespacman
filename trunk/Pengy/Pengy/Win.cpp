@@ -53,6 +53,29 @@ int CWin::Run()
 	
 	while( msg.message != WM_QUIT )
 	{
+		short keystateLeft;
+		short keystateUp;
+		short keystateRight;
+		short keystateDown;
+		short keystateSpace;
+
+		keystateSpace = GetAsyncKeyState(32);
+		keystateLeft = GetAsyncKeyState(37);
+		keystateUp = GetAsyncKeyState(38);
+		keystateRight = GetAsyncKeyState(39);
+		keystateDown = GetAsyncKeyState(40);
+
+		if(keystateSpace != 0)
+			MessageQueue::Inst()->sendMessage(CM_CHARACTER_SPACEBAR, NULL, NULL);
+		if(keystateLeft != 0)
+			MessageQueue::Inst()->sendMessage(CM_CHARACTER_LEFT, NULL, NULL);
+		if(keystateUp != 0)
+			MessageQueue::Inst()->sendMessage(CM_CHARACTER_UP, NULL, NULL);
+		if(keystateRight != 0)
+			MessageQueue::Inst()->sendMessage(CM_CHARACTER_RIGHT, NULL, NULL);
+		if(keystateDown != 0)
+			MessageQueue::Inst()->sendMessage(CM_CHARACTER_DOWN, NULL, NULL);
+
 		if( PeekMessage( &msg, NULL, 0U, 0U, PM_REMOVE ) )
 		{
 			TranslateMessage( &msg );

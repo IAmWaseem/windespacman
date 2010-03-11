@@ -16,6 +16,7 @@ public:
 	void Update();
 	Location * GetLocation();
 	void SetLocation(Location * location);
+	static float DistanceToMove;
 	CharacterView * GetCharacterView();
 	Direction getDirection();
 	void setDirection(Direction direction);

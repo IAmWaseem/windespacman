@@ -6,14 +6,14 @@ Falling::Falling(void)
 {
 	this->distanceToMove = 0;
 	this->downwardVelocity = 0;
-	this->speed = 0.3f;
+	this->speed = 0.2f;
 }
 
 Falling::Falling(CharacterStateMachine * pStateMachine) : CharacterState(pStateMachine)
 {
 	this->distanceToMove = 0;
 	this->downwardVelocity = 0;
-	this->speed = 0.3f;
+	this->speed = 0.2f;
 }
 
 void Falling::Up()

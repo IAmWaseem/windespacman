@@ -3,7 +3,6 @@
 
 CharacterState::CharacterState()
 {
-
 }
 
 CharacterState::CharacterState(CharacterStateMachine * pStateMachine)

@@ -26,15 +26,15 @@ void Idle::Down()
 
 void Idle::Left()
 {
-	this->pStateMachine->walking->Left();
-	this->pStateMachine->Transition(this->pStateMachine->walking);
+	this->pStateMachine->pWalking->Left();
+	this->pStateMachine->Transition(this->pStateMachine->pWalking);
 }
 
 
 void Idle::Right()
 {
-	this->pStateMachine->walking->Right();
-	this->pStateMachine->Transition(this->pStateMachine->walking);
+	this->pStateMachine->pWalking->Right();
+	this->pStateMachine->Transition(this->pStateMachine->pWalking);
 }
 
 void Idle::Throw()
@@ -45,8 +45,8 @@ void Idle::Throw()
 
 void Idle::Spacebar()
 {
-	this->pStateMachine->jumping->Spacebar();
-	this->pStateMachine->Transition(this->pStateMachine->jumping);
+	this->pStateMachine->pJumping->Spacebar();
+	this->pStateMachine->Transition(this->pStateMachine->pJumping);
 }
 
 void Idle::Update(int timeElapsed)
@@ -54,12 +54,12 @@ void Idle::Update(int timeElapsed)
 
 }
 
-void Idle::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
+void Idle::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch(message)
 	{
 	case CM_CHARACTER_IS_FALLING:
-		this->pStateMachine->Transition(this->pStateMachine->falling);
+		this->pStateMachine->Transition(this->pStateMachine->pFalling);
 		break;
 	}
 }

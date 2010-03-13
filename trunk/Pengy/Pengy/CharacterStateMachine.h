@@ -9,10 +9,10 @@ private:
 
 public:
 
-	CharacterState * idle;
-	CharacterState * walking;
-	CharacterState * jumping;
-	CharacterState * falling;
+	CharacterState * pIdle;
+	CharacterState * pWalking;
+	CharacterState * pJumping;
+	CharacterState * pFalling;
 
 	CharacterStateMachine(void);
 	~CharacterStateMachine(void);
@@ -24,5 +24,5 @@ public:
 	void Throw();
 	void Update(int timeElapsed);
 	void Transition(CharacterState * pCharacterState);
-	void recieveMessage(UINT message, WPARAM wParam, LPARAM lParam);
+	void ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam);
 };

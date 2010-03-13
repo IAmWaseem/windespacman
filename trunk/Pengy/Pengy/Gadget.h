@@ -4,12 +4,12 @@
 #include "GadgetStateMachine.h"
 #include "Location.h"
 
-class Gadget : public Observer
+class Gadget
 {
 public:
 	~Gadget(void);
 	Gadget(int id, Location * location, GadgetView::GadgetImage gadgetImage);
-	void recieveMessage(UINT message, WPARAM wParam, LPARAM lParam);
+	void ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam);
 	void Update();
 	Location * GetLocation();
 	void SetLocation(Location * location);

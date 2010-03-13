@@ -77,7 +77,7 @@ void CharacterView::Draw(HDC hdc, RECT rect, int xFrom, int xTo)
 		s2 << "Location = ( " << (int)(x / 64) << ", " << (int)(y / 64) << " )";
 		
 		LPCSTR PengyDirection = "";
-		if(Character::Instance()->getDirection() == Direction::Left)
+		if(Character::Instance()->GetDirection() == Direction::Left)
 			PengyDirection = "left";
 		else
 			PengyDirection = "right";

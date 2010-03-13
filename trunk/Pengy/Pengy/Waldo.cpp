@@ -96,7 +96,7 @@ void Waldo::CheckPengyCollision()
 		if(this->isVulnerable)
 		{
 			this->pView->unRegisterToGraphics();
-			MessageQueue::Inst()->sendMessage(CM_WALDO_KILLED, NULL, NULL);
+			MessageQueue::Instance()->SendMessage(CM_WALDO_KILLED, NULL, NULL);
 			this->isAlive = false;
 			delete this->pLocation;
 			delete this->pWaldoStateMachine;
@@ -104,7 +104,7 @@ void Waldo::CheckPengyCollision()
 		}
 		else
 		{
-			MessageQueue::Inst()->sendMessage(CM_CHARACTER_KILLED, NULL, NULL);
+			MessageQueue::Instance()->SendMessage(CM_CHARACTER_KILLED, NULL, NULL);
 		}
 	}
 }

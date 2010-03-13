@@ -17,12 +17,12 @@ Menu::~Menu(){
   if(pInstance != 0)delete pInstance;
 }
 
-void Menu::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam) 
+void Menu::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam) 
  {
 	 switch (message) 
 	 {
 	 case CM_GAME_NEW:
-		 messageQueue->Inst()->sendMessage(CM_GAME_START, NULL, NULL);
+		 messageQueue->Instance()->SendMessage(CM_GAME_START, NULL, NULL);
 		 DeleteGameMenu();
 		 world->Inst()->menu = false;
 		 break;

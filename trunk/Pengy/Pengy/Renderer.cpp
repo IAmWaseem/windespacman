@@ -78,7 +78,7 @@ void Renderer::render(HDC hdc)
 	DeleteObject(backBrush);
 }
 
-void Renderer::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
+void Renderer::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 {
 	Location * from;
 	Location * to;

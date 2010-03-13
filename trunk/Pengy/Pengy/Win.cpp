@@ -66,15 +66,15 @@ int CWin::Run()
 		keystateDown = GetAsyncKeyState(40);
 
 		if(keystateSpace != 0)
-			MessageQueue::Inst()->sendMessage(CM_CHARACTER_SPACEBAR, NULL, NULL);
+			MessageQueue::Instance()->SendMessage(CM_CHARACTER_SPACEBAR, NULL, NULL);
 		if(keystateLeft != 0)
-			MessageQueue::Inst()->sendMessage(CM_CHARACTER_LEFT, NULL, NULL);
+			MessageQueue::Instance()->SendMessage(CM_CHARACTER_LEFT, NULL, NULL);
 		if(keystateUp != 0)
-			MessageQueue::Inst()->sendMessage(CM_CHARACTER_UP, NULL, NULL);
+			MessageQueue::Instance()->SendMessage(CM_CHARACTER_UP, NULL, NULL);
 		if(keystateRight != 0)
-			MessageQueue::Inst()->sendMessage(CM_CHARACTER_RIGHT, NULL, NULL);
+			MessageQueue::Instance()->SendMessage(CM_CHARACTER_RIGHT, NULL, NULL);
 		if(keystateDown != 0)
-			MessageQueue::Inst()->sendMessage(CM_CHARACTER_DOWN, NULL, NULL);
+			MessageQueue::Instance()->SendMessage(CM_CHARACTER_DOWN, NULL, NULL);
 
 		if( PeekMessage( &msg, NULL, 0U, 0U, PM_REMOVE ) )
 		{

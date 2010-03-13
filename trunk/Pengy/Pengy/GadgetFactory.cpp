@@ -19,7 +19,7 @@ GadgetFactory::~GadgetFactory(void)
 {
 }
 
-void GadgetFactory::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam) 
+void GadgetFactory::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam) 
 {
 	Location * location;
 	Gadget * gadget;
@@ -52,7 +52,7 @@ void GadgetFactory::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 			gadget = *iterator;
 			if(!gadget->IsRemoved())
 			{
-				gadget->recieveMessage(message, wParam, lParam);
+				gadget->ReceiveMessage(message, wParam, lParam);
 			}
 			iterator++;
 		}

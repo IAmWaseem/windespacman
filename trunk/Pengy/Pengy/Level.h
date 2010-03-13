@@ -14,7 +14,7 @@ class Level : public Observer
 public:
 	static Level* Inst();
     ~Level();
-    void recieveMessage(UINT message, WPARAM wParam, LPARAM lParam);
+    void ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam);
 	void LoadLevel(int level);
 protected:
 	Level();

@@ -11,15 +11,15 @@ protected:
 	Character(void);
 public:
 	~Character(void);
-	void recieveMessage(UINT message, WPARAM wParam, LPARAM lParam);
+	void ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam);
 	static Character* Instance();
 	void Update();
 	Location * GetLocation();
-	void SetLocation(Location * location);
+	void SetLocation(Location * pLocation);
 	static float DistanceToMove;
 	CharacterView * GetCharacterView();
-	Direction getDirection();
-	void setDirection(Direction direction);
+	Direction GetDirection();
+	void SetDirection(Direction direction);
 	int GetPickedWeapons();
 	int GetPickedGoldFish();
 	int GetAmountLives();
@@ -30,10 +30,10 @@ private:
 	static Character * pInstance;
 	CharacterView * pCharacterView;
 	CharacterStateMachine * pCharacterStateMachine;
-	Location * location;
+	Location * pLocation;
 	int pickedupFish;
 	int pickedupWeapons;
 	int lives;
-	World* world;
-	void startGame();
+	World* pWorld;
+	void StartGame();
 };

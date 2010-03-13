@@ -41,7 +41,7 @@ Sound::~Sound(void)
 	if(pInstance != 0)delete pInstance;
 }
 
-void Sound::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam) 
+void Sound::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam) 
 {
 	switch (message) 
 	{

@@ -154,10 +154,6 @@
 			Filter="cpp"
 			>
 			<File
-				RelativePath=".\Physics.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\Skeleton.cpp"
 				>
 			</File>
@@ -184,10 +180,6 @@
 			</File>
 			<File
 				RelativePath=".\Location.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Physics.h"
 				>
 			</File>
 			<File
@@ -620,6 +612,22 @@
 				>
 				<File
 					RelativePath=".\Menu.h"
+					>
+				</File>
+			</Filter>
+		</Filter>
+		<Filter
+			Name="Physics"
+			>
+			<File
+				RelativePath=".\Physics.cpp"
+				>
+			</File>
+			<Filter
+				Name="Headers"
+				>
+				<File
+					RelativePath=".\Physics.h"
 					>
 				</File>
 			</Filter>

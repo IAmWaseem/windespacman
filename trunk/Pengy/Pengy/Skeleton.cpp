@@ -27,8 +27,8 @@ CSkeleton::~CSkeleton()
 
 LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-	SPLASH splash;
-	Location * location;
+	SPLASH pSplash;
+	Location * pLocation;
 
 		
 		
@@ -36,24 +36,24 @@ LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	switch (uMsg) 
 	{
 	case WM_CREATE:
-		splash.Init(hWnd, this->m_hInstance, IDB_BITMAP2 );
-		splash.Show();
+		pSplash.Init(hWnd, this->m_hInstance, IDB_BITMAP2 );
+		pSplash.Show();
 		Sleep(3000);
-		splash.Hide();
+		pSplash.Hide();
 		
-		location = new Location();
-		location->X = 200;
-		location->Y = 300;
+		pLocation = new Location();
+		pLocation->X = 200;
+		pLocation->Y = 300;
 		
-		messageQueue->Instance()->Attach(level->Inst());
-		messageQueue->Instance()->Attach(character->Instance());
-		messageQueue->Instance()->Attach(renderer->Inst());
-		messageQueue->Instance()->Attach(sound->Inst());
-		messageQueue->Instance()->Attach(GadgetFactory::Instance());
-		messageQueue->Instance()->Attach(EnemyFactory::Instance());
-		messageQueue->Instance()->Attach(world->Inst());
-		messageQueue->Instance()->Attach(menu->Inst());
-		menu->Inst()->windowHandle = hWnd;
+		pMessageQueue->Instance()->Attach(pLevel->Inst());
+		pMessageQueue->Instance()->Attach(pCharacter->Instance());
+		pMessageQueue->Instance()->Attach(pRenderer->Inst());
+		pMessageQueue->Instance()->Attach(pSound->Inst());
+		pMessageQueue->Instance()->Attach(GadgetFactory::Instance());
+		pMessageQueue->Instance()->Attach(EnemyFactory::Instance());
+		pMessageQueue->Instance()->Attach(pWorld->Inst());
+		pMessageQueue->Instance()->Attach(pMenu->Inst());
+		pMenu->Inst()->windowHandle = hWnd;
 		break;
 	case WM_KEYDOWN:
 
@@ -78,22 +78,22 @@ LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
 		case 'm':
 		case 'M':
-			messageQueue->Instance()->SendMessage(CM_MENU_LOAD, NULL, NULL);
+			pMessageQueue->Instance()->SendMessage(CM_MENU_LOAD, NULL, NULL);
 			paused = true;
 
 		case 't':
 		case 'T':
-			messageQueue->Instance()->SendMessage(CM_CHARACTER_RESET_POSITION, NULL, 10);
+			pMessageQueue->Instance()->SendMessage(CM_CHARACTER_RESET_POSITION, NULL, 10);
 			break;
 
 		case 'r':
 		case 'R':
-			messageQueue->Instance()->SendMessage(CM_CHARACTER_RESET_POSITION, 50, 200);
+			pMessageQueue->Instance()->SendMessage(CM_CHARACTER_RESET_POSITION, 50, 200);
 			break;
 		
 		case 'g':
 		case 'G':
-			MessageQueue::Instance()->SendMessage(CM_SOUND_EVENT,(WPARAM)(LPCTSTR)"res/pengy.wav", 0);
+			pMessageQueue->Instance()->SendMessage(CM_SOUND_EVENT,(WPARAM)(LPCTSTR)"res/pengy.wav", 0);
 			break;
 
 			// show the fps
@@ -127,19 +127,19 @@ LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	case WM_COMMAND:  
 		switch(LOWORD(wParam)) {  
 		case CM_GAME_NEW:  
-			messageQueue->Instance()->SendMessage(CM_GAME_NEW, NULL, NULL);
+			pMessageQueue->Instance()->SendMessage(CM_GAME_NEW, NULL, NULL);
 			break;  
 		case CM_GAME_OPEN:  
-			messageQueue->Instance()->SendMessage(CM_GAME_OPEN, NULL, NULL);
+			pMessageQueue->Instance()->SendMessage(CM_GAME_OPEN, NULL, NULL);
 			break;  
 		case CM_GAME_SAVE:  
-			messageQueue->Instance()->SendMessage(CM_GAME_SAVE, NULL, NULL);
+			pMessageQueue->Instance()->SendMessage(CM_GAME_SAVE, NULL, NULL);
 			break;  
 		case CM_GAME_EXIT:  
-			messageQueue->Instance()->SendMessage(CM_GAME_EXIT, NULL, NULL); 
+			pMessageQueue->Instance()->SendMessage(CM_GAME_EXIT, NULL, NULL); 
 			break;
 		case CM_GAME_ABOUT:  
-			messageQueue->Instance()->SendMessage(CM_GAME_ABOUT, NULL, NULL);
+			pMessageQueue->Instance()->SendMessage(CM_GAME_ABOUT, NULL, NULL);
 			break;  
 		}  
 		break;  
@@ -149,7 +149,7 @@ LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 void CSkeleton::GameInit()
 {
-	messageQueue->Instance()->SendMessage(CM_MENU_LOAD, NULL, NULL);
+	pMessageQueue->Instance()->SendMessage(CM_MENU_LOAD, NULL, NULL);
 	paused = true;
 	RECT rect;
 	rect.left = 0;
@@ -197,7 +197,7 @@ void CSkeleton::Render(HWND hWnd)
 	rect.bottom = 600;
 
 	//::FillRect(bufDC, &rect, ::CreateSolidBrush(RGB(200, 255, 255)));
-	renderer->Inst()->render(bufDC);
+	pRenderer->Inst()->render(bufDC);
 	BitBlt(graphics, 0,0, 800, 600,bufDC, 0, 0, SRCCOPY);
 }
 
@@ -218,8 +218,8 @@ void CSkeleton::Update()
 	int elapsedTime = (int)(systemTimeIn_ms - previousUpdateTime);
 	
 	if(!paused == true)
-		messageQueue->Instance()->SendMessage(CM_UPDATE, elapsedTime, NULL);
+		pMessageQueue->Instance()->SendMessage(CM_UPDATE, elapsedTime, NULL);
 	previousUpdateTime = systemTimeIn_ms;
-	if(world->Inst()->menu == false && paused == true)
+	if(pWorld->Inst()->menu == false && paused == true)
 		paused = false;
 }

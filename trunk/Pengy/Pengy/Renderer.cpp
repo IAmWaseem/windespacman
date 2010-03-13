@@ -7,7 +7,7 @@ bool Renderer::ShowSurfaces = false;
 
 Renderer* Renderer::pInstance = NULL;
 
-Renderer* Renderer::Inst(){
+Renderer* Renderer::Instance(){
   if(pInstance == NULL){
     pInstance = new Renderer();
   }
@@ -24,13 +24,13 @@ Renderer::~Renderer(){
   if(pInstance != 0)delete pInstance;
 }
 
-void Renderer::attach( View *myView)
+void Renderer::Attach( View *pView)
 {
-    myViews.push_back( myView);
+    myViews.push_back( pView);
 	numViews++;
 }
 
-void Renderer::detach( View *myView)
+void Renderer::Detach( View *myView)
 {
     for (unsigned int i= 0; i< myViews.size(); i++)
     {
@@ -43,7 +43,7 @@ void Renderer::detach( View *myView)
     }
 }
 
-void Renderer::render(HDC hdc) 
+void Renderer::Render(HDC hdc) 
 {
 	HBRUSH backBrush;
 	backBrush = CreateSolidBrush(RGB(171, 207, 236));
@@ -69,8 +69,8 @@ void Renderer::render(HDC hdc)
 		vector<View*>::iterator iterator = myViews.begin();
 		while(iterator!=myViews.end())
 		{
-			View * view = *iterator;
-			view->Draw(hdc, rect, xFrom, xTo);
+			View * pView = *iterator;
+			pView->Draw(hdc, rect, xFrom, xTo);
 			iterator++;
 		}
 	}
@@ -80,8 +80,8 @@ void Renderer::render(HDC hdc)
 
 void Renderer::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 {
-	Location * from;
-	Location * to;
+	Location * pFrom;
+	Location * pTo;
 
 	switch(message)
 	{
@@ -89,21 +89,21 @@ void Renderer::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		levelLength = (int)wParam;
 		break;
 	case CM_CHARACTER_MOVE_X_FROM_TO:
-		from = (Location*)wParam;
-		to = (Location*)lParam;
-		characterX = (int)to->X;
+		pFrom = (Location*)wParam;
+		pTo = (Location*)lParam;
+		characterX = (int)pTo->X;
 
 		break;
 	case CM_CHARACTER_FALL_Y_FROM_TO:
-		from = (Location*)wParam;
-		to = (Location*)lParam;
-		characterX = (int)to->X;
+		pFrom = (Location*)wParam;
+		pTo = (Location*)lParam;
+		characterX = (int)pTo->X;
 
 		break;
 	case CM_CHARACTER_JUMP_Y_FROM_TO:
-		from = (Location*)wParam;
-		to = (Location*)lParam;
-		characterX = (int)to->X;
+		pFrom = (Location*)wParam;
+		pTo = (Location*)lParam;
+		characterX = (int)pTo->X;
 
 		break;
 	}

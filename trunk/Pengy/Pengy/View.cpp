@@ -11,12 +11,12 @@ View::~View()
 
 void View::registerToGraphics()
 {
-	renderer->Inst()->attach(this);
+	renderer->Instance()->Attach(this);
 }
 
 void View::unRegisterToGraphics()
 {
-	renderer->Inst()->detach(this);
+	renderer->Instance()->Detach(this);
 }
 
 void View::Draw(HDC hDC, RECT rect, int xFrom, int xTo)

@@ -47,7 +47,7 @@ LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		
 		pMessageQueue->Instance()->Attach(pLevel->Instance());
 		pMessageQueue->Instance()->Attach(pCharacter->Instance());
-		pMessageQueue->Instance()->Attach(pRenderer->Inst());
+		pMessageQueue->Instance()->Attach(pRenderer->Instance());
 		pMessageQueue->Instance()->Attach(pSound->Inst());
 		pMessageQueue->Instance()->Attach(GadgetFactory::Instance());
 		pMessageQueue->Instance()->Attach(EnemyFactory::Instance());
@@ -197,7 +197,7 @@ void CSkeleton::Render(HWND hWnd)
 	rect.bottom = 600;
 
 	//::FillRect(bufDC, &rect, ::CreateSolidBrush(RGB(200, 255, 255)));
-	pRenderer->Inst()->render(bufDC);
+	pRenderer->Instance()->Render(bufDC);
 	BitBlt(graphics, 0,0, 800, 600,bufDC, 0, 0, SRCCOPY);
 }
 

@@ -20,7 +20,7 @@ World::~World(){
   if(pInstance != 0)delete pInstance;
 }
 
-void World::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam) 
+void World::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam) 
  {
 	switch (message) 
 	{
@@ -50,12 +50,12 @@ void World::LoadNextLevel()
 	if(level<3)
 	{
 		level++;
-		messageQueue->Inst()->sendMessage(CM_LEVEL_LOAD, NULL, NULL);
+		messageQueue->Instance()->SendMessage(CM_LEVEL_LOAD, NULL, NULL);
 	}
 }
 
 void World::StartGame()
 {
 	level = 1;
-	messageQueue->Inst()->sendMessage(CM_LEVEL_LOAD, NULL, NULL);
+	messageQueue->Instance()->SendMessage(CM_LEVEL_LOAD, NULL, NULL);
 }

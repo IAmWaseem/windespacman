@@ -9,7 +9,7 @@ class Menu : public Observer
 public:
 	static Menu* Inst();
     ~Menu();
-    void recieveMessage(UINT message, WPARAM wParam, LPARAM lParam);
+    void ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam);
 	HWND windowHandle;
 	void LoadGameMenu();
 	void DeleteGameMenu();

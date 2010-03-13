@@ -18,5 +18,5 @@ public:
 	void Throw();
 	void Spacebar();
 	void Update(int timeElapsed);
-	void recieveMessage(UINT message, WPARAM wParam, LPARAM lParam);
+	void ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam);
 };

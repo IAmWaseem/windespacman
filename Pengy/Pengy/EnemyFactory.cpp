@@ -22,7 +22,7 @@ EnemyFactory::~EnemyFactory(void)
 {
 }
 
-void EnemyFactory::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
+void EnemyFactory::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 {
 	Enemy * enemy;
 	Surface * surface;

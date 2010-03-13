@@ -30,22 +30,22 @@ void Walking::Down()
 
 void Walking::Left()
 {
-	if(Character::Instance()->getDirection() != Direction::Left)
+	if(Character::Instance()->GetDirection() != Direction::Left)
 	{
 		Character::Instance()->GetCharacterView()->ChangeCurrentImage(CharacterView::CharacterImage::Left);
 	}
-	Character::Instance()->setDirection(Direction::Left);
+	Character::Instance()->SetDirection(Direction::Left);
 	this->distanceToMove = 5;
 }
 
 
 void Walking::Right()
 {
-	if(Character::Instance()->getDirection() != Direction::Right) 
+	if(Character::Instance()->GetDirection() != Direction::Right) 
 	{
 		Character::Instance()->GetCharacterView()->ChangeCurrentImage(CharacterView::CharacterImage::Right);
 	}
-	Character::Instance()->setDirection(Direction::Right);
+	Character::Instance()->SetDirection(Direction::Right);
 	this->distanceToMove = 5;
 }
 
@@ -57,15 +57,15 @@ void Walking::Throw()
 
 void Walking::Spacebar()
 {
-	this->pStateMachine->jumping->Spacebar();
+	this->pStateMachine->pJumping->Spacebar();
 	if(this->distanceToMove > 0.5)
 	{
-		if(Character::Instance()->getDirection()  == Direction::Left)
-			this->pStateMachine->jumping->Left();
+		if(Character::Instance()->GetDirection()  == Direction::Left)
+			this->pStateMachine->pJumping->Left();
 		else
-			this->pStateMachine->jumping->Right();
+			this->pStateMachine->pJumping->Right();
 	}
-	this->pStateMachine->Transition(this->pStateMachine->jumping);
+	this->pStateMachine->Transition(this->pStateMachine->pJumping);
 }
 
 void Walking::Update(int timeElapsed)
@@ -79,7 +79,7 @@ void Walking::Update(int timeElapsed)
 	if(distanceMoved > this->distanceToMove) distanceMoved = distanceToMove;
 	this->distanceToMove -= distanceMoved;
 	this->moved += distanceMoved;
-	switch(Character::Instance()->getDirection())
+	switch(Character::Instance()->GetDirection())
 	{
 	case Direction::Left:
 		newLocation->X = oldLocation->X - distanceMoved;
@@ -93,14 +93,14 @@ void Walking::Update(int timeElapsed)
 		break;
 	}
 	
-	MessageQueue::Inst()->sendMessage(CM_CHARACTER_MOVE_X_FROM_TO,  (int)oldLocation, (int)newLocation);
-	MessageQueue::Inst()->sendMessage(CM_CHARACTER_FALL_Y_FROM_TO,  (int)oldLocation, (int)newLocation);
+	MessageQueue::Instance()->SendMessage(CM_CHARACTER_MOVE_X_FROM_TO,  (int)oldLocation, (int)newLocation);
+	MessageQueue::Instance()->SendMessage(CM_CHARACTER_FALL_Y_FROM_TO,  (int)oldLocation, (int)newLocation);
 
 	SwapPicture();
 	
 	if(distanceToMove == 0)
 	{
-		this->pStateMachine->Transition(this->pStateMachine->idle);
+		this->pStateMachine->Transition(this->pStateMachine->pIdle);
 	}
 }
 
@@ -109,7 +109,7 @@ void Walking::SwapPicture()
 	if((int)this->moved % 15 < 1)
 	{
 		this->moved = 0;
-		if(Character::Instance()->getDirection() == Direction::Left)
+		if(Character::Instance()->GetDirection() == Direction::Left)
 		{
 			if(Character::Instance()->GetCharacterView()->GetCurrentImage() == CharacterView::CharacterImage::Left)
 			{
@@ -134,12 +134,12 @@ void Walking::SwapPicture()
 	}
 }
 
-void Walking::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
+void Walking::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch(message)
 	{
 	case CM_CHARACTER_IS_FALLING:
-		if(Character::Instance()->getDirection() == Direction::Left)
+		if(Character::Instance()->GetDirection() == Direction::Left)
 		{
 			Character::Instance()->GetCharacterView()->ChangeCurrentImage(CharacterView::CharacterImage::FallingLeft);
 		}
@@ -147,18 +147,18 @@ void Walking::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		{	
 			Character::Instance()->GetCharacterView()->ChangeCurrentImage(CharacterView::CharacterImage::FallingRight);
 		}
-		this->pStateMachine->Transition(this->pStateMachine->falling);
+		this->pStateMachine->Transition(this->pStateMachine->pFalling);
 
 		break;
 	case CM_CHARACTER_BUMPS_INTO:
-		Surface * surface = (Surface*)wParam;
-		if(((Character::Instance()->GetLocation()->X + Character::Instance()->GetLocation()->width) >= surface->xFrom) && surface->xTo > (Character::Instance()->GetLocation()->X + Character::Instance()->GetLocation()->width))
+		Surface * pSurface = (Surface*)wParam;
+		if(((Character::Instance()->GetLocation()->X + Character::Instance()->GetLocation()->width) >= pSurface->xFrom) && pSurface->xTo > (Character::Instance()->GetLocation()->X + Character::Instance()->GetLocation()->width))
 		{
-			Character::Instance()->GetLocation()->X = surface->xFrom - Character::Instance()->GetLocation()->width;
+			Character::Instance()->GetLocation()->X = pSurface->xFrom - Character::Instance()->GetLocation()->width;
 		}
 		else
 		{
-			Character::Instance()->GetLocation()->X = (float)surface->xTo;
+			Character::Instance()->GetLocation()->X = (float)pSurface->xTo;
 		}
 		break;
 	}

@@ -49,7 +49,7 @@ void Enemy::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	switch(message)
 	{
 	case CM_UPDATE:
-		MessageQueue::Inst()->sendMessage(CM_CHARACTER_GET_LOCATION, NULL, NULL);
+		MessageQueue::Instance()->SendMessage(CM_CHARACTER_GET_LOCATION, NULL, NULL);
 		break;
 
 	case CM_CHARACTER_RETURN_LOCATION:

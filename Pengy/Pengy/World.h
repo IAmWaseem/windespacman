@@ -10,7 +10,7 @@ class World : public Observer
 public:
 	static World* Inst();
     ~World();
-    void recieveMessage(UINT message, WPARAM wParam, LPARAM lParam);
+    void ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam);
 	int level;
 	bool menu;
 protected:

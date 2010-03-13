@@ -23,7 +23,7 @@ void GadgetStateMachine::Update(int timeElapsed)
 {
 }
 
-void GadgetStateMachine::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
+void GadgetStateMachine::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 {
 	pCurrentState->recieveMessage(message, wParam, lParam);
 }

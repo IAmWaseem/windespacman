@@ -8,7 +8,7 @@ class GadgetFactory : public Observer
 {
 public:
 	~GadgetFactory(void);
-	void recieveMessage(UINT message, WPARAM wParam, LPARAM lParam);
+	void ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam);
 	static GadgetFactory * Instance();
 protected:
 	GadgetFactory(void);

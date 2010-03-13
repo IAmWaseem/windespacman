@@ -9,12 +9,12 @@ class Observer;
 class MessageQueue
 {
 public:
-    static MessageQueue* Inst();
+    static MessageQueue* Instance();
     ~MessageQueue();
 
-	void attach( Observer *myObserver);
-	void detach( Observer *myObserver);
-    void sendMessage(UINT message, WPARAM wParam, LPARAM lParam);
+	void Attach( Observer *myObserver);
+	void Detach( Observer *myObserver);
+    void SendMessage(UINT message, WPARAM wParam, LPARAM lParam);
 
   protected:
     MessageQueue();

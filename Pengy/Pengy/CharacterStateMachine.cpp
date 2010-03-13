@@ -7,11 +7,11 @@
 
 CharacterStateMachine::CharacterStateMachine(void)
 {
-	idle = new Idle(this);
-	walking = new Walking(this);
-	jumping = new Jumping(this);
-	falling = new Falling(this);
-	pCurrentState = idle;
+	pIdle = new Idle(this);
+	pWalking = new Walking(this);
+	pJumping = new Jumping(this);
+	pFalling = new Falling(this);
+	pCurrentState = pIdle;
 }
 
 CharacterStateMachine::~CharacterStateMachine(void)
@@ -59,7 +59,7 @@ void CharacterStateMachine::Transition(CharacterState * pCharacterState)
 	this->pCurrentState = pCharacterState;
 }
 
-void CharacterStateMachine::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
+void CharacterStateMachine::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 {
-	this->pCurrentState->recieveMessage(message, wParam, lParam);
+	this->pCurrentState->ReceiveMessage(message, wParam, lParam);
 }

@@ -3,7 +3,7 @@
 
 MessageQueue* MessageQueue::pInstance = NULL;
 
-MessageQueue* MessageQueue::Inst(){
+MessageQueue* MessageQueue::Instance(){
   if(pInstance == NULL){
     pInstance = new MessageQueue();
   }
@@ -17,12 +17,12 @@ MessageQueue::~MessageQueue(){
   if(pInstance != 0)delete pInstance;
 }
 
-void MessageQueue::attach( Observer *myObserver)
+void MessageQueue::Attach( Observer *myObserver)
 {
     myObs.push_back( myObserver);
 }
 
-void MessageQueue::detach( Observer *myObserver)
+void MessageQueue::Detach( Observer *myObserver)
 {
     for (unsigned int i= 0; i< myObs.size(); i++)
     {
@@ -34,10 +34,10 @@ void MessageQueue::detach( Observer *myObserver)
     }
 }
 
-void MessageQueue::sendMessage(UINT message, WPARAM wParam, LPARAM lParam)
+void MessageQueue::SendMessage(UINT message, WPARAM wParam, LPARAM lParam)
 {
     for (unsigned int i= 0; i< myObs.size(); i++)
     {
-        myObs[i]->recieveMessage(message, wParam, lParam);
+        myObs[i]->ReceiveMessage(message, wParam, lParam);
     }
 }

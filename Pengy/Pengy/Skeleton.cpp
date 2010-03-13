@@ -45,14 +45,14 @@ LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		location->X = 200;
 		location->Y = 300;
 		
-		messageQueue->Inst()->attach(level->Inst());
-		messageQueue->Inst()->attach(character->Instance());
-		messageQueue->Inst()->attach(renderer->Inst());
-		messageQueue->Inst()->attach(sound->Inst());
-		messageQueue->Inst()->attach(GadgetFactory::Instance());
-		messageQueue->Inst()->attach(EnemyFactory::Instance());
-		messageQueue->Inst()->attach(world->Inst());
-		messageQueue->Inst()->attach(menu->Inst());
+		messageQueue->Instance()->Attach(level->Inst());
+		messageQueue->Instance()->Attach(character->Instance());
+		messageQueue->Instance()->Attach(renderer->Inst());
+		messageQueue->Instance()->Attach(sound->Inst());
+		messageQueue->Instance()->Attach(GadgetFactory::Instance());
+		messageQueue->Instance()->Attach(EnemyFactory::Instance());
+		messageQueue->Instance()->Attach(world->Inst());
+		messageQueue->Instance()->Attach(menu->Inst());
 		menu->Inst()->windowHandle = hWnd;
 		break;
 	case WM_KEYDOWN:
@@ -78,22 +78,22 @@ LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
 		case 'm':
 		case 'M':
-			messageQueue->Inst()->sendMessage(CM_MENU_LOAD, NULL, NULL);
+			messageQueue->Instance()->SendMessage(CM_MENU_LOAD, NULL, NULL);
 			paused = true;
 
 		case 't':
 		case 'T':
-			messageQueue->Inst()->sendMessage(CM_CHARACTER_RESET_POSITION, NULL, 10);
+			messageQueue->Instance()->SendMessage(CM_CHARACTER_RESET_POSITION, NULL, 10);
 			break;
 
 		case 'r':
 		case 'R':
-			messageQueue->Inst()->sendMessage(CM_CHARACTER_RESET_POSITION, 50, 200);
+			messageQueue->Instance()->SendMessage(CM_CHARACTER_RESET_POSITION, 50, 200);
 			break;
 		
 		case 'g':
 		case 'G':
-			MessageQueue::Inst()->sendMessage(CM_SOUND_EVENT,(WPARAM)(LPCTSTR)"res/pengy.wav", 0);
+			MessageQueue::Instance()->SendMessage(CM_SOUND_EVENT,(WPARAM)(LPCTSTR)"res/pengy.wav", 0);
 			break;
 
 			// show the fps
@@ -127,19 +127,19 @@ LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	case WM_COMMAND:  
 		switch(LOWORD(wParam)) {  
 		case CM_GAME_NEW:  
-			messageQueue->Inst()->sendMessage(CM_GAME_NEW, NULL, NULL);
+			messageQueue->Instance()->SendMessage(CM_GAME_NEW, NULL, NULL);
 			break;  
 		case CM_GAME_OPEN:  
-			messageQueue->Inst()->sendMessage(CM_GAME_OPEN, NULL, NULL);
+			messageQueue->Instance()->SendMessage(CM_GAME_OPEN, NULL, NULL);
 			break;  
 		case CM_GAME_SAVE:  
-			messageQueue->Inst()->sendMessage(CM_GAME_SAVE, NULL, NULL);
+			messageQueue->Instance()->SendMessage(CM_GAME_SAVE, NULL, NULL);
 			break;  
 		case CM_GAME_EXIT:  
-			messageQueue->Inst()->sendMessage(CM_GAME_EXIT, NULL, NULL); 
+			messageQueue->Instance()->SendMessage(CM_GAME_EXIT, NULL, NULL); 
 			break;
 		case CM_GAME_ABOUT:  
-			messageQueue->Inst()->sendMessage(CM_GAME_ABOUT, NULL, NULL);
+			messageQueue->Instance()->SendMessage(CM_GAME_ABOUT, NULL, NULL);
 			break;  
 		}  
 		break;  
@@ -149,7 +149,7 @@ LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 void CSkeleton::GameInit()
 {
-	messageQueue->Inst()->sendMessage(CM_MENU_LOAD, NULL, NULL);
+	messageQueue->Instance()->SendMessage(CM_MENU_LOAD, NULL, NULL);
 	paused = true;
 	RECT rect;
 	rect.left = 0;
@@ -218,7 +218,7 @@ void CSkeleton::Update()
 	int elapsedTime = (int)(systemTimeIn_ms - previousUpdateTime);
 	
 	if(!paused == true)
-		messageQueue->Inst()->sendMessage(CM_UPDATE, elapsedTime, NULL);
+		messageQueue->Instance()->SendMessage(CM_UPDATE, elapsedTime, NULL);
 	previousUpdateTime = systemTimeIn_ms;
 	if(world->Inst()->menu == false && paused == true)
 		paused = false;

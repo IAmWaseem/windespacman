@@ -10,7 +10,7 @@ class EnemyFactory : public Observer
 public:
 	static EnemyFactory * Instance();
 	~EnemyFactory(void);
-	void recieveMessage(UINT message, WPARAM wParam, LPARAM lParam);
+	void ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam);
 protected:
 	EnemyFactory(void);
 private:

@@ -8,11 +8,11 @@ float Character::DistanceToMove = 1.5f;
 
 Character::Character(void)
 {
-	location = new Location();
-	location->X = 50;
-	location->Y = 200;
-	location->width = 50;
-	location->height = 96;
+	pLocation = new Location();
+	pLocation->X = 50;
+	pLocation->Y = 200;
+	pLocation->width = 50;
+	pLocation->height = 96;
 	pCharacterStateMachine = new CharacterStateMachine();
 	direction = Direction::Right;
 	pickedupFish = 0;
@@ -26,18 +26,18 @@ Character::~Character(void)
 {
 }
 
-void Character::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
+void Character::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 {
-	this->pCharacterStateMachine->recieveMessage(message, wParam, lParam);
+	this->pCharacterStateMachine->ReceiveMessage(message, wParam, lParam);
 
 	int timeElapsed;
 	switch (message) 
 	{
 	case CM_GAME_START:
-		startGame();
+		StartGame();
 		break;
 	case CM_LEVEL_LOAD:
-		switch(world->Inst()->level)
+		switch(pWorld->Inst()->level)
 		{
 		case 1:
 			pCharacterView->LoadCVImage(CharacterView::CharacterImage::Left, "res/PengySummerLeft.bmp");
@@ -77,8 +77,8 @@ void Character::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		pCharacterView->LoadCVImage(CharacterView::CharacterImage::Sliding2, "res/PengySliding2.bmp");
 		pCharacterView->ChangeCurrentImage(CharacterView::CharacterImage::Right);
 		pCharacterView->registerToGraphics();
-		MessageQueue::Inst()->sendMessage(CM_CHARACTER_MOVE_X_FROM_TO, (int)location, (int)location);
-		MessageQueue::Inst()->sendMessage(CM_CHARACTER_FALL_Y_FROM_TO, (int)location, (int)location);
+		MessageQueue::Instance()->SendMessage(CM_CHARACTER_MOVE_X_FROM_TO, (int)pLocation, (int)pLocation);
+		MessageQueue::Instance()->SendMessage(CM_CHARACTER_FALL_Y_FROM_TO, (int)pLocation, (int)pLocation);
 		break;
 
 	case CM_UPDATE:
@@ -117,13 +117,13 @@ void Character::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 
 	case CM_CHARACTER_RESET_POSITION:
 		if(wParam != NULL)
-			location->X = (float)wParam;
+			pLocation->X = (float)wParam;
 
 		if(lParam != NULL)
-			location->Y = (float)lParam;
+			pLocation->Y = (float)lParam;
 
-		MessageQueue::Inst()->sendMessage(CM_CHARACTER_MOVE_X_FROM_TO, (int)location, (int)location);
-		MessageQueue::Inst()->sendMessage(CM_CHARACTER_FALL_Y_FROM_TO, (int)location, (int)location);
+		MessageQueue::Instance()->SendMessage(CM_CHARACTER_MOVE_X_FROM_TO, (int)pLocation, (int)pLocation);
+		MessageQueue::Instance()->SendMessage(CM_CHARACTER_FALL_Y_FROM_TO, (int)pLocation, (int)pLocation);
 		break;
 
 	case CM_GADGET_PIRANHA_PICKEDUP:
@@ -131,7 +131,7 @@ void Character::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 
 	case CM_CHARACTER_GET_LOCATION:
-		MessageQueue::Inst()->sendMessage(CM_CHARACTER_RETURN_LOCATION, (int)location, NULL);
+		MessageQueue::Instance()->SendMessage(CM_CHARACTER_RETURN_LOCATION, (int)pLocation, NULL);
 		break;
 
 	case CM_CHARACTER_KILLED:
@@ -163,12 +163,12 @@ void Character::Update()
 
 Location * Character::GetLocation()
 {
-	return location;
+	return pLocation;
 }
 
-void Character::SetLocation(Location * location)
+void Character::SetLocation(Location * pLocation)
 {
-	this->location = location;
+	this->pLocation = pLocation;
 }
 
 CharacterView * Character::GetCharacterView()
@@ -176,7 +176,7 @@ CharacterView * Character::GetCharacterView()
 	return this->pCharacterView;
 }
 
-Direction Character::getDirection()
+Direction Character::GetDirection()
 {
 	return direction;
 }
@@ -193,20 +193,20 @@ int Character::GetAmountLives() {
 	return this->lives;
 }
 
-void Character::setDirection(Direction direction)
+void Character::SetDirection(Direction direction)
 {
 	this->direction = direction;
 }
 
-void Character::startGame()
+void Character::StartGame()
 {
 	pCharacterView->unRegisterToGraphics();
 	pCharacterView = new CharacterView();
-	location = new Location();
-	location->X = 50;
-	location->Y = 200;
-	location->width = 50;
-	location->height = 96;
+	pLocation = new Location();
+	pLocation->X = 50;
+	pLocation->Y = 200;
+	pLocation->width = 50;
+	pLocation->height = 96;
 	pCharacterStateMachine = new CharacterStateMachine();
 	direction = Direction::Right;
 	lives=4;

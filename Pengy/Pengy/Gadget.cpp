@@ -47,8 +47,8 @@ void Gadget::SetLocation(Location * location)
 	this->location = location;
 }
 
-void Gadget::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam) {
-	pGadgetStateMachine->recieveMessage(message, wParam, lParam);
+void Gadget::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam) {
+	pGadgetStateMachine->ReceiveMessage(message, wParam, lParam);
 }
 
 void Gadget::Remove()

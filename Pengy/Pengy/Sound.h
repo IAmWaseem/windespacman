@@ -12,7 +12,7 @@ public:
 	Mix_Chunk* effect;
 	static Sound* Inst();
     ~Sound();
-    void recieveMessage(UINT message, WPARAM wParam, LPARAM lParam);
+    void ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam);
 protected:
 	Sound();
 private:

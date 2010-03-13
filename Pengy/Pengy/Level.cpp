@@ -39,7 +39,7 @@ Level::~Level(){
   if(pInstance != 0)delete pInstance;
 }
 
-void Level::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam) 
+void Level::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam) 
 {
 	Location * gL1 = new Location();
 	Location * gL2 = new Location();
@@ -84,37 +84,37 @@ void Level::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 	case CM_LEVEL_LOAD:
 		LoadLevel(world->Inst()->level);
-		MessageQueue::Inst()->sendMessage(CM_LEVEL_LENGTH, levelLength, NULL);
-		MessageQueue::Inst()->sendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)gL1, NULL);
-		MessageQueue::Inst()->sendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)gL2, NULL);
-		MessageQueue::Inst()->sendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)gL3, NULL);
-		MessageQueue::Inst()->sendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)gL4, NULL);
-		MessageQueue::Inst()->sendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)gL5, NULL);
-		MessageQueue::Inst()->sendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)gL6, NULL);
-		MessageQueue::Inst()->sendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)gL7, NULL);
-		MessageQueue::Inst()->sendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)gL8, NULL);
-		MessageQueue::Inst()->sendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)gL9, NULL);
-		MessageQueue::Inst()->sendMessage(CM_ENEMYFACTORY_CREATE_WALDO_WANDER, (int)surfaces.at(5), ((surfaces.at(5)->xFrom + surfaces.at(5)->xTo) / 2) + 10 );
-		MessageQueue::Inst()->sendMessage(CM_ENEMYFACTORY_CREATE_WALDO_PATROL, (int)surfaces.at(9), NULL);
-		MessageQueue::Inst()->sendMessage(CM_ENEMYFACTORY_CREATE_WALDO_PATROL, (int)surfaces.at(11), NULL);
-		MessageQueue::Inst()->sendMessage(CM_ENEMYFACTORY_CREATE_WALDO_PATROL, (int)surfaces.at(10), NULL);
-		MessageQueue::Inst()->sendMessage(CM_ENEMYFACTORY_CREATE_WALDO_PATROL, (int)surfaces.at(13), NULL);
+		MessageQueue::Instance()->SendMessage(CM_LEVEL_LENGTH, levelLength, NULL);
+		MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)gL1, NULL);
+		MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)gL2, NULL);
+		MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)gL3, NULL);
+		MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)gL4, NULL);
+		MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)gL5, NULL);
+		MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)gL6, NULL);
+		MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)gL7, NULL);
+		MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)gL8, NULL);
+		MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)gL9, NULL);
+		MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_WANDER, (int)surfaces.at(5), ((surfaces.at(5)->xFrom + surfaces.at(5)->xTo) / 2) + 10 );
+		MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_PATROL, (int)surfaces.at(9), NULL);
+		MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_PATROL, (int)surfaces.at(11), NULL);
+		MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_PATROL, (int)surfaces.at(10), NULL);
+		MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_PATROL, (int)surfaces.at(13), NULL);
 		break;
 	case CM_CHARACTER_MOVE_X_FROM_TO:
 		if(physic_behavior.Move_X_From_To((Location*)wParam,(Location*)lParam,surfaces)==true)
-			MessageQueue::Inst()->sendMessage(CM_CHARACTER_BUMPS_INTO, (int)physic_behavior.Surface_final, NULL);
+			MessageQueue::Instance()->SendMessage(CM_CHARACTER_BUMPS_INTO, (int)physic_behavior.Surface_final, NULL);
 		break;
 
 	case CM_CHARACTER_FALL_Y_FROM_TO:
 		if(physic_behavior.Fall_Y_From_To((Location*)wParam,(Location*)lParam,surfaces)==false)
-			MessageQueue::Inst()->sendMessage(CM_CHARACTER_IS_FALLING, NULL, NULL);
+			MessageQueue::Instance()->SendMessage(CM_CHARACTER_IS_FALLING, NULL, NULL);
 		else
-			MessageQueue::Inst()->sendMessage(CM_CHARACTER_IS_STANDING, (int)physic_behavior.onSurface_final_fall, NULL);
+			MessageQueue::Instance()->SendMessage(CM_CHARACTER_IS_STANDING, (int)physic_behavior.onSurface_final_fall, NULL);
 		break;
 
 	case CM_CHARACTER_JUMP_Y_FROM_TO:
 		if(physic_behavior.Jump_Y_From_To((Location*)wParam,(Location*)lParam,surfaces)==true)
-			MessageQueue::Inst()->sendMessage(CM_CHARACTER_JUMPING_BUMPS_HEAD, (int)physic_behavior.onSurface_final_jump, NULL);
+			MessageQueue::Instance()->SendMessage(CM_CHARACTER_JUMPING_BUMPS_HEAD, (int)physic_behavior.onSurface_final_jump, NULL);
 		break;
 	}
 }

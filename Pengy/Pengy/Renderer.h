@@ -20,7 +20,7 @@ public:
 	void attach(View *myView);
 	void detach(View *myView);
 	void render(HDC hdc);
-	void recieveMessage(UINT message, WPARAM wParam, LPARAM lParam);
+	void ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam);
 
 	static bool ShowDebug;
 	static bool ShowFps;

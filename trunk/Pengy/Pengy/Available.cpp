@@ -17,21 +17,21 @@ Available::~Available(void)
 void Available::Update(int timeElapsed) {
 }
 
-void Available::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam) 
+void Available::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam) 
 {
-	Location * fromLocation;
-	Location * toLocation;
-	Location * gadgetLocation = pGadget->GetLocation();;
+	Location * pFromLocation;
+	Location * pToLocation;
+	Location * pGadgetLocation = pGadget->GetLocation();
 	switch(message) {
 		case CM_CHARACTER_MOVE_X_FROM_TO:
 		case CM_CHARACTER_FALL_Y_FROM_TO:
 		case CM_CHARACTER_JUMP_Y_FROM_TO:
-			fromLocation = (Location*)wParam;
-			toLocation = (Location*)lParam;
-			if(LocationInGadgetX(toLocation, gadgetLocation) && LocationInGadgetY(toLocation, gadgetLocation))
+			pFromLocation = (Location*)wParam;
+			pToLocation = (Location*)lParam;
+			if(LocationInGadgetX(pToLocation, pGadgetLocation) && LocationInGadgetY(pToLocation, pGadgetLocation))
 			{
-				pStateMachine->Transition(pStateMachine->pickedUp);
-				pStateMachine->pickedUp->PickUp();
+				pStateMachine->Transition(pStateMachine->pPickedUp);
+				pStateMachine->pPickedUp->PickUp();
 			}
 			break;
 	}
@@ -41,44 +41,44 @@ void Available::PickUp()
 {
 }
 
-bool Available::LocationInGadgetX(Location * locationPengy, Location * locationGadget)
+bool Available::LocationInGadgetX(Location * plocationPengy, Location * pLocationGadget)
 {
 	bool inGadget = false;
-	if(locationGadget->X <= locationPengy->X && (locationGadget->X + locationGadget->width) >= (locationPengy->X + locationPengy->width))
+	if(pLocationGadget->X <= plocationPengy->X && (pLocationGadget->X + pLocationGadget->width) >= (plocationPengy->X + plocationPengy->width))
 	{
 		inGadget = true;
 	}
-	if(locationGadget->X >= locationPengy->X && (locationGadget->X + locationGadget->width) <= (locationPengy->X + locationPengy->width))
+	if(pLocationGadget->X >= plocationPengy->X && (pLocationGadget->X + pLocationGadget->width) <= (plocationPengy->X + plocationPengy->width))
 	{
 		inGadget = true;
 	}
-	if(locationGadget->X <= locationPengy->X && (locationGadget->X + locationGadget->width) <= (locationPengy->X + locationPengy->width) && (locationGadget->X + locationGadget->width) > locationPengy->X)
+	if(pLocationGadget->X <= plocationPengy->X && (pLocationGadget->X + pLocationGadget->width) <= (plocationPengy->X + plocationPengy->width) && (pLocationGadget->X + pLocationGadget->width) > plocationPengy->X)
 	{
 		inGadget = true;
 	}
-	if(locationGadget->X >= locationPengy->X && locationGadget->X <= (locationPengy->X + locationPengy->width) && (locationGadget->X + locationGadget->width) >= (locationPengy->X + locationPengy->width))
+	if(pLocationGadget->X >= plocationPengy->X && pLocationGadget->X <= (plocationPengy->X + plocationPengy->width) && (pLocationGadget->X + pLocationGadget->width) >= (plocationPengy->X + plocationPengy->width))
 	{
 		inGadget = true;
 	}
 	return inGadget;
 }
 
-bool Available::LocationInGadgetY(Location * locationPengy, Location * locationGadget)
+bool Available::LocationInGadgetY(Location * plocationPengy, Location * pLocationGadget)
 {
 	bool inGadget = false;
-	if(locationGadget->Y  >= locationPengy->Y && (locationGadget->Y + locationGadget->height) <= (locationPengy->Y + locationPengy->height))
+	if(pLocationGadget->Y  >= plocationPengy->Y && (pLocationGadget->Y + pLocationGadget->height) <= (plocationPengy->Y + plocationPengy->height))
 	{
 		inGadget = true;
 	}
-	if(locationGadget->Y  <= locationPengy->Y && (locationGadget->Y + locationGadget->height) >= (locationPengy->Y + locationPengy->height))
+	if(pLocationGadget->Y  <= plocationPengy->Y && (pLocationGadget->Y + pLocationGadget->height) >= (plocationPengy->Y + plocationPengy->height))
 	{
 		inGadget = true;
 	}
-	if(locationPengy->Y >= locationGadget->Y && locationPengy->Y <= (locationGadget->Y + locationGadget->height))
+	if(plocationPengy->Y >= pLocationGadget->Y && plocationPengy->Y <= (pLocationGadget->Y + pLocationGadget->height))
 	{
 		inGadget = true;
 	}
-	if((locationPengy->Y + locationPengy->height) >= locationGadget->Y && (locationPengy->Y + locationPengy->height) <= (locationGadget->Y + locationGadget->height))
+	if((plocationPengy->Y + plocationPengy->height) >= pLocationGadget->Y && (plocationPengy->Y + plocationPengy->height) <= (pLocationGadget->Y + pLocationGadget->height))
 	{
 		inGadget = true;
 	}

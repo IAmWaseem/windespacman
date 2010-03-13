@@ -17,5 +17,5 @@ public:
 	~GadgetState(void);
 	virtual void Update(int timeElapsed) = 0;
 	virtual void PickUp() = 0;
-	virtual void recieveMessage(UINT message, WPARAM wParam, LPARAM lParam) = 0;
+	virtual void ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam) = 0;
 };

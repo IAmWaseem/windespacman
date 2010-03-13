@@ -23,7 +23,7 @@ WaldoView::~WaldoView(void)
 
 void WaldoView::Draw(HDC hDC, RECT rect, int xFrom, int xTo)
 {
-	if(!world->Inst()->menu)
+	if(!pWorld->Instance()->menu)
 	{
 		int x = pWaldo->GetLocation()->X;
 		int y = pWaldo->GetLocation()->Y;

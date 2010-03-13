@@ -3,7 +3,7 @@
 Gadget::Gadget(int id, Location * pLocation, GadgetView::GadgetImage gadgetImage)
 {
 	pGadgetView = new GadgetView(gadgetImage, this);
-	pGadgetView->registerToGraphics();
+	pGadgetView->RegisterToGraphics();
 
 	if(pLocation->width <= 0)
 	{
@@ -29,7 +29,7 @@ int Gadget::GetId()
 
 Gadget::~Gadget(void)
 {
-	pGadgetView->unRegisterToGraphics();
+	pGadgetView->UnRegisterToGraphics();
 }
 
 void Gadget::Update()
@@ -53,7 +53,7 @@ void Gadget::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam) {
 
 void Gadget::Remove()
 {
-	pGadgetView->unRegisterToGraphics();
+	pGadgetView->UnRegisterToGraphics();
 	delete pGadgetView;
 	delete pGadgetStateMachine;
 	isRemoved = true;

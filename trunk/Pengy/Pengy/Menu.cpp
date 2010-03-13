@@ -24,7 +24,7 @@ void Menu::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	 case CM_GAME_NEW:
 		 pMessageQueue->Instance()->SendMessage(CM_GAME_START, NULL, NULL);
 		 DeleteGameMenu();
-		 pWorld->Inst()->menu = false;
+		 pWorld->Instance()->menu = false;
 		 break;
 	 case CM_GAME_OPEN:
 		 OpenFileDialog();
@@ -42,7 +42,7 @@ void Menu::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 
 void Menu::LoadGameMenu()
 {
-	if(pWorld->Inst()->menu)
+	if(pWorld->Instance()->menu)
 	{
 		HMENU hMenu;
 		HMENU hSubMenu;

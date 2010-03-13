@@ -37,7 +37,7 @@ void Character::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		StartGame();
 		break;
 	case CM_LEVEL_LOAD:
-		switch(pWorld->Inst()->level)
+		switch(pWorld->Instance()->level)
 		{
 		case 1:
 			pCharacterView->LoadCVImage(CharacterView::CharacterImage::Left, "res/PengySummerLeft.bmp");
@@ -76,7 +76,7 @@ void Character::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		pCharacterView->LoadCVImage(CharacterView::CharacterImage::Sliding, "res/PengySliding.bmp");
 		pCharacterView->LoadCVImage(CharacterView::CharacterImage::Sliding2, "res/PengySliding2.bmp");
 		pCharacterView->ChangeCurrentImage(CharacterView::CharacterImage::Right);
-		pCharacterView->registerToGraphics();
+		pCharacterView->RegisterToGraphics();
 		MessageQueue::Instance()->SendMessage(CM_CHARACTER_MOVE_X_FROM_TO, (int)pLocation, (int)pLocation);
 		MessageQueue::Instance()->SendMessage(CM_CHARACTER_FALL_Y_FROM_TO, (int)pLocation, (int)pLocation);
 		break;
@@ -141,7 +141,7 @@ void Character::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 			this->timeToStayKilled = 2000;
 
 			if(this->lives == 0) {
-				pCharacterView->unRegisterToGraphics();
+				pCharacterView->UnRegisterToGraphics();
 			}
 		}
 		break;
@@ -200,7 +200,7 @@ void Character::SetDirection(Direction direction)
 
 void Character::StartGame()
 {
-	pCharacterView->unRegisterToGraphics();
+	pCharacterView->UnRegisterToGraphics();
 	pCharacterView = new CharacterView();
 	pLocation = new Location();
 	pLocation->X = 50;

@@ -10,16 +10,16 @@ HANDLE LevelView::myMask = NULL;
 LevelView::LevelView(){ 
 	if(myTiles == NULL)
 		myTiles = new vector<Tile *>();
-	registerToGraphics();
+	RegisterToGraphics();
 }
 
 LevelView::~LevelView(){
-	unRegisterToGraphics();
+	UnRegisterToGraphics();
 }
 
 void LevelView::Draw(HDC hDC, RECT rect, int xFrom, int xTo)
 {
-	if(!world->Inst()->menu)
+	if(!pWorld->Instance()->menu)
 	{
 		if(myTiles != NULL)
 		{

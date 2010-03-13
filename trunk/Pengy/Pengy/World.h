@@ -8,7 +8,7 @@ class Menu;
 class World : public Observer
 {
 public:
-	static World* Inst();
+	static World* Instance();
     ~World();
     void ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam);
 	int level;
@@ -19,6 +19,6 @@ private:
 	static World* pInstance;
 	void LoadNextLevel();
 	void StartGame();
-	MessageQueue* messageQueue;
-	Menu* menuObject;
+	MessageQueue* pMessageQueue;
+	Menu* pMenuObject;
 };

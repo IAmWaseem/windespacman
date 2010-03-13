@@ -8,7 +8,7 @@ Waldo::Waldo(Surface * pSurface, int x) : Enemy(pSurface)
 	RandomDirection();
 	
 	this->pView = new WaldoView(this);
-	this->pView->registerToGraphics();
+	this->pView->RegisterToGraphics();
 
 	this->pLocation->width = 60;
 	this->pLocation->height = 60;
@@ -28,7 +28,7 @@ Waldo::Waldo(Surface * pSurface) : Enemy(pSurface)
 	RandomDirection();
 
 	this->pView = new WaldoView(this);
-	this->pView->registerToGraphics();
+	this->pView->RegisterToGraphics();
 
 	this->pLocation->width = 60;
 	this->pLocation->height = 60;
@@ -45,7 +45,7 @@ Waldo::Waldo(Surface * pSurface) : Enemy(pSurface)
 
 Waldo::~Waldo(void)
 {
-	pView->unRegisterToGraphics();
+	pView->UnRegisterToGraphics();
 	delete pView;
 }
 
@@ -95,7 +95,7 @@ void Waldo::CheckPengyCollision()
 	{
 		if(this->isVulnerable)
 		{
-			this->pView->unRegisterToGraphics();
+			this->pView->UnRegisterToGraphics();
 			MessageQueue::Instance()->SendMessage(CM_WALDO_KILLED, NULL, NULL);
 			this->isAlive = false;
 			delete this->pLocation;

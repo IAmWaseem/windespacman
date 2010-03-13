@@ -21,7 +21,7 @@
 
 Sound* Sound::pInstance = NULL;
 
-Sound* Sound::Inst(){
+Sound* Sound::Instance(){
 	if(pInstance == NULL){
 		pInstance = new Sound();
 	}
@@ -35,8 +35,8 @@ Sound::Sound(void)
 
 Sound::~Sound(void)
 {
-	Mix_FreeChunk(effect);
-	Mix_FreeMusic(music);
+	Mix_FreeChunk(pEffect);
+	Mix_FreeMusic(pMusic);
 	Mix_CloseAudio();	
 	if(pInstance != 0)delete pInstance;
 }
@@ -46,20 +46,20 @@ void Sound::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	switch (message) 
 	{
 	case CM_SOUND_LOOP:
-	 	music=NULL;
- 		music = Mix_LoadMUS((const char *)wParam);
-		if (Mix_PlayMusic(music, -1) == -1)
+	 	pMusic=NULL;
+ 		pMusic = Mix_LoadMUS((const char *)wParam);
+		if (Mix_PlayMusic(pMusic, -1) == -1)
 		{
 			break;
 		}
 		break;
 	case CM_SOUND_END_LOOP:
-		Mix_FreeMusic(music);
+		Mix_FreeMusic(pMusic);
 		break;
 	case CM_SOUND_EVENT:
-		effect = NULL;
-		effect = Mix_LoadWAV((const char *)wParam);
-		if(Mix_PlayChannel(-1, effect, lParam) == -1)
+		pEffect = NULL;
+		pEffect = Mix_LoadWAV((const char *)wParam);
+		if(Mix_PlayChannel(-1, pEffect, lParam) == -1)
 		{
 			break;
 		}

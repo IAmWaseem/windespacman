@@ -9,19 +9,17 @@ View::~View()
 {
 }
 
-void View::registerToGraphics()
+void View::RegisterToGraphics()
 {
-	renderer->Instance()->Attach(this);
+	pRenderer->Instance()->Attach(this);
 }
 
-void View::unRegisterToGraphics()
+void View::UnRegisterToGraphics()
 {
-	renderer->Instance()->Detach(this);
+	pRenderer->Instance()->Detach(this);
 }
 
-void View::Draw(HDC hDC, RECT rect, int xFrom, int xTo)
-{
-}
+
 void View::BitBltTransparant(HDC hdc, int x, int y, int cx, int cy, HDC source, int x1, int y1, HANDLE image, HANDLE transparantMask)
 {
 	HANDLE oldHandle;

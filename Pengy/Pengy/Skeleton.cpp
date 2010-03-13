@@ -51,7 +51,7 @@ LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		pMessageQueue->Instance()->Attach(pSound->Instance());
 		pMessageQueue->Instance()->Attach(GadgetFactory::Instance());
 		pMessageQueue->Instance()->Attach(EnemyFactory::Instance());
-		pMessageQueue->Instance()->Attach(pWorld->Inst());
+		pMessageQueue->Instance()->Attach(pWorld->Instance());
 		pMessageQueue->Instance()->Attach(pMenu->Instance());
 		pMenu->Instance()->windowHandle = hWnd;
 		break;
@@ -220,6 +220,6 @@ void CSkeleton::Update()
 	if(!paused == true)
 		pMessageQueue->Instance()->SendMessage(CM_UPDATE, elapsedTime, NULL);
 	previousUpdateTime = systemTimeIn_ms;
-	if(pWorld->Inst()->menu == false && paused == true)
+	if(pWorld->Instance()->menu == false && paused == true)
 		paused = false;
 }

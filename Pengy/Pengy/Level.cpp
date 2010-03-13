@@ -83,7 +83,7 @@ void Level::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	case CM_KEY:
 		break;
 	case CM_LEVEL_LOAD:
-		LoadLevel(pWorld->Inst()->level);
+		LoadLevel(pWorld->Instance()->level);
 		MessageQueue::Instance()->SendMessage(CM_LEVEL_LENGTH, levelLength, NULL);
 		MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)pL1, NULL);
 		MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL2, NULL);

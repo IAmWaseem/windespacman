@@ -74,7 +74,7 @@ void GadgetView::Update()
 
 void GadgetView::Draw(HDC hdc, RECT rect, int xFrom, int xTo)
 {
-	if(!world->Inst()->menu)
+	if(!pWorld->Instance()->menu)
 	{
 		HANDLE bitmap = currentBitmap;
 		HANDLE mask = currentMask;

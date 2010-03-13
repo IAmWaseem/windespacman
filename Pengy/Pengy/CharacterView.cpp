@@ -16,7 +16,7 @@ CharacterView::~CharacterView(void)
 
 void CharacterView::Draw(HDC hdc, RECT rect, int xFrom, int xTo)
 {
-	if(!world->Inst()->menu)
+	if(!pWorld->Instance()->menu)
 	{
 			HANDLE bitmap = pImages->find(currentImage)->second;
 			HANDLE mask = pMasks->find(currentImage)->second;

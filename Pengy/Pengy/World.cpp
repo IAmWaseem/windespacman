@@ -3,7 +3,7 @@
 
 World* World::pInstance = NULL;
 
-World* World::Inst(){
+World* World::Instance(){
   if(pInstance == NULL){
     pInstance = new World();
   }
@@ -34,12 +34,12 @@ void World::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		if(menu)
 		{
 			menu = false;
-			menuObject->Instance()->DeleteGameMenu();
+			pMenuObject->Instance()->DeleteGameMenu();
 		}
 		else
 		{
 			menu = true;
-			menuObject->Instance()->LoadGameMenu();
+			pMenuObject->Instance()->LoadGameMenu();
 		}
 		break;
 	}
@@ -50,12 +50,12 @@ void World::LoadNextLevel()
 	if(level<3)
 	{
 		level++;
-		messageQueue->Instance()->SendMessage(CM_LEVEL_LOAD, NULL, NULL);
+		pMessageQueue->Instance()->SendMessage(CM_LEVEL_LOAD, NULL, NULL);
 	}
 }
 
 void World::StartGame()
 {
 	level = 1;
-	messageQueue->Instance()->SendMessage(CM_LEVEL_LOAD, NULL, NULL);
+	pMessageQueue->Instance()->SendMessage(CM_LEVEL_LOAD, NULL, NULL);
 }

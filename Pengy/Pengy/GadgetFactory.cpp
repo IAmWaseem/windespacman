@@ -5,7 +5,7 @@ GadgetFactory * GadgetFactory::pInstance = NULL;
 
 GadgetFactory::GadgetFactory(void)
 {
-	gadgets = new vector<Gadget*>();
+	pGadgets = new vector<Gadget*>();
 }
 
 GadgetFactory * GadgetFactory::Instance()
@@ -21,38 +21,38 @@ GadgetFactory::~GadgetFactory(void)
 
 void GadgetFactory::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam) 
 {
-	Location * location;
-	Gadget * gadget;
+	Location * pLocation;
+	Gadget * pGadget;
 	int id;
 
 	switch(message)
 	{
 	case CM_GAME_START:
-		startGame();
+		StartGame();
 		break;
 	case CM_GADGETFACTORY_CREATE_GOLDFISH:
-		location = (Location*)wParam;
-		gadget = new Gadget(gadgets->size(), location, GadgetView::GadgetImage::Goldfish);
-		gadgets->push_back(gadget);
+		pLocation = (Location*)wParam;
+		pGadget = new Gadget(pGadgets->size(), pLocation, GadgetView::GadgetImage::Goldfish);
+		pGadgets->push_back(pGadget);
 		break;
 	case CM_GADGETFACTORY_CREATE_PIRANHA:
-		location = (Location*)wParam;
-		gadget = new Gadget(gadgets->size(), location, GadgetView::GadgetImage::Piranha);
-		gadgets->push_back(gadget);
+		pLocation = (Location*)wParam;
+		pGadget = new Gadget(pGadgets->size(), pLocation, GadgetView::GadgetImage::Piranha);
+		pGadgets->push_back(pGadget);
 		break;
 	case CM_GADGETFACTORY_DESTROY_GADGET:
 		id = (int)wParam;
-		gadgets->at(id)->Remove();
+		pGadgets->at(id)->Remove();
 		break;
 
 	default:
-		vector<Gadget*>::iterator iterator = gadgets->begin();
-		while(iterator != gadgets->end())
+		vector<Gadget*>::iterator iterator = pGadgets->begin();
+		while(iterator != pGadgets->end())
 		{
-			gadget = *iterator;
-			if(!gadget->IsRemoved())
+			pGadget = *iterator;
+			if(!pGadget->IsRemoved())
 			{
-				gadget->ReceiveMessage(message, wParam, lParam);
+				pGadget->ReceiveMessage(message, wParam, lParam);
 			}
 			iterator++;
 		}
@@ -60,15 +60,15 @@ void GadgetFactory::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	}
 }
 
-void GadgetFactory::startGame()
+void GadgetFactory::StartGame()
 {
 	Gadget * gadget;
-	vector<Gadget*>::iterator iterator = gadgets->begin();
-	while(iterator != gadgets->end())
+	vector<Gadget*>::iterator iterator = pGadgets->begin();
+	while(iterator != pGadgets->end())
 	{
 		gadget = *iterator;
 		gadget->~Gadget();
 		iterator++;
 	}
-	gadgets->clear();
+	pGadgets->clear();
 }

@@ -13,7 +13,7 @@ public:
 protected:
 	GadgetFactory(void);
 private:
-	vector<Gadget*> * gadgets; 
+	vector<Gadget*> * pGadgets; 
 	static GadgetFactory * pInstance;
-	void startGame();
+	void StartGame();
 };

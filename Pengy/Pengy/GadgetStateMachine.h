@@ -11,8 +11,8 @@ public:
 	GadgetStateMachine(Gadget * gadget);
 	~GadgetStateMachine(void);
 
-	GadgetState * available;
-	GadgetState * pickedUp;
+	GadgetState * pAvailable;
+	GadgetState * pPickedUp;
 
 	void Update(int timeElapsed);
 	void ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam);

@@ -1,19 +1,19 @@
 #include "Gadget.h"
 
-Gadget::Gadget(int id, Location * location, GadgetView::GadgetImage gadgetImage)
+Gadget::Gadget(int id, Location * pLocation, GadgetView::GadgetImage gadgetImage)
 {
 	pGadgetView = new GadgetView(gadgetImage, this);
 	pGadgetView->registerToGraphics();
 
-	if(location->width <= 0)
+	if(pLocation->width <= 0)
 	{
-		location->width = 60;
+		pLocation->width = 60;
 	}
-	if(location->height <= 0)
+	if(pLocation->height <= 0)
 	{
-		location->height = 30;
+		pLocation->height = 30;
 	}
-	this->location = location;
+	this->pLocation = pLocation;
 
 
 	pGadgetStateMachine = new GadgetStateMachine(this);
@@ -39,12 +39,12 @@ void Gadget::Update()
 
 Location * Gadget::GetLocation()
 {
-	return location;
+	return pLocation;
 }
 
-void Gadget::SetLocation(Location * location)
+void Gadget::SetLocation(Location * pLocation)
 {
-	this->location = location;
+	this->pLocation = pLocation;
 }
 
 void Gadget::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam) {

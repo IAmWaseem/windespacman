@@ -8,11 +8,11 @@ class Gadget
 {
 public:
 	~Gadget(void);
-	Gadget(int id, Location * location, GadgetView::GadgetImage gadgetImage);
+	Gadget(int id, Location * pLocation, GadgetView::GadgetImage gadgetImage);
 	void ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam);
 	void Update();
 	Location * GetLocation();
-	void SetLocation(Location * location);
+	void SetLocation(Location * pLocation);
 	int GetId();
 	void Remove();
 	bool IsRemoved();
@@ -20,7 +20,7 @@ public:
 private:
 	GadgetView * pGadgetView;
 	GadgetStateMachine * pGadgetStateMachine;
-	Location * location;
+	Location * pLocation;
 	int id;
 	bool isRemoved;
 	GadgetView::GadgetImage gadgetImage;

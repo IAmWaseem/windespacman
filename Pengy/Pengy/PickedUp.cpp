@@ -16,7 +16,7 @@ PickedUp::PickedUp(GadgetStateMachine * pStateMachine, Gadget * gadget) : Gadget
 void PickedUp::Update(int timeElapsed) {
 }
 
-void PickedUp::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam) 
+void PickedUp::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam) 
 {
 }
 

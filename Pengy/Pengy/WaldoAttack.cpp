@@ -12,7 +12,7 @@ WaldoAttack::~WaldoAttack(void)
 {
 }
 
-void WaldoAttack::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam) 
+void WaldoAttack::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam) 
 {
 int timeElapsed;
 

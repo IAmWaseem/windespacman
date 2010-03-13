@@ -15,7 +15,7 @@ EnemyFactory * EnemyFactory::Instance()
 
 EnemyFactory::EnemyFactory(void)
 {
-	enemies = new vector<Enemy*>();
+	pEnemies = new vector<Enemy*>();
 }
 
 EnemyFactory::~EnemyFactory(void)
@@ -24,46 +24,46 @@ EnemyFactory::~EnemyFactory(void)
 
 void EnemyFactory::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 {
-	Enemy * enemy;
-	Surface * surface;
-	Location * location;
+	Enemy * pEnemy;
+	Surface * pSurface;
+	Location * pLocation;
 	int x;
 	switch(message)
 	{
 	case CM_GAME_START:
-		startGame();
+		StartGame();
 		break;
 	case CM_ENEMYFACTORY_CREATE_WALDO_PATROL:
-		surface = (Surface*)wParam;
-		enemy = new Waldo(surface);
-		enemies->push_back(enemy);
+		pSurface = (Surface*)wParam;
+		pEnemy = new Waldo(pSurface);
+		pEnemies->push_back(pEnemy);
 		break;
 	case CM_ENEMYFACTORY_CREATE_WALDO_WANDER:
-		surface = (Surface*)wParam;
+		pSurface = (Surface*)wParam;
 		x = lParam;
-		enemy = new Waldo(surface, x);
-		enemies->push_back(enemy);
+		pEnemy = new Waldo(pSurface, x);
+		pEnemies->push_back(pEnemy);
 
 		break;
 	}
 
-	vector<Enemy*>::iterator iterator = enemies->begin();
-	while(iterator != enemies->end())
+	vector<Enemy*>::iterator iterator = pEnemies->begin();
+	while(iterator != pEnemies->end())
 	{
-		enemy = *iterator;
-		enemy->recieveMessage(message, wParam, lParam);
+		pEnemy = *iterator;
+		pEnemy->ReceiveMessage(message, wParam, lParam);
 		iterator++;
 	}
 }
-void EnemyFactory::startGame()
+void EnemyFactory::StartGame()
 {
-	Enemy * enemy;
-	vector<Enemy*>::iterator iterator = enemies->begin();
-	while(iterator != enemies->end())
+	Enemy * pEnemy;
+	vector<Enemy*>::iterator iterator = pEnemies->begin();
+	while(iterator != pEnemies->end())
 	{
-		enemy = *iterator;
-		delete enemy;
+		pEnemy = *iterator;
+		delete pEnemy;
 		iterator++;
 	}
-	enemies->clear();
+	pEnemies->clear();
 }

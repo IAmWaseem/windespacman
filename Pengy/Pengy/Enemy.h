@@ -16,12 +16,12 @@ class Enemy
 		Location * pPengyLocation;
 		bool isAlive;
 		int health;
-		virtual void recieveMessageInternal(UINT message, WPARAM wParam, LPARAM lParam) = 0;
+		virtual void ReceiveMessageInternal(UINT message, WPARAM wParam, LPARAM lParam) = 0;
 
 	public:
 		Enemy(Surface * pSurface);
 		virtual ~Enemy(void);
-		void recieveMessage(UINT message, WPARAM wParam, LPARAM lParam);
+		void ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam);
 		Location * GetLocation();
 		Direction GetDirection();
 		void SetDirection(Direction direction);

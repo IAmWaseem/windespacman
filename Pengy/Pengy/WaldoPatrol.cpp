@@ -12,7 +12,7 @@ WaldoPatrol::~WaldoPatrol(void)
 {
 }
 
-void WaldoPatrol::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam) 
+void WaldoPatrol::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam) 
 {
 	int timeElapsed;
 

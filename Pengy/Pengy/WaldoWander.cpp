@@ -14,7 +14,7 @@ WaldoWander::~WaldoWander(void)
 }
 
 
-void WaldoWander::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam) 
+void WaldoWander::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam) 
 {
 	int timeElapsed;
 	switch(message) 

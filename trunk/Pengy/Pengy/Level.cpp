@@ -5,7 +5,7 @@
 
 Level* Level::pInstance = NULL;
 
-Level* Level::Inst(){
+Level* Level::Instance(){
   if(pInstance == NULL){
     pInstance = new Level();
   }
@@ -15,7 +15,7 @@ Level* Level::Inst(){
 Level::Level()
 { 
 	//default level 1
-	surfaces = beach.getSurfaces();
+	surfaces = beach.GetSurfaces();
 	SetLevelLength();
 }
 
@@ -25,10 +25,10 @@ void Level::SetLevelLength()
 	vector<Surface*>::iterator iterator = surfaces.begin();
 	while(iterator != surfaces.end())
 	{
-		Surface * surface = *iterator;
-		if(maxX < surface->xTo)
+		Surface * pSurface = *iterator;
+		if(maxX < pSurface->xTo)
 		{
-			maxX = surface->xTo;
+			maxX = pSurface->xTo;
 		}
 		iterator++;
 	}
@@ -41,59 +41,59 @@ Level::~Level(){
 
 void Level::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam) 
 {
-	Location * gL1 = new Location();
-	Location * gL2 = new Location();
-	Location * gL3 = new Location();
-	Location * gL4 = new Location();
-	Location * gL5 = new Location();
-	Location * gL6 = new Location();
-	Location * gL7 = new Location();
-	Location * gL8 = new Location();
-	Location * gL9 = new Location();
+	Location * pL1 = new Location();
+	Location * pL2 = new Location();
+	Location * pL3 = new Location();
+	Location * pL4 = new Location();
+	Location * pL5 = new Location();
+	Location * pL6 = new Location();
+	Location * pL7 = new Location();
+	Location * pL8 = new Location();
+	Location * pL9 = new Location();
 
-	gL1->X = 400;
-	gL1->Y = 300;
+	pL1->X = 400;
+	pL1->Y = 300;
 
-	gL2->X = 200;
-	gL2->Y = 300;
+	pL2->X = 200;
+	pL2->Y = 300;
 
-	gL3->X = 300;
-	gL3->Y = 300;
+	pL3->X = 300;
+	pL3->Y = 300;
 
-	gL4->X = 600;
-	gL4->Y = 100;
+	pL4->X = 600;
+	pL4->Y = 100;
 
-	gL5->X = 900;
-	gL5->Y = 100;
+	pL5->X = 900;
+	pL5->Y = 100;
 
-	gL6->X = 1000;
-	gL6->Y = 300;
+	pL6->X = 1000;
+	pL6->Y = 300;
 
-	gL7->X = 760;
-	gL7->Y = 300;
+	pL7->X = 760;
+	pL7->Y = 300;
 
-	gL8->X = 1050;
-	gL8->Y = 300;
+	pL8->X = 1050;
+	pL8->Y = 300;
 
-	gL9->X = 500;
-	gL9->Y = 900;
+	pL9->X = 500;
+	pL9->Y = 900;
 
 	switch (message) 
 	{
 	case CM_KEY:
 		break;
 	case CM_LEVEL_LOAD:
-		LoadLevel(world->Inst()->level);
+		LoadLevel(pWorld->Inst()->level);
 		MessageQueue::Instance()->SendMessage(CM_LEVEL_LENGTH, levelLength, NULL);
-		MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)gL1, NULL);
-		MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)gL2, NULL);
-		MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)gL3, NULL);
-		MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)gL4, NULL);
-		MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)gL5, NULL);
-		MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)gL6, NULL);
-		MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)gL7, NULL);
-		MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)gL8, NULL);
-		MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)gL9, NULL);
+		MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)pL1, NULL);
+		MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL2, NULL);
+		MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL3, NULL);
+		MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL4, NULL);
+		MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL5, NULL);
+		MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)pL6, NULL);
+		MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)pL7, NULL);
+		MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)pL8, NULL);
+		MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)pL9, NULL);
 		MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_WANDER, (int)surfaces.at(5), ((surfaces.at(5)->xFrom + surfaces.at(5)->xTo) / 2) + 10 );
 		MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_PATROL, (int)surfaces.at(9), NULL);
 		MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_PATROL, (int)surfaces.at(11), NULL);
@@ -130,8 +130,8 @@ void Level::LoadLevel(int level)
 	case 1:
 		
 		path = "res/tilemap.bmp";
-		data = beach.getTiles();
-		surfaces = beach.getSurfaces();
+		data = beach.GetTiles();
+		surfaces = beach.GetSurfaces();
 		SetLevelLength();
 		break;
 	//case 2:
@@ -145,8 +145,8 @@ void Level::LoadLevel(int level)
 	default:
 		//level1
 		path = "res/tilemap.bmp";
-		data = beach.getTiles();
-		surfaces = beach.getSurfaces();
+		data = beach.GetTiles();
+		surfaces = beach.GetSurfaces();
 		SetLevelLength();
 		break;
 	}

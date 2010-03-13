@@ -12,7 +12,7 @@ void LevelData::LoadGadgets()
 {
 }
 
-vector<int*> LevelData::sortTiles(vector<int*> data)
+vector<int*> LevelData::SortTiles(vector<int*> data)
 {
 	vector<int*> data0;
 	vector<int*> data1;
@@ -102,13 +102,13 @@ vector<int*> LevelData::sortTiles(vector<int*> data)
 	return temp;
 }
 
-vector<Surface*> LevelData::getSurfaces()
+vector<Surface*> LevelData::GetSurfaces()
 {
 	vector<Surface*> data;
 	return data;
 }
 
-vector<int*> LevelData::getTiles()
+vector<int*> LevelData::GetTiles()
 {
 	vector<int*> data;
 	return data;

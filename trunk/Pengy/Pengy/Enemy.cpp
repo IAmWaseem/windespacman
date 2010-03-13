@@ -41,7 +41,7 @@ Location * Enemy::GetPengyLocation()
 	return this->pPengyLocation;
 }
 
-void Enemy::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
+void Enemy::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 {
 	if(!this->isAlive)
 		return;
@@ -58,6 +58,6 @@ void Enemy::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	}
 
 	if(this->isAlive)
-		this->recieveMessageInternal(message, wParam, lParam);
+		this->ReceiveMessageInternal(message, wParam, lParam);
 
 }

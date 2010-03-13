@@ -20,7 +20,7 @@ void WaldoStateMachine::Transition(WaldoState * pWaldoState)
 	this->pCurrentState = pWaldoState;
 }
 
-void WaldoStateMachine::recieveMessage(UINT message, WPARAM wParam, LPARAM lParam)
+void WaldoStateMachine::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 {
-	this->pCurrentState->recieveMessage(message, wParam, lParam);
+	this->pCurrentState->ReceiveMessage(message, wParam, lParam);
 }

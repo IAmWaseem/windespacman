@@ -12,5 +12,5 @@ public:
 	WaldoWander(Waldo * pWaldo, WaldoStateMachine * pWaldoStateMachine);
 	~WaldoWander(void);
 	virtual void Update(int timeElapsed);
-	virtual void recieveMessage(UINT message, WPARAM wParam, LPARAM lParam);
+	virtual void ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam);
 };

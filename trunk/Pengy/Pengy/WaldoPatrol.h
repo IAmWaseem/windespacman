@@ -9,5 +9,5 @@ public:
 	WaldoPatrol(Waldo * pWaldo, WaldoStateMachine * pWaldoStateMachine);
 	~WaldoPatrol(void);
 	virtual void Update(int timeElapsed);
-	virtual void recieveMessage(UINT message, WPARAM wParam, LPARAM lParam);
+	virtual void ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam);
 };

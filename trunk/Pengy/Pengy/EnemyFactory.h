@@ -14,7 +14,7 @@ public:
 protected:
 	EnemyFactory(void);
 private:
-	vector<Enemy*> * enemies;
+	vector<Enemy*> * pEnemies;
 	static EnemyFactory * pInstance;
-	void startGame();
+	void StartGame();
 };

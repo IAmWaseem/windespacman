@@ -49,7 +49,7 @@ Waldo::~Waldo(void)
 	delete pView;
 }
 
-void Waldo::recieveMessageInternal(UINT message, WPARAM wParam, LPARAM lParam)
+void Waldo::ReceiveMessageInternal(UINT message, WPARAM wParam, LPARAM lParam)
 {
 	if(!this->isAlive)
 		return;
@@ -79,7 +79,7 @@ void Waldo::recieveMessageInternal(UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 	}
 	if(this->isAlive)
-		this->pWaldoStateMachine->recieveMessage(message, wParam, lParam);
+		this->pWaldoStateMachine->ReceiveMessage(message, wParam, lParam);
 }
 
 
@@ -109,44 +109,44 @@ void Waldo::CheckPengyCollision()
 	}
 }
 
-bool Waldo::LocationInWaldoX(Location * locationPengy, Location * locationGadget)
+bool Waldo::LocationInWaldoX(Location * pplocationPengy, Location * pLocationWaldo)
 {
 	bool inGadget = false;
-	if(locationGadget->X <= locationPengy->X && (locationGadget->X + locationGadget->width) >= (locationPengy->X + locationPengy->width))
+	if(pLocationWaldo->X <= pplocationPengy->X && (pLocationWaldo->X + pLocationWaldo->width) >= (pplocationPengy->X + pplocationPengy->width))
 	{
 		inGadget = true;
 	}
-	if(locationGadget->X >= locationPengy->X && (locationGadget->X + locationGadget->width) <= (locationPengy->X + locationPengy->width))
+	if(pLocationWaldo->X >= pplocationPengy->X && (pLocationWaldo->X + pLocationWaldo->width) <= (pplocationPengy->X + pplocationPengy->width))
 	{
 		inGadget = true;
 	}
-	if(locationGadget->X <= locationPengy->X && (locationGadget->X + locationGadget->width) <= (locationPengy->X + locationPengy->width) && (locationGadget->X + locationGadget->width) > locationPengy->X)
+	if(pLocationWaldo->X <= pplocationPengy->X && (pLocationWaldo->X + pLocationWaldo->width) <= (pplocationPengy->X + pplocationPengy->width) && (pLocationWaldo->X + pLocationWaldo->width) > pplocationPengy->X)
 	{
 		inGadget = true;
 	}
-	if(locationGadget->X >= locationPengy->X && locationGadget->X <= (locationPengy->X + locationPengy->width) && (locationGadget->X + locationGadget->width) >= (locationPengy->X + locationPengy->width))
+	if(pLocationWaldo->X >= pplocationPengy->X && pLocationWaldo->X <= (pplocationPengy->X + pplocationPengy->width) && (pLocationWaldo->X + pLocationWaldo->width) >= (pplocationPengy->X + pplocationPengy->width))
 	{
 		inGadget = true;
 	}
 	return inGadget;
 }
 
-bool Waldo::LocationInWaldoY(Location * locationPengy, Location * locationGadget)
+bool Waldo::LocationInWaldoY(Location * plocationPengy, Location * pLocationWaldo)
 {
 	bool inGadget = false;
-	if(locationGadget->Y  >= locationPengy->Y && (locationGadget->Y + locationGadget->height) <= (locationPengy->Y + locationPengy->height))
+	if(pLocationWaldo->Y  >= plocationPengy->Y && (pLocationWaldo->Y + pLocationWaldo->height) <= (plocationPengy->Y + plocationPengy->height))
 	{
 		inGadget = true;
 	}
-	if(locationGadget->Y  <= locationPengy->Y && (locationGadget->Y + locationGadget->height) >= (locationPengy->Y + locationPengy->height))
+	if(pLocationWaldo->Y  <= plocationPengy->Y && (pLocationWaldo->Y + pLocationWaldo->height) >= (plocationPengy->Y + plocationPengy->height))
 	{
 		inGadget = true;
 	}
-	if(locationPengy->Y >= locationGadget->Y && locationPengy->Y <= (locationGadget->Y + locationGadget->height))
+	if(plocationPengy->Y >= pLocationWaldo->Y && plocationPengy->Y <= (pLocationWaldo->Y + pLocationWaldo->height))
 	{
 		inGadget = true;
 	}
-	if((locationPengy->Y + locationPengy->height) >= locationGadget->Y && (locationPengy->Y + locationPengy->height) <= (locationGadget->Y + locationGadget->height))
+	if((plocationPengy->Y + plocationPengy->height) >= pLocationWaldo->Y && (plocationPengy->Y + plocationPengy->height) <= (pLocationWaldo->Y + pLocationWaldo->height))
 	{
 		inGadget = true;
 	}

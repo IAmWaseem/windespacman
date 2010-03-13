@@ -15,13 +15,13 @@ class Waldo : public Enemy
 		bool isVulnerable;
 
 		void CheckPengyCollision();
-		bool LocationInWaldoX(Location * locationPengy, Location * locationGadget);
-		bool LocationInWaldoY(Location * locationPengy, Location * locationGadget);
+		bool LocationInWaldoX(Location * pLocationPengy, Location * pLocationWaldo);
+		bool LocationInWaldoY(Location * pLocationPengy, Location * pLocationWaldo);
 		void RandomDirection();
 
 	public:
 		Waldo(Surface * pSurface, int x);
 		Waldo(Surface * pSurface);
 		~Waldo(void);
-		void recieveMessageInternal(UINT message, WPARAM wParam, LPARAM lParam);
+		void ReceiveMessageInternal(UINT message, WPARAM wParam, LPARAM lParam);
 };

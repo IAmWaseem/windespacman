@@ -24,13 +24,13 @@ public:
 	void GameLoop();
 	void GameEnd();
 private:
-	Character* character;
-	Renderer* renderer;
-	MessageQueue* messageQueue;
-	Level* level;
-	World* world;
-	Menu* menu;
-	Sound* sound;
+	Character* pCharacter;
+	Renderer* pRenderer;
+	MessageQueue* pMessageQueue;
+	Level* pLevel;
+	World* pWorld;
+	Menu* pMenu;
+	Sound* pSound;
 	void Update();
 	void Render(HWND);
 	HDC bufDC;

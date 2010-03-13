@@ -4,77 +4,77 @@
 
 BeachLevel::BeachLevel(void)
 {
-	surfaces = new vector<Surface*>();
+	pSurfaces = new vector<Surface*>();
 
 	Surface * borderBottom = new Surface();
 	borderBottom->xFrom = 0;
 	borderBottom->xTo = 2500;
 	borderBottom->yFrom = 568;
 	borderBottom->yTo = 600;
-	surfaces->push_back(borderBottom);
+	pSurfaces->push_back(borderBottom);
 
 	Surface * borderLeft = new Surface();
 	borderLeft->xFrom = 0;
 	borderLeft->xTo = 8;
 	borderLeft->yFrom = 0;
 	borderLeft->yTo = 600;
-	surfaces->push_back(borderLeft);	
+	pSurfaces->push_back(borderLeft);	
 
 	Surface * borderRight = new Surface();
 	borderRight->xFrom = 2481;
 	borderRight->xTo = 2489;
 	borderRight->yFrom = 0;
 	borderRight->yTo = 600;
-	surfaces->push_back(borderRight);
+	pSurfaces->push_back(borderRight);
 
 	Surface * borderTop = new Surface();
 	borderTop->xFrom = 0;
 	borderTop->xTo = 2500;
 	borderTop->yFrom = 0;
 	borderTop->yTo = 8;
-	surfaces->push_back(borderTop);
+	pSurfaces->push_back(borderTop);
 
 	Surface * landLeft = new Surface();
 	landLeft->xFrom = 0;
 	landLeft->xTo = 320;
 	landLeft->yFrom = 448;
 	landLeft->yTo = 600;
-	surfaces->push_back(landLeft);
+	pSurfaces->push_back(landLeft);
 
 	Surface * landRight = new Surface();
 	landRight->xFrom = 704;
 	landRight->xTo = 2500;
 	landRight->yFrom = 448;
 	landRight->yTo = 600;
-	surfaces->push_back(landRight);	
+	pSurfaces->push_back(landRight);	
 
 	Surface * waterLeft = new Surface();
 	waterLeft->xFrom = 320;
 	waterLeft->xTo = 384;
 	waterLeft->yFrom = 530;
 	waterLeft->yTo = 600;
-	surfaces->push_back(waterLeft);
+	pSurfaces->push_back(waterLeft);
 
 	Surface * waterRight = new Surface();
 	waterRight->xFrom = 640;
 	waterRight->xTo = 704;
 	waterRight->yFrom = 530;
 	waterRight->yTo = 600;
-	surfaces->push_back(waterRight);
+	pSurfaces->push_back(waterRight);
 
 	Surface * aboveWater = new Surface();
 	aboveWater->xFrom = 404;
 	aboveWater->xTo = 492;
 	aboveWater->yFrom = 404;
 	aboveWater->yTo = 428;
-	surfaces->push_back(aboveWater);
+	pSurfaces->push_back(aboveWater);
 
 	Surface * aboveWater2 = new Surface();
 	aboveWater2->xFrom = 532;
 	aboveWater2->xTo = 620;
 	aboveWater2->yFrom = 404;
 	aboveWater2->yTo = 428;
-	surfaces->push_back(aboveWater2);
+	pSurfaces->push_back(aboveWater2);
 
 	Surface * firstObstacle = new Surface();
 	firstObstacle->xFrom = 852;
@@ -82,7 +82,7 @@ BeachLevel::BeachLevel(void)
 	firstObstacle->yFrom = 340;
 	firstObstacle->yTo = 364;
 	firstObstacle->isCloud = true;
-	surfaces->push_back(firstObstacle);
+	pSurfaces->push_back(firstObstacle);
 
 	Surface * secondObstacle = new Surface();
 	secondObstacle->xFrom = 980;
@@ -90,7 +90,7 @@ BeachLevel::BeachLevel(void)
 	secondObstacle->yFrom = 276;
 	secondObstacle->yTo = 300;
 	secondObstacle->isCloud = true;
-	surfaces->push_back(secondObstacle);
+	pSurfaces->push_back(secondObstacle);
 
 	Surface * thirdObstacle = new Surface();
 	thirdObstacle->xFrom = 1044;
@@ -98,7 +98,7 @@ BeachLevel::BeachLevel(void)
 	thirdObstacle->yFrom = 340;
 	thirdObstacle->yTo = 364;
 	thirdObstacle->isCloud = true;
-	surfaces->push_back(thirdObstacle);
+	pSurfaces->push_back(thirdObstacle);
 
 	Surface * fourthObstacle = new Surface();
 	fourthObstacle->xFrom = 1235;
@@ -106,7 +106,7 @@ BeachLevel::BeachLevel(void)
 	fourthObstacle->yFrom = 276;
 	fourthObstacle->yTo = 300;
 	fourthObstacle->isCloud = true;
-	surfaces->push_back(fourthObstacle);
+	pSurfaces->push_back(fourthObstacle);
 
 	Surface * fifthObstacle = new Surface();
 	fifthObstacle->xFrom = 1300;
@@ -114,7 +114,7 @@ BeachLevel::BeachLevel(void)
 	fifthObstacle->yFrom = 148;
 	fifthObstacle->yTo = 172;
 	fifthObstacle->isCloud = true;
-	surfaces->push_back(fifthObstacle);
+	pSurfaces->push_back(fifthObstacle);
 }
 
 
@@ -126,13 +126,13 @@ void BeachLevel::LoadGadgets()
 {
 }
 
-vector<Surface*> BeachLevel::getSurfaces()
+vector<Surface*> BeachLevel::GetSurfaces()
 {
-	return *surfaces;
+	return *pSurfaces;
 }
 
 
-vector<int*> BeachLevel::getTiles()
+vector<int*> BeachLevel::GetTiles()
 {
 	vector<int*> data;
 
@@ -407,6 +407,6 @@ vector<int*> BeachLevel::getTiles()
 
 #pragma endregion creation of struction tiles
 
-	data = sortTiles(data);
+	data = SortTiles(data);
 	return data;
 }

@@ -11,9 +11,9 @@ private:
 
 public:
     LevelData();
-	vector<int*> sortTiles(vector<int*> data);
+	vector<int*> SortTiles(vector<int*> data);
 	virtual void LoadGadgets() = 0;
-    virtual vector<Surface*> getSurfaces() = 0;
-	virtual vector<int*> getTiles() = 0;
+    virtual vector<Surface*> GetSurfaces() = 0;
+	virtual vector<int*> GetTiles() = 0;
     ~LevelData();
 };

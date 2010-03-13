@@ -12,7 +12,7 @@
 class Level : public Observer
 {
 public:
-	static Level* Inst();
+	static Level* Instance();
     ~Level();
     void ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam);
 	void LoadLevel(int level);
@@ -26,7 +26,7 @@ private:
 	Physics physic_behavior;
 	int levelLength;
 	void SetLevelLength();
-	World* world;
+	World* pWorld;
 	/*bool LocationInSurfaceX(Location * location, Surface * surface);
 	bool LocationInSurfaceY(Location * location, Surface * surface);*/
 };

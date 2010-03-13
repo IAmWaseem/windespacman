@@ -9,8 +9,8 @@ public:
 	~BeachLevel(void);
 
 	void LoadGadgets();
-	vector<Surface*> getSurfaces();
-	vector<int*> getTiles();
+	vector<Surface*> GetSurfaces();
+	vector<int*> GetTiles();
 private:
-	vector<Surface*> * surfaces;
+	vector<Surface*> * pSurfaces;
 };

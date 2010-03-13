@@ -2,7 +2,7 @@
 
 Menu* Menu::pInstance = NULL;
 
-Menu* Menu::Inst(){
+Menu* Menu::Instance(){
   if(pInstance == NULL){
     pInstance = new Menu();
   }
@@ -22,9 +22,9 @@ void Menu::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	 switch (message) 
 	 {
 	 case CM_GAME_NEW:
-		 messageQueue->Instance()->SendMessage(CM_GAME_START, NULL, NULL);
+		 pMessageQueue->Instance()->SendMessage(CM_GAME_START, NULL, NULL);
 		 DeleteGameMenu();
-		 world->Inst()->menu = false;
+		 pWorld->Inst()->menu = false;
 		 break;
 	 case CM_GAME_OPEN:
 		 OpenFileDialog();
@@ -42,7 +42,7 @@ void Menu::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 
 void Menu::LoadGameMenu()
 {
-	if(world->Inst()->menu)
+	if(pWorld->Inst()->menu)
 	{
 		HMENU hMenu;
 		HMENU hSubMenu;

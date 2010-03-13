@@ -34,12 +34,12 @@ void World::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		if(menu)
 		{
 			menu = false;
-			menuObject->Inst()->DeleteGameMenu();
+			menuObject->Instance()->DeleteGameMenu();
 		}
 		else
 		{
 			menu = true;
-			menuObject->Inst()->LoadGameMenu();
+			menuObject->Instance()->LoadGameMenu();
 		}
 		break;
 	}

@@ -52,8 +52,8 @@ LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		pMessageQueue->Instance()->Attach(GadgetFactory::Instance());
 		pMessageQueue->Instance()->Attach(EnemyFactory::Instance());
 		pMessageQueue->Instance()->Attach(pWorld->Inst());
-		pMessageQueue->Instance()->Attach(pMenu->Inst());
-		pMenu->Inst()->windowHandle = hWnd;
+		pMessageQueue->Instance()->Attach(pMenu->Instance());
+		pMenu->Instance()->windowHandle = hWnd;
 		break;
 	case WM_KEYDOWN:
 

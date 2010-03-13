@@ -101,20 +101,20 @@ void Level::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_PATROL, (int)surfaces.at(13), NULL);
 		break;
 	case CM_CHARACTER_MOVE_X_FROM_TO:
-		if(physic_behavior.Move_X_From_To((Location*)wParam,(Location*)lParam,surfaces)==true)
-			MessageQueue::Instance()->SendMessage(CM_CHARACTER_BUMPS_INTO, (int)physic_behavior.Surface_final, NULL);
+		if(physic_behavior.MoveXFromTo((Location*)wParam,(Location*)lParam,surfaces)==true)
+			MessageQueue::Instance()->SendMessage(CM_CHARACTER_BUMPS_INTO, (int)physic_behavior.pSurfaceFinal, NULL);
 		break;
 
 	case CM_CHARACTER_FALL_Y_FROM_TO:
-		if(physic_behavior.Fall_Y_From_To((Location*)wParam,(Location*)lParam,surfaces)==false)
+		if(physic_behavior.FallYFromTo((Location*)wParam,(Location*)lParam,surfaces)==false)
 			MessageQueue::Instance()->SendMessage(CM_CHARACTER_IS_FALLING, NULL, NULL);
 		else
-			MessageQueue::Instance()->SendMessage(CM_CHARACTER_IS_STANDING, (int)physic_behavior.onSurface_final_fall, NULL);
+			MessageQueue::Instance()->SendMessage(CM_CHARACTER_IS_STANDING, (int)physic_behavior.pOnSurfaceFinalFall, NULL);
 		break;
 
 	case CM_CHARACTER_JUMP_Y_FROM_TO:
-		if(physic_behavior.Jump_Y_From_To((Location*)wParam,(Location*)lParam,surfaces)==true)
-			MessageQueue::Instance()->SendMessage(CM_CHARACTER_JUMPING_BUMPS_HEAD, (int)physic_behavior.onSurface_final_jump, NULL);
+		if(physic_behavior.JumpYFromTo((Location*)wParam,(Location*)lParam,surfaces)==true)
+			MessageQueue::Instance()->SendMessage(CM_CHARACTER_JUMPING_BUMPS_HEAD, (int)physic_behavior.pOnSurfaceFinalJump, NULL);
 		break;
 	}
 }

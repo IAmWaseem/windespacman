@@ -14,12 +14,12 @@ class View;
 class Renderer : public Observer
 {
 public:
-    static Renderer* Inst();
+    static Renderer* Instance();
     ~Renderer();
 
-	void attach(View *myView);
-	void detach(View *myView);
-	void render(HDC hdc);
+	void Attach(View *pView);
+	void Detach(View *pView);
+	void Render(HDC hdc);
 	void ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam);
 
 	static bool ShowDebug;

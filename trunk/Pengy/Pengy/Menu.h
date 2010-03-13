@@ -7,7 +7,7 @@
 class Menu : public Observer
 {
 public:
-	static Menu* Inst();
+	static Menu* Instance();
     ~Menu();
     void ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam);
 	HWND windowHandle;
@@ -17,8 +17,8 @@ protected:
 	Menu();
 private:
 	static Menu* pInstance;
-	World * world;
-	MessageQueue * messageQueue;
+	World * pWorld;
+	MessageQueue * pMessageQueue;
 	void OpenFileDialog();
 };
 

@@ -8,9 +8,9 @@
 class Sound : public Observer
 {
 public:
-	Mix_Music* music;
-	Mix_Chunk* effect;
-	static Sound* Inst();
+	Mix_Music* pMusic;
+	Mix_Chunk* pEffect;
+	static Sound* Instance();
     ~Sound();
     void ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam);
 protected:

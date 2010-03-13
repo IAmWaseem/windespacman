@@ -48,7 +48,7 @@ LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		pMessageQueue->Instance()->Attach(pLevel->Instance());
 		pMessageQueue->Instance()->Attach(pCharacter->Instance());
 		pMessageQueue->Instance()->Attach(pRenderer->Instance());
-		pMessageQueue->Instance()->Attach(pSound->Inst());
+		pMessageQueue->Instance()->Attach(pSound->Instance());
 		pMessageQueue->Instance()->Attach(GadgetFactory::Instance());
 		pMessageQueue->Instance()->Attach(EnemyFactory::Instance());
 		pMessageQueue->Instance()->Attach(pWorld->Inst());

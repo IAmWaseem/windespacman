@@ -117,6 +117,9 @@ void Level::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		if(physic_behavior.JumpYFromTo((Location*)wParam,(Location*)lParam,surfaces)==true)
 			MessageQueue::Instance()->SendMessage(CM_CHARACTER_JUMPING_BUMPS_HEAD, (int)physic_behavior.pOnSurfaceFinalJump, NULL);
 		break;
+	case CM_GAME_START:
+		levelView.StartGame();
+		break;
 	}
 }
 
@@ -129,7 +132,6 @@ void Level::LoadLevel(int level)
 	switch(level)
 	{
 	case 1:
-		
 		path = "res/tilemap.bmp";
 		data = beach.GetTiles();
 		surfaces = beach.GetSurfaces();

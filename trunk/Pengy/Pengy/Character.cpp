@@ -20,6 +20,7 @@ Character::Character(void)
 	lives = 4;
 	timeToStayKilled = 0;
 	isKilled = false;
+	firstGame = 0;
 }
 
 Character::~Character(void)
@@ -35,6 +36,7 @@ void Character::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	{
 	case CM_GAME_START:
 		StartGame();
+		firstGame = 1;
 		break;
 	case CM_LEVEL_LOAD:
 		switch(pWorld->Instance()->level)
@@ -200,9 +202,16 @@ void Character::SetDirection(Direction direction)
 	this->direction = direction;
 }
 
+
 void Character::StartGame()
 {
-	pCharacterView->UnRegisterToGraphics();
+	if(firstGame==1)
+	{
+		delete pCharacterView;
+		pCharacterView->UnRegisterToGraphics();
+		delete pLocation;
+		delete pCharacterStateMachine;
+	}
 	pCharacterView = new CharacterView();
 	pLocation = new Location();
 	pLocation->X = 50;

@@ -11,7 +11,9 @@ CharacterView::CharacterView(void)
 
 CharacterView::~CharacterView(void)
 {
-
+	delete pImages;
+	delete pMasks;
+	delete pWidthHeight;
 }
 
 void CharacterView::Draw(HDC hdc, RECT rect, int xFrom, int xTo)

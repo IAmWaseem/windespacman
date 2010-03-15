@@ -5,6 +5,11 @@
 // Static Initialisation
 //////////////////////////////////////////////////////////////////
 static CWin * g_pCWin		= NULL;
+short CWin::keystateDown = 0;
+short CWin::keystateLeft = 0;
+short CWin::keystateRight = 0;
+short CWin::keystateUp = 0;
+short CWin::keystateSpace = 0;
 HINSTANCE CWin::m_hInstance = GetModuleHandle(NULL);
 
 //////////////////////////////////////////////////////////////////
@@ -53,12 +58,6 @@ int CWin::Run()
 	
 	while( msg.message != WM_QUIT )
 	{
-		short keystateLeft;
-		short keystateUp;
-		short keystateRight;
-		short keystateDown;
-		short keystateSpace;
-
 		keystateSpace = GetAsyncKeyState(32);
 		keystateLeft = GetAsyncKeyState(37);
 		keystateUp = GetAsyncKeyState(38);

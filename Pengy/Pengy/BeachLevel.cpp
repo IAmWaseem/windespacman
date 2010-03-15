@@ -77,8 +77,8 @@ BeachLevel::BeachLevel(void)
 	Surface * aboveWater2 = new Surface();
 	aboveWater2->xFrom = 532;
 	aboveWater2->xTo = 620;
-	aboveWater2->yFrom = 468;
-	aboveWater2->yTo = 492;
+	aboveWater2->yFrom = 532;
+	aboveWater2->yTo = 556;
 	pSurfaces->push_back(aboveWater2);
 
 	Surface * firstObstacle = new Surface();
@@ -120,6 +120,102 @@ BeachLevel::BeachLevel(void)
 	fifthObstacle->yTo = 172;
 	fifthObstacle->isCloud = true;
 	pSurfaces->push_back(fifthObstacle);
+
+	Surface * ladderCloud1 = new Surface();
+	ladderCloud1->xFrom = 1365;
+	ladderCloud1->yFrom = 322;
+	ladderCloud1->xTo = 1450;
+	ladderCloud1->yTo = 329;
+	ladderCloud1->isCloud = true;
+	pSurfaces->push_back(ladderCloud1);
+
+	Surface * ladderCloud2 = new Surface();
+	ladderCloud2->xFrom = 1365;
+	ladderCloud2->yFrom = 353;
+	ladderCloud2->xTo = 1450;
+	ladderCloud2->yTo = 360;
+	ladderCloud2->isCloud = true;
+	pSurfaces->push_back(ladderCloud2);
+
+	Surface * ladderCloud3 = new Surface();
+	ladderCloud3->xFrom = 1365;
+	ladderCloud3->yFrom = 384;
+	ladderCloud3->xTo = 1450;
+	ladderCloud3->yTo = 391;
+	ladderCloud3->isCloud = true;
+	pSurfaces->push_back(ladderCloud3);
+
+	Surface * ladderCloud4 = new Surface();
+	ladderCloud4->xFrom = 1365;
+	ladderCloud4->yFrom = 417;
+	ladderCloud4->xTo = 1450;
+	ladderCloud4->yTo = 423;
+	ladderCloud4->isCloud = true;
+	pSurfaces->push_back(ladderCloud4);
+
+	Surface * ladderCloud5 = new Surface();
+	ladderCloud5->xFrom = 1365;
+	ladderCloud5->yFrom = 442;
+	ladderCloud5->xTo = 1450;
+	ladderCloud5->yTo = 450;
+	ladderCloud5->isCloud = true;
+	pSurfaces->push_back(ladderCloud5);
+
+	Surface * ladderCloud6 = new Surface();
+	ladderCloud6->xFrom = 1365;
+	ladderCloud6->yFrom = 475;
+	ladderCloud6->xTo = 1450;
+	ladderCloud6->yTo = 485;
+	ladderCloud6->isCloud = true;
+	pSurfaces->push_back(ladderCloud6);
+
+	/*Surface * ladderCloud7 = new Surface();
+	ladderCloud7->xFrom = 1365;
+	ladderCloud7->yFrom = 322;
+	ladderCloud7->xTo = 1450;
+	ladderCloud7->yTo = 329;
+	ladderCloud7->isCloud = true;
+	pSurfaces->push_back(ladderCloud7);
+
+	Surface * ladderCloud8 = new Surface();
+	ladderCloud8->xFrom = 1365;
+	ladderCloud8->yFrom = 322;
+	ladderCloud8->xTo = 1450;
+	ladderCloud8->yTo = 329;
+	ladderCloud8->isCloud = true;
+	pSurfaces->push_back(ladderCloud8);
+
+	Surface * ladderCloud9 = new Surface();
+	ladderCloud9->xFrom = 1365;
+	ladderCloud9->yFrom = 322;
+	ladderCloud9->xTo = 1450;
+	ladderCloud9->yTo = 329;
+	ladderCloud9->isCloud = true;
+	pSurfaces->push_back(ladderCloud9);
+
+	Surface * ladderCloud10 = new Surface();
+	ladderCloud10->xFrom = 1365;
+	ladderCloud10->yFrom = 322;
+	ladderCloud10->xTo = 1450;
+	ladderCloud10->yTo = 329;
+	ladderCloud10->isCloud = true;
+	pSurfaces->push_back(ladderCloud10);
+
+	Surface * ladderCloud11 = new Surface();
+	ladderCloud11->xFrom = 1365;
+	ladderCloud11->yFrom = 322;
+	ladderCloud11->xTo = 1450;
+	ladderCloud11->yTo = 329;
+	ladderCloud11->isCloud = true;
+	pSurfaces->push_back(ladderCloud11);
+
+	Surface * ladderCloud12 = new Surface();
+	ladderCloud12->xFrom = 1365;
+	ladderCloud12->yFrom = 322;
+	ladderCloud12->xTo = 1450;
+	ladderCloud12->yTo = 329;
+	ladderCloud12->isCloud = true;
+	pSurfaces->push_back(ladderCloud12);*/
 }
 
 
@@ -142,13 +238,13 @@ vector<int*> BeachLevel::GetTiles()
 
 #pragma region bottom ground
 	// bottom data
-	for(int i = 0; i < 39; i++)
+	for(int i = 0; i <= 47; i++)
 	{
 		int* temp = new int[6]; temp[0] = i; temp[1] = 9; temp[2] = 0; temp[3] = 7; temp[4] = 0; temp[5] = 0;
 		data.push_back(temp);
 	}
 	// bottom data
-	for(int i = 0; i < 39; i++)
+	for(int i = 0; i <= 47; i++)
 	{
 		int* temp = new int[6]; temp[0] = i; temp[1] = 10; temp[2] = 0; temp[3] = 8; temp[4] = 0; temp[5] = 0;
 		data.push_back(temp);
@@ -183,7 +279,7 @@ vector<int*> BeachLevel::GetTiles()
 	// i is where the middle of the tree is!
 
 	// big tree
-	for(int i = 0; i < 20; i++)
+	for(int i = 0; i <= 47; i++)
 	{
 		if(i == 0 || i == 16 || i == 23)
 		{
@@ -210,9 +306,9 @@ vector<int*> BeachLevel::GetTiles()
 	}
 
 	// medium tree
-	for(int i = 0; i < 20; i++)
+	for(int i = 0; i <= 47; i++)
 	{
-		if(i == 11 || i == 19 || i == 25)
+		if(i == 11 || i == 19 || i == 30)
 		{
 			// treeleaves
 			int* tree1 = new int[6]; tree1[0] = -1 + (i); tree1[1] = 5; tree1[2] = 5; tree1[3] = 4; tree1[4] = 1; tree1[5] = 2;
@@ -233,9 +329,9 @@ vector<int*> BeachLevel::GetTiles()
 	}
 
 	// smallest tree
-	for(int i = 0; i < 40; i++)
+	for(int i = 0; i <= 47; i++)
 	{
-		if(i == 2 || i == 17 || i == 24 || i == 34)
+		if(i == 2 || i == 17 || i == 24 || i == 34 || i == 39 || i == 45)
 		{
 			// treeleaves
 			int* tree1 = new int[6]; tree1[0] = 0 + (i); tree1[1] = 5; tree1[2] = 0; tree1[3] = 3; tree1[4] = 1;tree1[5] = 1;
@@ -320,10 +416,10 @@ vector<int*> BeachLevel::GetTiles()
 	int* structure2 = new int[6]; structure2[0] = 7; structure2[1] = 8; structure2[2] = 14; structure2[3] = 7; structure2[4] = 1; structure2[5] = 0;
 	data.push_back(structure2);
 
-	int* structure3 = new int[6]; structure3[0] = 8; structure3[1] = 7; structure3[2] = 12; structure3[3] = 7; structure3[4] = 1; structure3[5] = 0;
+	int* structure3 = new int[6]; structure3[0] = 8; structure3[1] = 8; structure3[2] = 12; structure3[3] = 7; structure3[4] = 1; structure3[5] = 0;
 	data.push_back(structure3);
 
-	int* structure4 = new int[6]; structure4[0] = 9; structure4[1] = 7; structure4[2] = 14; structure4[3] = 7; structure4[4] = 1; structure4[5] = 0;
+	int* structure4 = new int[6]; structure4[0] = 9; structure4[1] = 8; structure4[2] = 14; structure4[3] = 7; structure4[4] = 1; structure4[5] = 0;
 	data.push_back(structure4);
 
 	int* structure5 = new int[6]; structure5[0] = 15; structure5[1] = 4; structure5[2] = 5; structure5[3] = 3; structure5[4] = 1; structure5[5] = 0;

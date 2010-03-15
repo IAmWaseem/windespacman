@@ -49,7 +49,7 @@ namespace TicTacToe
 
             Two = new Player();
             Two.PlayerNumber = 2;
-            if (player1Human.Checked)
+            if (player2Human.Checked)
                 Two.Controller = Controller.Human;
             else
                 Two.Controller = Controller.AI;
@@ -77,6 +77,358 @@ namespace TicTacToe
             thread.Start();
         }
 
+        private int Evaluation(List<TicTacField> Grid, int playerNumber)
+        {
+            bool win = CalculateWinner(Grid);
+            int tempN = playerNumber;
+            if (tempN == 1)
+                tempN = 2;
+            else
+                tempN = 1;
+
+            if (WinningPlayer == playerNumber && win)
+            {
+                return 5;
+            }
+            else if (WinningPlayer == tempN && win)
+            {
+                return 0;
+            }
+
+            // create temp grid with playernumbers
+            List<List<int>> grid = new List<List<int>>();
+            List<int> grid0 = new List<int>();
+            grid0.Add(0); grid0.Add(0); grid0.Add(0);
+            List<int> grid1 = new List<int>();
+            grid1.Add(0); grid1.Add(0); grid1.Add(0);
+            List<int> grid2 = new List<int>();
+            grid2.Add(0); grid2.Add(0); grid2.Add(0);
+            grid.Add(grid0);
+            grid.Add(grid1);
+            grid.Add(grid2);
+
+            for (int i = 0; i < Grid.Count; i++)
+            {
+                TicTacField ttf = Grid[i];
+                grid[ttf.X][ttf.Y] = ttf.Player;
+            }
+
+            int PairOne = 0;
+            int PairTwo = 0;
+
+            if (grid[0][0] == grid[1][0])
+            {
+                if (grid[0][0] == 1)
+                    PairOne++;
+                else if (grid[0][0] == 2)
+                    PairTwo++;
+            }
+
+            if (grid[1][0] == grid[2][0])
+            {
+                if (grid[1][0] == 1)
+                    PairOne++;
+                else if (grid[1][0] == 2)
+                    PairTwo++;
+            }
+            if (grid[0][0] == grid[0][1])
+            {
+                if (grid[0][0] == 1)
+                    PairOne++;
+                else if (grid[0][0] == 2)
+                    PairTwo++;
+            }
+            if (grid[1][0] == grid[1][1])
+            {
+                if (grid[1][0] == 1)
+                    PairOne++;
+                else if (grid[1][0] == 2)
+                    PairTwo++;
+            }
+            if (grid[2][0] == grid[2][1])
+            {
+                if (grid[2][0] == 1)
+                    PairOne++;
+                else if (grid[2][0] == 2)
+                    PairTwo++;
+            }
+            if (grid[0][0] == grid[1][1])
+            {
+                if (grid[0][0] == 1)
+                    PairOne++;
+                else if (grid[0][0] == 2)
+                    PairTwo++;
+            }
+            if (grid[1][0] == grid[2][1])
+            {
+                if (grid[1][0] == 1)
+                    PairOne++;
+                else if (grid[1][0] == 2)
+                    PairTwo++;
+            }
+            if (grid[2][0] == grid[1][1])
+            {
+                if (grid[2][0] == 1)
+                    PairOne++;
+                else if (grid[2][0] == 2)
+                    PairTwo++;
+            }
+            if (grid[1][0] == grid[0][1])
+            {
+                if (grid[1][0] == 1)
+                    PairOne++;
+                else if (grid[1][0] == 2)
+                    PairTwo++;
+            }
+            if (grid[0][1] == grid[0][2])
+            {
+                if (grid[0][1] == 1)
+                    PairOne++;
+                else if (grid[0][1] == 2)
+                    PairTwo++;
+            }
+            if (grid[1][1] == grid[1][2])
+            {
+                if (grid[1][1] == 1)
+                    PairOne++;
+                else if (grid[1][1] == 2)
+                    PairTwo++;
+            }
+            if (grid[2][1] == grid[2][2])
+            {
+                if (grid[2][1] == 1)
+                    PairOne++;
+                else if (grid[2][1] == 2)
+                    PairTwo++;
+            }
+            if (grid[1][1] == grid[2][2])
+            {
+                if (grid[1][1] == 1)
+                    PairOne++;
+                else if (grid[1][1] == 2)
+                    PairTwo++;
+            }
+            if (grid[1][1] == grid[0][2])
+            {
+                if (grid[1][1] == 1)
+                    PairOne++;
+                else if (grid[1][1] == 2)
+                    PairTwo++;
+            }
+            if (grid[2][1] == grid[1][2])
+            {
+                if (grid[2][1] == 1)
+                    PairOne++;
+                else if (grid[2][1] == 2)
+                    PairTwo++;
+            }
+            if (grid[0][1] == grid[1][2])
+            {
+                if (grid[0][1] == 1)
+                    PairOne++;
+                else if (grid[0][1] == 2)
+                    PairTwo++;
+            }
+            if (grid[0][1] == grid[1][1])
+            {
+                if (grid[0][1] == 1)
+                    PairOne++;
+                else if (grid[0][1] == 2)
+                    PairTwo++;
+            }
+            if (grid[1][1] == grid[2][1])
+            {
+                if (grid[1][1] == 1)
+                    PairOne++;
+                else if (grid[1][1] == 2)
+                    PairTwo++;
+            }
+            if (grid[0][2] == grid[1][2])
+            {
+                if (grid[0][2] == 1)
+                    PairOne++;
+                else if (grid[0][2] == 2)
+                    PairTwo++;
+            }
+            if (grid[1][2] == grid[2][2])
+            {
+                if (grid[1][2] == 1)
+                    PairOne++;
+                else if (grid[1][2] == 2)
+                    PairTwo++;
+            }
+
+            if (playerNumber == 1)
+            {
+                if (PairOne >= 1)
+                {
+                    if (PairTwo >= 1)
+                        return 3;
+                    else
+                        return 4;
+                }
+                else
+                {
+                    if (PairTwo >= 1)
+                        return 1;
+                    else
+                        return 2;
+                }
+            }
+            else if (playerNumber == 2)
+            {
+                if (PairTwo >= 1)
+                {
+                    if (PairOne >= 1)
+                        return 3;
+                    else
+                        return 4;
+                }
+                else
+                {
+                    if (PairOne >= 1)
+                        return 1;
+                    else
+                        return 2;
+                }
+            }
+
+            return 0;
+
+        }
+
+        List<TicTacField> tempGrid = new List<TicTacField>();
+        private int MiniMax(List<TicTacField> Grid, int depth, int playerNumber, bool first)
+        {
+            if (CalculateWinner(Grid) || depth == 0)
+            {
+                int toReturn = Evaluation(Grid, playerNumber);
+                return toReturn;
+            }
+            else
+            {
+                int score = int.MinValue;
+
+                List<List<TicTacField>> NextMoves = CalculateMoves(Grid, playerNumber);
+                
+                if (NextMoves != null)
+                {
+                    foreach (List<TicTacField> Move in NextMoves)
+                    {
+                        int tempScore = score;
+                        
+                        // nog niet gewonnen en doorgaan
+                        if (playerNumber == 1)
+                            playerNumber = 2;
+                        else
+                            playerNumber = 1;
+
+                        score = Math.Max(score, -1 * MiniMax(Move, depth - 1, playerNumber, false));
+
+                        if (score != tempScore && first)
+                        {
+                            tempGrid = Move;
+                        }
+                    }
+                }
+
+                return score;
+            }
+        }
+
+        private List<List<TicTacField>> CalculateMoves(List<TicTacField> Grid, int player)
+        {
+            List<TicTacField> tempTo = new List<TicTacField>();
+            List<TicTacField> tempFrom = new List<TicTacField>();
+            List<List<TicTacField>> moves = new List<List<TicTacField>>();
+
+            if (CountTicTacFields(player, Grid) < 3)
+            {
+                if (CountTicTacFields(0, Grid) == 9)
+                {
+                    int count = 0;
+                    foreach (TicTacField temperdetemp in Grid)
+                    {
+                        
+                        List<TicTacField> temp = new List<TicTacField>();
+                        for (int i = 0; i < Grid.Count; i++)
+                        {
+                            if (count == i)
+                            {
+                                TicTacField ticTemp = Grid[i];
+                                ticTemp.Player = player;
+                                temp.Add(ticTemp);
+                            }
+                            else
+                                temp.Add(Grid[i]);
+
+                        }
+                        count = count + 1;
+                        moves.Add(temp);
+                    }
+                }
+                else if (CountTicTacFields(0, Grid) < 9)
+                {
+                    int count = 0;
+                    foreach (TicTacField temperdetemp in Grid)
+                    {
+                        bool verandering = false;
+                        List<TicTacField> temp = new List<TicTacField>();
+                        for (int i = 0; i < Grid.Count; i++)
+                        {
+                            if (count == i && Grid[i].Player == 0)
+                            {
+                                verandering = true;
+                                TicTacField ticTemp = Grid[i];
+                                ticTemp.Player = player;
+                                temp.Add(ticTemp);
+                            }
+                            else
+                                temp.Add(Grid[i]);
+
+                        }
+                        count = count + 1;
+                        if(verandering)
+                            moves.Add(temp);
+                    }
+                }
+            }
+            else
+            {
+                foreach (TicTacField ttf in Grid)
+                {
+                    if (ttf.Player == player)
+                        tempFrom.Add(ttf);
+                    if (ttf.Player == 0)
+                        tempTo.Add(ttf);
+                }
+
+                foreach (TicTacField ttFrom in tempFrom)
+                {
+                    foreach (TicTacField ttTo in tempTo)
+                    {
+                        List<TicTacField> temp = new List<TicTacField>();
+                        temp.AddRange(Grid);
+                        temp.Remove(ttFrom);
+                        temp.Remove(ttTo);
+
+                        TicTacField tempTTo = ttTo;
+                        TicTacField tempTFrom = ttFrom;
+
+                        int playerN = ttTo.Player;
+                        tempTTo.Player = tempTFrom.Player;
+                        tempTFrom.Player = playerN;
+
+                        temp.Add(tempTFrom);
+                        temp.Add(tempTTo);
+                        moves.Add(temp);
+                    }
+                }
+            }
+
+            return moves;
+        }
+
         private bool firstMove = false;
         private bool winner = false;
         private bool validMove = true;
@@ -86,76 +438,97 @@ namespace TicTacToe
         {
             while (Game.GameRuns)
             {
+                if (CurrentPlayer == Two.PlayerNumber && Two.Controller == Controller.AI || CurrentPlayer == One.PlayerNumber && One.Controller == Controller.AI)
+                {
+                    DoTheLoop = true;
+                }
+
                 if (DoTheLoop)
                 {
                     validMove = true;
                     if (!winner)
                     {
-                        List<TicTacField> ttList = GameGrid.Where(n => n.X == xCol && n.Y == yCol).ToList();
-
-                        TicTacField temp = ttList[0];
-                        int index = GameGrid.IndexOf(temp);
-
-                        if (temp.Player == 0)
+                        if (CurrentPlayer == Two.PlayerNumber && Two.Controller == Controller.AI || CurrentPlayer == One.PlayerNumber && One.Controller == Controller.AI)
                         {
-                            temp.Player = CurrentPlayer;
+                            int score = MiniMax(GameGrid, 4, CurrentPlayer, true);
+                            GameGrid = tempGrid;
 
-                            if ((CountTicTacFields(CurrentPlayer) < 3 && GameWithATwist.Checked) || GameClassic.Checked)
-                            {
-                                GameGrid[index] = temp;
-                                if (CurrentPlayer == 1)
-                                    CurrentPlayer = 2;
-                                else
-                                    CurrentPlayer = 1;
-                            }
+                            if (CurrentPlayer == 1)
+                                CurrentPlayer = 2;
                             else
-                            {
-                                if (CountTicTacFields(CurrentPlayer) == 3 && GameWithATwist.Checked)
-                                {
-                                    if (tempSelected > -1)
-                                    {
-                                        TicTacField otherTemp = GameGrid[tempSelected];
-                                        int indexOther = GameGrid.IndexOf(otherTemp);
-
-                                        temp.Player = CurrentPlayer;
-                                        otherTemp.Player = 0;
-
-                                        GameGrid[index] = otherTemp;
-                                        GameGrid[indexOther] = temp;
-
-                                        if (CurrentPlayer == 1)
-                                            CurrentPlayer = 2;
-                                        else
-                                            CurrentPlayer = 1;
-                                    }
-                                    else
-                                    {
-                                        validMove = false;
-                                    }
-                                }
-                            }
-                            tempSelected = -1;
+                                CurrentPlayer = 1;
                         }
                         else
                         {
-                            // already selected
-                            if (CountTicTacFields(CurrentPlayer) == 3 && GameWithATwist.Checked)
+
+                            List<TicTacField> ttList = GameGrid.Where(n => n.X == xCol && n.Y == yCol).ToList();
+
+                            TicTacField temp = ttList[0];
+                            int index = GameGrid.IndexOf(temp);
+
+
+                            if (temp.Player == 0)
                             {
-                                if (temp.Player == CurrentPlayer)
-                                    tempSelected = GameGrid.IndexOf(temp);
+                                temp.Player = CurrentPlayer;
+
+                                if ((CountTicTacFields(CurrentPlayer, GameGrid) < 3 && GameWithATwist.Checked) || GameClassic.Checked)
+                                {
+                                    GameGrid[index] = temp;
+                                    if (CurrentPlayer == 1)
+                                        CurrentPlayer = 2;
+                                    else
+                                        CurrentPlayer = 1;
+                                }
                                 else
+                                {
+                                    if (CountTicTacFields(CurrentPlayer, GameGrid) == 3 && GameWithATwist.Checked)
+                                    {
+                                        if (tempSelected > -1)
+                                        {
+                                            TicTacField otherTemp = GameGrid[tempSelected];
+                                            int indexOther = GameGrid.IndexOf(otherTemp);
+
+                                            temp.Player = CurrentPlayer;
+                                            otherTemp.Player = 0;
+
+                                            GameGrid[index] = otherTemp;
+                                            GameGrid[indexOther] = temp;
+
+                                            if (CurrentPlayer == 1)
+                                                CurrentPlayer = 2;
+                                            else
+                                                CurrentPlayer = 1;
+                                        }
+                                        else
+                                        {
+                                            validMove = false;
+                                        }
+                                    }
+                                }
+                                tempSelected = -1;
+
+                            }
+                            else
+                            {
+                                // already selected
+                                if (CountTicTacFields(CurrentPlayer, GameGrid) == 3 && GameWithATwist.Checked)
+                                {
+                                    if (temp.Player == CurrentPlayer)
+                                        tempSelected = GameGrid.IndexOf(temp);
+                                    else
+                                    {
+                                        tempSelected = -1;
+                                        validMove = false;
+                                    }
+                                }
+                                if (GameClassic.Checked && CountTicTacFields(0, GameGrid) <= 0)
                                 {
                                     tempSelected = -1;
                                     validMove = false;
                                 }
                             }
-                            if (GameClassic.Checked && CountTicTacFields(0) <= 0)
-                            {
-                                tempSelected = -1;
-                                validMove = false;
-                            }
                         }
-                        winner = CalculateWinner();                        
+                        winner = CalculateWinner(GameGrid);
                     }
                     DoTheLoop = false;
                 }
@@ -164,7 +537,7 @@ namespace TicTacToe
 
         private List<Point> WinningPoints = new List<Point>();
         private int WinningPlayer = 0;
-        private bool CalculateWinner()
+        private bool CalculateWinner(List<TicTacField> aGrid)
         {
             // create temp grid with playernumbers
             List<List<int>> grid = new List<List<int>>();
@@ -177,10 +550,10 @@ namespace TicTacToe
             grid.Add(grid0);
             grid.Add(grid1);
             grid.Add(grid2);
-            
-            for (int i = 0; i < GameGrid.Count; i++)
+
+            for (int i = 0; i < aGrid.Count; i++)
             {
-                TicTacField ttf = GameGrid[i];
+                TicTacField ttf = aGrid[i];
                 grid[ttf.X][ttf.Y] = ttf.Player;
             }
 
@@ -204,7 +577,7 @@ namespace TicTacToe
             {
 
                 if ((grid[i][0] > 0 && grid[i][1] > 0 && grid[i][2] > 0) && (grid[i][0] == grid[i][1] && grid[i][0] == grid[i][2]))
-                {                    
+                {
                     WinningPoints.Clear();
                     WinningPoints.Add(new Point(i, 0));
                     WinningPoints.Add(new Point(i, 1));
@@ -236,7 +609,7 @@ namespace TicTacToe
                 return true;
             }
 
-            if (GameClassic.Checked && CountTicTacFields(0) <= 0)
+            if (GameClassic.Checked && CountTicTacFields(0, GameGrid) <= 0)
             {
                 WinningPlayer = 0;
                 WinningPoints.Clear();
@@ -246,12 +619,12 @@ namespace TicTacToe
             return false;
         }
 
-        private int CountTicTacFields(int playernumber)
+        private int CountTicTacFields(int playernumber, List<TicTacField> Grid)
         {
             int count = 0;
-            for (int i = 0; i < GameGrid.Count; i++)
+            for (int i = 0; i < Grid.Count; i++)
             {
-                if (GameGrid[i].Player == playernumber)
+                if (Grid[i].Player == playernumber)
                     count++;
             }
             return count;
@@ -267,8 +640,9 @@ namespace TicTacToe
             }
             if (firstMove)
             {
-                GameClassic.Enabled = false;
-                GameWithATwist.Enabled = false;
+                groupBox1.Enabled = false;
+                groupBox2.Enabled = false;
+                groupBox3.Enabled = false;
             }
 
             Brush rectBrush = Brushes.LightGray;
@@ -277,17 +651,17 @@ namespace TicTacToe
                 for (int i = 0; i < GameGrid.Count; i++)
                 {
                     TicTacField ttf = GameGrid[i];
-                    
-                        if (ttf.Player == One.PlayerNumber)
-                            rectBrush = Brushes.Orange;
-                        else if (ttf.Player == Two.PlayerNumber)
-                            rectBrush = Brushes.LightBlue;
-                        else if (ttf.Player == None.PlayerNumber)
-                            rectBrush = Brushes.LightGray;
-                    
+
+                    if (ttf.Player == One.PlayerNumber)
+                        rectBrush = Brushes.Orange;
+                    else if (ttf.Player == Two.PlayerNumber)
+                        rectBrush = Brushes.LightBlue;
+                    else if (ttf.Player == None.PlayerNumber)
+                        rectBrush = Brushes.LightGray;
+
                     if (tempSelected > -1)
                     {
-                        if(GameGrid.IndexOf(ttf) == tempSelected)
+                        if (GameGrid.IndexOf(ttf) == tempSelected)
                             if (ttf.Player == One.PlayerNumber)
                                 rectBrush = Brushes.Red;
                             else if (ttf.Player == Two.PlayerNumber)
@@ -299,7 +673,7 @@ namespace TicTacToe
                 }
             }
             else
-                panel1.Invalidate();            
+                panel1.Invalidate();
 
             CurrentPlayerLabel.Text = "Turn of player " + CurrentPlayer;
             if (validMove)
@@ -320,20 +694,21 @@ namespace TicTacToe
                 GameClassic.Enabled = true;
                 GameWithATwist.Enabled = true;
                 string playerColor = "";
-				if(WinningPlayer > 0)
-				{
-	                if (WinningPlayer == 1)
-	                    playerColor = "orange";
-	                else if (WinningPlayer == 2)
-	                    playerColor = "light blue";
-						
-					MessageBox.Show("Player " + WinningPlayer + " (" + playerColor + ") has won! Click OK for a new game");
-				}
+                if (WinningPlayer > 0)
+                {
+                    if (WinningPlayer == 1)
+                        playerColor = "orange";
+                    else if (WinningPlayer == 2)
+                        playerColor = "light blue";
+
+                    MessageBox.Show("Player " + WinningPlayer + " (" + playerColor + ") has won! Click OK for a new game");
+                }
                 else
-				{
-					MessageBox.Show("No winner! Click OK for a new game");
-				}
+                {
+                    MessageBox.Show("No winner! Click OK for a new game");
+                }                
                 thread.Abort();
+                winner = false;
                 WinningPlayer = 0;
                 InitGame();
                 StartGame();
@@ -400,6 +775,20 @@ namespace TicTacToe
             {
                 thread.Abort();
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            winner = false;
+            firstMove = false;
+            groupBox3.Enabled = true;
+            groupBox1.Enabled = true;
+            groupBox2.Enabled = true;
+            thread.Abort();
+            WinningPlayer = 0;
+            InitGame();
+            StartGame();
+            panel1.Invalidate();
         }
     }
 }

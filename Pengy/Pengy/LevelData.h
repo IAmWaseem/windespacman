@@ -3,6 +3,8 @@
 #include <string>
 #include <algorithm>
 #include <vector>
+#include "MovingSurface.h"
+#include "MessageQueue.h"
 using namespace std;
 
 class LevelData

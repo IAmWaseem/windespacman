@@ -291,6 +291,10 @@
 				RelativePath=".\LevelData.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\MovingSurface.cpp"
+				>
+			</File>
 			<Filter
 				Name="Headers"
 				>
@@ -304,6 +308,10 @@
 				</File>
 				<File
 					RelativePath=".\LevelData.h"
+					>
+				</File>
+				<File
+					RelativePath=".\MovingSurface.h"
 					>
 				</File>
 				<File
@@ -329,6 +337,10 @@
 			</File>
 			<File
 				RelativePath=".\LevelView.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\MovingSurfaceView.cpp"
 				>
 			</File>
 			<File
@@ -360,6 +372,10 @@
 				</File>
 				<File
 					RelativePath=".\LevelView.h"
+					>
+				</File>
+				<File
+					RelativePath=".\MovingSurfaceView.h"
 					>
 				</File>
 				<File

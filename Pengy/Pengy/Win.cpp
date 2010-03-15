@@ -29,8 +29,8 @@ CWin::CWin()
 	this->m_dwCreationFlags	= SW_SHOW;
 	this->m_PosX			= CW_USEDEFAULT;	
 	this->m_PosY			= CW_USEDEFAULT;	
-	this->m_dwCreationWidth		= 800;
-	this->m_dwCreationHeight	= 600;
+	this->m_dwCreationWidth		= 1024;
+	this->m_dwCreationHeight	= 700;
 	this->m_hbrWindowColor	= (HBRUSH)(COLOR_WINDOW+1);
 	this->m_hIcon			= LoadIcon(m_hInstance, (LPCTSTR)IDI_APPLICATION);
 	this->m_strWindowTitle	= _T("Pengy the Pinguin");

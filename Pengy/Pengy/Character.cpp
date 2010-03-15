@@ -144,6 +144,8 @@ void Character::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 				pCharacterView->UnRegisterToGraphics();
 			}
 		}
+		MessageQueue::Instance()->SendMessage(CM_CHARACTER_RESET_POSITION, 50, 200);
+		pCharacterView->RegisterToGraphics();
 		break;
 	}
 }

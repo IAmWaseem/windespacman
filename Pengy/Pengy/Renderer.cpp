@@ -51,18 +51,18 @@ void Renderer::Render(HDC hdc)
 	RECT rect;
 	rect.left = 0;
 	rect.top = 0;
-	rect.bottom = 600;
-	rect.right = 800;
+	rect.bottom = 700;
+	rect.right = 1024;
 	
 	FillRect(hdc, &rect, backBrush);
 
-	int xFrom = characterX - 400;
+	int xFrom = characterX - 512;
 	if(xFrom < 0) xFrom = 0;
-	int xTo = xFrom + 800;
+	int xTo = xFrom + 1024;
 	if(xTo >= levelLength)
 	{
 		xTo = levelLength;
-		xFrom = levelLength - 800;
+		xFrom = levelLength - 1024;
 	}
 	if(numViews > 0)
 	{

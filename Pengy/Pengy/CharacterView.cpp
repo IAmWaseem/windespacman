@@ -132,6 +132,8 @@ void CharacterView::Draw(HDC hdc, RECT rect, int xFrom, int xTo)
 		Polyline(hdc, bottomOfPengy, 2);
 		Polyline(hdc, topOfPengy, 2);
 		Polyline(hdc, rightOfPengy, 2);
+
+		DeleteObject(hPen);
 	}
 #pragma endregion
 	}

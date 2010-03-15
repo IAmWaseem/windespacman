@@ -6,6 +6,7 @@
 #include "Surface.h"
 #include "Renderer.h"
 #include "Tile.h"
+#include "MovingSurface.h"
 #include <sstream>
 using namespace std;
 

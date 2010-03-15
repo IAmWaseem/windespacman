@@ -6,30 +6,35 @@ BeachLevel::BeachLevel(void)
 {
 	pSurfaces = new vector<Surface*>();
 
+	MovingSurface * ms = new MovingSurface(30, 150, 100, 170, 200, true);
+	ms->isCloud = true;
+	MessageQueue::Instance()->Attach(ms);
+	pSurfaces->push_back(ms);
+
 	Surface * borderBottom = new Surface();
 	borderBottom->xFrom = 0;
-	borderBottom->xTo = 2500;
-	borderBottom->yFrom = 568;
-	borderBottom->yTo = 600;
+	borderBottom->xTo = 3072;
+	borderBottom->yFrom = 662;
+	borderBottom->yTo = 700;
 	pSurfaces->push_back(borderBottom);
 
 	Surface * borderLeft = new Surface();
 	borderLeft->xFrom = 0;
 	borderLeft->xTo = 8;
 	borderLeft->yFrom = 0;
-	borderLeft->yTo = 600;
+	borderLeft->yTo = 700;
 	pSurfaces->push_back(borderLeft);	
 
 	Surface * borderRight = new Surface();
-	borderRight->xFrom = 2481;
-	borderRight->xTo = 2489;
+	borderRight->xFrom = 3053;
+	borderRight->xTo = 3061;
 	borderRight->yFrom = 0;
-	borderRight->yTo = 600;
+	borderRight->yTo = 700;
 	pSurfaces->push_back(borderRight);
 
 	Surface * borderTop = new Surface();
 	borderTop->xFrom = 0;
-	borderTop->xTo = 2500;
+	borderTop->xTo = 3072;
 	borderTop->yFrom = 0;
 	borderTop->yTo = 8;
 	pSurfaces->push_back(borderTop);
@@ -37,43 +42,43 @@ BeachLevel::BeachLevel(void)
 	Surface * landLeft = new Surface();
 	landLeft->xFrom = 0;
 	landLeft->xTo = 320;
-	landLeft->yFrom = 448;
-	landLeft->yTo = 600;
+	landLeft->yFrom = 576;
+	landLeft->yTo = 662;
 	pSurfaces->push_back(landLeft);
 
 	Surface * landRight = new Surface();
 	landRight->xFrom = 704;
-	landRight->xTo = 2500;
-	landRight->yFrom = 448;
-	landRight->yTo = 600;
+	landRight->xTo = 3072;
+	landRight->yFrom = 576;
+	landRight->yTo = 662;
 	pSurfaces->push_back(landRight);	
 
 	Surface * waterLeft = new Surface();
 	waterLeft->xFrom = 320;
 	waterLeft->xTo = 384;
-	waterLeft->yFrom = 530;
-	waterLeft->yTo = 600;
+	waterLeft->yFrom = 658;
+	waterLeft->yTo = 662;
 	pSurfaces->push_back(waterLeft);
 
 	Surface * waterRight = new Surface();
 	waterRight->xFrom = 640;
 	waterRight->xTo = 704;
-	waterRight->yFrom = 530;
-	waterRight->yTo = 600;
+	waterRight->yFrom = 658;
+	waterRight->yTo = 662;
 	pSurfaces->push_back(waterRight);
 
 	Surface * aboveWater = new Surface();
 	aboveWater->xFrom = 404;
 	aboveWater->xTo = 492;
-	aboveWater->yFrom = 404;
-	aboveWater->yTo = 428;
+	aboveWater->yFrom = 532;
+	aboveWater->yTo = 556;
 	pSurfaces->push_back(aboveWater);
 
 	Surface * aboveWater2 = new Surface();
 	aboveWater2->xFrom = 532;
 	aboveWater2->xTo = 620;
-	aboveWater2->yFrom = 404;
-	aboveWater2->yTo = 428;
+	aboveWater2->yFrom = 468;
+	aboveWater2->yTo = 492;
 	pSurfaces->push_back(aboveWater2);
 
 	Surface * firstObstacle = new Surface();
@@ -131,7 +136,6 @@ vector<Surface*> BeachLevel::GetSurfaces()
 	return *pSurfaces;
 }
 
-
 vector<int*> BeachLevel::GetTiles()
 {
 	vector<int*> data;
@@ -140,13 +144,13 @@ vector<int*> BeachLevel::GetTiles()
 	// bottom data
 	for(int i = 0; i < 39; i++)
 	{
-		int* temp = new int[6]; temp[0] = i; temp[1] = 7; temp[2] = 0; temp[3] = 7; temp[4] = 0; temp[5] = 0;
+		int* temp = new int[6]; temp[0] = i; temp[1] = 9; temp[2] = 0; temp[3] = 7; temp[4] = 0; temp[5] = 0;
 		data.push_back(temp);
 	}
 	// bottom data
 	for(int i = 0; i < 39; i++)
 	{
-		int* temp = new int[6]; temp[0] = i; temp[1] = 8; temp[2] = 0; temp[3] = 8; temp[4] = 0; temp[5] = 0;
+		int* temp = new int[6]; temp[0] = i; temp[1] = 10; temp[2] = 0; temp[3] = 8; temp[4] = 0; temp[5] = 0;
 		data.push_back(temp);
 	}
 #pragma endregion here is the creation of the ground tiles
@@ -154,20 +158,20 @@ vector<int*> BeachLevel::GetTiles()
 #pragma region waterpart
 
 	// water part
-	int* water1 = new int[6] ; water1[0] = 5; water1[1] = 7; water1[2] = 1; water1[3] = 7; water1[4] = 0; water1[5] = 0;
-	int* water2 = new int[6] ; water2[0] = 5; water2[1] = 8; water2[2] = 1; water2[3] = 8; water2[4] = 0; water2[5] = 0;
-	int* water3 = new int[6] ; water3[0] = 6; water3[1] = 7; water3[2] = 2; water3[3] = 7; water3[4] = 0; water3[5] = 0;
-	int* water4 = new int[6] ; water4[0] = 6; water4[1] = 8; water4[2] = 2; water4[3] = 8; water4[4] = 0; water4[5] = 0;
-	int* water5 = new int[6] ; water5[0] = 7; water5[1] = 7; water5[2] = 3; water5[3] = 7; water5[4] = 0; water5[5] = 0;
-	int* water6 = new int[6] ; water6[0] = 7; water6[1] = 8; water6[2] = 3; water6[3] = 8; water6[4] = 0; water6[5] = 0;
+	int* water1 = new int[6] ; water1[0] = 5; water1[1] = 9; water1[2] = 1; water1[3] = 7; water1[4] = 0; water1[5] = 0;
+	int* water2 = new int[6] ; water2[0] = 5; water2[1] = 10; water2[2] = 1; water2[3] = 8; water2[4] = 0; water2[5] = 0;
+	int* water3 = new int[6] ; water3[0] = 6; water3[1] = 9; water3[2] = 2; water3[3] = 7; water3[4] = 0; water3[5] = 0;
+	int* water4 = new int[6] ; water4[0] = 6; water4[1] = 10; water4[2] = 2; water4[3] = 8; water4[4] = 0; water4[5] = 0;
+	int* water5 = new int[6] ; water5[0] = 7; water5[1] = 9; water5[2] = 3; water5[3] = 7; water5[4] = 0; water5[5] = 0;
+	int* water6 = new int[6] ; water6[0] = 7; water6[1] = 10; water6[2] = 3; water6[3] = 8; water6[4] = 0; water6[5] = 0;
 
-	int* water9 = new int[6] ; water9[0] = 8; water9[1] = 7; water9[2] = 3; water9[3] = 7; water9[4] = 0;  water9[5] = 0;
-	int* water10 = new int[6] ; water10[0] = 8; water10[1] = 8; water10[2] = 3; water10[3] = 8; water10[4] = 0; water10[5] = 0;
-	int* water11 = new int[6] ; water11[0] = 9; water11[1] = 7; water11[2] = 3; water11[3] = 7; water11[4] = 0; water11[5] = 0;
-	int* water12 = new int[6] ; water12[0] = 9; water12[1] = 8; water12[2] = 3; water12[3] = 8; water12[4] = 0; water12[5] = 0;
+	int* water9 = new int[6] ; water9[0] = 8; water9[1] = 9; water9[2] = 3; water9[3] = 7; water9[4] = 0;  water9[5] = 0;
+	int* water10 = new int[6] ; water10[0] = 8; water10[1] = 10; water10[2] = 3; water10[3] = 8; water10[4] = 0; water10[5] = 0;
+	int* water11 = new int[6] ; water11[0] = 9; water11[1] = 9; water11[2] = 3; water11[3] = 7; water11[4] = 0; water11[5] = 0;
+	int* water12 = new int[6] ; water12[0] = 9; water12[1] = 10; water12[2] = 3; water12[3] = 8; water12[4] = 0; water12[5] = 0;
 
-	int* water7 = new int[6] ; water7[0] = 10; water7[1] = 7; water7[2] = 4; water7[3] = 7; water7[4] = 0;water7[5] = 0;
-	int* water8 = new int[6] ; water8[0] = 10; water8[1] = 8; water8[2] = 4; water8[3] = 8; water8[4] = 0;water8[5] = 0;
+	int* water7 = new int[6] ; water7[0] = 10; water7[1] = 9; water7[2] = 4; water7[3] = 7; water7[4] = 0;water7[5] = 0;
+	int* water8 = new int[6] ; water8[0] = 10; water8[1] = 10; water8[2] = 4; water8[3] = 8; water8[4] = 0;water8[5] = 0;
 	data.push_back(water1); data.push_back(water2); data.push_back(water3); data.push_back(water4);
 	data.push_back(water5); data.push_back(water6); data.push_back(water7); data.push_back(water8);
 	data.push_back(water9); data.push_back(water10); data.push_back(water11); data.push_back(water12);
@@ -184,19 +188,19 @@ vector<int*> BeachLevel::GetTiles()
 		if(i == 0 || i == 16 || i == 23)
 		{
 			// treeleaves
-			int* tree1 = new int[6]; tree1[0] = -1 + (i); tree1[1] = 2; tree1[2] = 1; tree1[3] = 0; tree1[4] = 1;tree1[5] = 2;
-			int* tree2 = new int[6]; tree2[0] =  0 + (i); tree2[1] = 2; tree2[2] = 2; tree2[3] = 0; tree2[4] = 1;	tree2[5] = 2;
-			int* tree3 = new int[6]; tree3[0] =  1 + (i); tree3[1] = 2; tree3[2] = 3; tree3[3] = 0; tree3[4] = 1;tree3[5] = 2;
-			int* tree4 = new int[6]; tree4[0] = -1 + (i); tree4[1] = 3; tree4[2] = 1; tree4[3] = 1; tree4[4] = 1;tree4[5] = 2;
-			int* tree5 = new int[6]; tree5[0] =  0 + (i); tree5[1] = 3; tree5[2] = 2; tree5[3] = 1; tree5[4] = 1;tree5[5] = 2;
-			int* tree6 = new int[6]; tree6[0] =  1 + (i); tree6[1] = 3; tree6[2] = 3; tree6[3] = 1; tree6[4] = 1;tree6[5] = 2;
-			int* tree7 = new int[6]; tree7[0] = -1 + (i); tree7[1] = 4; tree7[2] = 1; tree7[3] = 2; tree7[4] = 1;tree7[5] = 2;
-			int* tree8 = new int[6]; tree8[0] =  0 + (i); tree8[1] = 4; tree8[2] = 2; tree8[3] = 2; tree8[4] = 1;tree8[5] = 2;
-			int* tree9 = new int[6]; tree9[0] =  1 + (i); tree9[1] = 4; tree9[2] = 3; tree9[3] = 2; tree9[4] = 1;tree9[5] = 2;
+			int* tree1 = new int[6]; tree1[0] = -1 + (i); tree1[1] = 4; tree1[2] = 1; tree1[3] = 0; tree1[4] = 1;tree1[5] = 2;
+			int* tree2 = new int[6]; tree2[0] =  0 + (i); tree2[1] = 4; tree2[2] = 2; tree2[3] = 0; tree2[4] = 1;	tree2[5] = 2;
+			int* tree3 = new int[6]; tree3[0] =  1 + (i); tree3[1] = 4; tree3[2] = 3; tree3[3] = 0; tree3[4] = 1;tree3[5] = 2;
+			int* tree4 = new int[6]; tree4[0] = -1 + (i); tree4[1] = 5; tree4[2] = 1; tree4[3] = 1; tree4[4] = 1;tree4[5] = 2;
+			int* tree5 = new int[6]; tree5[0] =  0 + (i); tree5[1] = 5; tree5[2] = 2; tree5[3] = 1; tree5[4] = 1;tree5[5] = 2;
+			int* tree6 = new int[6]; tree6[0] =  1 + (i); tree6[1] = 5; tree6[2] = 3; tree6[3] = 1; tree6[4] = 1;tree6[5] = 2;
+			int* tree7 = new int[6]; tree7[0] = -1 + (i); tree7[1] = 6; tree7[2] = 1; tree7[3] = 2; tree7[4] = 1;tree7[5] = 2;
+			int* tree8 = new int[6]; tree8[0] =  0 + (i); tree8[1] = 6; tree8[2] = 2; tree8[3] = 2; tree8[4] = 1;tree8[5] = 2;
+			int* tree9 = new int[6]; tree9[0] =  1 + (i); tree9[1] = 6; tree9[2] = 3; tree9[3] = 2; tree9[4] = 1;tree9[5] = 2;
 
 			// treelog
-			int* tree10 = new int[6]; tree10[0] = 0 + (i); tree10[1] = 5; tree10[2] = 2; tree10[3] = 3; tree10[4] = 1;tree10[5] = 2;
-			int* tree11 = new int[6]; tree11[0] = 0 + (i); tree11[1] = 6; tree11[2] = 2; tree11[3] = 4; tree11[4] = 1;tree11[5] = 2;
+			int* tree10 = new int[6]; tree10[0] = 0 + (i); tree10[1] = 7; tree10[2] = 2; tree10[3] = 3; tree10[4] = 1;tree10[5] = 2;
+			int* tree11 = new int[6]; tree11[0] = 0 + (i); tree11[1] = 8; tree11[2] = 2; tree11[3] = 4; tree11[4] = 1;tree11[5] = 2;
 
 			data.push_back(tree1); data.push_back(tree2); data.push_back(tree3); 
 			data.push_back(tree4); data.push_back(tree5); data.push_back(tree6); 
@@ -211,16 +215,16 @@ vector<int*> BeachLevel::GetTiles()
 		if(i == 11 || i == 19 || i == 25)
 		{
 			// treeleaves
-			int* tree1 = new int[6]; tree1[0] = -1 + (i); tree1[1] = 3; tree1[2] = 5; tree1[3] = 4; tree1[4] = 1; tree1[5] = 2;
-			int* tree2 = new int[6]; tree2[0] =  0 + (i); tree2[1] = 3; tree2[2] = 6; tree2[3] = 4; tree2[4] = 1; tree2[5] = 2;	
-			int* tree3 = new int[6]; tree3[0] =  1 + (i); tree3[1] = 3; tree3[2] = 7; tree3[3] = 4; tree3[4] = 1; tree3[5] = 2;
-			int* tree4 = new int[6]; tree4[0] = -1 + (i); tree4[1] = 4; tree4[2] = 5; tree4[3] = 5; tree4[4] = 1; tree4[5] = 2;
-			int* tree5 = new int[6]; tree5[0] =  0 + (i); tree5[1] = 4; tree5[2] = 6; tree5[3] = 5; tree5[4] = 1; tree5[5] = 2;
-			int* tree6 = new int[6]; tree6[0] =  1 + (i); tree6[1] = 4; tree6[2] = 7; tree6[3] = 5; tree6[4] = 1; tree6[5] = 2;
+			int* tree1 = new int[6]; tree1[0] = -1 + (i); tree1[1] = 5; tree1[2] = 5; tree1[3] = 4; tree1[4] = 1; tree1[5] = 2;
+			int* tree2 = new int[6]; tree2[0] =  0 + (i); tree2[1] = 5; tree2[2] = 6; tree2[3] = 4; tree2[4] = 1; tree2[5] = 2;	
+			int* tree3 = new int[6]; tree3[0] =  1 + (i); tree3[1] = 5; tree3[2] = 7; tree3[3] = 4; tree3[4] = 1; tree3[5] = 2;
+			int* tree4 = new int[6]; tree4[0] = -1 + (i); tree4[1] = 6; tree4[2] = 5; tree4[3] = 5; tree4[4] = 1; tree4[5] = 2;
+			int* tree5 = new int[6]; tree5[0] =  0 + (i); tree5[1] = 6; tree5[2] = 6; tree5[3] = 5; tree5[4] = 1; tree5[5] = 2;
+			int* tree6 = new int[6]; tree6[0] =  1 + (i); tree6[1] = 6; tree6[2] = 7; tree6[3] = 5; tree6[4] = 1; tree6[5] = 2;
 
 			// treelog
-			int* tree10 = new int[6]; tree10[0] = 0 + (i); tree10[1] = 5; tree10[2] = 6; tree10[3] = 6; tree10[4] = 1; tree10[5] = 2;
-			int* tree11 = new int[6]; tree11[0] = 0 + (i); tree11[1] = 6; tree11[2] = 6; tree11[3] = 7; tree11[4] = 1; tree11[5] = 2;
+			int* tree10 = new int[6]; tree10[0] = 0 + (i); tree10[1] = 7; tree10[2] = 6; tree10[3] = 6; tree10[4] = 1; tree10[5] = 2;
+			int* tree11 = new int[6]; tree11[0] = 0 + (i); tree11[1] = 8; tree11[2] = 6; tree11[3] = 7; tree11[4] = 1; tree11[5] = 2;
 
 			data.push_back(tree1); data.push_back(tree2); data.push_back(tree3); 
 			data.push_back(tree4); data.push_back(tree5); data.push_back(tree6); 
@@ -234,16 +238,16 @@ vector<int*> BeachLevel::GetTiles()
 		if(i == 2 || i == 17 || i == 24 || i == 34)
 		{
 			// treeleaves
-			int* tree1 = new int[6]; tree1[0] = 0 + (i); tree1[1] = 3; tree1[2] = 0; tree1[3] = 3; tree1[4] = 1;tree1[5] = 1;
-			int* tree2 = new int[6]; tree2[0] = 1 + (i); tree2[1] = 3; tree2[2] = 1; tree2[3] = 3; tree2[4] = 1;tree2[5] = 1;
-			int* tree3 = new int[6]; tree3[0] = 0 + (i); tree3[1] = 4; tree3[2] = 0; tree3[3] = 4; tree3[4] = 1;tree3[5] = 1;
-			int* tree4 = new int[6]; tree4[0] = 1 + (i); tree4[1] = 4; tree4[2] = 1; tree4[3] = 4; tree4[4] = 1;tree4[5] = 1;
-			int* tree5 = new int[6]; tree5[0] = 0 + (i); tree5[1] = 5; tree5[2] = 0; tree5[3] = 5; tree5[4] = 1;tree5[5] = 1;
-			int* tree6 = new int[6]; tree6[0] = 1 + (i); tree6[1] = 5; tree6[2] = 1; tree6[3] = 5; tree6[4] = 1;tree6[5] = 1;
+			int* tree1 = new int[6]; tree1[0] = 0 + (i); tree1[1] = 5; tree1[2] = 0; tree1[3] = 3; tree1[4] = 1;tree1[5] = 1;
+			int* tree2 = new int[6]; tree2[0] = 1 + (i); tree2[1] = 5; tree2[2] = 1; tree2[3] = 3; tree2[4] = 1;tree2[5] = 1;
+			int* tree3 = new int[6]; tree3[0] = 0 + (i); tree3[1] = 6; tree3[2] = 0; tree3[3] = 4; tree3[4] = 1;tree3[5] = 1;
+			int* tree4 = new int[6]; tree4[0] = 1 + (i); tree4[1] = 6; tree4[2] = 1; tree4[3] = 4; tree4[4] = 1;tree4[5] = 1;
+			int* tree5 = new int[6]; tree5[0] = 0 + (i); tree5[1] = 7; tree5[2] = 0; tree5[3] = 5; tree5[4] = 1;tree5[5] = 1;
+			int* tree6 = new int[6]; tree6[0] = 1 + (i); tree6[1] = 7; tree6[2] = 1; tree6[3] = 5; tree6[4] = 1;tree6[5] = 1;
 
 			// treelog
-			int* tree10 = new int[6]; tree10[0] = 0 + (i); tree10[1] = 6; tree10[2] = 0; tree10[3] = 6; tree10[4] = 1;tree10[5] = 1;
-			int* tree11 = new int[6]; tree11[0] = 1 + (i); tree11[1] = 6; tree11[2] = 1; tree11[3] = 6; tree11[4] = 1;tree11[5] = 1;
+			int* tree10 = new int[6]; tree10[0] = 0 + (i); tree10[1] = 8; tree10[2] = 0; tree10[3] = 6; tree10[4] = 1;tree10[5] = 1;
+			int* tree11 = new int[6]; tree11[0] = 1 + (i); tree11[1] = 8; tree11[2] = 1; tree11[3] = 6; tree11[4] = 1;tree11[5] = 1;
 
 			data.push_back(tree1); data.push_back(tree2); data.push_back(tree3); 
 			data.push_back(tree4); data.push_back(tree5); data.push_back(tree6); 
@@ -254,29 +258,29 @@ vector<int*> BeachLevel::GetTiles()
 
 #pragma region decals
 
-	int* decal1 = new int[6]; decal1[0] = 4; decal1[1] = 4; decal1[2] = 12; decal1[3] = 4; decal1[4] = 1; decal1[5] = 0;
-	int* decal2 = new int[6]; decal2[0] = 4; decal2[1] = 5; decal2[2] = 12; decal2[3] = 5; decal2[4] = 1; decal2[5] = 0;
-	int* decal3 = new int[6]; decal3[0] = 4; decal3[1] = 6; decal3[2] = 12; decal3[3] = 6; decal3[4] = 1; decal3[5] = 0;
+	int* decal1 = new int[6]; decal1[0] = 4; decal1[1] = 6; decal1[2] = 12; decal1[3] = 4; decal1[4] = 1; decal1[5] = 0;
+	int* decal2 = new int[6]; decal2[0] = 4; decal2[1] = 7; decal2[2] = 12; decal2[3] = 5; decal2[4] = 1; decal2[5] = 0;
+	int* decal3 = new int[6]; decal3[0] = 4; decal3[1] = 8; decal3[2] = 12; decal3[3] = 6; decal3[4] = 1; decal3[5] = 0;
 
-	int* decal4 = new int[6]; decal4[0] = 5; decal4[1] = 4; decal4[2] = 13; decal4[3] = 4; decal4[4] = 1; decal4[5] = 0;
-	int* decal5 = new int[6]; decal5[0] = 5; decal5[1] = 5; decal5[2] = 13; decal5[3] = 5; decal5[4] = 1; decal5[5] = 0;
-	int* decal6 = new int[6]; decal6[0] = 5; decal6[1] = 6; decal6[2] = 13; decal6[3] = 6; decal6[4] = 1; decal6[5] = 0;
+	int* decal4 = new int[6]; decal4[0] = 5; decal4[1] = 6; decal4[2] = 13; decal4[3] = 4; decal4[4] = 1; decal4[5] = 0;
+	int* decal5 = new int[6]; decal5[0] = 5; decal5[1] = 7; decal5[2] = 13; decal5[3] = 5; decal5[4] = 1; decal5[5] = 0;
+	int* decal6 = new int[6]; decal6[0] = 5; decal6[1] = 8; decal6[2] = 13; decal6[3] = 6; decal6[4] = 1; decal6[5] = 0;
 	data.push_back(decal1);data.push_back(decal2);data.push_back(decal3);
 	data.push_back(decal4);data.push_back(decal5);data.push_back(decal6);
 
 	for(int i = 0; i < 4; i++)
 	{
-		int* parasol3 = new int[6]; parasol3[0] = 24+i; parasol3[1] = 3; parasol3[2] = 12+i; parasol3[3] = 0; parasol3[4] = 1; parasol3[5] = 0;
-		int* parasol4 = new int[6]; parasol4[0] = 24+i; parasol4[1] = 4; parasol4[2] = 12+i; parasol4[3] = 1; parasol4[4] = 1; parasol4[5] = 0;
+		int* parasol3 = new int[6]; parasol3[0] = 24+i; parasol3[1] = 5; parasol3[2] = 12+i; parasol3[3] = 0; parasol3[4] = 1; parasol3[5] = 0;
+		int* parasol4 = new int[6]; parasol4[0] = 24+i; parasol4[1] = 6; parasol4[2] = 12+i; parasol4[3] = 1; parasol4[4] = 1; parasol4[5] = 0;
 		
 		if(i > 0)
 		{
-			int* parasol5 = new int[6]; parasol5[0] = 24+i; parasol5[1] = 5; parasol5[2] = 12+i; parasol5[3] = 2; parasol5[4] = 1; parasol5[5] = 0;
+			int* parasol5 = new int[6]; parasol5[0] = 24+i; parasol5[1] = 7; parasol5[2] = 12+i; parasol5[3] = 2; parasol5[4] = 1; parasol5[5] = 0;
 			data.push_back(parasol5); 
 		}
 		if(i == 1)
 		{
-			int* parasol6 = new int[6]; parasol6[0] = 24+i; parasol6[1] = 6; parasol6[2] = 12+i; parasol6[3] = 3; parasol6[4] = 1; parasol6[5] = 0;
+			int* parasol6 = new int[6]; parasol6[0] = 24+i; parasol6[1] = 8; parasol6[2] = 12+i; parasol6[3] = 3; parasol6[4] = 1; parasol6[5] = 0;
 			data.push_back(parasol6);
 		}		
 		data.push_back(parasol3); data.push_back(parasol4); 
@@ -310,16 +314,16 @@ vector<int*> BeachLevel::GetTiles()
 
 #pragma region structures
 
-	int* structure1 = new int[6]; structure1[0] = 6; structure1[1] = 6; structure1[2] = 12; structure1[3] = 7; structure1[4] = 1; structure1[5] = 0;
+	int* structure1 = new int[6]; structure1[0] = 6; structure1[1] = 8; structure1[2] = 12; structure1[3] = 7; structure1[4] = 1; structure1[5] = 0;
 	data.push_back(structure1);
 
-	int* structure2 = new int[6]; structure2[0] = 7; structure2[1] = 6; structure2[2] = 14; structure2[3] = 7; structure2[4] = 1; structure2[5] = 0;
+	int* structure2 = new int[6]; structure2[0] = 7; structure2[1] = 8; structure2[2] = 14; structure2[3] = 7; structure2[4] = 1; structure2[5] = 0;
 	data.push_back(structure2);
 
-	int* structure3 = new int[6]; structure3[0] = 8; structure3[1] = 6; structure3[2] = 12; structure3[3] = 7; structure3[4] = 1; structure3[5] = 0;
+	int* structure3 = new int[6]; structure3[0] = 8; structure3[1] = 7; structure3[2] = 12; structure3[3] = 7; structure3[4] = 1; structure3[5] = 0;
 	data.push_back(structure3);
 
-	int* structure4 = new int[6]; structure4[0] = 9; structure4[1] = 6; structure4[2] = 14; structure4[3] = 7; structure4[4] = 1; structure4[5] = 0;
+	int* structure4 = new int[6]; structure4[0] = 9; structure4[1] = 7; structure4[2] = 14; structure4[3] = 7; structure4[4] = 1; structure4[5] = 0;
 	data.push_back(structure4);
 
 	int* structure5 = new int[6]; structure5[0] = 15; structure5[1] = 4; structure5[2] = 5; structure5[3] = 3; structure5[4] = 1; structure5[5] = 0;
@@ -404,6 +408,12 @@ vector<int*> BeachLevel::GetTiles()
 
 	int* structure31 = new int[6]; structure31[0] = 22; structure31[1] = 6; structure31[2] = 4; structure31[3] = 5; structure31[4] = 1; structure31[5] = 0;
 	data.push_back(structure31);
+
+	int* structure32 = new int[6]; structure32[0] = 21; structure32[1] = 7; structure32[2] = 3; structure32[3] = 6; structure32[4] = 1; structure32[5] = 0;
+	data.push_back(structure32);
+
+	int* structure33 = new int[6]; structure33[0] = 22; structure33[1] = 7; structure33[2] = 4; structure33[3] = 6; structure33[4] = 1; structure33[5] = 0;
+	data.push_back(structure33);
 
 #pragma endregion creation of struction tiles
 

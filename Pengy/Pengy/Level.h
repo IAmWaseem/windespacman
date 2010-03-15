@@ -7,7 +7,7 @@
 #include "BeachLevel.h"
 #include "World.h"
 #include "Physics.h"
-
+#include "MovingSurface.h"
 
 class Level : public Observer
 {
@@ -20,6 +20,7 @@ protected:
 	Level();
 private:
 	vector<Surface*> surfaces;
+	vector<MovingSurface*> movingSurfaces;
     static Level* pInstance;
 	LevelView levelView;
 	BeachLevel beach;

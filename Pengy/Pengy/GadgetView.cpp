@@ -90,7 +90,7 @@ void GadgetView::Draw(HDC hdc, RECT rect, int xFrom, int xTo)
 		int difWidth = (width - imageW) / 2;
 		int difHeight = height - imageH;
 
-		if(x + width >= xFrom && x + width <= xTo)
+		if(x + width >= xFrom && x <= xTo)
 		{
 			BitBltTransparant(hdc, x + difWidth - xFrom, y + difHeight, imageW, imageH, bufDC, 0, 0, bitmap, mask);
 		}
@@ -133,6 +133,8 @@ void GadgetView::Draw(HDC hdc, RECT rect, int xFrom, int xTo)
 			Polyline(hdc, bottomOfPengy, 2);
 			Polyline(hdc, topOfPengy, 2);
 			Polyline(hdc, rightOfPengy, 2);
+
+			DeleteObject(hPen);
 		}
 #pragma endregion
 

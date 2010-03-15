@@ -234,7 +234,15 @@ namespace TicTacToe
                 WinningPoints.Add(new Point(2, 0));
                 WinningPlayer = grid[0][2];
                 return true;
-            }            
+            }
+
+            if (GameClassic.Checked && CountTicTacFields(0) <= 0)
+            {
+                WinningPlayer = 0;
+                WinningPoints.Clear();
+                return true;
+            }
+
             return false;
         }
 
@@ -312,13 +320,19 @@ namespace TicTacToe
                 GameClassic.Enabled = true;
                 GameWithATwist.Enabled = true;
                 string playerColor = "";
-                if (WinningPlayer == 1)
-                    playerColor = "orange";
-                else if (WinningPlayer == 2)
-                    playerColor = "light blue";
+				if(WinningPlayer > 0)
+				{
+	                if (WinningPlayer == 1)
+	                    playerColor = "orange";
+	                else if (WinningPlayer == 2)
+	                    playerColor = "light blue";
+						
+					MessageBox.Show("Player " + WinningPlayer + " (" + playerColor + ") has won! Click OK for a new game");
+				}
                 else
-                    playerColor = "light gray";
-                MessageBox.Show("Player " + WinningPlayer + " (" + playerColor + ") has won! Click OK for a new game");
+				{
+					MessageBox.Show("No winner! Click OK for a new game");
+				}
                 thread.Abort();
                 WinningPlayer = 0;
                 InitGame();

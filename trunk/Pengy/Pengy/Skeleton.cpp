@@ -30,9 +30,6 @@ LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	SPLASH pSplash;
 	Location * pLocation;
 
-		
-		
-
 	switch (uMsg) 
 	{
 	case WM_CREATE:
@@ -154,12 +151,12 @@ void CSkeleton::GameInit()
 	RECT rect;
 	rect.left = 0;
 	rect.top = 0;
-	rect.right = 800;
-	rect.bottom = 600;
+	rect.right = 1024;
+	rect.bottom = 700;
 
 	bufDC = CreateCompatibleDC(graphics);
 	HBITMAP bufBMP;
-	bufBMP = CreateCompatibleBitmap(graphics, 800, 600);
+	bufBMP = CreateCompatibleBitmap(graphics, 1024, 700);
 	SelectObject(bufDC, bufBMP);
 	::FillRect(bufDC, &rect, ::CreateSolidBrush(0x00FFFFFF));
 
@@ -193,12 +190,12 @@ void CSkeleton::Render(HWND hWnd)
 	RECT rect;
 	rect.left = 0;
 	rect.top = 0;
-	rect.right = 800;
-	rect.bottom = 600;
+	rect.right = 1024;
+	rect.bottom = 700;
 
 	//::FillRect(bufDC, &rect, ::CreateSolidBrush(RGB(200, 255, 255)));
 	pRenderer->Instance()->Render(bufDC);
-	BitBlt(graphics, 0,0, 800, 600,bufDC, 0, 0, SRCCOPY);
+	BitBlt(graphics, 0,0, 1024, 700,bufDC, 0, 0, SRCCOPY);
 }
 
 void CSkeleton::Update()

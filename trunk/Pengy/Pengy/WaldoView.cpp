@@ -80,6 +80,8 @@ void WaldoView::Draw(HDC hDC, RECT rect, int xFrom, int xTo)
 			Polyline(hDC, bottomOfPengy, 2);
 			Polyline(hDC, topOfPengy, 2);
 			Polyline(hDC, rightOfPengy, 2);
+
+			DeleteObject(hPen);
 		}
 #pragma endregion
 	}	

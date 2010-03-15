@@ -34,14 +34,26 @@ void LevelView::Draw(HDC hDC, RECT rect, int xFrom, int xTo)
 			}
 		}
 
-		if(surfaces != NULL && Renderer::ShowSurfaces)
+		if(Renderer::ShowSurfaces)
 		{
+			vector<Surface*> tempList;
+			if(surfaces != NULL)
+			{
+				vector<Surface*>::iterator surfIterator = surfaces->begin();
+				while(surfIterator != surfaces->end())
+				{
+					Surface * surf = *surfIterator;
+					tempList.push_back(surf);
+					surfIterator++;
+				}
+			}
+			
 			HPEN hPen = CreatePen(PS_SOLID, 1, RGB(255, 25, 5));
 			HPEN cloud = CreatePen(PS_DOT, 1, RGB(255, 25, 5));
 			SelectObject(hDC, hPen);
 
-			vector<Surface*>::iterator surfIterator = surfaces->begin();
-			while(surfIterator != surfaces->end())
+			vector<Surface*>::iterator surfIterator = tempList.begin();
+			while(surfIterator != tempList.end())
 			{				
 				Surface * surface = *surfIterator;
 
@@ -54,7 +66,7 @@ void LevelView::Draw(HDC hDC, RECT rect, int xFrom, int xTo)
 				surfIterator++;
 			}
 			DeleteObject(hPen);
-			DeleteObject(cloud);
+			DeleteObject(cloud);		
 		}
 
 		if(Renderer::ShowFps)
@@ -105,7 +117,7 @@ void LevelView::SetSurface(vector<Surface*> * theSurface)
 	if(surfaces == NULL)
 		surfaces = new vector<Surface *>();
 
-	while(iterator!=theSurface->end())
+	while(iterator != theSurface->end())
 	{
 		Surface * surf = *iterator;
 

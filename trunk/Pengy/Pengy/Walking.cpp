@@ -24,7 +24,7 @@ void Walking::Up()
 
 void Walking::Down()
 {
-	
+	this->pStateMachine->Transition(this->pStateMachine->pFalling);
 }
 
 

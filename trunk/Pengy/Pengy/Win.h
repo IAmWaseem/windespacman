@@ -34,6 +34,11 @@ public:
 	 virtual void GameInit() = 0;
 	 virtual void GameLoop() = 0;
 	 virtual void GameEnd() = 0;
+	 static short keystateLeft;
+	 static short keystateUp;
+	 static short keystateRight;
+	 static short keystateDown;
+	 static short keystateSpace;
 };
 
 #endif

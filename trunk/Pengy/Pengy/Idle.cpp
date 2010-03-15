@@ -19,8 +19,8 @@ void Idle::Up()
 }
 
 void Idle::Down()
-{
-	
+{	
+	this->pStateMachine->Transition(this->pStateMachine->pFalling);
 }
 
 

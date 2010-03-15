@@ -1,4 +1,5 @@
 #include "Physics.h"
+#include "Win.h"
 
 Physics::Physics(void)
 {
@@ -75,8 +76,15 @@ bool Physics::FallYFromTo(Location * pFromLocation,Location * pToLocation,vector
 		{
 			if((pSurface->yFrom <= toLocationY && pSurface->yFrom >= fromLocationY) || toLocationYdiff < 5)
 			{
-				isFalling = false;
-				pOnSurface = pSurface;
+				if(pSurface->isCloud && CWin::keystateDown != 0)
+				{
+
+				}
+				else
+				{
+					isFalling = false;
+					pOnSurface = pSurface;
+				}
 			}
 		}
 		iterator++;

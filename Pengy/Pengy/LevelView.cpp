@@ -172,3 +172,35 @@ void LevelView::DrawTile(Tile * tile, HDC hdc, RECT rect, int offsetX, int offse
 
 	DeleteDC(hTileDC);
 }
+
+void LevelView::StartGame()
+{
+	tilemap = NULL;
+	myMask = NULL;
+
+	if(myTiles!=NULL)
+	{
+		Tile * pTile;
+		vector<Tile*>::iterator iterator = myTiles->begin();
+		while(iterator != myTiles->end())
+		{
+			pTile = *iterator;
+			delete pTile;
+			iterator++;
+		}
+		myTiles->clear();
+	}
+
+	if(surfaces !=NULL)
+	{
+		Surface * pSurface;
+		vector<Surface*>::iterator it = surfaces->begin();
+		while(it != surfaces->end())
+		{
+			pSurface = *it;
+			pSurface = NULL;
+			it++;
+		}
+		surfaces->clear();
+	}
+}

@@ -29,4 +29,5 @@ public:
 	~LevelView();
 	void SetSurface(vector<Surface*> * theSurface);
 	void SetTiles(vector<Tile> myTiles, LPCSTR path);	
+	void StartGame();
 };

@@ -67,7 +67,7 @@ void GadgetFactory::StartGame()
 	while(iterator != pGadgets->end())
 	{
 		gadget = *iterator;
-		gadget->~Gadget();
+		delete gadget;
 		iterator++;
 	}
 	pGadgets->clear();

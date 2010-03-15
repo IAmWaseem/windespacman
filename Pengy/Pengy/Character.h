@@ -36,4 +36,5 @@ private:
 	int lives;
 	World* pWorld;
 	void StartGame();
+	int firstGame;
 };

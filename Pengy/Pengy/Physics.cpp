@@ -1,5 +1,4 @@
 #include "Physics.h"
-#include "Win.h"
 
 Physics::Physics(void)
 {
@@ -15,19 +14,18 @@ Physics::~Physics(void)
 bool Physics::MoveXFromTo(Location * pFromLocation,Location * pToLocation,vector<Surface*> surfaces) 
 {
 	vector<Surface*>::iterator iterator;
-	Surface * pOnSurface;
 	iterator = surfaces.begin();
 
 	if(pFromLocation->X < pToLocation->X)
 	{
 		while(iterator != surfaces.end())
 		{
-			Surface * surface = *iterator;
-			if(LocationInSurfaceY(pToLocation, pOnSurface))
+			Surface * pSurface = *iterator;
+			if(LocationInSurfaceY(pToLocation, pSurface))
 			{
-				if(!pOnSurface->isCloud && ((pFromLocation->X + pFromLocation->width) <= pOnSurface->xFrom && (pToLocation->X + pToLocation->width) >= pOnSurface->xFrom))
+				if(!pSurface->isCloud && ((pFromLocation->X + pFromLocation->width) <= pSurface->xFrom && (pToLocation->X + pToLocation->width) >= pSurface->xFrom))
 				{
-					pSurfaceFinal=pOnSurface;
+					pSurfaceFinal=pSurface;
 					return true;
 				}
 			}
@@ -76,15 +74,8 @@ bool Physics::FallYFromTo(Location * pFromLocation,Location * pToLocation,vector
 		{
 			if((pSurface->yFrom <= toLocationY && pSurface->yFrom >= fromLocationY) || toLocationYdiff < 5)
 			{
-				if(pSurface->isCloud && CWin::keystateDown != 0)
-				{
-
-				}
-				else
-				{
-					isFalling = false;
-					pOnSurface = pSurface;
-				}
+				isFalling = false;
+				pOnSurface = pSurface;
 			}
 		}
 		iterator++;
@@ -95,7 +86,7 @@ bool Physics::FallYFromTo(Location * pFromLocation,Location * pToLocation,vector
 	}
 	else
 	{
-		pOnSurfaceFinalFall=pOnSurface;
+		pOnSurfaceFinalFall = pOnSurface;
 		return true;
 	}
 }
@@ -144,44 +135,44 @@ bool Physics::JumpYFromTo(Location * pFromLocation, Location * pToLocation, vect
 
 bool Physics::LocationInSurfaceX(Location * pLocation, Surface * pSurface)
 {
-	bool inpSurface = false;
+	bool inSurface = false;
 	if(pSurface->xFrom <= pLocation->X && pSurface->xTo >= (pLocation->X + pLocation->width))
 	{
-		inpSurface = true;
+		inSurface = true;
 	}
 	if(pSurface->xFrom >= pLocation->X && pSurface->xTo <= (pLocation->X + pLocation->width))
 	{
-		inpSurface = true;
+		inSurface = true;
 	}
 	if(pSurface->xFrom <= pLocation->X && pSurface->xTo <= (pLocation->X + pLocation->width) && pSurface->xTo > pLocation->X)
 	{
-		inpSurface = true;
+		inSurface = true;
 	}
 	if(pSurface->xFrom >= pLocation->X && pSurface->xFrom <= (pLocation->X + pLocation->width) && pSurface->xTo >= (pLocation->X + pLocation->width))
 	{
-		inpSurface = true;
+		inSurface = true;
 	}
-	return inpSurface;
+	return inSurface;
 }
 
 bool Physics::LocationInSurfaceY(Location * pLocation, Surface * pSurface)
 {
-	bool inpSurface = false;
+	bool inSurface = false;
 	if(pSurface->yFrom  >= pLocation->Y && pSurface->yTo <= (pLocation->Y + pLocation->height))
 	{
-		inpSurface = true;
+		inSurface = true;
 	}
 	if(pSurface->yFrom  <= pLocation->Y && pSurface->yTo >= (pLocation->Y + pLocation->height))
 	{
-		inpSurface = true;
+		inSurface = true;
 	}
 	if(pLocation->Y >= pSurface->yFrom && pLocation->Y <= pSurface->yTo)
 	{
-		inpSurface = true;
+		inSurface = true;
 	}
 	if((pLocation->Y + pLocation->height) >= pSurface->yFrom && (pLocation->Y + pLocation->height) <= pSurface->yTo)
 	{
-		inpSurface = true;
+		inSurface = true;
 	}
-	return inpSurface;
+	return inSurface;
 }

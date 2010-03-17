@@ -23,7 +23,14 @@ void Falling::Up()
 
 void Falling::Down()
 {
-	
+	if(Character::Instance()->GetDirection() == Direction::Right) 
+	{
+		Character::Instance()->GetCharacterView()->ChangeCurrentImage(CharacterView::CharacterImage::FallingRight);
+	}
+	else
+	{
+		Character::Instance()->GetCharacterView()->ChangeCurrentImage(CharacterView::CharacterImage::FallingLeft);
+	}
 }
 
 

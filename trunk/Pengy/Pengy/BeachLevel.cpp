@@ -105,17 +105,17 @@ BeachLevel::BeachLevel(void)
 	thirdObstacle->isCloud = true;
 	pSurfaces->push_back(thirdObstacle);
 
-	Surface * fourthObstacle = new Surface();
-	fourthObstacle->xFrom = 1235;
-	fourthObstacle->xTo = 1323;
-	fourthObstacle->yFrom = 276;
-	fourthObstacle->yTo = 300;
-	fourthObstacle->isCloud = true;
-	pSurfaces->push_back(fourthObstacle);
+	//Surface * fourthObstacle = new Surface();
+	//fourthObstacle->xFrom = 1235;
+	//fourthObstacle->xTo = 1323;
+	//fourthObstacle->yFrom = 276;
+	//fourthObstacle->yTo = 300;
+	//fourthObstacle->isCloud = true;
+	//pSurfaces->push_back(fourthObstacle);
 
 	Surface * fifthObstacle = new Surface();
 	fifthObstacle->xFrom = 1300;
-	fifthObstacle->xTo = 1516;
+	fifthObstacle->xTo = 1580;
 	fifthObstacle->yFrom = 148;
 	fifthObstacle->yTo = 172;
 	fifthObstacle->isCloud = true;
@@ -169,7 +169,8 @@ BeachLevel::BeachLevel(void)
 	ladderCloud6->isCloud = true;
 	pSurfaces->push_back(ladderCloud6);
 
-	/*Surface * ladderCloud7 = new Surface();
+	// ladder 2
+	Surface * ladderCloud7 = new Surface();
 	ladderCloud7->xFrom = 1365;
 	ladderCloud7->yFrom = 322;
 	ladderCloud7->xTo = 1450;
@@ -210,12 +211,12 @@ BeachLevel::BeachLevel(void)
 	pSurfaces->push_back(ladderCloud11);
 
 	Surface * ladderCloud12 = new Surface();
-	ladderCloud12->xFrom = 1365;
-	ladderCloud12->yFrom = 322;
-	ladderCloud12->xTo = 1450;
-	ladderCloud12->yTo = 329;
+	ladderCloud12->xFrom = 1173;
+	ladderCloud12->yFrom = 224;
+	ladderCloud12->xTo = 1258;
+	ladderCloud12->yTo = 230;
 	ladderCloud12->isCloud = true;
-	pSurfaces->push_back(ladderCloud12);*/
+	pSurfaces->push_back(ladderCloud12);
 }
 
 
@@ -399,10 +400,10 @@ vector<int*> BeachLevel::GetTiles()
 	data.push_back(cloud1); data.push_back(cloud2); data.push_back(cloud3); data.push_back(cloud4);
 	data.push_back(cloud5); data.push_back(cloud6); data.push_back(cloud7); data.push_back(cloud8);	
 	
-	int* cloud9 = new int[6]; cloud9[0] = 17; cloud9[1] = 0; cloud9[2] = 8; cloud9[3] = 5; cloud9[4] = 0; cloud9[5] = 3;
-	int* cloud10 = new int[6]; cloud10[0] = 18; cloud10[1] = 0; cloud10[2] = 9; cloud10[3] = 5; cloud10[4] = 0; cloud10[5] = 3;
-	int* cloud11 = new int[6]; cloud11[0] = 17; cloud11[1] = 1; cloud11[2] = 8; cloud11[3] = 6; cloud11[4] = 0; cloud11[5] = 3;
-	int* cloud12 = new int[6]; cloud12[0] = 18; cloud12[1] = 1; cloud12[2] = 9; cloud12[3] = 6; cloud12[4] = 0; cloud12[5] = 3;
+	int* cloud9 = new int[6]; cloud9[0] = 17; cloud9[1] = 1; cloud9[2] = 8; cloud9[3] = 5; cloud9[4] = 0; cloud9[5] = 3;
+	int* cloud10 = new int[6]; cloud10[0] = 18; cloud10[1] = 1; cloud10[2] = 9; cloud10[3] = 5; cloud10[4] = 0; cloud10[5] = 3;
+	int* cloud11 = new int[6]; cloud11[0] = 17; cloud11[1] = 2; cloud11[2] = 8; cloud11[3] = 6; cloud11[4] = 0; cloud11[5] = 3;
+	int* cloud12 = new int[6]; cloud12[0] = 18; cloud12[1] = 2; cloud12[2] = 9; cloud12[3] = 6; cloud12[4] = 0; cloud12[5] = 3;
 
 	data.push_back(cloud9); data.push_back(cloud10); data.push_back(cloud11); data.push_back(cloud12);
 
@@ -440,11 +441,11 @@ vector<int*> BeachLevel::GetTiles()
 	int* structure8 = new int[6]; structure8[0] = 17; structure8[1] = 5; structure8[2] = 7; structure8[3] = 3; structure8[4] = 1; structure8[5] = 0;
 	data.push_back(structure8);
 
-	int* structure11 = new int[6]; structure11[0] = 19; structure11[1] = 4; structure11[2] = 5; structure11[3] = 3; structure11[4] = 1; structure11[5] = 0;
-	data.push_back(structure11);
+	//int* structure11 = new int[6]; structure11[0] = 19; structure11[1] = 4; structure11[2] = 5; structure11[3] = 3; structure11[4] = 1; structure11[5] = 0;
+	//data.push_back(structure11);
 
-	int* structure12 = new int[6]; structure12[0] = 20; structure12[1] = 4; structure12[2] = 7; structure12[3] = 3; structure12[4] = 1; structure12[5] = 0;
-	data.push_back(structure12);
+	//int* structure12 = new int[6]; structure12[0] = 20; structure12[1] = 4; structure12[2] = 7; structure12[3] = 3; structure12[4] = 1; structure12[5] = 0;
+	//data.push_back(structure12);
 
 	int* structure13 = new int[6]; structure13[0] = 20; structure13[1] = 2; structure13[2] = 5; structure13[3] = 3; structure13[4] = 1; structure13[5] = 0;
 	data.push_back(structure13);
@@ -455,10 +456,10 @@ vector<int*> BeachLevel::GetTiles()
 	int* structure15 = new int[6]; structure15[0] = 22; structure15[1] = 2; structure15[2] = 6; structure15[3] = 3; structure15[4] = 1; structure15[5] = 0;
 	data.push_back(structure15);
 
-	int* structure16 = new int[6]; structure16[0] = 22; structure16[1] = 2; structure16[2] = 6; structure16[3] = 3; structure16[4] = 1; structure16[5] = 0;
+	int* structure16 = new int[6]; structure16[0] = 23; structure16[1] = 2; structure16[2] = 6; structure16[3] = 3; structure16[4] = 1; structure16[5] = 0;
 	data.push_back(structure16);
 
-	int* structure17 = new int[6]; structure17[0] = 23; structure17[1] = 2; structure17[2] = 7; structure17[3] = 3; structure17[4] = 1; structure17[5] = 0;
+	int* structure17 = new int[6]; structure17[0] = 24; structure17[1] = 2; structure17[2] = 7; structure17[3] = 3; structure17[4] = 1; structure17[5] = 0;
 	data.push_back(structure17);
 
 	//ladder 1

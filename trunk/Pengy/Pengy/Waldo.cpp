@@ -20,7 +20,6 @@ Waldo::Waldo(Surface * pSurface, int x) : Enemy(pSurface)
 	pWaldoStateMachine->Transition(pWaldoStateMachine->pWander);
 
 	this->isVulnerable = false;
-	this->pengyJumping = false;
 }
 
 Waldo::Waldo(Surface * pSurface) : Enemy(pSurface)
@@ -40,7 +39,6 @@ Waldo::Waldo(Surface * pSurface) : Enemy(pSurface)
 	pWaldoStateMachine->Transition(pWaldoStateMachine->pPatrol);
 
 	this->isVulnerable = false;
-	this->pengyJumping = false;
 }
 
 Waldo::~Waldo(void)
@@ -61,21 +59,8 @@ void Waldo::ReceiveMessageInternal(UINT message, WPARAM wParam, LPARAM lParam)
 		CheckPengyCollision();
 		break;
 
-	case CM_CHARACTER_JUMP_Y_FROM_TO:
-		this->pengyJumping = true;
-		break;
-
-	case CM_CHARACTER_IS_FALLING:
-	case CM_CHARACTER_FALL_Y_FROM_TO:
-		if(this->pengyJumping)
-			this->isVulnerable = true;
-		else
-			this->isVulnerable = false;
-		break;
-
 	case CM_CHARACTER_IS_STANDING:
 		this->isVulnerable = false;
-		this->pengyJumping = false;
 		break;
 	}
 	if(this->isAlive)
@@ -87,8 +72,20 @@ void Waldo::CheckPengyCollision()
 {
 	bool collision = false;
 	if(LocationInWaldoX(pPengyLocation, pLocation) && LocationInWaldoY(pPengyLocation, pLocation))
-	{
+	{		
 		collision = true;
+
+		int Pengy = (pPengyLocation->Y + pPengyLocation->height);
+		int Waldo = (pLocation->Y);
+		if(Pengy >= Waldo - 5 && Pengy <= Waldo + 5)
+		{
+			this->isVulnerable = true;
+		}
+		else
+		{
+			this->isVulnerable = false;
+		}
+
 	}
 
 	if(collision)

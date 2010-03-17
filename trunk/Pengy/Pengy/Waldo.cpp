@@ -78,7 +78,7 @@ void Waldo::CheckPengyCollision()
 
 		int Pengy = (pPengyLocation->Y + pPengyLocation->height);
 		int Waldo = (pLocation->Y);
-		if(Pengy >= Waldo - 3 && Pengy <= Waldo + 3)
+		if(Pengy >= Waldo - 5 && Pengy <= Waldo + 5)
 		{
 			this->isVulnerable = true;
 		}

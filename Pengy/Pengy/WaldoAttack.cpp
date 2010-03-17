@@ -4,7 +4,7 @@
 
 WaldoAttack::WaldoAttack(Waldo * pWaldo, WaldoStateMachine * pWaldoStateMachine):WaldoState(pWaldo, pWaldoStateMachine)
 {
-	this->speed = 0.08f;
+	this->speed = 0.10f;
 }
 
 
@@ -66,7 +66,13 @@ bool WaldoAttack::IsPengyTooFarAway()
 	Location * pPengyLocation = pWaldo->GetPengyLocation();
 	Location * pWaldoLocation = pWaldo->GetLocation();
 	int distanceToPengy = fabs((pWaldo->GetPengyLocation()->X + 0.5*pWaldo->GetPengyLocation()->width) - (pWaldo->GetLocation()->X + 0.5*(pWaldoLocation->width)));
-	if(distanceToPengy <= 120)
+	int distanceToPengyY = fabs((pWaldo->GetPengyLocation()->Y + 0.5*pWaldo->GetPengyLocation()->height) - (pWaldo->GetLocation()->Y + 0.5*(pWaldoLocation->height)));
+	
+	if(distanceToPengyY > 180)
+		return true;
+
+	if(distanceToPengy <= 240)
 		return false;
-	else return true;
+
+	return true;
 }

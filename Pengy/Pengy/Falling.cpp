@@ -109,6 +109,11 @@ void Falling::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	case CM_CHARACTER_IS_STANDING:
 		downwardVelocity = 0;
 		pSurface = (Surface*)wParam;
+		if(pSurface->isSurfaceOfDeath)
+		{
+			MessageQueue::Instance()->SendMessage(CM_CHARACTER_KILLED, NULL, NULL);
+			break;
+		}
 		pCharacterLocation = Character::Instance()->GetLocation();
 		pCharacterLocation->Y = pSurface->yFrom - pCharacterLocation->height;
 		Character::Instance()->SetLocation(pCharacterLocation);

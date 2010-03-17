@@ -99,7 +99,7 @@ void Level::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_WANDER, (int)surfaces.at(6), ((surfaces.at(6)->xFrom + surfaces.at(6)->xTo) / 4) + 10 );
 		MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_WANDER, (int)surfaces.at(6), ((surfaces.at(6)->xTo) / 2) + 10 );
 		MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_WANDER, (int)surfaces.at(6), ((surfaces.at(6)->xFrom) + 10 ));
-		MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_PATROL, (int)surfaces.at(13), NULL);
+		MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_PATROL, (int)surfaces.at(14), NULL);
 		break;
 	case CM_CHARACTER_MOVE_X_FROM_TO:
 		if(physic_behavior.MoveXFromTo((Location*)wParam,(Location*)lParam,surfaces)==true)

@@ -11,7 +11,6 @@ class Waldo : public Enemy
 {
 	private:
 		WaldoStateMachine * pWaldoStateMachine;
-		bool pengyJumping;
 		bool isVulnerable;
 
 		void CheckPengyCollision();

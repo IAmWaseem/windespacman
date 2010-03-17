@@ -54,7 +54,6 @@ void Waldo::ReceiveMessageInternal(UINT message, WPARAM wParam, LPARAM lParam)
 
 	switch(message)
 	{
-
 	case CM_UPDATE:
 		CheckPengyCollision();
 		break;
@@ -71,21 +70,18 @@ void Waldo::ReceiveMessageInternal(UINT message, WPARAM wParam, LPARAM lParam)
 void Waldo::CheckPengyCollision()
 {
 	bool collision = false;
+	this->isVulnerable = false;
+
 	if(LocationInWaldoX(pPengyLocation, pLocation) && LocationInWaldoY(pPengyLocation, pLocation))
 	{		
 		collision = true;
 
 		int Pengy = (pPengyLocation->Y + pPengyLocation->height);
 		int Waldo = (pLocation->Y);
-		if(Pengy >= Waldo - 5 && Pengy <= Waldo + 5)
+		if(Pengy >= Waldo - 3 && Pengy <= Waldo + 3)
 		{
 			this->isVulnerable = true;
 		}
-		else
-		{
-			this->isVulnerable = false;
-		}
-
 	}
 
 	if(collision)

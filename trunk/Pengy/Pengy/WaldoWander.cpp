@@ -6,7 +6,7 @@ WaldoWander::WaldoWander(Waldo * pWaldo, WaldoStateMachine * pWaldoStateMachine)
 {
 	distanceToWander = 0;
 	distanceWandered = 0;
-	speed = 0.06f;
+	speed = 0.05f;
 }
 
 WaldoWander::~WaldoWander(void)
@@ -29,7 +29,7 @@ void WaldoWander::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 void WaldoWander::Update(int timeElapsed) 
 {
 	int distanceToPengy = fabs((pWaldo->GetPengyLocation()->X + 0.5*pWaldo->GetPengyLocation()->width) - (pWaldo->GetLocation()->X + 0.5*(pWaldo->GetLocation()->width)));
-	if(distanceToPengy < 120)
+	if(distanceToPengy < 240)
 	{
 		this->pWaldoStateMachine->Transition(this->pWaldoStateMachine->pAttack);
 	}

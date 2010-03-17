@@ -19,6 +19,7 @@ public:
 
 	void Attach(View *pView);
 	void Detach(View *pView);
+	void DetachAll();
 	void Render(HDC hdc);
 	void ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam);
 

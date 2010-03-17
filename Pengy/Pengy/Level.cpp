@@ -52,32 +52,36 @@ void Level::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	Location * pL8 = new Location();
 	Location * pL9 = new Location();
 
-	pL1->X = 400;
+	// goldfish
+	pL2->X = 420;
+	pL2->Y = 495;
+
+	pL3->X = 544;
+	pL3->Y = 495;
+
+	pL4->X = 1185;
+	pL4->Y = 90;
+
+	pL5->X = 1378;
+	pL5->Y = 285;
+	// end of gf
+
+	// piranah
+	pL1->X = 862;
 	pL1->Y = 300;
 
-	pL2->X = 200;
-	pL2->Y = 300;
+	pL6->X = 995;
+	pL6->Y = 240;
 
-	pL3->X = 300;
-	pL3->Y = 300;
+	pL7->X = 1364;
+	pL7->Y = 110;
 
-	pL4->X = 600;
-	pL4->Y = 100;
+	pL8->X = 1492;
+	pL8->Y = 110;
 
-	pL5->X = 900;
-	pL5->Y = 100;
-
-	pL6->X = 1000;
-	pL6->Y = 300;
-
-	pL7->X = 760;
-	pL7->Y = 300;
-
-	pL8->X = 1050;
-	pL8->Y = 300;
-
-	pL9->X = 500;
-	pL9->Y = 900;
+	pL9->X = 1700;
+	pL9->Y = 300;
+	// end of piranha
 
 	switch (message) 
 	{
@@ -95,10 +99,10 @@ void Level::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)pL7, NULL);
 		MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)pL8, NULL);
 		MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)pL9, NULL);
-		MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_WANDER, (int)surfaces.at(6), ((surfaces.at(6)->xFrom + surfaces.at(6)->xTo) / 2) + 10 );
-		MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_WANDER, (int)surfaces.at(6), ((surfaces.at(6)->xFrom + surfaces.at(6)->xTo) / 4) + 10 );
-		MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_WANDER, (int)surfaces.at(6), ((surfaces.at(6)->xTo) / 2) + 10 );
-		MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_WANDER, (int)surfaces.at(6), ((surfaces.at(6)->xFrom) + 10 ));
+		MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_WANDER, (int)surfaces.at(6), (surfaces.at(6)->xFrom + surfaces.at(6)->xTo) / 2 + 10 );
+		MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_WANDER, (int)surfaces.at(25), (surfaces.at(25)->xFrom + surfaces.at(25)->xTo) / 4 + 10 );
+		MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_WANDER, (int)surfaces.at(6), (surfaces.at(6)->xTo) - 10 );
+		MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_WANDER, (int)surfaces.at(6), (surfaces.at(6)->xFrom) + 10 );
 		MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_PATROL, (int)surfaces.at(14), NULL);
 		break;
 	case CM_CHARACTER_MOVE_X_FROM_TO:

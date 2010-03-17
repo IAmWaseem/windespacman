@@ -43,6 +43,15 @@ void Renderer::Detach( View *myView)
     }
 }
 
+void Renderer::DetachAll()
+{
+	for (unsigned int i= 0; i< myViews.size(); i++)
+    {
+        myViews.erase(myViews.begin()+i);
+		numViews--;
+    }
+}
+
 void Renderer::Render(HDC hdc) 
 {
 	HBRUSH backBrush;
@@ -85,6 +94,9 @@ void Renderer::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 
 	switch(message)
 	{
+	case CM_CLEAR_REGISTERED_VIEWS:
+		DetachAll();
+		break;
 	case CM_LEVEL_LENGTH:
 		levelLength = (int)wParam;
 		break;

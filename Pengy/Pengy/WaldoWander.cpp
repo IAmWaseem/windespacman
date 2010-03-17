@@ -6,7 +6,7 @@ WaldoWander::WaldoWander(Waldo * pWaldo, WaldoStateMachine * pWaldoStateMachine)
 {
 	distanceToWander = 0;
 	distanceWandered = 0;
-	speed = 0.05f;
+	speed = 0.08f;
 }
 
 WaldoWander::~WaldoWander(void)

@@ -21,7 +21,7 @@ void Menu::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
  {
 	 switch (message) 
 	 {
-	 case CM_GAME_NEW:
+	 case CM_GAME_NEW:	
 		 pMessageQueue->Instance()->SendMessage(CM_GAME_START, NULL, NULL);
 		 DeleteGameMenu();
 		 pWorld->Instance()->menu = false;

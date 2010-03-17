@@ -80,7 +80,7 @@ LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 		case 't':
 		case 'T':
-			pMessageQueue->Instance()->SendMessage(CM_CHARACTER_RESET_POSITION, NULL, 10);
+			pMessageQueue->Instance()->SendMessage(CM_CHARACTER_RESET_POSITION, NULL, -90);
 			break;
 
 		case 'r':

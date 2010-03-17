@@ -4,7 +4,7 @@
 
 WaldoPatrol::WaldoPatrol(Waldo * pWaldo, WaldoStateMachine * pWaldoStateMachine):WaldoState(pWaldo, pWaldoStateMachine)
 {
-	this->speed = 0.05f;
+	this->speed = 0.09f;
 }
 
 

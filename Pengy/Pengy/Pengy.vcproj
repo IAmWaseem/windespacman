@@ -295,6 +295,10 @@
 				RelativePath=".\MovingSurface.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\SnowLevel.cpp"
+				>
+			</File>
 			<Filter
 				Name="Headers"
 				>
@@ -312,6 +316,10 @@
 				</File>
 				<File
 					RelativePath=".\MovingSurface.h"
+					>
+				</File>
+				<File
+					RelativePath=".\SnowLevel.h"
 					>
 				</File>
 				<File

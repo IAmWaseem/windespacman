@@ -14,7 +14,7 @@ WaldoAttack::~WaldoAttack(void)
 
 void WaldoAttack::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam) 
 {
-int timeElapsed;
+	int timeElapsed;
 
 	switch(message) {
 		case CM_UPDATE:
@@ -68,7 +68,7 @@ bool WaldoAttack::IsPengyTooFarAway()
 	int distanceToPengy = fabs((pWaldo->GetPengyLocation()->X + 0.5*pWaldo->GetPengyLocation()->width) - (pWaldo->GetLocation()->X + 0.5*(pWaldoLocation->width)));
 	int distanceToPengyY = fabs((pWaldo->GetPengyLocation()->Y + 0.5*pWaldo->GetPengyLocation()->height) - (pWaldo->GetLocation()->Y + 0.5*(pWaldoLocation->height)));
 	
-	if(distanceToPengyY > 180)
+	if(distanceToPengyY > 100)
 		return true;
 
 	if(distanceToPengy <= 240)

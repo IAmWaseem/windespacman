@@ -157,7 +157,7 @@ vector<int*> SnowLevel::GetTiles()
 		}
 	}
 
-	for(int x = 0; x < 32; x++)
+	for(int x = 0; x < 59; x++)
 	{
 		for(int y = 6; y < 11;y++)
 		{
@@ -169,12 +169,12 @@ vector<int*> SnowLevel::GetTiles()
 			tempTile[2] = tileX;
 			tempTile[3] = tileY;
 			tempTile[4] = 1;
-			tempTile[5] = 0;
-			//tiles.push_back(tempTile);
+			tempTile[5] = 1;
+			tiles.push_back(tempTile);
 		}
 	}
 
-	for(int x = 0; x < 32; x++)
+	for(int x = 0; x < 59; x++)
 	{
 		for(int y = 6; y < 11;y++)
 		{
@@ -187,7 +187,7 @@ vector<int*> SnowLevel::GetTiles()
 			tempTile[3] = tileY;
 			tempTile[4] = 1;
 			tempTile[5] = 2;
-			//tiles.push_back(tempTile);
+			tiles.push_back(tempTile);
 		}
 	}
 

@@ -29,7 +29,7 @@ void LevelView::Draw(HDC hDC, RECT rect, int xFrom, int xTo)
 			while(iterator!=myTiles->end())
 			{
 				Tile * tile = *iterator;
-				//if(tile->PixelPositionX() + tile->TileWidth() >= xFrom && tile->PixelPositionX() <= xTo && tile->Depth == 0 || tile->Depth > 0)
+				if(ShouldDrawTile(tile, xFrom, xTo))
 					DrawTile(tile, hDC, rect, -1 * xFrom);
 				iterator++;
 			}
@@ -231,4 +231,13 @@ void LevelView::StartGame()
 		tilemap = LoadImage(NULL, tilemapPath, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
 		myMask = CreateBitmapMask(tilemap, RGB(0,0,0), tilemapWidth, tilemapHeight);
 	}
+}
+
+bool LevelView::ShouldDrawTile(Tile * tile, int xFrom, int xTo)
+{
+	float xPos = (tile->GridX * tile->TileWidth()) + ( -xFrom / tile->DepthFactor());
+	int screenWidth = xTo - xFrom;
+	if(xPos + tile->TileWidth() >= 0 && xPos <= screenWidth)
+		return true;
+	return false;
 }

@@ -25,6 +25,7 @@ private:
 	void DrawTile(Tile * tile, HDC hdc, RECT rect);
 	void DrawTile(Tile * tile, HDC hdc, RECT rect, int offsetX);
 	void DrawTile(Tile * tile, HDC hdc, RECT rect, int offsetX, int offsetY);
+	bool ShouldDrawTile(Tile * tile, int xFrom, int xTo);
 public:
 	void Draw(HDC hDC, RECT rect, int xFrom, int xTo);
 	LevelView();

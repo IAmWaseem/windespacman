@@ -21,9 +21,9 @@ CSkeleton::~CSkeleton()
 {
 }
 
-/////////////////////////////////////
+///////////////////////////////////////
 // Member functions                  //
-/////////////////////////////////////
+///////////////////////////////////////
 
 LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -52,92 +52,74 @@ LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		pMessageQueue->Instance()->Attach(pMenu->Instance());
 		pMenu->Instance()->windowHandle = hWnd;
 		break;
-	case WM_KEYDOWN:
+	case WM_KEYDOWN:	
+		switch(wParam)
+		{
+			case 'm':
+			case 'M':
+				pMessageQueue->Instance()->SendMessage(CM_MENU_LOAD, NULL, NULL);
+				paused = true;
 
-		
+			case 't':
+			case 'T':
+				pMessageQueue->Instance()->SendMessage(CM_CHARACTER_RESET_POSITION, NULL, -90);
+				break;
 
-		//case 32:
-		//	messageQueue->Inst()->sendMessage(CM_CHARACTER_SPACEBAR, NULL, NULL);
-		//	break;
-		//case 37:
-		//	messageQueue->Inst()->sendMessage(CM_CHARACTER_LEFT, NULL, NULL);
-		//	break;
-		//case 38:
-		//	messageQueue->Inst()->sendMessage(CM_CHARACTER_UP, NULL, NULL);
-		//	break;
-		//case 39:
-		//	messageQueue->Inst()->sendMessage(CM_CHARACTER_RIGHT, NULL, NULL);
-		//	break;
-		//case 40:
-		//	messageQueue->Inst()->sendMessage(CM_CHARACTER_DOWN, NULL, NULL);
-		//	break;
-	switch(wParam)
-	{
-		case 'm':
-		case 'M':
-			pMessageQueue->Instance()->SendMessage(CM_MENU_LOAD, NULL, NULL);
-			paused = true;
+			case 'r':
+			case 'R':
+				pMessageQueue->Instance()->SendMessage(CM_CHARACTER_RESET_POSITION, 50, 200);
+				break;
+			
+			case 'g':
+			case 'G':
+				pMessageQueue->Instance()->SendMessage(CM_SOUND_EVENT,(WPARAM)(LPCTSTR)"res/pengy.wav", 0);
+				break;
 
-		case 't':
-		case 'T':
-			pMessageQueue->Instance()->SendMessage(CM_CHARACTER_RESET_POSITION, NULL, -90);
-			break;
+				// show the fps
+			case 'f':
+			case 'F':
+				if(Renderer::ShowFps)
+					Renderer::ShowFps = false;
+				else
+					Renderer::ShowFps = true;
+				break;
 
-		case 'r':
-		case 'R':
-			pMessageQueue->Instance()->SendMessage(CM_CHARACTER_RESET_POSITION, 50, 200);
-			break;
-		
-		case 'g':
-		case 'G':
-			pMessageQueue->Instance()->SendMessage(CM_SOUND_EVENT,(WPARAM)(LPCTSTR)"res/pengy.wav", 0);
-			break;
+				// show the surfaces
+			case 's':
+			case 'S':
+				if(Renderer::ShowSurfaces)
+					Renderer::ShowSurfaces = false;
+				else
+					Renderer::ShowSurfaces = true;
+				break;
 
-			// show the fps
-		case 'f':
-		case 'F':
-			if(Renderer::ShowFps)
-				Renderer::ShowFps = false;
-			else
-				Renderer::ShowFps = true;
-			break;
-
-			// show the surfaces
-		case 's':
-		case 'S':
-			if(Renderer::ShowSurfaces)
-				Renderer::ShowSurfaces = false;
-			else
-				Renderer::ShowSurfaces = true;
-			break;
-
-			// show the debug
-		case 'd':
-		case 'D':
-			if(Renderer::ShowDebug)
-				Renderer::ShowDebug = false;
-			else
-				Renderer::ShowDebug = true;
-			break;
+				// show the debug
+			case 'd':
+			case 'D':
+				if(Renderer::ShowDebug)
+					Renderer::ShowDebug = false;
+				else
+					Renderer::ShowDebug = true;
+				break;
 		}
 		break;
 	case WM_COMMAND:  
 		switch(LOWORD(wParam)) {  
-		case CM_GAME_NEW:  
-			pMessageQueue->Instance()->SendMessage(CM_GAME_NEW, NULL, NULL);
-			break;  
-		case CM_GAME_OPEN:  
-			pMessageQueue->Instance()->SendMessage(CM_GAME_OPEN, NULL, NULL);
-			break;  
-		case CM_GAME_SAVE:  
-			pMessageQueue->Instance()->SendMessage(CM_GAME_SAVE, NULL, NULL);
-			break;  
-		case CM_GAME_EXIT:  
-			pMessageQueue->Instance()->SendMessage(CM_GAME_EXIT, NULL, NULL); 
-			break;
-		case CM_GAME_ABOUT:  
-			pMessageQueue->Instance()->SendMessage(CM_GAME_ABOUT, NULL, NULL);
-			break;  
+			case CM_GAME_NEW:  
+				pMessageQueue->Instance()->SendMessage(CM_GAME_NEW, NULL, NULL);
+				break;  
+			case CM_GAME_OPEN:  
+				pMessageQueue->Instance()->SendMessage(CM_GAME_OPEN, NULL, NULL);
+				break;  
+			case CM_GAME_SAVE:  
+				pMessageQueue->Instance()->SendMessage(CM_GAME_SAVE, NULL, NULL);
+				break;  
+			case CM_GAME_EXIT:  
+				pMessageQueue->Instance()->SendMessage(CM_GAME_EXIT, NULL, NULL); 
+				break;
+			case CM_GAME_ABOUT:  
+				pMessageQueue->Instance()->SendMessage(CM_GAME_ABOUT, NULL, NULL);
+				break;  
 		}  
 		break;  
 	}

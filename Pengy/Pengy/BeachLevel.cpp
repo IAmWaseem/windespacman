@@ -193,7 +193,7 @@ BeachLevel::BeachLevel(void)
 	pSurfaces->push_back(ladderCloud12);	
 
 	Surface * landRight2 = new Surface();
-	landRight2->xFrom = 2304;
+	landRight2->xFrom = 2496;
 	landRight2->xTo = 3072;
 	landRight2->yFrom = 576;
 	landRight2->yTo = 670;
@@ -202,28 +202,23 @@ BeachLevel::BeachLevel(void)
 	bool first = true;
 	for(int i = 0; i < 6; i++)
 	{
-		int tempX = 26 + i;
-		int tempY = 6 - i;
-
-		Surface * temp = new Surface();
-
-		temp->xFrom = tempX * 64;
-		if(first)
-			temp->xFrom = temp->xFrom + 20;
-
-		temp->xTo = (tempX + 1) * 64;
-		if(!first)
-			temp->xTo = temp->xTo - 20;
-		
-		temp->yFrom = tempY * 64 + 20;
-		temp->yTo = tempY * 64 + 45;
 		if(!first)
 		{
+			int tempX = 26 + i;
+			int tempY = 6 - i;
+
+			Surface * temp = new Surface();
+
+			temp->xFrom = (tempX - 1) * 64 + 20;
+			temp->xTo = (tempX + 1) * 64 - 20;			
+			temp->yFrom = tempY * 64 + 20;
+			temp->yTo = tempY * 64 + 45;
+
 			temp->yFrom = temp->yFrom + 64;
 			temp->yTo = temp->yTo + 64;
-		}
 
-		pSurfaces->push_back(temp);
+			pSurfaces->push_back(temp);
+		}
 		if(first)
 			first = false;
 		else
@@ -272,8 +267,8 @@ vector<int*> BeachLevel::GetTiles()
 		if(i == 1)
 			offset = 25;
 		// water part
-		int* water1 = new int[6] ; water1[0] = 5 + offset; water1[1] = 9; water1[2] = 2; water1[3] = 7; water1[4] = 0; water1[5] = 0;
-		int* water2 = new int[6] ; water2[0] = 5 + offset; water2[1] = 10; water2[2] = 2; water2[3] = 8; water2[4] = 0; water2[5] = 0;
+		int* water1 = new int[6] ; water1[0] = 5 + offset; water1[1] = 9; water1[2] = 1; water1[3] = 7; water1[4] = 0; water1[5] = 0;
+		int* water2 = new int[6] ; water2[0] = 5 + offset; water2[1] = 10; water2[2] = 1; water2[3] = 8; water2[4] = 0; water2[5] = 0;
 		int* water3 = new int[6] ; water3[0] = 6 + offset; water3[1] = 9; water3[2] = 2; water3[3] = 7; water3[4] = 0; water3[5] = 0;
 		int* water4 = new int[6] ; water4[0] = 6 + offset; water4[1] = 10; water4[2] = 2; water4[3] = 8; water4[4] = 0; water4[5] = 0;
 		int* water5 = new int[6] ; water5[0] = 7 + offset; water5[1] = 9; water5[2] = 3; water5[3] = 7; water5[4] = 0; water5[5] = 0;
@@ -281,11 +276,24 @@ vector<int*> BeachLevel::GetTiles()
 
 		int* water9 = new int[6] ; water9[0] = 8 + offset; water9[1] = 9; water9[2] = 3; water9[3] = 7; water9[4] = 0;  water9[5] = 0;
 		int* water10 = new int[6] ; water10[0] = 8 + offset; water10[1] = 10; water10[2] = 3; water10[3] = 8; water10[4] = 0; water10[5] = 0;
-		int* water11 = new int[6] ; water11[0] = 9 + offset; water11[1] = 9; water11[2] = 3; water11[3] = 7; water11[4] = 0; water11[5] = 0;
-		int* water12 = new int[6] ; water12[0] = 9 + offset; water12[1] = 10; water12[2] = 3; water12[3] = 8; water12[4] = 0; water12[5] = 0;
+		int* water11 = new int[6] ; water11[0] = 9 + offset; water11[1] = 9; water11[2] = 2; water11[3] = 7; water11[4] = 0; water11[5] = 0;
+		int* water12 = new int[6] ; water12[0] = 9 + offset; water12[1] = 10; water12[2] = 2; water12[3] = 8; water12[4] = 0; water12[5] = 0;
+		
+		int extraOffset = 0;
+		if(i == 1)
+		{
+			for(int j = 0; j < 3; j++)
+			{
+				int* water13 = new int[6]; water13[0] = 10 + offset + extraOffset; water13[1] = 9; water13[2] = 3; water13[3] = 7; water13[4] = 0;  water13[5] = 0;
+				int* water14 = new int[6]; water14[0] = 10 + offset + extraOffset; water14[1] = 10; water14[2] = 3; water14[3] = 8; water14[4] = 0;  water14[5] = 0;
+				data.push_back(water13);data.push_back(water14);
+				extraOffset = extraOffset + 1;
+			}
+			
+		}
 
-		int* water7 = new int[6] ; water7[0] = 10 + offset; water7[1] = 9; water7[2] = 3; water7[3] = 7; water7[4] = 0;water7[5] = 0;
-		int* water8 = new int[6] ; water8[0] = 10 + offset; water8[1] = 10; water8[2] = 3; water8[3] = 8; water8[4] = 0;water8[5] = 0;
+		int* water7 = new int[6] ; water7[0] = 10 + offset + extraOffset; water7[1] = 9; water7[2] = 4; water7[3] = 7; water7[4] = 0;water7[5] = 0;
+		int* water8 = new int[6] ; water8[0] = 10 + offset + extraOffset; water8[1] = 10; water8[2] = 4; water8[3] = 8; water8[4] = 0;water8[5] = 0;
 		data.push_back(water1); data.push_back(water2); data.push_back(water3); data.push_back(water4);
 		data.push_back(water5); data.push_back(water6); data.push_back(water7); data.push_back(water8);
 		data.push_back(water9); data.push_back(water10); data.push_back(water11); data.push_back(water12);

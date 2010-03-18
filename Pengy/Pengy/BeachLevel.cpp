@@ -54,19 +54,14 @@ BeachLevel::BeachLevel(void)
 	landRight->yTo = 670;
 	pSurfaces->push_back(landRight);	
 
-	Surface * waterLeft = new Surface();
-	//waterLeft->xFrom = 320;
-	//waterLeft->xTo = 384;
-	//waterLeft->yFrom = 658;
-	//waterLeft->yTo = 670;
-	pSurfaces->push_back(waterLeft);
-
-	Surface * waterRight = new Surface();
-	//waterRight->xFrom = 640;
-	//waterRight->xTo = 704;
-	//waterRight->yFrom = 658;
-	//waterRight->yTo = 670;
-	pSurfaces->push_back(waterRight);
+	//////////////////////////////////////////////////////////////////////////////
+	// for letting the array be stil the same, indexes are used in the program	//
+	Surface * waterLeft = new Surface();										//
+	pSurfaces->push_back(waterLeft);											//
+																				//
+	Surface * waterRight = new Surface();										//
+	pSurfaces->push_back(waterRight);											//
+	//////////////////////////////////////////////////////////////////////////////
 
 	Surface * aboveWater = new Surface();
 	aboveWater->xFrom = 404;
@@ -433,12 +428,6 @@ vector<int*> BeachLevel::GetTiles()
 	int* structure8 = new int[6]; structure8[0] = 17; structure8[1] = 5; structure8[2] = 7; structure8[3] = 3; structure8[4] = 1; structure8[5] = 0;
 	data.push_back(structure8);
 
-	//int* structure11 = new int[6]; structure11[0] = 19; structure11[1] = 4; structure11[2] = 5; structure11[3] = 3; structure11[4] = 1; structure11[5] = 0;
-	//data.push_back(structure11);
-
-	//int* structure12 = new int[6]; structure12[0] = 20; structure12[1] = 4; structure12[2] = 7; structure12[3] = 3; structure12[4] = 1; structure12[5] = 0;
-	//data.push_back(structure12);
-
 	int* structure13 = new int[6]; structure13[0] = 20; structure13[1] = 2; structure13[2] = 12; structure13[3] = 7; structure13[4] = 1; structure13[5] = 0;
 	data.push_back(structure13);
 
@@ -470,24 +459,6 @@ vector<int*> BeachLevel::GetTiles()
 	int* structure21 = new int[6]; structure21[0] = 19; structure21[1] = 2; structure21[2] = 4; structure21[3] = 4; structure21[4] = 1; structure21[5] = 0;
 	data.push_back(structure21);
 
-	/*int* structure18 = new int[6]; structure18[0] = 18; structure18[1] = 0; structure18[2] = 3; structure18[3] = 3; structure18[4] = 1; structure18[5] = 0;
-	data.push_back(structure18);
-
-	int* structure19 = new int[6]; structure19[0] = 19; structure19[1] = 0; structure19[2] = 4; structure19[3] = 3; structure19[4] = 1; structure19[5] = 0;
-	data.push_back(structure19);
-
-	int* structure20 = new int[6]; structure20[0] = 18; structure20[1] = 1; structure20[2] = 3; structure20[3] = 4; structure20[4] = 1; structure20[5] = 0;
-	data.push_back(structure20);
-
-	int* structure21 = new int[6]; structure21[0] = 19; structure21[1] = 1; structure21[2] = 4; structure21[3] = 4; structure21[4] = 1; structure21[5] = 0;
-	data.push_back(structure21);
-
-	int* structure22 = new int[6]; structure22[0] = 18; structure22[1] = 2; structure22[2] = 3; structure22[3] = 5; structure22[4] = 1; structure22[5] = 0;
-	data.push_back(structure22);
-
-	int* structure23 = new int[6]; structure23[0] = 19; structure23[1] = 2; structure23[2] = 4; structure23[3] = 5; structure23[4] = 1; structure23[5] = 0;
-	data.push_back(structure23);*/
-
 	int* structure24 = new int[6]; structure24[0] = 18; structure24[1] = 3; structure24[2] = 3; structure24[3] = 6; structure24[4] = 1; structure24[5] = 0;
 	data.push_back(structure24);
 
@@ -518,6 +489,36 @@ vector<int*> BeachLevel::GetTiles()
 
 	int* structure33 = new int[6]; structure33[0] = 22; structure33[1] = 7; structure33[2] = 4; structure33[3] = 6; structure33[4] = 1; structure33[5] = 0;
 	data.push_back(structure33);
+
+	bool first = true;
+	int height = 0;
+	for(int i = 0; i < 8; i++)
+	{
+		int* tempstruc = new int[6];
+		tempstruc[0] = 24 + i;
+		tempstruc[1] = 6 - height;
+
+		if(first)
+		{
+			tempstruc[2] = 12;
+			first = false;
+		}
+		else
+		{
+			tempstruc[2] = 14;
+			int tempheight = (height * 2) + 1;
+			if(tempheight > 3)
+				tempheight = 3;
+			height += tempheight;
+			
+			first = true;
+		}
+
+		tempstruc[3] = 7;
+		tempstruc[4] = 1;
+		tempstruc[5] = 0;
+		data.push_back(tempstruc);
+	}
 
 #pragma endregion creation of struction tiles
 

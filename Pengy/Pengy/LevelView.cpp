@@ -3,8 +3,9 @@
 vector<Tile*>* LevelView::myTiles = NULL;
 vector<Surface*>* LevelView::surfaces = NULL;
 HANDLE LevelView::tilemap = NULL;
-int LevelView::tilemapWidth = 2048;
-int LevelView::tilemapHeight = 2048;
+LPCSTR LevelView::tilemapPath = "";
+int LevelView::tilemapWidth = 4096;
+int LevelView::tilemapHeight = 1024;
 HANDLE LevelView::myMask = NULL;
 
 LevelView::LevelView(){ 
@@ -28,12 +29,13 @@ void LevelView::Draw(HDC hDC, RECT rect, int xFrom, int xTo)
 			while(iterator!=myTiles->end())
 			{
 				Tile * tile = *iterator;
-				if(tile->PixelPositionX() + tile->TileWidth() >= xFrom && tile->PixelPositionX() <= xTo && tile->Depth == 0 || tile->Depth > 0)
+				//if(tile->PixelPositionX() + tile->TileWidth() >= xFrom && tile->PixelPositionX() <= xTo && tile->Depth == 0 || tile->Depth > 0)
 					DrawTile(tile, hDC, rect, -1 * xFrom);
 				iterator++;
 			}
 		}
 
+#pragma region surfaces
 		if(Renderer::ShowSurfaces)
 		{
 			vector<Surface*> tempList;
@@ -68,7 +70,9 @@ void LevelView::Draw(HDC hDC, RECT rect, int xFrom, int xTo)
 			DeleteObject(hPen);
 			DeleteObject(cloud);		
 		}
+#pragma endregion
 
+#pragma region fps
 		if(Renderer::ShowFps)
 		{
 			SYSTEMTIME now;
@@ -107,6 +111,8 @@ void LevelView::Draw(HDC hDC, RECT rect, int xFrom, int xTo)
 			// set the time of the last update to this
 			st = now;
 		}
+#pragma endregion
+
 	}
 }
 
@@ -129,6 +135,7 @@ void LevelView::SetSurface(vector<Surface*> * theSurface)
 
 void LevelView::SetTiles(vector<Tile> tiles, LPCSTR path)
 {
+	tilemapPath = path;
 	vector<Tile>::iterator iterator = tiles.begin();
 	if(myTiles == NULL)
 		myTiles = new vector<Tile *>();
@@ -140,7 +147,7 @@ void LevelView::SetTiles(vector<Tile> tiles, LPCSTR path)
 
 		iterator++;
 	}
-	tilemap = LoadImage(NULL, path, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+	tilemap = LoadImage(NULL, tilemapPath, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
 	myMask = CreateBitmapMask(tilemap, RGB(0,0,0), tilemapWidth, tilemapHeight);
 }
 
@@ -159,6 +166,10 @@ void LevelView::DrawTile(Tile * tile, HDC hdc, RECT rect, int offsetX, int offse
 	HDC hTileDC = CreateCompatibleDC(hdc);
 	//FillRect(hTileDC, &rect, (HBRUSH)GetStockObject(WHITE_BRUSH));
 
+	if(tilemap == NULL)
+	{
+		ReimportTilemap();
+	}
 	SelectObject(hTileDC, tilemap);
 
 	if(tile->Transparant == true)
@@ -173,12 +184,24 @@ void LevelView::DrawTile(Tile * tile, HDC hdc, RECT rect, int offsetX, int offse
 	DeleteDC(hTileDC);
 }
 
+void LevelView::ReimportTilemap()
+{
+	DeleteObject(tilemap);
+	DeleteObject(myMask);
+
+	if(strlen(tilemapPath) > 0)
+	{
+		tilemap = LoadImage(NULL, tilemapPath, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+		myMask = CreateBitmapMask(tilemap, RGB(0,0,0), tilemapWidth, tilemapHeight);
+	}
+}
+
 void LevelView::StartGame()
 {
-	tilemap = NULL;
-	myMask = NULL;
+	DeleteObject(tilemap);
+	DeleteObject(myMask);
 
-	if(myTiles!=NULL)
+	if(myTiles != NULL)
 	{
 		Tile * pTile;
 		vector<Tile*>::iterator iterator = myTiles->begin();
@@ -191,7 +214,7 @@ void LevelView::StartGame()
 		myTiles->clear();
 	}
 
-	if(surfaces !=NULL)
+	if(surfaces != NULL)
 	{
 		Surface * pSurface;
 		vector<Surface*>::iterator it = surfaces->begin();
@@ -202,5 +225,11 @@ void LevelView::StartGame()
 			it++;
 		}
 		surfaces->clear();
+	}
+
+	if(strlen(tilemapPath) > 0)
+	{
+		tilemap = LoadImage(NULL, tilemapPath, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+		myMask = CreateBitmapMask(tilemap, RGB(0,0,0), tilemapWidth, tilemapHeight);
 	}
 }

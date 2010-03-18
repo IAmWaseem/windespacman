@@ -13,6 +13,7 @@ using namespace std;
 class LevelView : public View
 {
 private:
+	static LPCSTR tilemapPath;
 	static HANDLE tilemap;
 	static HANDLE myMask;
 	static int tilemapWidth;
@@ -20,6 +21,7 @@ private:
 	SYSTEMTIME st;
 	static vector<Tile*> * myTiles;
 	static vector<Surface*> * surfaces;
+	void ReimportTilemap();
 	void DrawTile(Tile * tile, HDC hdc, RECT rect);
 	void DrawTile(Tile * tile, HDC hdc, RECT rect, int offsetX);
 	void DrawTile(Tile * tile, HDC hdc, RECT rect, int offsetX, int offsetY);

@@ -197,7 +197,38 @@ BeachLevel::BeachLevel(void)
 	landRight2->xTo = 3072;
 	landRight2->yFrom = 576;
 	landRight2->yTo = 670;
-	pSurfaces->push_back(landRight2);	
+	pSurfaces->push_back(landRight2);
+
+	bool first = true;
+	for(int i = 0; i < 6; i++)
+	{
+		int tempX = 26 + i;
+		int tempY = 6 - i;
+
+		Surface * temp = new Surface();
+
+		temp->xFrom = tempX * 64;
+		if(first)
+			temp->xFrom = temp->xFrom + 20;
+
+		temp->xTo = (tempX + 1) * 64;
+		if(!first)
+			temp->xTo = temp->xTo - 20;
+		
+		temp->yFrom = tempY * 64 + 20;
+		temp->yTo = tempY * 64 + 45;
+		if(!first)
+		{
+			temp->yFrom = temp->yFrom + 64;
+			temp->yTo = temp->yTo + 64;
+		}
+
+		pSurfaces->push_back(temp);
+		if(first)
+			first = false;
+		else
+			first = true;
+	}
 }
 
 
@@ -492,10 +523,10 @@ vector<int*> BeachLevel::GetTiles()
 
 	bool first = true;
 	int height = 0;
-	for(int i = 0; i < 8; i++)
+	for(int i = 0; i < 6; i++)
 	{
 		int* tempstruc = new int[6];
-		tempstruc[0] = 24 + i;
+		tempstruc[0] = 26 + i;
 		tempstruc[1] = 6 - height;
 
 		if(first)
@@ -506,7 +537,7 @@ vector<int*> BeachLevel::GetTiles()
 		else
 		{
 			tempstruc[2] = 14;
-			int tempheight = (height * 2) + 1;
+			int tempheight = 2;
 			if(tempheight > 3)
 				tempheight = 3;
 			height += tempheight;

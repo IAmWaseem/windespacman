@@ -164,7 +164,6 @@ void LevelView::DrawTile(Tile * tile, HDC hdc, RECT rect, int offsetX)
 void LevelView::DrawTile(Tile * tile, HDC hdc, RECT rect, int offsetX, int offsetY)
 {
 	HDC hTileDC = CreateCompatibleDC(hdc);
-	//FillRect(hTileDC, &rect, (HBRUSH)GetStockObject(WHITE_BRUSH));
 
 	if(tilemap == NULL)
 	{

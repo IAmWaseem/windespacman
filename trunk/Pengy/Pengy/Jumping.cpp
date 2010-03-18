@@ -65,7 +65,7 @@ void Jumping::Spacebar()
 	
 	if(upwardVelocity == 0)
 	{
-		upwardVelocity = 0.320f;
+		upwardVelocity = 0.330f;
 	}
 
 	

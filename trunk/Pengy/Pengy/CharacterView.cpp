@@ -43,28 +43,28 @@ void CharacterView::Draw(HDC hdc, RECT rect, int xFrom, int xTo)
 		
 	
 	ostringstream weaponPickedUp;
-	weaponPickedUp << "Weapons:" << Character::Instance()->GetPickedWeapons();
+	weaponPickedUp << "Weapons: " << Character::Instance()->GetPickedWeapons();
 	LPCSTR weapon = "";
 	string temp; 
 	temp = weaponPickedUp.str();
 	weapon = temp.c_str();
-	TextOut(hdc, 15, 55, weapon, strlen(weapon));
+	TextOut(hdc, 15, 75, weapon, strlen(weapon));
 
 	ostringstream fishPickedUp;
-	fishPickedUp << "Fish:" << Character::Instance()->GetPickedGoldFish();
+	fishPickedUp << "Fish: " << Character::Instance()->GetPickedGoldFish();
 	LPCSTR fish = "";
 	string temp2; 
 	temp2 = fishPickedUp.str();
 	fish = temp2.c_str();
-	TextOut(hdc, 15, 75, fish, strlen(fish));
+	TextOut(hdc, 15, 95, fish, strlen(fish));
 
 	ostringstream lives;
-	lives << "Lives:" << Character::Instance()->GetAmountLives();
+	lives << "Lives: " << Character::Instance()->GetAmountLives();
 	LPCSTR livesLeft = "";
 	string temp3; 
 	temp3 = lives.str();
 	livesLeft = temp3.c_str();
-	TextOut(hdc, 15, 95, livesLeft, strlen(livesLeft));
+	TextOut(hdc, 15, 115, livesLeft, strlen(livesLeft));
 
 #pragma region debug
 	if(Renderer::ShowDebug)

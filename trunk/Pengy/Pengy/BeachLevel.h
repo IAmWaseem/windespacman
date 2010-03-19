@@ -12,5 +12,6 @@ public:
 	vector<Surface*> GetSurfaces();
 	vector<int*> GetTiles();
 private:
+	//Slopes cal;
 	vector<Surface*> * pSurfaces;
 };

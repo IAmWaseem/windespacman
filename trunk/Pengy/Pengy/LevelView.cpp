@@ -64,7 +64,22 @@ void LevelView::Draw(HDC hDC, RECT rect, int xFrom, int xTo)
 				else
 					SelectObject(hDC, hPen);
 
-				Rectangle(hDC, surface->xFrom - xFrom, surface->yFrom, surface->xTo - xFrom, surface->yFrom + (surface->yTo - surface->yFrom));
+				if(surface->isSlope!=0)
+				{
+					if (surface->isSlope==1)
+					{
+						MoveToEx(hDC,surface->xFrom - xFrom, surface->yFrom,NULL);
+						LineTo(hDC,surface->xTo - xFrom, surface->yFrom + (surface->yTo - surface->yFrom));
+					}
+					else
+					{
+						MoveToEx(hDC,surface->xFrom - xFrom, surface->yTo,NULL);
+						LineTo(hDC,surface->xTo - xFrom, surface->yTo+ (surface->yFrom - surface->yTo));
+					}
+				}
+				else
+					Rectangle(hDC, surface->xFrom - xFrom, surface->yFrom, surface->xTo - xFrom, surface->yFrom + (surface->yTo - surface->yFrom));
+				
 				surfIterator++;
 			}
 			DeleteObject(hPen);

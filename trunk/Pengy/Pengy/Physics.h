@@ -23,4 +23,5 @@ public:
 	bool Physics::JumpYFromTo(Location * pFromLocation,Location * toLocation,vector<Surface*> surfaces);
 	bool LocationInSurfaceX(Location * pLocation, Surface * pSurface);
 	bool LocationInSurfaceY(Location * pLocation, Surface * pSurface);
+	bool SlopeInSurfaceX(Location * pLocation, Surface * pSurface);
 };

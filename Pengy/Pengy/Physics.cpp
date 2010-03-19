@@ -57,7 +57,7 @@ bool Physics::FallYFromTo(Location * pFromLocation,Location * pToLocation,vector
 	bool isFalling;
 	vector<Surface*>::iterator iterator;
 	Surface * pOnSurface;
-	float fromLocationYdiff;
+	//float fromLocationYdiff;
 	float toLocationYdiff;
 	float fromLocationY;
 	float toLocationY;
@@ -68,12 +68,36 @@ bool Physics::FallYFromTo(Location * pFromLocation,Location * pToLocation,vector
 	while(iterator != surfaces.end())
 	{
 		Surface * pSurface = *iterator;
-		fromLocationYdiff = fabs(fromLocationY - pSurface->xFrom);
+		//fromLocationYdiff = fabs(fromLocationY - pSurface->xFrom);
 		toLocationYdiff = fabs(toLocationY - pSurface->yFrom);
 		
 		if(LocationInSurfaceX(pToLocation, pSurface))
 		{
-			if((pSurface->yFrom <= toLocationY && pSurface->yFrom >= fromLocationY) || toLocationYdiff < 5)
+			if(pSurface->isSlope!=0 && SlopeInSurfaceX(pToLocation, pSurface))
+			{
+				if(pSurface->isSlope==1)
+				{
+					if(toLocationY >= pSurface->SlopeCoefficientB + (pSurface->SlopeCoefficientA * pToLocation->X ))
+					{
+						isFalling = false;
+						pOnSurface = new Surface;	
+						pOnSurface->isSurfaceOfDeath = false;
+						pOnSurface->yFrom = toLocationY;
+					}
+				}
+				else
+				{
+					if(toLocationY >= pSurface->SlopeCoefficientB + (pSurface->SlopeCoefficientA * (pToLocation->width + pToLocation->X)))
+					{
+						isFalling = false;
+						pOnSurface = new Surface;		
+						pOnSurface->isSurfaceOfDeath = false;
+						pOnSurface->yFrom = toLocationY;
+					}
+				}
+				
+			}
+			else if((pSurface->yFrom <= toLocationY && pSurface->yFrom >= fromLocationY) || toLocationYdiff < 5)
 			{
 				if(pSurface->isCloud && CWin::keystateDown != 0)
 				{
@@ -101,24 +125,22 @@ bool Physics::FallYFromTo(Location * pFromLocation,Location * pToLocation,vector
 
 bool Physics::JumpYFromTo(Location * pFromLocation, Location * pToLocation, vector<Surface*> surfaces) 
 {
-	float fromLocationYdiff;
+	//float fromLocationYdiff;
 	float toLocationYdiff;
 	float fromLocationY;
 	float toLocationY;
 	fromLocationY = pFromLocation->Y;
 	toLocationY = pToLocation->Y;
-	bool hit;
+	//bool hit;
 	vector<Surface*>::iterator iterator;
 	Surface * pOnSurface;
 	bool bumpHead;
-	fromLocationY = pFromLocation->Y;
-	toLocationY = pToLocation->Y;
 	bumpHead = false;
 	iterator = surfaces.begin();
 	while(iterator != surfaces.end())
 	{
 		Surface * pSurface = *iterator;
-		fromLocationYdiff = fabs(fromLocationY - pSurface->xTo);
+		//fromLocationYdiff = fabs(fromLocationY - pSurface->xTo);
 		toLocationYdiff = fabs(toLocationY - pSurface->yTo);
 		
 		if(LocationInSurfaceX(pToLocation, pSurface))
@@ -181,6 +203,27 @@ bool Physics::LocationInSurfaceY(Location * pLocation, Surface * pSurface)
 	if((pLocation->Y + pLocation->height) >= pSurface->yFrom && (pLocation->Y + pLocation->height) <= pSurface->yTo)
 	{
 		inSurface = true;
+	}
+	return inSurface;
+}
+
+bool Physics::SlopeInSurfaceX(Location * location, Surface * surface)
+{
+	bool inSurface = true;
+
+	if(surface->isSlope == 1)
+	{
+		if(surface->xFrom >= location->X)
+		{
+			inSurface = false;
+		}
+	}
+	else
+	{
+		if(surface->xTo <= location->X + location->width)
+		{
+			inSurface = false;
+		}
 	}
 	return inSurface;
 }

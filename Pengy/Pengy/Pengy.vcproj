@@ -296,6 +296,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Slopes.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\SnowLevel.cpp"
 				>
 			</File>
@@ -316,6 +320,10 @@
 				</File>
 				<File
 					RelativePath=".\MovingSurface.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Slopes.h"
 					>
 				</File>
 				<File

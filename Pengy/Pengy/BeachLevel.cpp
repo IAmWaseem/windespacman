@@ -54,6 +54,28 @@ BeachLevel::BeachLevel(void)
 	landRight->yTo = 670;
 	pSurfaces->push_back(landRight);	
 
+	// two slopes for testing purposes
+
+	/*Surface * slopeLeft = new Surface();
+	slopeLeft->xFrom = 320;
+	slopeLeft->xTo = 384;
+	slopeLeft->yFrom = 449;
+	slopeLeft->yTo = 530;
+	slopeLeft->isSlope=1;
+	slopeLeft->SlopeCoefficientA = cal.CalculateSlopCoeffA(320,449,384,530);
+	slopeLeft->SlopeCoefficientB = cal.CalculateSlopCoeffB(320,448,slopeLeft->SlopeCoefficientA);
+	pSurfaces->push_back(slopeLeft);*/
+
+	/*Surface * slopeRight = new Surface();
+	slopeRight->xFrom = 840;
+	slopeRight->xTo = 904;
+	slopeRight->yFrom = 449;
+	slopeRight->yTo = 530;
+	slopeRight->isSlope=2;
+	slopeRight->SlopeCoefficientA = cal.CalculateSlopCoeffA(840,530,904,449);
+	slopeRight->SlopeCoefficientB = cal.CalculateSlopCoeffB(840,530,slopeRight->SlopeCoefficientA);
+	pSurfaces->push_back(slopeRight);*/
+
 	//////////////////////////////////////////////////////////////////////////////
 	// for letting the array be stil the same, indexes are used in the program	//
 	Surface * waterLeft = new Surface();										//

@@ -24,6 +24,12 @@ bool Physics::MoveXFromTo(Location * pFromLocation,Location * pToLocation,vector
 			Surface * pSurface = *iterator;
 			if(LocationInSurfaceY(pToLocation, pSurface))
 			{
+				if((pSurface->isSlope == 2) && SlopeInSurfaceX(pToLocation, pSurface) && LocationInSurfaceX(pToLocation, pSurface))
+				{
+						pSurfaceFinal = CopySurface(pSurface);
+						pSurfaceFinal->xTo = pFromLocation->X;
+						return true;
+				}
 				if(!pSurface->isCloud && ((pFromLocation->X + pFromLocation->width) <= pSurface->xFrom && (pToLocation->X + pToLocation->width) >= pSurface->xFrom))
 				{
 					pSurfaceFinal = pSurface;
@@ -40,6 +46,12 @@ bool Physics::MoveXFromTo(Location * pFromLocation,Location * pToLocation,vector
 			Surface * pSurface = *iterator;
 			if(LocationInSurfaceY(pToLocation, pSurface))
 			{
+				if((pSurface->isSlope == 1) && SlopeInSurfaceX(pToLocation, pSurface) && LocationInSurfaceX(pToLocation, pSurface))
+				{
+					pSurfaceFinal = CopySurface(pSurface);
+					pSurfaceFinal->xTo = pFromLocation->X;
+					return true;
+				}
 				if(!pSurface->isCloud && (pFromLocation->X >= pSurface->xTo && pToLocation->X <= pSurface->xTo))
 				{
 					pSurfaceFinal=pSurface;
@@ -80,9 +92,12 @@ bool Physics::FallYFromTo(Location * pFromLocation,Location * pToLocation,vector
 					if(toLocationY >= pSurface->SlopeCoefficientB + (pSurface->SlopeCoefficientA * pToLocation->X ))
 					{
 						isFalling = false;
+						pOnSurface = CopySurface(pSurface);
+						pOnSurface->yFrom = toLocationY;
+						/*isFalling = false;
 						pOnSurface = new Surface;	
 						pOnSurface->isSurfaceOfDeath = false;
-						pOnSurface->yFrom = toLocationY;
+						pOnSurface->yFrom = toLocationY;*/
 					}
 				}
 				else
@@ -90,9 +105,12 @@ bool Physics::FallYFromTo(Location * pFromLocation,Location * pToLocation,vector
 					if(toLocationY >= pSurface->SlopeCoefficientB + (pSurface->SlopeCoefficientA * (pToLocation->width + pToLocation->X)))
 					{
 						isFalling = false;
+						pOnSurface = CopySurface(pSurface);
+						pOnSurface->yFrom = toLocationY;
+						/*isFalling = false;
 						pOnSurface = new Surface;		
 						pOnSurface->isSurfaceOfDeath = false;
-						pOnSurface->yFrom = toLocationY;
+						pOnSurface->yFrom = toLocationY;*/
 					}
 				}
 				
@@ -226,4 +244,24 @@ bool Physics::SlopeInSurfaceX(Location * location, Surface * surface)
 		}
 	}
 	return inSurface;
+}
+
+Surface * Physics::CopySurface(Surface * pSurface)
+{
+	Surface * newSurface;
+	newSurface = new Surface;
+	newSurface->xFrom = pSurface->xFrom;
+	newSurface->xTo = pSurface->xTo;
+	newSurface->yFrom = pSurface->yFrom;
+	newSurface->yTo = pSurface->yTo;
+
+	newSurface->isCloud = pSurface->isCloud;
+	newSurface->isIce = pSurface->isIce;
+	newSurface->isSurfaceOfDeath = pSurface->isSurfaceOfDeath;
+	newSurface->isSlope = pSurface->isSlope;
+
+	newSurface->SlopeCoefficientA = pSurface->SlopeCoefficientA;
+	newSurface->SlopeCoefficientB = pSurface->SlopeCoefficientB;
+	
+	return newSurface;
 }

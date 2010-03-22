@@ -24,4 +24,5 @@ public:
 	bool LocationInSurfaceX(Location * pLocation, Surface * pSurface);
 	bool LocationInSurfaceY(Location * pLocation, Surface * pSurface);
 	bool SlopeInSurfaceX(Location * pLocation, Surface * pSurface);
+	Surface * Physics::CopySurface(Surface * pSurfac);
 };

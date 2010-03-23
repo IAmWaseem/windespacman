@@ -3,6 +3,28 @@
 #include "WaldoStateMachine.h"
 #include "MessageQueue.h"
 
+//extra voor superWaldo
+Waldo::Waldo(Surface * pSurface, int x, bool isSuper):Enemy(pSurface)
+{
+	RandomDirection();
+	
+	this->pView = new WaldoView(this);
+	this->pView->RegisterToGraphics();
+
+	this->pLocation->width = 60;
+	this->pLocation->height = 60;
+
+	this->pLocation->X = x;
+	this->pLocation->Y = pSurface->yFrom - this->pLocation->height;
+
+	this->pWaldoStateMachine = new WaldoStateMachine(this);
+	pWaldoStateMachine->Transition(pWaldoStateMachine->pWander);
+
+	this->isVulnerable = false;
+
+	this->superWaldo = isSuper;
+}
+
 Waldo::Waldo(Surface * pSurface, int x) : Enemy(pSurface)
 {
 	RandomDirection();
@@ -20,6 +42,7 @@ Waldo::Waldo(Surface * pSurface, int x) : Enemy(pSurface)
 	pWaldoStateMachine->Transition(pWaldoStateMachine->pWander);
 
 	this->isVulnerable = false;
+	this->superWaldo = false;
 }
 
 Waldo::Waldo(Surface * pSurface) : Enemy(pSurface)
@@ -39,6 +62,7 @@ Waldo::Waldo(Surface * pSurface) : Enemy(pSurface)
 	pWaldoStateMachine->Transition(pWaldoStateMachine->pPatrol);
 
 	this->isVulnerable = false;
+	this->superWaldo = false;
 }
 
 Waldo::~Waldo(void)
@@ -94,6 +118,12 @@ void Waldo::CheckPengyCollision()
 			delete this->pLocation;
 			delete this->pWaldoStateMachine;
 			delete this->pView;
+
+			//extra waldo zodat je naar volgend level gaat
+			if(superWaldo)
+			{
+				MessageQueue::Instance()->SendMessage(CM_LEVEL_START, NULL, NULL);
+			}
 		}
 		else
 		{

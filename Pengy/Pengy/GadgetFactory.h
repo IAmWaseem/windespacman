@@ -10,10 +10,10 @@ public:
 	~GadgetFactory(void);
 	void ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam);
 	static GadgetFactory * Instance();
+	void StartGame();
 protected:
 	GadgetFactory(void);
 private:
 	vector<Gadget*> * pGadgets; 
 	static GadgetFactory * pInstance;
-	void StartGame();
 };

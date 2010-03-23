@@ -25,10 +25,12 @@ private:
     static Level* pInstance;
 	LevelView levelView;
 	BeachLevel beach;
+	SnowLevel snowLevel;
 	Physics physic_behavior;
 	int levelLength;
 	void SetLevelLength();
 	World* pWorld;
+	
 	/*bool LocationInSurfaceX(Location * location, Surface * surface);
 	bool LocationInSurfaceY(Location * location, Surface * surface);*/
 };

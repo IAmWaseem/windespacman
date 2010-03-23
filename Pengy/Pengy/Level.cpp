@@ -75,7 +75,6 @@ void Level::LoadLevel(int level)
 	vector<Tile> myTiles;
 	vector<int*> data;
 	LPCSTR path = "";
-	SnowLevel snowLevel;
 	switch(level)
 	{
 	case 1:
@@ -86,10 +85,14 @@ void Level::LoadLevel(int level)
 		snowLevel.LoadEnemies();
 		SetLevelLength();
 		break;
-	//case 2:
-	//	path = "res/Summer.bmp";
-	//	data = GetLevel1Array();
-	//	break;
+	case 2:
+		path = "res/tilemap.bmp";
+		data = snowLevel.GetTiles();
+		surfaces = snowLevel.GetSurfaces();
+		snowLevel.LoadGadgets();
+		snowLevel.LoadEnemies();
+		SetLevelLength();
+		break;
 	//case 3:
 	//	path = "res/Summer.bmp";
 	//	data = GetLevel1Array();
@@ -99,6 +102,8 @@ void Level::LoadLevel(int level)
 		path = "res/tilemap.bmp";
 		data = beach.GetTiles();
 		surfaces = beach.GetSurfaces();
+		beach.LoadGadgets();
+		beach.LoadEnemies();
 		SetLevelLength();
 		break;
 	}

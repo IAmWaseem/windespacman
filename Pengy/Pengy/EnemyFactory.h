@@ -11,10 +11,10 @@ public:
 	static EnemyFactory * Instance();
 	~EnemyFactory(void);
 	void ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam);
+	void StartGame();
 protected:
 	EnemyFactory(void);
 private:
 	vector<Enemy*> * pEnemies;
 	static EnemyFactory * pInstance;
-	void StartGame();
 };

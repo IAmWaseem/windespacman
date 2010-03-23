@@ -135,8 +135,8 @@ void Level::LoadLevel(int level)
 	{
 	case 1:
 		path = "res/tilemap.bmp";
-		data = beach.GetTiles();
-		surfaces = beach.GetSurfaces();
+		data = snowLevel.GetTiles();
+		surfaces = snowLevel.GetSurfaces();
 		SetLevelLength();
 		break;
 	//case 2:

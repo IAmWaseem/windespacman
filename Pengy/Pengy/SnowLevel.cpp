@@ -121,6 +121,124 @@ vector<Surface*> SnowLevel::GetSurfaces()
 	ladder1Step6->isCloud = true;
 	surfaces.push_back(ladder1Step6);
 
+	Surface * bar3 = new Surface();
+	bar3->xFrom = 1173;
+	bar3->xTo = 1258;
+	bar3->yFrom = 270;
+	bar3->yTo = 300;
+	surfaces.push_back(bar3);
+
+	Surface * bar4 = new Surface();
+	bar4->xFrom = 1173;
+	bar4->xTo = 1258;
+	bar4->yFrom = 140;
+	bar4->yTo = 170;
+	surfaces.push_back(bar4);
+
+	Surface * bar5 = new Surface();
+	bar5->xFrom = 1495;
+	bar5->xTo = 1580;
+	bar5->yFrom = 270;
+	bar5->yTo = 300;
+	surfaces.push_back(bar5);
+	
+	Surface * ground2 = new Surface();
+	ground2->xFrom = 1530;
+	ground2->xTo = 2180;
+	ground2->yFrom = 575;
+	ground2->yTo = 700;
+	surfaces.push_back(ground2);
+
+	Surface * bar6 = new Surface();
+	bar6->xFrom = 1750;
+	bar6->xTo = 1835;
+	bar6->yFrom = 463;
+	bar6->yTo = 493;
+	surfaces.push_back(bar6);
+
+	Surface * bar7 = new Surface();
+	bar7->xFrom = 1878;
+	bar7->xTo = 1963;
+	bar7->yFrom = 333;
+	bar7->yTo = 363;
+	surfaces.push_back(bar7);
+
+	Surface * bar8 = new Surface();
+	bar8->xFrom = 2006;
+	bar8->xTo = 2091;
+	bar8->yFrom = 203;
+	bar8->yTo = 233;
+	surfaces.push_back(bar8);
+
+	Surface * ice = new Surface();
+	ice->xFrom = 2180;
+	ice->xTo = 2749;
+	ice->yFrom = 590;
+	ice->yTo = 700;
+	surfaces.push_back(ice);
+
+	Surface * ground3 = new Surface();
+	ground3->xFrom = 2749;
+	ground3->xTo = 3776;
+	ground3->yFrom = 575;
+	ground3->yTo = 700;
+	surfaces.push_back(ground3);
+
+	Surface * ladder2Step1 = new Surface();
+	ladder2Step1->xFrom = 2910;
+	ladder2Step1->xTo = 2975;
+	ladder2Step1->yFrom = 474;
+	ladder2Step1->yTo = 484;
+	ladder2Step1->isCloud = true;
+	surfaces.push_back(ladder2Step1);
+
+	Surface * ladder2Step2 = new Surface();
+	ladder2Step2->xFrom = 2910;
+	ladder2Step2->xTo = 2975;
+	ladder2Step2->yFrom = 446;
+	ladder2Step2->yTo = 456;
+	ladder2Step2->isCloud = true;
+	surfaces.push_back(ladder2Step2);
+
+	Surface * ladder2Step3 = new Surface();
+	ladder2Step3->xFrom = 2910;
+	ladder2Step3->xTo = 2975;
+	ladder2Step3->yFrom = 415;
+	ladder2Step3->yTo = 425;
+	ladder2Step3->isCloud = true;
+	surfaces.push_back(ladder2Step3);
+
+	Surface * ladder2Step4 = new Surface();
+	ladder2Step4->xFrom = 2910;
+	ladder2Step4->xTo = 2975;
+	ladder2Step4->yFrom = 385;
+	ladder2Step4->yTo = 395;
+	ladder2Step4->isCloud = true;
+	surfaces.push_back(ladder2Step4);
+
+	Surface * ladder2Step5 = new Surface();
+	ladder2Step5->xFrom = 2910;
+	ladder2Step5->xTo = 2975;
+	ladder2Step5->yFrom = 354;
+	ladder2Step5->yTo = 364;
+	ladder2Step5->isCloud = true;
+	surfaces.push_back(ladder2Step5);
+
+	Surface * ladder2Step6 = new Surface();
+	ladder2Step6->xFrom = 2910;
+	ladder2Step6->xTo = 2975;
+	ladder2Step6->yFrom = 323;
+	ladder2Step6->yTo = 333;
+	ladder2Step6->isCloud = true;
+	surfaces.push_back(ladder2Step6);
+
+	Surface * bar9 = new Surface();
+	bar9->xFrom = 3095;
+	bar9->xTo = 3180;
+	bar9->yFrom = 268;
+	bar9->yTo = 298;
+	surfaces.push_back(bar9);
+
 	return surfaces;
 }
 

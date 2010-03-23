@@ -31,6 +31,10 @@ void PickedUp::PickUp()
 	case GadgetView::GadgetImage::Piranha:
 		MessageQueue::Instance()->SendMessage(CM_GADGET_PIRANHA_PICKEDUP, NULL, NULL);
 		break;
+
+	case GadgetView::GadgetImage::SnowBall:
+		MessageQueue::Instance()->SendMessage(CM_GADGET_SNOWBALL_PICKEDUP, NULL, NULL);
+		break;
 	}
 	
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_DESTROY_GADGET, pGadget->GetId(), NULL);

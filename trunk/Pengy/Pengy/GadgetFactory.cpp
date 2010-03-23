@@ -44,6 +44,26 @@ void GadgetFactory::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		id = (int)wParam;
 		pGadgets->at(id)->Remove();
 		break;
+	case CM_GADGETFACTORY_CREATE_SNOWBALL:
+		pLocation = (Location*)wParam;
+		pGadget = new Gadget(pGadgets->size(), pLocation, GadgetView::GadgetImage::SnowBall);
+		pGadgets->push_back(pGadget);
+		break;
+	case CM_GADGETFACTORY_CREATE_SWITCH:
+		pLocation = (Location*)wParam;
+		pGadget = new Gadget(pGadgets->size(), pLocation, GadgetView::GadgetImage::Switch);
+		pGadgets->push_back(pGadget);
+		break;
+	case CM_GADGETFACTORY_CREATE_EXTRALIFE:
+		pLocation = (Location*)wParam;
+		pGadget = new Gadget(pGadgets->size(), pLocation, GadgetView::GadgetImage::ExtraLife);
+		pGadgets->push_back(pGadget);
+		break;
+	case CM_GADGETFACTORY_CREATE_SNOWBOOTS:
+		pLocation = (Location*)wParam;
+		pGadget = new Gadget(pGadgets->size(), pLocation, GadgetView::GadgetImage::SnowBoots);
+		pGadgets->push_back(pGadget);
+		break;
 
 	default:
 		vector<Gadget*>::iterator iterator = pGadgets->begin();

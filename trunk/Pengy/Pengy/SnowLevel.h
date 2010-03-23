@@ -12,4 +12,9 @@ public:
 	vector<Surface*> GetSurfaces();
 	vector<int*> GetTiles();
 	void LoadEnemies();
+private:
+	Surface * pGround1;
+	Surface * pGround2;
+	Surface * pIce;
+	Surface * pGround3;
 };

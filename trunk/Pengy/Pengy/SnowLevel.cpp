@@ -1,4 +1,5 @@
 #include "SnowLevel.h"
+#include "Location.h"
 
 SnowLevel::SnowLevel(void)
 {
@@ -61,12 +62,12 @@ vector<Surface*> SnowLevel::GetSurfaces()
 	bar2->yTo = 425;
 	surfaces.push_back(bar2);
 
-	Surface * ground1 = new Surface();
-	ground1->xFrom = 960;
-	ground1->xTo = 1225;
-	ground1->yFrom = 575;
-	ground1->yTo = 700;
-	surfaces.push_back(ground1);
+	pGround1 = new Surface();
+	pGround1->xFrom = 960;
+	pGround1->xTo = 1225;
+	pGround1->yFrom = 575;
+	pGround1->yTo = 700;
+	surfaces.push_back(pGround1);
 
 	Surface * ladder1Step1 = new Surface();
 	ladder1Step1->xFrom = 990;
@@ -137,12 +138,12 @@ vector<Surface*> SnowLevel::GetSurfaces()
 	bar5->yTo = 300;
 	surfaces.push_back(bar5);
 	
-	Surface * ground2 = new Surface();
-	ground2->xFrom = 1530;
-	ground2->xTo = 2180;
-	ground2->yFrom = 575;
-	ground2->yTo = 700;
-	surfaces.push_back(ground2);
+	pGround2 = new Surface();
+	pGround2->xFrom = 1530;
+	pGround2->xTo = 2180;
+	pGround2->yFrom = 575;
+	pGround2->yTo = 700;
+	surfaces.push_back(pGround2);
 
 	Surface * bar6 = new Surface();
 	bar6->xFrom = 1750;
@@ -165,19 +166,19 @@ vector<Surface*> SnowLevel::GetSurfaces()
 	bar8->yTo = 233;
 	surfaces.push_back(bar8);
 
-	Surface * ice = new Surface();
-	ice->xFrom = 2180;
-	ice->xTo = 2749;
-	ice->yFrom = 590;
-	ice->yTo = 700;
-	surfaces.push_back(ice);
+	pIce = new Surface();
+	pIce->xFrom = 2180;
+	pIce->xTo = 2749;
+	pIce->yFrom = 590;
+	pIce->yTo = 700;
+	surfaces.push_back(pIce);
 
-	Surface * ground3 = new Surface();
-	ground3->xFrom = 2749;
-	ground3->xTo = 3776;
-	ground3->yFrom = 575;
-	ground3->yTo = 700;
-	surfaces.push_back(ground3);
+	pGround3 = new Surface();
+	pGround3->xFrom = 2749;
+	pGround3->xTo = 3776;
+	pGround3->yFrom = 575;
+	pGround3->yTo = 700;
+	surfaces.push_back(pGround3);
 
 	Surface * ladder2Step1 = new Surface();
 	ladder2Step1->xFrom = 2910;
@@ -682,10 +683,98 @@ vector<int*> SnowLevel::GetTiles()
 
 void SnowLevel::LoadEnemies()
 {
-	
+	MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_WANDER, (int)pGround1, (int)pGround1->xTo - 10);
+	MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_WANDER, (int)pGround1, (int)pGround1->xFrom + 10);
+
+	MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_WANDER, (int)pGround2, (int)pGround2->xTo - 10);
+	MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_WANDER, (int)pGround2, (int)pGround2->xFrom + 0.5*(pGround2->xTo - pGround2->xFrom));
+	MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_WANDER, (int)pGround2, (int)pGround2->xFrom + 10);
+
+	MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_WANDER, (int)pIce, (int)pIce->xTo - 10);
+	MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_WANDER, (int)pIce, (int)pIce->xFrom + 10);
+
+	MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_WANDER, (int)pGround3, (int)pGround3->xTo - 10);
+	MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_WANDER, (int)pGround3, (int)pGround3->xFrom + 0.5*(pGround3->xTo - pGround3->xFrom));
+	MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_WANDER, (int)pGround3, (int)pGround3->xFrom + 10);
 }
 
 void SnowLevel::LoadGadgets()
 {
+	Location * pGl1 = new Location();
+	Location * pGl2 = new Location();
+	Location * pGl3 = new Location();
+	Location * pGl4 = new Location();
+	Location * pGl5 = new Location();
+	Location * pGl6 = new Location();
+	Location * pGl7 = new Location();
+	Location * pGl8 = new Location();
+	Location * pGl9 = new Location();
+	Location * pGl10 = new Location();
+	Location * pGl11 = new Location();
+	Location * pGl12 = new Location();
+	Location * pGl13 = new Location();
+	Location * pGl14 = new Location();
+	Location * pGl15 = new Location();
+	Location * pGl16 = new Location();
+	Location * pGl17 = new Location();
 
+	pGl1->X = 170;
+	pGl1->Y = 80;
+
+	pGl2->X = 230;
+	pGl2->Y = 80;
+
+	pGl3->X = 290;
+	pGl3->Y = 80;
+
+	pGl4->X = 350;
+	pGl4->Y = 80;
+
+	pGl5->X = 410;
+	pGl5->Y = 80;
+
+	pGl6->X = 993;
+	pGl6->Y = 307;
+
+	pGl7->X = 993;
+	pGl7->Y = 213;
+
+	pGl8->X = 1080;
+	pGl8->Y = 130;
+
+	pGl9->X = 1185;
+	pGl9->Y = 100;
+
+	pGl10->X = 1192;
+	pGl10->Y = 220;
+
+	pGl11->X = 1501;
+	pGl11->Y = 220;
+
+	pGl12->X = 1765;
+	pGl12->Y = 420;
+
+	pGl13->X = 1885;
+	pGl13->Y = 300;
+
+	pGl14->X = 2005;
+	pGl14->Y = 180;
+
+	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pGl1, NULL);
+	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pGl2, NULL);
+	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pGl3, NULL);
+	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pGl4, NULL);
+	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pGl5, NULL);
+
+	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_SNOWBALL, (int)pGl6, NULL);
+	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_SNOWBALL, (int)pGl7, NULL);
+
+	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pGl8, NULL);
+	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_SWITCH, (int)pGl9, NULL);
+	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_EXTRALIFE, (int)pGl10, NULL);
+	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_SNOWBOOTS, (int)pGl11, NULL);
+
+	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_SNOWBALL, (int)pGl12, NULL);
+	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_SNOWBALL, (int)pGl13, NULL);
+	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_SNOWBALL, (int)pGl14, NULL);
 }

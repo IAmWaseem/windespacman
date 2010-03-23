@@ -39,6 +39,7 @@ void Character::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		firstGame = 1;
 		break;
 	case CM_LEVEL_LOAD:
+		StartGame();
 		switch(pWorld->Instance()->level)
 		{
 		case 1:

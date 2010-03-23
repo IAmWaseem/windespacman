@@ -45,6 +45,13 @@ void EnemyFactory::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		pEnemies->push_back(pEnemy);
 
 		break;
+	case CM_ENEMYFACTORY_CREATE_SUPERWALDO_WANDER:
+		pSurface = (Surface*)wParam;
+		x = lParam;
+		pEnemy = new Waldo(pSurface, x, true);
+		pEnemies->push_back(pEnemy);
+
+		break;
 	}
 
 	vector<Enemy*>::iterator iterator = pEnemies->begin();

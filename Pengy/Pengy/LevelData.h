@@ -1,3 +1,4 @@
+#pragma once
 #include "messages.h"
 #include "Surface.h"
 #include <string>

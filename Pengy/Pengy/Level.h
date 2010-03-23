@@ -8,6 +8,7 @@
 #include "World.h"
 #include "Physics.h"
 #include "MovingSurface.h"
+#include "SnowLevel.h"
 
 class Level : public Observer
 {

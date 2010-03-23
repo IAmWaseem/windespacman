@@ -22,7 +22,9 @@ public:
 		Powerup,
 		Balloons,
 		Piranha,
-		Ladybug
+		Ladybug,
+		Switch,
+		SnowBoots
 	};
 
 	GadgetView(void);

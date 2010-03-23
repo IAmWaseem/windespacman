@@ -80,10 +80,10 @@ void Level::LoadLevel(int level)
 	{
 	case 1:
 		path = "res/tilemap.bmp";
-		data = beach.GetTiles();
-		surfaces = beach.GetSurfaces();
-		beach.LoadGadgets();
-		beach.LoadEnemies();
+		data = snowLevel.GetTiles();
+		surfaces = snowLevel.GetSurfaces();
+		snowLevel.LoadGadgets();
+		snowLevel.LoadEnemies();
 		SetLevelLength();
 		break;
 	//case 2:

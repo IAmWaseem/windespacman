@@ -23,13 +23,21 @@ GadgetView::GadgetView(GadgetImage image, Gadget * gadget)
 		mask = CreateBitmapMask(bitmap, RGB(0, 0, 0), width_height[0], width_height[1]);
 		break;
 	case GadgetImage::SnowBall:
-
+		bitmap = LoadImage(NULL, SNOWBALL_IMAGE, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+		b->LoadDIBFile(SNOWBALL_IMAGE);
+		width_height[0] = b->Width();
+		width_height[1] = b->Height();
+		mask = CreateBitmapMask(bitmap, RGB(0, 0, 0), width_height[0], width_height[1]);
 		break;
 	case GadgetImage::Balloons:
 
 		break;
 	case GadgetImage::ExtraLife:
-
+		bitmap = LoadImage(NULL, EXTRALIFE_IMAGE, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+		b->LoadDIBFile(EXTRALIFE_IMAGE);
+		width_height[0] = b->Width();
+		width_height[1] = b->Height();
+		mask = CreateBitmapMask(bitmap, RGB(0, 0, 0), width_height[0], width_height[1]);
 		break;
 
 	case GadgetImage::RottenFish:
@@ -50,6 +58,22 @@ GadgetView::GadgetView(GadgetImage image, Gadget * gadget)
 
 	case GadgetImage::Ladybug:
 
+		break;
+
+	case GadgetImage::Switch:
+		bitmap = LoadImage(NULL, SWITCH_IMAGE, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+		b->LoadDIBFile(SWITCH_IMAGE);
+		width_height[0] = b->Width();
+		width_height[1] = b->Height();
+		mask = CreateBitmapMask(bitmap, RGB(0, 0, 0), width_height[0], width_height[1]);
+		break;
+
+	case GadgetImage::SnowBoots:
+		bitmap = LoadImage(NULL, SNOWBOOTS_IMAGE, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+		b->LoadDIBFile(SNOWBOOTS_IMAGE);
+		width_height[0] = b->Width();
+		width_height[1] = b->Height();
+		mask = CreateBitmapMask(bitmap, RGB(0, 0, 0), width_height[0], width_height[1]);
 		break;
 
 	}

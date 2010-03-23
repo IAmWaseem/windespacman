@@ -16,6 +16,7 @@ public:
     LevelData();
 	vector<int*> SortTiles(vector<int*> data);
 	virtual void LoadGadgets() = 0;
+	virtual void LoadEnemies() = 0;
     virtual vector<Surface*> GetSurfaces() = 0;
 	virtual vector<int*> GetTiles() = 0;
     ~LevelData();

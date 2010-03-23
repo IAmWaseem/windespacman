@@ -11,4 +11,5 @@ public:
 	void LoadGadgets();
 	vector<Surface*> GetSurfaces();
 	vector<int*> GetTiles();
+	void LoadEnemies();
 };

@@ -8,11 +8,6 @@ SnowLevel::~SnowLevel(void)
 {
 }
 
-void SnowLevel::LoadGadgets()
-{
-
-}
-
 vector<Surface*> SnowLevel::GetSurfaces()
 {
 	vector<Surface*> surfaces;
@@ -683,4 +678,14 @@ vector<int*> SnowLevel::GetTiles()
 	}
 
 	return SortTiles(tiles);
+}
+
+void SnowLevel::LoadEnemies()
+{
+	
+}
+
+void SnowLevel::LoadGadgets()
+{
+
 }

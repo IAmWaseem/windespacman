@@ -40,47 +40,6 @@ Level::~Level(){
 
 void Level::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam) 
 {
-	Location * pL1 = new Location();
-	Location * pL2 = new Location();
-	Location * pL3 = new Location();
-	Location * pL4 = new Location();
-	Location * pL5 = new Location();
-	Location * pL6 = new Location();
-	Location * pL7 = new Location();
-	Location * pL8 = new Location();
-	Location * pL9 = new Location();
-
-	// goldfish
-	pL2->X = 420;
-	pL2->Y = 495;
-
-	pL3->X = 544;
-	pL3->Y = 495;
-
-	pL4->X = 1185;
-	pL4->Y = 90;
-
-	pL5->X = 1378;
-	pL5->Y = 285;
-	// end of gf
-
-	// piranah
-	pL1->X = 862;
-	pL1->Y = 300;
-
-	pL6->X = 995;
-	pL6->Y = 240;
-
-	pL7->X = 1364;
-	pL7->Y = 110;
-
-	pL8->X = 1492;
-	pL8->Y = 110;
-
-	pL9->X = 1700;
-	pL9->Y = 300;
-	// end of piranha
-
 	switch (message) 
 	{
 	case CM_KEY:
@@ -88,20 +47,6 @@ void Level::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	case CM_LEVEL_LOAD:
 		LoadLevel(pWorld->Instance()->level);
 		MessageQueue::Instance()->SendMessage(CM_LEVEL_LENGTH, levelLength, NULL);
-		MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)pL1, NULL);
-		MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL2, NULL);
-		MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL3, NULL);
-		MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL4, NULL);
-		MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL5, NULL);
-		MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)pL6, NULL);
-		MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)pL7, NULL);
-		MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)pL8, NULL);
-		MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)pL9, NULL);
-		//MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_WANDER, (int)surfaces.at(6), (surfaces.at(6)->xFrom + surfaces.at(6)->xTo) / 2 + 10 );
-		//MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_WANDER, (int)surfaces.at(25), (surfaces.at(25)->xFrom + surfaces.at(25)->xTo) / 4 + 10 );
-		//MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_WANDER, (int)surfaces.at(6), (surfaces.at(6)->xTo) - 10 );
-		//MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_WANDER, (int)surfaces.at(6), (surfaces.at(6)->xFrom) + 10 );
-		//MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_PATROL, (int)surfaces.at(14), NULL);
 		break;
 	case CM_CHARACTER_MOVE_X_FROM_TO:
 		if(physic_behavior.MoveXFromTo((Location*)wParam,(Location*)lParam,surfaces)==true)
@@ -135,8 +80,10 @@ void Level::LoadLevel(int level)
 	{
 	case 1:
 		path = "res/tilemap.bmp";
-		data = snowLevel.GetTiles();
-		surfaces = snowLevel.GetSurfaces();
+		data = beach.GetTiles();
+		surfaces = beach.GetSurfaces();
+		beach.LoadGadgets();
+		beach.LoadEnemies();
 		SetLevelLength();
 		break;
 	//case 2:

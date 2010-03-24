@@ -34,6 +34,7 @@ private:
 	int pickedupFish;
 	int pickedupWeapons;
 	int lives;
+	bool hasSnowBoots;
 	World* pWorld;
 	void StartGame();
 	int firstGame;

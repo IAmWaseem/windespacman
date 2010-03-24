@@ -66,6 +66,7 @@ void Level::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 	case CM_GAME_START:
 		levelView.StartGame();
+		MessageQueue::Instance()->SendMessage(CM_LEVEL_BEGIN, NULL, NULL);
 		break;
 	}
 }
@@ -79,10 +80,10 @@ void Level::LoadLevel(int level)
 	{
 	case 1:
 		path = "res/tilemap.bmp";
-		data = snowLevel.GetTiles();
-		surfaces = snowLevel.GetSurfaces();
-		snowLevel.LoadGadgets();
-		snowLevel.LoadEnemies();
+		data = beach.GetTiles();
+		surfaces = beach.GetSurfaces();
+		beach.LoadGadgets();
+		beach.LoadEnemies();
 		SetLevelLength();
 		break;
 	case 2:

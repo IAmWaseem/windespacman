@@ -16,7 +16,7 @@ MovingSurface::MovingSurface(void)
 	this->speed = 0.10f;
 	this->maxDif = 0;
 }
-MovingSurface::MovingSurface(int FromX, int FromY, int ToX, int ToY, int theMaxDif, bool MoveUp)
+MovingSurface::MovingSurface(int FromX, int FromY, int ToX, int ToY, int theMaxDif, bool MoveUp, MovingSurfaceType type)
 {
 	this->initMoveUp = MoveUp;
 	this->isCloud = false;
@@ -31,6 +31,8 @@ MovingSurface::MovingSurface(int FromX, int FromY, int ToX, int ToY, int theMaxD
 	this->yTo = ToY;
 	this->speed = 0.10f;
 	this->maxDif = theMaxDif;
+	msView = new MovingSurfaceView(this, type);
+	msView->RegisterToGraphics();
 }
 
 void MovingSurface::Update(int timeElapsed)
@@ -64,10 +66,6 @@ void MovingSurface::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		case CM_UPDATE:
 			timeElapsed = wParam;
 			this->Update(timeElapsed);
-			break;
-		case CM_LEVEL_LOAD:
-			msView = new MovingSurfaceView();
-			msView->RegisterToGraphics();
 			break;
 	}
 }

@@ -136,6 +136,7 @@ void Walking::SwapPicture()
 
 void Walking::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 {
+	Surface * pSurface;
 	switch(message)
 	{
 	case CM_CHARACTER_IS_FALLING:
@@ -151,7 +152,7 @@ void Walking::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 
 		break;
 	case CM_CHARACTER_BUMPS_INTO:
-		Surface * pSurface = (Surface*)wParam;
+		pSurface = (Surface*)wParam;
 		if(((Character::Instance()->GetLocation()->X + Character::Instance()->GetLocation()->width) >= pSurface->xFrom) && pSurface->xTo > (Character::Instance()->GetLocation()->X + Character::Instance()->GetLocation()->width))
 		{
 			Character::Instance()->GetLocation()->X = pSurface->xFrom - Character::Instance()->GetLocation()->width;
@@ -160,6 +161,15 @@ void Walking::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			Character::Instance()->GetLocation()->X = (float)pSurface->xTo;
 		}
+		break;
+	case CM_CHARACTER_IS_STANDING:
+		pSurface = (Surface*) wParam;
+		if(pSurface->isSurfaceOfDeath)
+		{
+			MessageQueue::Instance()->SendMessage(CM_CHARACTER_KILLED, NULL, NULL);
+			break;
+		}
+		Character::Instance()->GetLocation()->Y = pSurface->yFrom - Character::Instance()->GetLocation()->height;
 		break;
 	}
 }

@@ -17,4 +17,5 @@ protected:
 private:
 	vector<Enemy*> * pEnemies;
 	static EnemyFactory * pInstance;
+	static bool SendMessagesToChildren;
 };

@@ -35,6 +35,17 @@ void PickedUp::PickUp()
 	case GadgetView::GadgetImage::SnowBall:
 		MessageQueue::Instance()->SendMessage(CM_GADGET_SNOWBALL_PICKEDUP, NULL, NULL);
 		break;
+
+	case GadgetView::GadgetImage::ExtraLife:
+		MessageQueue::Instance()->SendMessage(CM_GADGET_EXTRALIFE_PICKEDUP, NULL, NULL);
+		break;
+
+	case GadgetView::GadgetImage::Switch:
+		MessageQueue::Instance()->SendMessage(CM_GADGET_SWITCH_PICKEDUP, NULL, NULL);
+		break;
+	case GadgetView::GadgetImage::SnowBoots:
+		MessageQueue::Instance()->SendMessage(CM_GADGET_SNOWBOOTS_PICKEDUP, NULL, NULL);
+		break;
 	}
 	
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_DESTROY_GADGET, pGadget->GetId(), NULL);

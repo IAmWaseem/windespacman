@@ -391,6 +391,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\MovingSurfaceImages.h"
+					>
+				</File>
+				<File
 					RelativePath=".\MovingSurfaceView.h"
 					>
 				</File>

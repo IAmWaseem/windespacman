@@ -82,9 +82,12 @@ void Character::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		pCharacterView->RegisterToGraphics();
 		MessageQueue::Instance()->SendMessage(CM_CHARACTER_MOVE_X_FROM_TO, (int)pLocation, (int)pLocation);
 		MessageQueue::Instance()->SendMessage(CM_CHARACTER_FALL_Y_FROM_TO, (int)pLocation, (int)pLocation);
+		pickedupWeapons = 0;
 		break;
 
 	case CM_UPDATE:
+		MessageQueue::Instance()->SendMessage(CM_CHARACTER_MOVE_X_FROM_TO, (int)pLocation, (int)pLocation);
+		MessageQueue::Instance()->SendMessage(CM_CHARACTER_FALL_Y_FROM_TO, (int)pLocation, (int)pLocation);
 		timeElapsed = wParam;
 		pCharacterStateMachine->Update(timeElapsed);
 		if(isKilled) {
@@ -149,6 +152,19 @@ void Character::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		}
 		MessageQueue::Instance()->SendMessage(CM_CHARACTER_RESET_POSITION, 50, 200);
 		pCharacterView->RegisterToGraphics();
+		break;
+
+	case CM_GADGET_SNOWBALL_PICKEDUP:
+		pickedupWeapons++;
+		break;
+	case CM_GADGET_EXTRALIFE_PICKEDUP:
+		lives++;
+		break;
+	case CM_GADGET_SWITCH_PICKEDUP:
+		MessageQueue::Instance()->SendMessage(CM_WINTERLEVEL_OPEN_BRIDGE, NULL, NULL);
+		break;
+	case CM_GADGET_SNOWBOOTS_PICKEDUP:
+		hasSnowBoots = true;
 		break;
 	}
 }

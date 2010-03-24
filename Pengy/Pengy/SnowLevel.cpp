@@ -754,11 +754,21 @@ void SnowLevel::LoadGadgets()
 	pGl12->X = 1765;
 	pGl12->Y = 420;
 
-	pGl13->X = 1885;
-	pGl13->Y = 300;
+	pGl13->X = 1890;
+	pGl13->Y = 290;
 
-	pGl14->X = 2005;
-	pGl14->Y = 180;
+	pGl14->X = 2020;
+	pGl14->Y = 165;
+
+	pGl15->X = 2200;
+	pGl15->Y = 540;
+
+	pGl16->X = 2450;
+	pGl16->Y = 480;
+
+	pGl17->X = 2700;
+	pGl17->Y = 540;
+
 
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pGl1, NULL);
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pGl2, NULL);
@@ -777,4 +787,8 @@ void SnowLevel::LoadGadgets()
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_SNOWBALL, (int)pGl12, NULL);
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_SNOWBALL, (int)pGl13, NULL);
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_SNOWBALL, (int)pGl14, NULL);
+
+	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_SNOWBALL, (int)pGl15, NULL);
+	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_SNOWBALL, (int)pGl16, NULL);
+	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_SNOWBALL, (int)pGl17, NULL);
 }

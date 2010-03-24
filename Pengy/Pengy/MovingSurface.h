@@ -5,10 +5,17 @@
 
 class MovingSurfaceView;
 
+enum MovingSurfaceType
+{
+	SurfBoard,
+	Plank
+};
+
 class MovingSurface : public Surface, public Observer
 {
 private:
 	MovingSurfaceView * msView;
+
 public:
 	bool initMoveUp;
 	int maxDif;
@@ -18,6 +25,6 @@ public:
 	void Update(int timeElapsed);
 	void ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam);
 	MovingSurface(void);
-	MovingSurface(int FromX, int FromY, int ToX, int ToY, int theMaxDif, bool MoveUp);
+	MovingSurface(int FromX, int FromY, int ToX, int ToY, int theMaxDif, bool MoveUp, MovingSurfaceType type);
 	~MovingSurface(void);
 };

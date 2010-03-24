@@ -56,10 +56,20 @@ void Idle::Update(int timeElapsed)
 
 void Idle::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 {
+	Surface * pOnSurface;
 	switch(message)
 	{
 	case CM_CHARACTER_IS_FALLING:
 		this->pStateMachine->Transition(this->pStateMachine->pFalling);
+		break;
+	case CM_CHARACTER_IS_STANDING:
+		pOnSurface = (Surface*) wParam;
+		if(pOnSurface->isSurfaceOfDeath)
+		{
+			MessageQueue::Instance()->SendMessage(CM_CHARACTER_KILLED, NULL, NULL);
+			break;
+		}
+		Character::Instance()->GetLocation()->Y = pOnSurface->yFrom - Character::Instance()->GetLocation()->height;
 		break;
 	}
 }

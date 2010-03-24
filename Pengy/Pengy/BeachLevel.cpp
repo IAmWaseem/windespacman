@@ -7,8 +7,8 @@ BeachLevel::BeachLevel(void)
 {
 	pSurfaces = new vector<Surface*>();
 
-	MovingSurface * ms = new MovingSurface(30, 150, 100, 170, 200, true);
-	ms->isCloud = true;
+	MovingSurface * ms = new MovingSurface(2000, 300, 2100, 270, 400, true, MovingSurfaceType::SurfBoard);
+	ms->isCloud = false;
 	MessageQueue::Instance()->Attach(ms);
 	pSurfaces->push_back(ms);
 
@@ -247,6 +247,11 @@ BeachLevel::BeachLevel(void)
 		else
 			first = true;
 	}
+
+	MovingSurface * ms2 = new MovingSurface(2200, 300, 2300, 270, 200, true, MovingSurfaceType::SurfBoard);
+	ms2->isCloud = false;
+	MessageQueue::Instance()->Attach(ms2);
+	pSurfaces->push_back(ms2);
 }
 
 
@@ -605,6 +610,7 @@ void BeachLevel::LoadGadgets()
 	Location * pL7 = new Location();
 	Location * pL8 = new Location();
 	Location * pL9 = new Location();
+	Location * pL10 = new Location();
 
 	// goldfish
 	pL2->X = 420;
@@ -635,6 +641,9 @@ void BeachLevel::LoadGadgets()
 
 	pL9->X = 1700;
 	pL9->Y = 300;
+
+	pL10->X = 2050;
+	pL10->Y = 600;
 	// end of piranha
 
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)pL1, NULL);
@@ -646,4 +655,5 @@ void BeachLevel::LoadGadgets()
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)pL7, NULL);
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)pL8, NULL);
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)pL9, NULL);
+	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)pL10, NULL);
 }

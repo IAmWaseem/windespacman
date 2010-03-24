@@ -13,13 +13,14 @@ using namespace std;
 using namespace dotnetguy;
 
 class MovingSurface;
+enum MovingSurfaceType;
 
 class MovingSurfaceView : public View
 {	
 
 public:
 	MovingSurfaceView(void);
-	MovingSurfaceView(MovingSurface * surface);
+	MovingSurfaceView(MovingSurface * surface, MovingSurfaceType type);
 	~MovingSurfaceView(void);
 	
 	void Draw(HDC hdc, RECT rect, int xFrom, int xTo);
@@ -28,4 +29,7 @@ public:
 
 private:
 	MovingSurface * pSurface;
+	HANDLE currentBitmap;
+	HANDLE currentMask;
+	int* width_height;
 };

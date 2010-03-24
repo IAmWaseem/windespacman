@@ -94,3 +94,8 @@ void EnemyFactory::StartGame()
 	}
 	pEnemies->clear();
 }
+
+vector<Enemy*> * EnemyFactory::GetEnemies()
+{
+	return pEnemies;
+}

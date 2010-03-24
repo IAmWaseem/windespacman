@@ -1,6 +1,8 @@
+#pragma once
 #include "Character.h"
 #include "CharacterView.h"
 #include <iostream>
+#include "EnemyFactory.h"
 using namespace std;
 
 Character* Character::pInstance = NULL;
@@ -166,7 +168,26 @@ void Character::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	case CM_GADGET_SNOWBOOTS_PICKEDUP:
 		hasSnowBoots = true;
 		break;
+	case CM_CHARACTER_HIT_BY_ROTTEN_FISH:
+		pickedupFish -= 2;
+		if(pickedupFish < 0)
+		{
+			pickedupFish = 0;
+			MessageQueue::Instance()->SendMessage(CM_CHARACTER_KILLED, NULL, NULL);
+		}
+		break;
+	case CM_CHARACTER_THROW:
+		Throw();
+		break;
 	}
+}
+
+void Character::Throw()
+{
+	vector<Enemy*> * enemies = EnemyFactory::Instance()->GetEnemies();
+	vector<Enemy*>::iterator iterator = enemies->begin();
+
+	int shootingDistance = 400;
 }
 
 Character* Character::Instance()

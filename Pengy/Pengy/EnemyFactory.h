@@ -13,6 +13,7 @@ public:
 	void ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam);
 	void StartGame();
 	static bool SendMessagesToChildren;
+	vector<Enemy*> * GetEnemies();
 protected:
 	EnemyFactory(void);
 private:

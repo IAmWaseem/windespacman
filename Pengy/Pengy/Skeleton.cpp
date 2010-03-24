@@ -101,6 +101,9 @@ LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				else
 					Renderer::ShowDebug = true;
 				break;
+			case 17:
+				pMessageQueue->Instance()->SendMessage(CM_CHARACTER_THROW, NULL, NULL);
+				break;
 		}
 		break;
 	case WM_COMMAND:  

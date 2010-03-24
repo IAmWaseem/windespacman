@@ -6,6 +6,7 @@
 #include "direction.h"
 #include <ctime>
 #include <cstdlib>
+#include "character.h"
 
 BeachBallAttack::BeachBallAttack(BeachBall * pBeachBall, BeachBallStateMachine * pBeachBallStateMachine):BeachBallState(pBeachBall, pBeachBallStateMachine)
 {
@@ -45,7 +46,7 @@ void BeachBallAttack::Throw()
 		pWl->Y = pBeachBall->GetPengyLocation()->Y - (0.5 * pBeachBall->GetPengyLocation()->height);
 		if(pWl->Y > pBeachBall->GetLocation()->Y)
 			pWl->Y = pBeachBall->GetLocation()->Y;
-		Weapon * weapon = new Weapon(pWl, GadgetView::GadgetImage::RottenFish, Direction::Left, 0.4, 500);
+		Weapon * weapon = new Weapon(pWl, GadgetView::GadgetImage::RottenFish, Direction::Left, 0.4, 500, Character::Instance());
 		throws = 0;
 		throwsInterval = RandomIntBetween(5, 20);
 	}

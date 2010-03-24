@@ -17,7 +17,7 @@ public:
 	void Remove();
 	bool IsRemoved();
 	GadgetView::GadgetImage GetGadgetImage();
-private:
+protected:
 	GadgetView * pGadgetView;
 	GadgetStateMachine * pGadgetStateMachine;
 	Location * pLocation;

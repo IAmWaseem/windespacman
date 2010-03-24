@@ -62,12 +62,15 @@ void EnemyFactory::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	if(EnemyFactory::SendMessagesToChildren)
 	{
 		vector<Enemy*>::iterator iterator = pEnemies->begin();
-		while(iterator != pEnemies->end())
+		while(iterator != pEnemies->end()&& EnemyFactory::SendMessagesToChildren)
 		{
 			pEnemy = *iterator;
 			pEnemy->ReceiveMessage(message, wParam, lParam);
 			if(!EnemyFactory::SendMessagesToChildren)
-				return;
+			{
+				EnemyFactory::SendMessagesToChildren = true;
+				break;
+			}
 			iterator++;
 		}
 	}

@@ -12,10 +12,10 @@ public:
 	~EnemyFactory(void);
 	void ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam);
 	void StartGame();
+	static bool SendMessagesToChildren;
 protected:
 	EnemyFactory(void);
 private:
 	vector<Enemy*> * pEnemies;
 	static EnemyFactory * pInstance;
-	static bool SendMessagesToChildren;
 };

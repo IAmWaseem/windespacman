@@ -2,6 +2,7 @@
 #include "enemy.h"
 #include "surface.h"
 #include "location.h"
+#include "EnemyFactory.h"
 
 class WaldoStateMachine;
 

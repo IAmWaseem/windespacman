@@ -64,7 +64,7 @@ void CharacterView::Draw(HDC hdc, RECT rect, int xFrom, int xTo)
 	string temp3; 
 	temp3 = lives.str();
 	livesLeft = temp3.c_str();
-	TextOut(hdc, 15, 115, livesLeft, strlen(livesLeft));
+	TextOut(hdc, 15, 115, livesLeft, strlen(livesLeft));		
 
 #pragma region debug
 	if(Renderer::ShowDebug)
@@ -173,5 +173,5 @@ CharacterView::CharacterImage CharacterView::GetCurrentImage()
 
 void CharacterView::ChangeCurrentImage(CharacterImage image)
 {
-	currentImage = image;
+	 currentImage = image;
 }

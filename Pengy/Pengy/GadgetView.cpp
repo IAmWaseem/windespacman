@@ -41,7 +41,11 @@ GadgetView::GadgetView(GadgetImage image, Gadget * gadget)
 		break;
 
 	case GadgetImage::RottenFish:
-
+		bitmap = LoadImage(NULL, ROTTENFISH_IMAGE, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+		b->LoadDIBFile(ROTTENFISH_IMAGE);
+		width_height[0] = b->Width();
+		width_height[1] = b->Height();
+		mask = CreateBitmapMask(bitmap, RGB(0, 0, 0), width_height[0], width_height[1]);
 		break;
 
 	case GadgetImage::Powerup:

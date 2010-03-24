@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="Pengy"
 	ProjectGUID="{D9792256-FBF2-4E04-A095-D180715C6649}"
 	RootNamespace="Pengy"
@@ -340,6 +340,10 @@
 			Name="View"
 			>
 			<File
+				RelativePath=".\BeachBallView.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Bitmap.cpp"
 				>
 			</File>
@@ -374,6 +378,10 @@
 			<Filter
 				Name="Headers"
 				>
+				<File
+					RelativePath=".\BeachBallView.h"
+					>
+				</File>
 				<File
 					RelativePath=".\Bitmap.h"
 					>
@@ -467,6 +475,10 @@
 				RelativePath=".\GadgetFactory.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\Weapon.cpp"
+				>
+			</File>
 			<Filter
 				Name="Headers"
 				>
@@ -480,6 +492,10 @@
 				</File>
 				<File
 					RelativePath=".\GadgetImages.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Weapon.h"
 					>
 				</File>
 			</Filter>
@@ -544,6 +560,10 @@
 			Name="Enemies"
 			>
 			<File
+				RelativePath=".\BeachBall.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Enemy.cpp"
 				>
 			</File>
@@ -558,6 +578,22 @@
 			<Filter
 				Name="States"
 				>
+				<File
+					RelativePath=".\BeachBallAttack.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\BeachBallPatrol.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\BeachBallState.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\BeachBallStateMachine.cpp"
+					>
+				</File>
 				<File
 					RelativePath=".\WaldoAttack.cpp"
 					>
@@ -581,6 +617,22 @@
 				<Filter
 					Name="Header"
 					>
+					<File
+						RelativePath=".\BeachBallAttack.h"
+						>
+					</File>
+					<File
+						RelativePath=".\BeachBallPatrol.h"
+						>
+					</File>
+					<File
+						RelativePath=".\BeachBallState.h"
+						>
+					</File>
+					<File
+						RelativePath=".\BeachBallStateMachine.h"
+						>
+					</File>
 					<File
 						RelativePath=".\WaldoAttack.h"
 						>
@@ -606,6 +658,10 @@
 			<Filter
 				Name="Headers"
 				>
+				<File
+					RelativePath=".\BeachBall.h"
+					>
+				</File>
 				<File
 					RelativePath=".\Enemy.h"
 					>

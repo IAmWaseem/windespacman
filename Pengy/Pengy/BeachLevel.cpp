@@ -1,6 +1,6 @@
 #include "BeachLevel.h"
 #include "Location.h"
-
+#include "BeachBall.h"
 
 
 BeachLevel::BeachLevel(void)
@@ -248,7 +248,7 @@ BeachLevel::BeachLevel(void)
 			first = true;
 	}
 
-	MovingSurface * ms2 = new MovingSurface(2200, 300, 2300, 270, 200, true, MovingSurfaceType::SurfBoard);
+	MovingSurface * ms2 = new MovingSurface(2200, 300, 2300, 270, 300, true, MovingSurfaceType::SurfBoard);
 	ms2->isCloud = false;
 	MessageQueue::Instance()->Attach(ms2);
 	pSurfaces->push_back(ms2);
@@ -595,8 +595,9 @@ void BeachLevel::LoadEnemies()
 	MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_WANDER, (int)pSurfaces->at(6), (pSurfaces->at(6)->xTo) - 10 );
 	MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_WANDER, (int)pSurfaces->at(6), (pSurfaces->at(6)->xFrom) + 10 );
 	MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_PATROL, (int)pSurfaces->at(14), NULL);
-
-	MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_SUPERWALDO_WANDER, (int)pSurfaces->at(25), (pSurfaces->at(25)->xFrom + pSurfaces->at(25)->xTo) / 4 + 10 );
+	
+	//MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_SUPERWALDO_WANDER, (int)pSurfaces->at(25), (pSurfaces->at(25)->xFrom + pSurfaces->at(25)->xTo) / 4 + 10 );
+	MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_BEACHBALL, (int)pSurfaces->at(25), (pSurfaces->at(25)->xFrom + pSurfaces->at(25)->xTo) / 4 + 10 );
 }
 
 void BeachLevel::LoadGadgets()

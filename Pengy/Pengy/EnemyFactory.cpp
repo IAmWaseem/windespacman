@@ -3,6 +3,7 @@
 #include "Location.h"
 #include "Waldo.h"
 #include "Enemy.h"
+#include "BeachBall.h"
 
 EnemyFactory * EnemyFactory::pInstance = NULL;
 bool EnemyFactory::SendMessagesToChildren = false;
@@ -38,6 +39,12 @@ void EnemyFactory::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	case CM_ENEMYFACTORY_CREATE_WALDO_PATROL:
 		pSurface = (Surface*)wParam;
 		pEnemy = new Waldo(pSurface);
+		pEnemies->push_back(pEnemy);
+		break;
+	case CM_ENEMYFACTORY_CREATE_BEACHBALL:
+		pSurface = (Surface*)wParam;
+		x = lParam;
+		pEnemy = new BeachBall(pSurface);
 		pEnemies->push_back(pEnemy);
 		break;
 	case CM_ENEMYFACTORY_CREATE_WALDO_WANDER:

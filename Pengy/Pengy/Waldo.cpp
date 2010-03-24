@@ -122,9 +122,10 @@ void Waldo::CheckPengyCollision()
 			//extra waldo zodat je naar volgend level gaat
 			if(superWaldo)
 			{
-				MessageQueue::Instance()->SendMessage(CM_LEVEL_END, NULL, NULL);
+				//MessageQueue::Instance()->SendMessage(CM_LEVEL_END, NULL, NULL);
+				EnemyFactory::SendMessagesToChildren = false;
 				MessageQueue::Instance()->SendMessage(CM_LEVEL_START, NULL, NULL);
-				MessageQueue::Instance()->SendMessage(CM_LEVEL_BEGIN, NULL, NULL);
+				//MessageQueue::Instance()->SendMessage(CM_LEVEL_BEGIN, NULL, NULL);
 			}
 		}
 		else

@@ -93,6 +93,7 @@ void Level::LoadLevel(int level)
 		snowLevel.LoadGadgets();
 		snowLevel.LoadEnemies();
 		SetLevelLength();
+		//MessageQueue::Instance()->SendMessage(CM_LEVEL_BEGIN, NULL, NULL);
 		break;
 	//case 3:
 	//	path = "res/Summer.bmp";

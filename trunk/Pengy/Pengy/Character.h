@@ -38,4 +38,5 @@ private:
 	World* pWorld;
 	void StartGame();
 	int firstGame;
+	void Throw();
 };

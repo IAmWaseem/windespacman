@@ -12,7 +12,7 @@ public:
 	vector<Surface*> GetSurfaces();
 	vector<int*> GetTiles();
 	void LoadEnemies();
-	vector<Surface*> pSlopes;
+	vector<Surface*> * pSlopes;
 private:
 	Slopes cal;
 	Surface * pGround1;

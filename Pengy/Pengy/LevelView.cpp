@@ -135,7 +135,7 @@ void LevelView::SetSurface(vector<Surface*> * theSurface)
 {
 	vector<Surface*>::iterator iterator = theSurface->begin();
 
-	if(surfaces == NULL)
+	//if(surfaces == NULL)
 		surfaces = new vector<Surface *>();
 
 	while(iterator != theSurface->end())
@@ -152,7 +152,7 @@ void LevelView::SetTiles(vector<Tile> tiles, LPCSTR path)
 {
 	tilemapPath = path;
 	vector<Tile>::iterator iterator = tiles.begin();
-	if(myTiles == NULL)
+	//if(myTiles == NULL)
 		myTiles = new vector<Tile *>();
 
 	while(iterator!=tiles.end())

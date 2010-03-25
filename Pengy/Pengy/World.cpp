@@ -1,5 +1,7 @@
 #include "World.h"
 #include "Menu.h"
+#include "GadgetFactory.h"
+#include "EnemyFactory.h"
 
 World* World::pInstance = NULL;
 
@@ -50,6 +52,8 @@ void World::LoadNextLevel()
 	if(level<3)
 	{
 		level++;
+		GadgetFactory* pGadgetFactory;
+		pGadgetFactory->Instance()->StartGame();
 		pMessageQueue->Instance()->SendMessage(CM_LEVEL_LOAD, NULL, NULL);
 	}
 }

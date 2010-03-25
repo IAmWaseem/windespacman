@@ -56,6 +56,7 @@ vector<Surface*> SnowLevel::GetSurfaces()
 	slope1->isSlope=1;
 	slope1->SlopeCoefficientA = cal.CalculateSlopCoeffA(slope1->xFrom,slope1->yFrom,slope1->xTo,slope1->yTo);
 	slope1->SlopeCoefficientB = cal.CalculateSlopCoeffB(slope1->xFrom,slope1->yFrom,slope1->SlopeCoefficientA);
+	pSlopes.push_back(slope1);
 	surfaces.push_back(slope1);
 
 	Surface * slope2 = new Surface();
@@ -66,6 +67,7 @@ vector<Surface*> SnowLevel::GetSurfaces()
 	slope2->isSlope=1;
 	slope2->SlopeCoefficientA = cal.CalculateSlopCoeffA(slope2->xFrom,slope2->yFrom,slope2->xTo,slope2->yTo);
 	slope2->SlopeCoefficientB = cal.CalculateSlopCoeffB(slope2->xFrom,slope2->yFrom,slope2->SlopeCoefficientA);
+	pSlopes.push_back(slope2);
 	surfaces.push_back(slope2);
 
 	Surface * slope3 = new Surface();
@@ -76,6 +78,7 @@ vector<Surface*> SnowLevel::GetSurfaces()
 	slope3->isSlope=1;
 	slope3->SlopeCoefficientA = cal.CalculateSlopCoeffA(slope3->xFrom,slope3->yFrom,slope3->xTo,slope3->yTo);
 	slope3->SlopeCoefficientB = cal.CalculateSlopCoeffB(slope3->xFrom,slope3->yFrom,slope3->SlopeCoefficientA);
+	pSlopes.push_back(slope3);
 	surfaces.push_back(slope3);
 
 	Surface * slope4 = new Surface();
@@ -86,6 +89,7 @@ vector<Surface*> SnowLevel::GetSurfaces()
 	slope4->isSlope=1;
 	slope4->SlopeCoefficientA = cal.CalculateSlopCoeffA(slope4->xFrom,slope4->yFrom,slope4->xTo,slope4->yTo);
 	slope4->SlopeCoefficientB = cal.CalculateSlopCoeffB(slope4->xFrom,slope4->yFrom,slope4->SlopeCoefficientA);
+	pSlopes.push_back(slope4);
 	surfaces.push_back(slope4);
 
 	Surface * slope5 = new Surface();
@@ -96,6 +100,7 @@ vector<Surface*> SnowLevel::GetSurfaces()
 	slope5->isSlope=1;
 	slope5->SlopeCoefficientA = cal.CalculateSlopCoeffA(slope5->xFrom,slope5->yFrom,slope5->xTo,slope5->yTo);
 	slope5->SlopeCoefficientB = cal.CalculateSlopCoeffB(slope5->xFrom,slope5->yFrom,slope5->SlopeCoefficientA);
+	pSlopes.push_back(slope5);
 	surfaces.push_back(slope5);
 
 	Surface * slope6 = new Surface();
@@ -106,6 +111,7 @@ vector<Surface*> SnowLevel::GetSurfaces()
 	slope6->isSlope=1;
 	slope6->SlopeCoefficientA = cal.CalculateSlopCoeffA(slope6->xFrom,slope6->yFrom,slope6->xTo,slope6->yTo);
 	slope6->SlopeCoefficientB = cal.CalculateSlopCoeffB(slope6->xFrom,slope6->yFrom,slope6->SlopeCoefficientA);
+	pSlopes.push_back(slope6);
 	surfaces.push_back(slope6);
 
 	Surface * slopeTopBar = new Surface();

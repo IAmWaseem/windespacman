@@ -43,10 +43,70 @@ vector<Surface*> SnowLevel::GetSurfaces()
 
 	Surface * slopeTop = new Surface();
 	slopeTop->xFrom = 0;
-	slopeTop->xTo = 525;
+	slopeTop->xTo = 475;
 	slopeTop->yFrom = 325;
 	slopeTop->yTo = 674;
 	surfaces.push_back(slopeTop);
+
+	Surface * slope1 = new Surface();
+	slope1->xFrom = 475;
+	slope1->xTo = 525;
+	slope1->yFrom = 326;
+	slope1->yTo = 340;
+	slope1->isSlope=1;
+	slope1->SlopeCoefficientA = cal.CalculateSlopCoeffA(slope1->xFrom,slope1->yFrom,slope1->xTo,slope1->yTo);
+	slope1->SlopeCoefficientB = cal.CalculateSlopCoeffB(slope1->xFrom,slope1->yFrom,slope1->SlopeCoefficientA);
+	surfaces.push_back(slope1);
+
+	Surface * slope2 = new Surface();
+	slope2->xFrom = 525;
+	slope2->xTo = 565;
+	slope2->yFrom = 340;
+	slope2->yTo = 365;
+	slope2->isSlope=1;
+	slope2->SlopeCoefficientA = cal.CalculateSlopCoeffA(slope2->xFrom,slope2->yFrom,slope2->xTo,slope2->yTo);
+	slope2->SlopeCoefficientB = cal.CalculateSlopCoeffB(slope2->xFrom,slope2->yFrom,slope2->SlopeCoefficientA);
+	surfaces.push_back(slope2);
+
+	Surface * slope3 = new Surface();
+	slope3->xFrom = 565;
+	slope3->xTo = 640;
+	slope3->yFrom = 365;
+	slope3->yTo = 440;
+	slope3->isSlope=1;
+	slope3->SlopeCoefficientA = cal.CalculateSlopCoeffA(slope3->xFrom,slope3->yFrom,slope3->xTo,slope3->yTo);
+	slope3->SlopeCoefficientB = cal.CalculateSlopCoeffB(slope3->xFrom,slope3->yFrom,slope3->SlopeCoefficientA);
+	surfaces.push_back(slope3);
+
+	Surface * slope4 = new Surface();
+	slope4->xFrom = 640;
+	slope4->xTo = 790;
+	slope4->yFrom = 440;
+	slope4->yTo = 528;
+	slope4->isSlope=1;
+	slope4->SlopeCoefficientA = cal.CalculateSlopCoeffA(slope4->xFrom,slope4->yFrom,slope4->xTo,slope4->yTo);
+	slope4->SlopeCoefficientB = cal.CalculateSlopCoeffB(slope4->xFrom,slope4->yFrom,slope4->SlopeCoefficientA);
+	surfaces.push_back(slope4);
+
+	Surface * slope5 = new Surface();
+	slope5->xFrom = 790;
+	slope5->xTo = 875;
+	slope5->yFrom = 528;
+	slope5->yTo = 562;
+	slope5->isSlope=1;
+	slope5->SlopeCoefficientA = cal.CalculateSlopCoeffA(slope5->xFrom,slope5->yFrom,slope5->xTo,slope5->yTo);
+	slope5->SlopeCoefficientB = cal.CalculateSlopCoeffB(slope5->xFrom,slope5->yFrom,slope5->SlopeCoefficientA);
+	surfaces.push_back(slope5);
+
+	Surface * slope6 = new Surface();
+	slope6->xFrom = 875;
+	slope6->xTo = 960;
+	slope6->yFrom = 562;
+	slope6->yTo = 575;
+	slope6->isSlope=1;
+	slope6->SlopeCoefficientA = cal.CalculateSlopCoeffA(slope6->xFrom,slope6->yFrom,slope6->xTo,slope6->yTo);
+	slope6->SlopeCoefficientB = cal.CalculateSlopCoeffB(slope6->xFrom,slope6->yFrom,slope6->SlopeCoefficientA);
+	surfaces.push_back(slope6);
 
 	Surface * slopeTopBar = new Surface();
 	slopeTopBar->xFrom = 130;
@@ -60,6 +120,7 @@ vector<Surface*> SnowLevel::GetSurfaces()
 	bar2->xTo = 875;
 	bar2->yFrom = 395;
 	bar2->yTo = 425;
+	bar2->isCloud = true;
 	surfaces.push_back(bar2);
 
 	pGround1 = new Surface();

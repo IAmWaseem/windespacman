@@ -13,6 +13,8 @@ public:
 	vector<int*> GetTiles();
 	void LoadEnemies();
 private:
+	Slopes cal;
+
 	Surface * pGround1;
 	Surface * pGround2;
 	Surface * pIce;

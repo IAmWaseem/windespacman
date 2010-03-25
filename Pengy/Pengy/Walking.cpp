@@ -169,6 +169,11 @@ void Walking::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 			MessageQueue::Instance()->SendMessage(CM_CHARACTER_KILLED, NULL, NULL);
 			break;
 		}
+		/*if(pOnSurface->isSlope != 0)
+		{
+			MessageQueue::Instance()->SendMessage(CM_IS_SLOPING, lParam, NULL);
+			break;
+		}*/
 		Character::Instance()->GetLocation()->Y = pSurface->yFrom - Character::Instance()->GetLocation()->height;
 		break;
 	}

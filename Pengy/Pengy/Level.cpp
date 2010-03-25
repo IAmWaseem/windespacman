@@ -57,7 +57,8 @@ void Level::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		if(physic_behavior.FallYFromTo((Location*)wParam,(Location*)lParam,surfaces)==false)
 			MessageQueue::Instance()->SendMessage(CM_CHARACTER_IS_FALLING, NULL, NULL);
 		else
-			MessageQueue::Instance()->SendMessage(CM_CHARACTER_IS_STANDING, (int)physic_behavior.pOnSurfaceFinalFall, NULL);
+			// problems with sending massage :(
+			MessageQueue::Instance()->SendMessage(CM_CHARACTER_IS_STANDING, (int)physic_behavior.pOnSurfaceFinalFall,(int)snowLevel.pSlopes);
 		break;
 
 	case CM_CHARACTER_JUMP_Y_FROM_TO:

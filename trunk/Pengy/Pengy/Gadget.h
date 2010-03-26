@@ -7,7 +7,7 @@
 class Gadget
 {
 public:
-	~Gadget(void);
+	virtual ~Gadget(void);
 	Gadget(int id, Location * pLocation, GadgetView::GadgetImage gadgetImage);
 	void ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam);
 	void Update();

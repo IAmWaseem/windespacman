@@ -26,8 +26,6 @@ Weapon::Weapon(Location * pLocation, GadgetView::GadgetImage gadgetImage, Direct
 Weapon::~Weapon(void)
 {
 	MessageQueue::Instance()->Detach(this);
-	this->pGadgetView->UnRegisterToGraphics();
-	delete this->pGadgetView;
 }
 
 void Weapon::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)

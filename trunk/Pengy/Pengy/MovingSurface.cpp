@@ -72,4 +72,7 @@ void MovingSurface::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 
 MovingSurface::~MovingSurface(void)
 {
+	msView->UnRegisterToGraphics();
+	MessageQueue::Instance()->Detach(this);
+	delete msView;
 }

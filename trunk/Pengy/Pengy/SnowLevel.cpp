@@ -12,6 +12,7 @@ SnowLevel::~SnowLevel(void)
 vector<Surface*> SnowLevel::GetSurfaces()
 {
 	vector<Surface*> surfaces;
+	pSlopes = new vector<Surface*>();
 
 	Surface * borderBottom = new Surface();
 	borderBottom->xFrom = 0;

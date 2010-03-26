@@ -20,5 +20,6 @@ public:
 	virtual void LoadEnemies() = 0;
     virtual vector<Surface*> GetSurfaces() = 0;
 	virtual vector<int*> GetTiles() = 0;
-    ~LevelData();
+    virtual ~LevelData();
+	vector<Surface*> * pSlopes;
 };

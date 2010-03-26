@@ -1,6 +1,7 @@
 #include "Enemy.h"
 #include "messages.h"
 #include "MessageQueue.h"
+#include "View.h"
 
 Enemy::Enemy(Surface * pSurface)
 {
@@ -8,12 +9,12 @@ Enemy::Enemy(Surface * pSurface)
 	this->pLocation = new Location();
 	this->health = 100;
 	this->isAlive = true;
+	this->isDeleted = false;
 }
 
 
 Enemy::~Enemy(void)
 {
-
 }
 
 Location * Enemy::GetLocation()
@@ -60,4 +61,19 @@ void Enemy::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	if(this->isAlive)
 		this->ReceiveMessageInternal(message, wParam, lParam);
 
+}
+
+void Enemy::Delete()
+{
+	isDeleted = true;
+	if(isAlive)
+	{
+		pView->UnRegisterToGraphics();
+		delete pView;
+	}
+}
+
+bool Enemy::IsDeleted()
+{
+	return isDeleted;
 }

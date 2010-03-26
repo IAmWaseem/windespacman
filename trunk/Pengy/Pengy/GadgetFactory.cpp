@@ -64,6 +64,9 @@ void GadgetFactory::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		pGadget = new Gadget(pGadgets->size(), pLocation, GadgetView::GadgetImage::SnowBoots);
 		pGadgets->push_back(pGadget);
 		break;
+	case CM_GADGETFACTORY_CLEAR:
+		pGadgets->clear();
+		break;
 
 	default:
 		vector<Gadget*>::iterator iterator = pGadgets->begin();

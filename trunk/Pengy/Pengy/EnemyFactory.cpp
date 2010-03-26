@@ -34,7 +34,7 @@ void EnemyFactory::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	switch(message)
 	{
 	case CM_GAME_START:
-		StartGame();
+		//StartGame();
 		break;
 	case CM_ENEMYFACTORY_CREATE_WALDO_PATROL:
 		pSurface = (Surface*)wParam;
@@ -64,6 +64,12 @@ void EnemyFactory::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 	case CM_LEVEL_BEGIN:
 		EnemyFactory::SendMessagesToChildren = true;
+	case CM_ENEMYFACTORY_CLEAR:
+		StartGame();
+		break;
+	case CM_UPDATE:
+		CleanUp();
+		break;
 	}
 	
 	if(EnemyFactory::SendMessagesToChildren)
@@ -85,17 +91,38 @@ void EnemyFactory::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 void EnemyFactory::StartGame()
 {
 	Enemy * pEnemy;
-	vector<Enemy*>::iterator iterator = pEnemies->begin();
-	while(iterator != pEnemies->end())
+	for(int n=0; n<pEnemies->size(); n++)
 	{
-		pEnemy = *iterator;
-		delete pEnemy;
-		iterator++;
+		pEnemy = pEnemies->at(n);
+		pEnemy->Delete();
 	}
-	pEnemies->clear();
 }
 
 vector<Enemy*> * EnemyFactory::GetEnemies()
 {
 	return pEnemies;
+}
+
+void EnemyFactory::CleanUp()
+{
+	vector<Enemy*> * newEnemies = new vector<Enemy*>();
+	Enemy * pEnemy;
+	for(int n=0; n<pEnemies->size(); n++)
+	{
+		pEnemy = pEnemies->at(n);
+		if(pEnemy->IsDeleted())
+		{
+			delete pEnemy;
+		}
+		else
+		{
+			newEnemies->push_back(pEnemy);
+		}
+	}
+	if(pEnemies->size() > newEnemies->size())
+	{
+		int x = 8;
+	}
+	pEnemies->clear();
+	pEnemies = newEnemies;
 }

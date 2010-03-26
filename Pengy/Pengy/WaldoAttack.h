@@ -12,4 +12,8 @@ private:
 	float speed;
 	bool IsPengyOnMySurface();
 	bool IsPengyTooFarAway();
+	void Throw();
+	int throws;
+	int throwsInterval;
+	int RandomIntBetween(int a, int b);
 };

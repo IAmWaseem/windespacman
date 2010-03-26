@@ -64,6 +64,11 @@ void GadgetFactory::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		pGadget = new Gadget(pGadgets->size(), pLocation, GadgetView::GadgetImage::SnowBoots);
 		pGadgets->push_back(pGadget);
 		break;
+	case CM_GADGETFACTORY_CREATE_ROTTENFISH:
+		pLocation = (Location*)wParam;
+		pGadget = new Gadget(pGadgets->size(), pLocation, GadgetView::GadgetImage::RottenFish);
+		pGadgets->push_back(pGadget);
+		break;
 	case CM_GADGETFACTORY_CLEAR:
 		pGadgets->clear();
 		break;

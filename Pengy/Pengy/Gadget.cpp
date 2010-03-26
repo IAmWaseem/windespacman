@@ -2,8 +2,6 @@
 
 Gadget::Gadget(int id, Location * pLocation, GadgetView::GadgetImage gadgetImage)
 {
-	pGadgetView = new GadgetView(gadgetImage, this);
-	pGadgetView->RegisterToGraphics();
 
 	if(pLocation->width <= 0)
 	{
@@ -20,6 +18,8 @@ Gadget::Gadget(int id, Location * pLocation, GadgetView::GadgetImage gadgetImage
 	this->id = id;
 	isRemoved = false;
 	this->gadgetImage = gadgetImage;
+	pGadgetView = new GadgetView(gadgetImage, this);
+	pGadgetView->RegisterToGraphics();
 }
 
 int Gadget::GetId()

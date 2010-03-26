@@ -20,6 +20,8 @@ GadgetView::GadgetView(GadgetImage image, Gadget * gadget)
 		b->LoadDIBFile(GOLDFISH_IMAGE);
 		width_height[0] = b->Width();
 		width_height[1] = b->Height();
+		gadget->GetLocation()->height = b->Height();
+		gadget->GetLocation()->width = b->Width();
 		mask = CreateBitmapMask(bitmap, RGB(0, 0, 0), width_height[0], width_height[1]);
 		break;
 	case GadgetImage::SnowBall:
@@ -45,6 +47,8 @@ GadgetView::GadgetView(GadgetImage image, Gadget * gadget)
 		b->LoadDIBFile(ROTTENFISH_IMAGE);
 		width_height[0] = b->Width();
 		width_height[1] = b->Height();
+		gadget->GetLocation()->height = b->Height();
+		gadget->GetLocation()->width = b->Width();
 		mask = CreateBitmapMask(bitmap, RGB(0, 0, 0), width_height[0], width_height[1]);
 		break;
 

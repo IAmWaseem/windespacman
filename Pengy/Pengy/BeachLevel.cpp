@@ -5,9 +5,21 @@
 
 BeachLevel::BeachLevel(void)
 {
+}
+
+
+BeachLevel::~BeachLevel(void)
+{
+	delete ms;
+	delete ms2;
+	delete pSurfaces;
+}
+
+vector<Surface*> BeachLevel::GetSurfaces()
+{
 	pSurfaces = new vector<Surface*>();
 
-	MovingSurface * ms = new MovingSurface(2000, 300, 2100, 270, 400, true, MovingSurfaceType::SurfBoard);
+	ms = new MovingSurface(2000, 300, 2100, 270, 400, true, MovingSurfaceType::SurfBoard);
 	ms->isCloud = false;
 	MessageQueue::Instance()->Attach(ms);
 	pSurfaces->push_back(ms);
@@ -248,19 +260,10 @@ BeachLevel::BeachLevel(void)
 			first = true;
 	}
 
-	MovingSurface * ms2 = new MovingSurface(2200, 300, 2300, 270, 300, true, MovingSurfaceType::SurfBoard);
+	ms2 = new MovingSurface(2200, 300, 2300, 270, 300, true, MovingSurfaceType::SurfBoard);
 	ms2->isCloud = false;
 	MessageQueue::Instance()->Attach(ms2);
 	pSurfaces->push_back(ms2);
-}
-
-
-BeachLevel::~BeachLevel(void)
-{
-}
-
-vector<Surface*> BeachLevel::GetSurfaces()
-{
 	return *pSurfaces;
 }
 
@@ -591,8 +594,6 @@ vector<int*> BeachLevel::GetTiles()
 
 void BeachLevel::LoadEnemies()
 {
-	
-
 	MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_WANDER, (int)pSurfaces->at(6), (pSurfaces->at(6)->xFrom + pSurfaces->at(6)->xTo) / 2 + 10 );
 	MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_WANDER, (int)pSurfaces->at(6), (pSurfaces->at(6)->xTo) - 10 );
 	MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_WANDER, (int)pSurfaces->at(6), (pSurfaces->at(6)->xFrom) + 10 );

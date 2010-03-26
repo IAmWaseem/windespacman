@@ -30,6 +30,7 @@ int Gadget::GetId()
 Gadget::~Gadget(void)
 {
 	pGadgetView->UnRegisterToGraphics();
+	delete pGadgetView;
 }
 
 void Gadget::Update()

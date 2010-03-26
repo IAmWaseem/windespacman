@@ -4,7 +4,7 @@
 #include "MessageQueue.h"
 #include "LevelView.h"
 #include "Location.h"
-#include "BeachLevel.h"
+#include "BeachLevel.h"d
 #include "World.h"
 #include "Physics.h"
 #include "MovingSurface.h"
@@ -24,8 +24,7 @@ private:
 	vector<MovingSurface*> movingSurfaces;
     static Level* pInstance;
 	LevelView levelView;
-	BeachLevel beach;
-	SnowLevel snowLevel;
+	LevelData * currentLevel;
 	Physics physic_behavior;
 	int levelLength;
 	void SetLevelLength();

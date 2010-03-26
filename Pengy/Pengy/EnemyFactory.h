@@ -19,4 +19,5 @@ protected:
 private:
 	vector<Enemy*> * pEnemies;
 	static EnemyFactory * pInstance;
+	void CleanUp();
 };

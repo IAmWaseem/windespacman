@@ -15,7 +15,7 @@ Level* Level::Instance(){
 
 Level::Level()
 { 
-
+	currentLevel = new BeachLevel();
 }
 
 void Level::SetLevelLength()
@@ -58,7 +58,7 @@ void Level::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 			MessageQueue::Instance()->SendMessage(CM_CHARACTER_IS_FALLING, NULL, NULL);
 		else
 			// problems with sending massage :(
-			MessageQueue::Instance()->SendMessage(CM_CHARACTER_IS_STANDING, (int)physic_behavior.pOnSurfaceFinalFall,(int)snowLevel.pSlopes);
+			MessageQueue::Instance()->SendMessage(CM_CHARACTER_IS_STANDING, (int)physic_behavior.pOnSurfaceFinalFall,(int)currentLevel->pSlopes);
 		break;
 
 	case CM_CHARACTER_JUMP_Y_FROM_TO:
@@ -81,18 +81,20 @@ void Level::LoadLevel(int level)
 	{
 	case 1:
 		path = "res/tilemap.bmp";
-		data = beach.GetTiles();
-		surfaces = beach.GetSurfaces();
-		beach.LoadGadgets();
-		beach.LoadEnemies();
+		data = currentLevel->GetTiles();
+		surfaces = currentLevel->GetSurfaces();
+		currentLevel->LoadGadgets();
+		currentLevel->LoadEnemies();
 		SetLevelLength();
 		break;
 	case 2:
+		delete currentLevel;
+		currentLevel = new SnowLevel();
 		path = "res/tilemap.bmp";
-		data = snowLevel.GetTiles();
-		surfaces = snowLevel.GetSurfaces();
-		snowLevel.LoadGadgets();
-		snowLevel.LoadEnemies();
+		data = currentLevel->GetTiles();
+		surfaces = currentLevel->GetSurfaces();
+		currentLevel->LoadGadgets();
+		currentLevel->LoadEnemies();
 		SetLevelLength();
 		break;
 	//case 3:
@@ -102,10 +104,10 @@ void Level::LoadLevel(int level)
 	default:
 		//level1
 		path = "res/tilemap.bmp";
-		data = beach.GetTiles();
-		surfaces = beach.GetSurfaces();
-		beach.LoadGadgets();
-		beach.LoadEnemies();
+		data = currentLevel->GetTiles();
+		surfaces = currentLevel->GetSurfaces();
+		currentLevel->LoadGadgets();
+		currentLevel->LoadEnemies();
 		SetLevelLength();
 		break;
 	}

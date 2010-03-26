@@ -17,6 +17,7 @@ class Enemy
 		bool isAlive;
 		int health;
 		virtual void ReceiveMessageInternal(UINT message, WPARAM wParam, LPARAM lParam) = 0;
+		bool isDeleted;
 
 	public:
 		Enemy(Surface * pSurface);
@@ -27,4 +28,6 @@ class Enemy
 		void SetDirection(Direction direction);
 		Surface * GetOnSurface();
 		Location * GetPengyLocation();
+		void Delete();
+		bool IsDeleted();
 };

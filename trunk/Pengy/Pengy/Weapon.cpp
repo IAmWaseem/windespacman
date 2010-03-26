@@ -52,21 +52,28 @@ void Weapon::Update(int timeElapsed)
 			pLocation->X += distanceTraveled;
 		else
 			pLocation->X -= distanceTraveled;
-		ChechkPengyCollision();
+		
+		ChechkCollision();
 	}
 }
 
-void Weapon::ChechkPengyCollision()
+void Weapon::ChechkCollision()
 {
 	Location * toCheck;
  	if(hitPengy)
 		toCheck = pPengy->GetLocation();
 	else
 		toCheck = pEnemy->GetLocation();
+
 	if(this->LocationInGadgetX(toCheck, this->pLocation) && this->LocationInGadgetY(toCheck, this->pLocation))
 	{
-		MessageQueue::Instance()->SendMessage(CM_CHARACTER_HIT_BY_ROTTEN_FISH, NULL, NULL);
-		delete this;
+		if(hitPengy) {
+			MessageQueue::Instance()->SendMessage(CM_CHARACTER_HIT_BY_ROTTEN_FISH, NULL, NULL);
+			delete this;
+		}
+		else {
+			pEnemy->Delete();
+			delete this;
+		}
 	}
-	
 }

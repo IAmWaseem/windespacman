@@ -19,7 +19,7 @@ private:
 	float speed;
 	int maxDistance;
 	int distanceCovered;
-	void ChechkPengyCollision();
+	void ChechkCollision();
 	Enemy * pEnemy;
 	Character * pPengy;
 	bool hitPengy;

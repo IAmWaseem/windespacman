@@ -2,11 +2,9 @@
 #include "Location.h"
 #include "BeachBall.h"
 
-
 BeachLevel::BeachLevel(void)
 {
 }
-
 
 BeachLevel::~BeachLevel(void)
 {

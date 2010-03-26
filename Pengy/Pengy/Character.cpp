@@ -1,8 +1,13 @@
 #pragma once
 #include "Character.h"
 #include "CharacterView.h"
+#include "Gadget.h"
+#include "GadgetView.h"
 #include <iostream>
+#include "Enemy.h"
 #include "EnemyFactory.h"
+#include <cmath>
+#include "Weapon.h"
 using namespace std;
 
 Character* Character::pInstance = NULL;
@@ -188,10 +193,57 @@ void Character::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 
 void Character::Throw()
 {
-	vector<Enemy*> * enemies = EnemyFactory::Instance()->GetEnemies();
-	vector<Enemy*>::iterator iterator = enemies->begin();
+	if(pickedupWeapons>0) {
+		vector<Enemy*> * enemies = EnemyFactory::Instance()->GetEnemies();
+		vector<Enemy*>::iterator iterator = enemies->begin();
+		vector<Enemy*> * pEnemiesInTouch = new vector<Enemy*>();
 
-	int shootingDistance = 400;
+		int shootingDistance = 400;
+
+		int Y = Character::Instance()->GetLocation()->Y + (Character::Instance()->GetLocation()->height/2);
+
+		while(iterator != enemies->end()) {
+			Enemy * pEnemyTemp = *iterator;
+			if(Y >= pEnemyTemp->GetLocation()->Y && Y <= pEnemyTemp->GetLocation()->Y + pEnemyTemp->GetLocation()->height) {
+				pEnemiesInTouch->push_back(pEnemyTemp);
+			}
+			iterator++;
+		}
+
+		if(pEnemiesInTouch->size() > 0) {
+			vector<Enemy*>::iterator iteratorCloseEnemies = pEnemiesInTouch->begin();
+			Enemy * pEnemy = *pEnemiesInTouch->begin();
+
+			while(iteratorCloseEnemies != pEnemiesInTouch->end()) {
+				Enemy * pEnemyT = *iteratorCloseEnemies;
+				int distanceBetween = Character::Instance()->GetLocation()->X - pEnemyT->GetLocation()->X;
+
+				if(Character::Instance()->GetDirection()==Direction::Left && distanceBetween>=0) {
+					if(pEnemy->GetLocation()->X < pEnemyT->GetLocation()->X)
+						pEnemy = pEnemyT;
+				}
+				if(Character::Instance()->GetDirection()==Direction::Right && distanceBetween<0) {
+					if(pEnemy->GetLocation()->X > pEnemyT->GetLocation()->X)
+						pEnemy = pEnemyT;
+				}
+				iteratorCloseEnemies++;
+			}
+			
+			double distanceBetween = Character::Instance()->GetLocation()->X - pEnemy->GetLocation()->X;
+			double distanceBetween2 = fabs(distanceBetween);
+
+			if(distanceBetween2 <= shootingDistance ) {
+				if((Character::Instance()->GetDirection()==Direction::Left && distanceBetween>=0) || (Character::Instance()->GetDirection()==Direction::Right && distanceBetween<0)) {
+					Location * pWl = new Location();
+					pWl->X = Character::Instance()->GetLocation()->X;
+					pWl->Y = Character::Instance()->GetLocation()->Y + (Character::Instance()->GetLocation()->height/2);
+
+					Weapon * weapon = new Weapon(pWl, GadgetView::GadgetImage::Piranha, Character::Instance()->GetDirection(), 0.5, shootingDistance, pEnemy);
+					pickedupWeapons--;
+				}
+			}
+		}
+	}
 }
 
 Character* Character::Instance()

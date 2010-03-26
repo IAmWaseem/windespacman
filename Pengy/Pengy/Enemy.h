@@ -29,5 +29,6 @@ class Enemy
 		Surface * GetOnSurface();
 		Location * GetPengyLocation();
 		void Delete();
+		bool IsAlive();
 		bool IsDeleted();
 };

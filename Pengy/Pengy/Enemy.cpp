@@ -77,3 +77,8 @@ bool Enemy::IsDeleted()
 {
 	return isDeleted;
 }
+
+bool Enemy::IsAlive()
+{
+	return isAlive;
+}

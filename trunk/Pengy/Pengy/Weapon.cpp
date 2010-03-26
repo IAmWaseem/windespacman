@@ -61,7 +61,7 @@ void Weapon::Update(int timeElapsed)
 void Weapon::ChechkPengyCollision()
 {
 	Location * toCheck;
-	if(hitPengy)
+ 	if(hitPengy)
 		toCheck = pPengy->GetLocation();
 	else
 		toCheck = pEnemy->GetLocation();

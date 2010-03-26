@@ -1,6 +1,10 @@
 #include "WaldoAttack.h"
 #include "math.h"
 #include "messages.h"
+#include "weapon.h"
+#include <ctime>
+#include <cstdlib>
+#include "character.h"
 
 WaldoAttack::WaldoAttack(Waldo * pWaldo, WaldoStateMachine * pWaldoStateMachine):WaldoState(pWaldo, pWaldoStateMachine)
 {
@@ -44,6 +48,7 @@ void WaldoAttack::Update(int timeElapsed)
 			pWaldoLocation->X -= distanceMoved;
 
 		}
+		Throw();
 	}
 	else
 	{
@@ -75,4 +80,33 @@ bool WaldoAttack::IsPengyTooFarAway()
 		return false;
 
 	return true;
+}
+
+void WaldoAttack::Throw() 
+    {	
+	if(throws == throwsInterval)
+	{
+   		Location * pWl = new Location();
+		pWl->X = pWaldo->GetLocation()->X;
+		pWl->Y = pWaldo->GetLocation()->Y + (pWaldo->GetLocation()->height/2);
+
+		if(pWaldo->GetLocation()->X < pWaldo->GetPengyLocation()->X)
+			Weapon * weapon = new Weapon(pWl, GadgetView::GadgetImage::RottenFish, Direction::Right, 0.3, 300, Character::Instance());
+		else
+			Weapon * weapon = new Weapon(pWl, GadgetView::GadgetImage::RottenFish, Direction::Left, 0.3, 300, Character::Instance());
+		
+		throws = 0;
+		throwsInterval = RandomIntBetween(1000, 1200);
+	}
+	else
+		throws++;
+}
+
+int WaldoAttack::RandomIntBetween(int a, int b)
+{
+	srand((unsigned)time(0));
+	int random_integer;
+	int lowest = a, highest = b;
+	int range =(highest-lowest) + 1; 
+	return lowest + int(range*rand()/(RAND_MAX + 1.0));
 }

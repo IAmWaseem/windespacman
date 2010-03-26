@@ -122,7 +122,11 @@ void Character::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	case CM_GADGET_GOLDFISH_PICKEDUP:
 		pickedupFish++;
 		break;
-
+	case CM_GADGET_ROTTENFISH_PICKEDUP:
+		pickedupFish = pickedupFish-2;
+		if(pickedupFish < 0)
+			CM_CHARACTER_KILLED;
+		break;
 	case CM_CHARACTER_RESET_POSITION:
 		if(wParam != NULL)
 			pLocation->X = (float)wParam;

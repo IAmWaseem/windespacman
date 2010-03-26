@@ -615,6 +615,32 @@ void BeachLevel::LoadGadgets()
 	Location * pL8 = new Location();
 	Location * pL9 = new Location();
 	Location * pL10 = new Location();
+	Location * pL11 = new Location();
+	Location * pL12 = new Location();
+	Location * pL13 = new Location();
+	Location * pL14 = new Location();
+	Location * pL15 = new Location();
+	Location * pL16 = new Location();
+	Location * pL17 = new Location();
+	Location * pL18 = new Location();
+	Location * pL19 = new Location();
+	Location * pL20 = new Location();
+	Location * pL21 = new Location();
+	Location * pL22 = new Location();
+	Location * pL23 = new Location();
+	Location * pL24 = new Location();
+	Location * pL25 = new Location();
+	Location * pL26 = new Location();
+	Location * pL27 = new Location();
+	Location * pL28 = new Location();
+	Location * pL29 = new Location();
+	Location * pL30 = new Location();
+	Location * pL31 = new Location();
+	Location * pL32 = new Location();
+	Location * pL33 = new Location();
+	Location * pL34 = new Location();
+	Location * pL35 = new Location();
+	Location * pL36 = new Location();
 
 	// goldfish
 	pL2->X = 420;
@@ -622,12 +648,60 @@ void BeachLevel::LoadGadgets()
 
 	pL3->X = 544;
 	pL3->Y = 495;
+	
+	pL26->X = 482;
+	pL26->Y = 465;
 
-	pL4->X = 1185;
-	pL4->Y = 90;
+	pL27->X = 510;
+	pL27->Y = 280;
 
-	pL5->X = 1378;
-	pL5->Y = 285;
+	pL15->X = 450;
+	pL15->Y = 495;
+
+	pL16->X = 574;
+	pL16->Y = 495;
+
+	pL4->X = 1200;
+	pL4->Y = 105;
+
+	pL22->X = 1200;
+	pL22->Y = 135;
+
+	pL23->X = 1200;
+	pL23->Y = 165;
+
+	pL24->X = 1200;
+	pL24->Y = 195;
+
+	pL25->X = 1395;
+	pL25->Y = 290;
+
+	pL17->X = 1395;
+	pL17->Y = 330;
+
+	pL18->X = 1395;
+	pL18->Y = 360;
+
+	pL19->X = 1395;
+	pL19->Y = 390;
+
+	pL20->X = 1395;
+	pL20->Y = 420;
+
+	pL21->X = 1395;
+	pL21->Y = 450;
+	
+	pL11->X = 1462;
+	pL11->Y = 110;
+	
+	pL12->X = 1402;
+	pL12->Y = 110;
+	
+	pL13->X = 1372;
+	pL13->Y = 110;
+	
+	pL14->X = 1432;
+	pL14->Y = 110;
 	// end of gf
 
 	// piranah
@@ -637,7 +711,7 @@ void BeachLevel::LoadGadgets()
 	pL6->X = 995;
 	pL6->Y = 240;
 
-	pL7->X = 1364;
+	pL7->X = 1304;
 	pL7->Y = 110;
 
 	pL8->X = 1492;
@@ -650,14 +724,51 @@ void BeachLevel::LoadGadgets()
 	pL10->Y = 600;
 	// end of piranha
 
+
+	pL28->X = 2040;
+	pL28->Y = 410;
+
+	pL31->X = 2040;
+	pL31->Y = 350;
+
+	pL30->X = 2040;
+	pL30->Y = 210;
+	
+	pL29->X = 2040;
+	pL29->Y = 290;
+
+	pL32->X = 446;
+	pL32->Y = 250;
+
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)pL1, NULL);
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL2, NULL);
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL3, NULL);
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL4, NULL);
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL5, NULL);
+	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL11, NULL);
+	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL12, NULL);
+	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL13, NULL);
+	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL14, NULL);
+	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL15, NULL);
+	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL16, NULL);
+	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL17, NULL);
+	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL18, NULL);
+	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL20, NULL);
+	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL21, NULL);
+	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL22, NULL);
+	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL23, NULL);
+	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL26, NULL);
+	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL27, NULL);
+	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL28, NULL);
+	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL25, NULL);
+	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_ROTTENFISH, (int)pL24, NULL);
+	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_ROTTENFISH, (int)pL31, NULL);
+	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_ROTTENFISH, (int)pL19, NULL);
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)pL6, NULL);
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)pL7, NULL);
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)pL8, NULL);
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)pL9, NULL);
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)pL10, NULL);
+	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)pL29, NULL);
+	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)pL32, NULL);
 }

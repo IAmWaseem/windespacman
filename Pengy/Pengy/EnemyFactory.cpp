@@ -113,6 +113,7 @@ void EnemyFactory::CleanUp()
 		if(pEnemy->IsDeleted())
 		{
 			delete pEnemy;
+			pEnemy = NULL;
 		}
 		else
 		{

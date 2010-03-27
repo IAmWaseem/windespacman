@@ -2,6 +2,7 @@
 #include "Location.h"
 #include "Math.h"
 #include "Waldo.h"
+#include "ForestLevel.h"
 
 
 Level* Level::pInstance = NULL;
@@ -77,14 +78,17 @@ void Level::LoadLevel(int level)
 	vector<Tile> myTiles;
 	vector<int*> data;
 	LPCSTR path = "";
+	ForestLevel * forestLevel = new ForestLevel();
 	switch(level)
 	{
 	case 1:
 		path = "res/tilemap.bmp";
-		data = currentLevel->GetTiles();
-		surfaces = currentLevel->GetSurfaces();
-		currentLevel->LoadGadgets();
-		currentLevel->LoadEnemies();
+		//delete currentLevel;
+		//currentLevel = new SnowLevel();
+		data = forestLevel->GetTiles();
+		surfaces = forestLevel->GetSurfaces();
+		forestLevel->LoadGadgets();
+		forestLevel->LoadEnemies();
 		SetLevelLength();
 		break;
 	case 2:

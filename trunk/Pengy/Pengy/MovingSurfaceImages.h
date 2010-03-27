@@ -1,2 +1,2 @@
 #define SURFBOARD_IMAGE "res/MovingSurfaceSurfboard.bmp"
-#define PLANK_IMAGE
+#define PLANK_IMAGE "res/MovingSurfacePlank.bmp"

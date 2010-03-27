@@ -3,6 +3,7 @@
 
 SnowLevel::SnowLevel(void)
 {
+	pSlopes = new vector<Surface*>();
 }
 
 SnowLevel::~SnowLevel(void)
@@ -12,7 +13,7 @@ SnowLevel::~SnowLevel(void)
 vector<Surface*> SnowLevel::GetSurfaces()
 {
 	vector<Surface*> surfaces;
-	pSlopes = new vector<Surface*>();
+	
 
 	Surface * borderBottom = new Surface();
 	borderBottom->xFrom = 0;
@@ -135,6 +136,8 @@ vector<Surface*> SnowLevel::GetSurfaces()
 	pGround1->xTo = 1225;
 	pGround1->yFrom = 575;
 	pGround1->yTo = 700;
+	pGround1->isSlope = 1;
+	pSlopes->push_back(slope6);
 	surfaces.push_back(pGround1);
 
 	Surface * ladder1Step1 = new Surface();

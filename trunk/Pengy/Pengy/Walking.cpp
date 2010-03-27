@@ -4,6 +4,7 @@
 #include "CharacterStateMachine.h"
 #include "Idle.h"
 #include "Jumping.h"
+#include "Sliding.h"
 
 Walking::Walking(void)
 {
@@ -169,11 +170,14 @@ void Walking::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 			MessageQueue::Instance()->SendMessage(CM_CHARACTER_KILLED, NULL, NULL);
 			break;
 		}
-		/*if(pOnSurface->isSlope != 0)
+		if(pSurface->isSlope != 0)
 		{
-			MessageQueue::Instance()->SendMessage(CM_IS_SLOPING, lParam, NULL);
+			vector<Surface*> * slopes = (vector<Surface*>*) lParam;
+			Sliding * sliding = (Sliding*)pStateMachine->pSliding;
+			sliding->SetSlopes(slopes);
+			pStateMachine->Transition(pStateMachine->pSliding);
 			break;
-		}*/
+		}
 		Character::Instance()->GetLocation()->Y = pSurface->yFrom - Character::Instance()->GetLocation()->height;
 		break;
 	}

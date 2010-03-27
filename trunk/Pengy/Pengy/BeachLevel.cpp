@@ -4,13 +4,19 @@
 
 BeachLevel::BeachLevel(void)
 {
+	ms = NULL;
+	ms2= NULL;
+	pSurfaces = NULL;
 }
 
 BeachLevel::~BeachLevel(void)
 {
-	delete ms;
-	delete ms2;
-	delete pSurfaces;
+	if(ms != NULL)
+		delete ms;
+	if(ms2 != NULL)
+		delete ms2;
+	if(pSurfaces != NULL)
+		delete pSurfaces;
 }
 
 vector<Surface*> BeachLevel::GetSurfaces()

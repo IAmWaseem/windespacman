@@ -173,5 +173,5 @@ CharacterView::CharacterImage CharacterView::GetCurrentImage()
 
 void CharacterView::ChangeCurrentImage(CharacterImage image)
 {
-	 currentImage = image;
+ 	 currentImage = image;
 }

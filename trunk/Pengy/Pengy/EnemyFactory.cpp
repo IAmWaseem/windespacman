@@ -94,7 +94,8 @@ void EnemyFactory::StartGame()
 	for(int n=0; n<pEnemies->size(); n++)
 	{
 		pEnemy = pEnemies->at(n);
-		pEnemy->Delete();
+		if(!pEnemy->IsDeleted())
+			pEnemy->Delete();
 	}
 }
 

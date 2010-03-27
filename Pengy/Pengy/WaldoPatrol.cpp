@@ -28,7 +28,7 @@ void WaldoPatrol::Update(int timeElapsed)
 {
 	Location * pWaldoLocation = pWaldo->GetLocation();
 	Surface * pOnSurface = pWaldo->GetOnSurface();
-	
+	pWaldoLocation->Y = pOnSurface->yFrom - pWaldoLocation->height;
 
 	int surfaceWidth = pOnSurface->xFrom - pOnSurface->xTo;
 

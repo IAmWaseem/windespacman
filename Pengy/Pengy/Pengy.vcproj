@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="9,00"
 	Name="Pengy"
 	ProjectGUID="{D9792256-FBF2-4E04-A095-D180715C6649}"
 	RootNamespace="Pengy"
@@ -243,6 +243,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\Sliding.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\Walking.cpp"
 					>
 				</File>
@@ -270,6 +274,10 @@
 						>
 					</File>
 					<File
+						RelativePath=".\Sliding.h"
+						>
+					</File>
+					<File
 						RelativePath=".\Walking.h"
 						>
 					</File>
@@ -281,6 +289,10 @@
 			>
 			<File
 				RelativePath=".\BeachLevel.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ForestLevel.cpp"
 				>
 			</File>
 			<File
@@ -308,6 +320,10 @@
 				>
 				<File
 					RelativePath=".\BeachLevel.h"
+					>
+				</File>
+				<File
+					RelativePath=".\ForestLevel.h"
 					>
 				</File>
 				<File

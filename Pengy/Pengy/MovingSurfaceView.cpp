@@ -26,11 +26,11 @@ MovingSurfaceView::MovingSurfaceView(MovingSurface * surface, MovingSurfaceType 
 		mask = CreateBitmapMask(bitmap, RGB(0, 0, 0), width_height[0], width_height[1]);
 		break;
 	case MovingSurfaceType::Plank:
-		//bitmap = LoadImage(NULL, PLANK_IMAGE, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
-		//b->LoadDIBFile(PLANK_IMAGE);
-		//width_height[0] = b->Width();
-		//width_height[1] = b->Height();
-		//mask = CreateBitmapMask(bitmap, RGB(0, 0, 0), width_height[0], width_height[1]);
+		bitmap = LoadImage(NULL, PLANK_IMAGE, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+		b->LoadDIBFile(PLANK_IMAGE);
+		width_height[0] = b->Width();
+		width_height[1] = b->Height();
+		mask = CreateBitmapMask(bitmap, RGB(0, 0, 0), width_height[0], width_height[1]);
 		break;
 	}
 	currentMask = mask;

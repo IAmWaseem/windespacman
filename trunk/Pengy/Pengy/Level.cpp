@@ -83,12 +83,10 @@ void Level::LoadLevel(int level)
 	{
 	case 1:
 		path = "res/tilemap.bmp";
-		//delete currentLevel;
-		//currentLevel = new SnowLevel();
-		data = forestLevel->GetTiles();
-		surfaces = forestLevel->GetSurfaces();
-		forestLevel->LoadGadgets();
-		forestLevel->LoadEnemies();
+		data = currentLevel->GetTiles();
+		surfaces = currentLevel->GetSurfaces();
+		currentLevel->LoadGadgets();
+		currentLevel->LoadEnemies();
 		SetLevelLength();
 		break;
 	case 2:

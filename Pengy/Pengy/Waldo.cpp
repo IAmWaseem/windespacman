@@ -110,12 +110,13 @@ void Waldo::CheckPengyCollision()
 	{
 		if(this->isVulnerable)
 		{
-			this->pView->UnRegisterToGraphics();
+			/*this->pView->UnRegisterToGraphics();
 			MessageQueue::Instance()->SendMessage(CM_WALDO_KILLED, NULL, NULL);
 			this->isAlive = false;
 			delete this->pLocation;
 			delete this->pWaldoStateMachine;
-			delete this->pView;
+			delete this->pView;*/
+			this->Delete();
 
 			//extra waldo zodat je naar volgend level gaat
 			if(superWaldo)

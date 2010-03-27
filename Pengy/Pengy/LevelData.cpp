@@ -6,8 +6,8 @@ LevelData::LevelData()
 
 LevelData::~LevelData()
 {
-	MessageQueue::Instance()->SendMessageA(CM_GADGETFACTORY_CLEAR, NULL, NULL);
-	MessageQueue::Instance()->SendMessageA(CM_ENEMYFACTORY_CLEAR, NULL, NULL);
+	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CLEAR, NULL, NULL);
+	MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CLEAR, NULL, NULL);
 }
 
 void LevelData::LoadGadgets()

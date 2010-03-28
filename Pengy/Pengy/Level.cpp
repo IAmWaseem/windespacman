@@ -78,10 +78,11 @@ void Level::LoadLevel(int level)
 	vector<Tile> myTiles;
 	vector<int*> data;
 	LPCSTR path = "";
-	ForestLevel * forestLevel = new ForestLevel();
 	switch(level)
 	{
 	case 1:
+		delete currentLevel;
+		currentLevel = new BeachLevel();
 		path = "res/tilemap.bmp";
 		data = currentLevel->GetTiles();
 		surfaces = currentLevel->GetSurfaces();

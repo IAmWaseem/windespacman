@@ -15,4 +15,5 @@ public:
 	virtual void ReceiveMessageInternal(UINT message, WPARAM wParam, LPARAM lParam);
 private:
 	BeachBallStateMachine * pBeachBallStateMachine;
+	void CheckCollision();
 };

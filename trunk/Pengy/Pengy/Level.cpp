@@ -2,7 +2,7 @@
 #include "Location.h"
 #include "Math.h"
 #include "Waldo.h"
-#include "ForestLevel.h"
+
 
 
 Level* Level::pInstance = NULL;
@@ -91,6 +91,16 @@ void Level::LoadLevel(int level)
 		break;
 	case 2:
 		delete currentLevel;
+		currentLevel = new ForestLevel();
+		path = "res/tilemap.bmp";
+		data = currentLevel->GetTiles();
+		surfaces = currentLevel->GetSurfaces();
+		currentLevel->LoadGadgets();
+		currentLevel->LoadEnemies();
+		SetLevelLength();
+		break;
+	case 3:
+		delete currentLevel;
 		currentLevel = new SnowLevel();
 		path = "res/tilemap.bmp";
 		data = currentLevel->GetTiles();
@@ -99,10 +109,6 @@ void Level::LoadLevel(int level)
 		currentLevel->LoadEnemies();
 		SetLevelLength();
 		break;
-	//case 3:
-	//	path = "res/Summer.bmp";
-	//	data = GetLevel1Array();
-	//	break;
 	default:
 		//level1
 		path = "res/tilemap.bmp";

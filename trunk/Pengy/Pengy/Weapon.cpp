@@ -25,6 +25,7 @@ Weapon::Weapon(Location * pLocation, GadgetView::GadgetImage gadgetImage, Direct
 
 Weapon::~Weapon(void)
 {
+	this->Remove();
 	MessageQueue::Instance()->Detach(this);
 }
 

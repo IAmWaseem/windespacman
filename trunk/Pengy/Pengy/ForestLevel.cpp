@@ -362,7 +362,7 @@ void ForestLevel::LoadEnemies()
 	MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_PATROL, (int)((Surface*)movingSurface_4), NULL);
 	MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_PATROL, (int)((Surface*)movingSurface_5), NULL);
 
-	MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_WANDER, (int)barTop, barTop->xFrom + 40 );
+	MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_SUPERWALDO_WANDER, (int)barTop, barTop->xFrom + 40 );
 	MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_WANDER, (int)barTop, barTop->xTo - 40 );
 
 	MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_WANDER, (int)landRight, landRight->xFrom + 40 );

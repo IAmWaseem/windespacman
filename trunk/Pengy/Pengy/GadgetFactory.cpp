@@ -40,10 +40,6 @@ void GadgetFactory::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		pGadget = new Gadget(pGadgets->size(), pLocation, GadgetView::GadgetImage::Piranha);
 		pGadgets->push_back(pGadget);
 		break;
-	case CM_GADGETFACTORY_DESTROY_GADGET:
-		id = (int)wParam;
-		pGadgets->at(id)->Remove();
-		break;
 	case CM_GADGETFACTORY_CREATE_SNOWBALL:
 		pLocation = (Location*)wParam;
 		pGadget = new Gadget(pGadgets->size(), pLocation, GadgetView::GadgetImage::SnowBall);
@@ -70,7 +66,10 @@ void GadgetFactory::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		pGadgets->push_back(pGadget);
 		break;
 	case CM_GADGETFACTORY_CLEAR:
-		pGadgets->clear();
+		StartGame();
+		break;
+	case CM_UPDATE:
+		CleanUp();
 		break;
 
 	default:
@@ -95,8 +94,32 @@ void GadgetFactory::StartGame()
 	while(iterator != pGadgets->end())
 	{
 		gadget = *iterator;
-		delete gadget;
+		if(!gadget->IsRemoved())
+		{
+			gadget->Remove();
+		}
 		iterator++;
 	}
 	pGadgets->clear();
+}
+
+void GadgetFactory::CleanUp()
+{
+	vector<Gadget*> * newGadgets = new vector<Gadget*>();
+	Gadget * pGadget;
+	for(int n=0; n<pGadgets->size(); n++)
+	{
+		pGadget = pGadgets->at(n);
+		if(pGadget->IsRemoved())
+		{
+			delete pGadget;
+			pGadget = NULL;
+		}
+		else
+		{
+			newGadgets->push_back(pGadget);
+		}
+	}
+	pGadgets->clear();
+	pGadgets = newGadgets;
 }

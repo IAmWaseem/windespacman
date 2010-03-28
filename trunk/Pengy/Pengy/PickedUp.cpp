@@ -49,5 +49,5 @@ void PickedUp::PickUp()
 		MessageQueue::Instance()->SendMessage(CM_GADGET_ROTTENFISH_PICKEDUP, NULL, NULL);
 	}
 	
-	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_DESTROY_GADGET, pGadget->GetId(), NULL);
+	pGadget->Remove();
 }

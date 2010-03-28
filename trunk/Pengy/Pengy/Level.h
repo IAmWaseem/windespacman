@@ -9,6 +9,7 @@
 #include "Physics.h"
 #include "MovingSurface.h"
 #include "SnowLevel.h"
+#include "ForestLevel.h"
 
 class Level : public Observer
 {

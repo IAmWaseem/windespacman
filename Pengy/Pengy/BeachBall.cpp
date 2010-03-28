@@ -17,6 +17,7 @@ BeachBall::BeachBall(Surface * pSurface) : Enemy(pSurface)
 	this->pLocation->X = pSurface->xTo - this->pLocation->width;
 	this->pLocation->Y = pSurface->yFrom - this->pLocation->height;
 	this->direction = Direction::Left;
+	this->health = 500;
 }
 
 void BeachBall::ReceiveMessageInternal(UINT message, WPARAM wParam, LPARAM lParam) {

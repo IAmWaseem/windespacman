@@ -6,6 +6,7 @@ GadgetFactory * GadgetFactory::pInstance = NULL;
 GadgetFactory::GadgetFactory(void)
 {
 	pGadgets = new vector<Gadget*>();
+	isPaused = false;
 }
 
 GadgetFactory * GadgetFactory::Instance()
@@ -21,6 +22,11 @@ GadgetFactory::~GadgetFactory(void)
 
 void GadgetFactory::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam) 
 {
+	if(message == CM_UNPAUSE)
+		isPaused = false;
+	if(isPaused)
+		return;
+
 	Location * pLocation;
 	Gadget * pGadget;
 	int id;
@@ -70,6 +76,9 @@ void GadgetFactory::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 	case CM_UPDATE:
 		CleanUp();
+		break;
+	case CM_PAUSE:
+		isPaused = true;
 		break;
 
 	default:

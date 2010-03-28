@@ -18,6 +18,7 @@ EnemyFactory * EnemyFactory::Instance()
 EnemyFactory::EnemyFactory(void)
 {
 	pEnemies = new vector<Enemy*>();
+	isPaused = false;
 }
 
 EnemyFactory::~EnemyFactory(void)
@@ -26,6 +27,11 @@ EnemyFactory::~EnemyFactory(void)
 
 void EnemyFactory::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 {
+	if(message == CM_UNPAUSE)
+		isPaused = false;
+	if(isPaused)
+		return;
+
 	bool stopSending = false;
 	Enemy * pEnemy;
 	Surface * pSurface;
@@ -69,6 +75,9 @@ void EnemyFactory::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 	case CM_UPDATE:
 		CleanUp();
+		break;
+	case CM_PAUSE:
+		isPaused = true;
 		break;
 	}
 	

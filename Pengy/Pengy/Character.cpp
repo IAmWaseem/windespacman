@@ -12,6 +12,7 @@ using namespace std;
 
 Character* Character::pInstance = NULL;
 float Character::DistanceToMove = 1.5f;
+const int Character::reloadTime = 3000;
 
 Character::Character(void)
 {
@@ -28,6 +29,7 @@ Character::Character(void)
 	timeToStayKilled = 0;
 	isKilled = false;
 	firstGame = 0;
+	timeSinceLastReload = 0;
 }
 
 Character::~Character(void)
@@ -103,6 +105,9 @@ void Character::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 				isKilled = false;
 			}
 		}
+		timeSinceLastReload += timeElapsed;
+		if(timeSinceLastReload > Character::reloadTime)
+			timeSinceLastReload = Character::reloadTime;
 		break;
 
 	case CM_CHARACTER_SPACEBAR:
@@ -193,7 +198,8 @@ void Character::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 
 void Character::Throw()
 {
-	if(pickedupWeapons>0) {
+	if(pickedupWeapons>0 && timeSinceLastReload >= Character::reloadTime) {
+		timeSinceLastReload = 0;
 		vector<Enemy*> * enemies = EnemyFactory::Instance()->GetEnemies();
 		vector<Enemy*>::iterator iterator = enemies->begin();
 		vector<Enemy*> * pEnemiesInTouch = new vector<Enemy*>();

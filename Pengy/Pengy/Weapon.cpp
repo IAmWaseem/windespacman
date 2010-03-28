@@ -44,11 +44,6 @@ void Weapon::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 
 void Weapon::Update(int timeElapsed)
 {
-	if(pEnemy == NULL)
-	{
-		delete this;
-		return;
-	}
 	int distanceTraveled = speed * timeElapsed;
 	distanceCovered += distanceTraveled;
 	if(distanceCovered > maxDistance)

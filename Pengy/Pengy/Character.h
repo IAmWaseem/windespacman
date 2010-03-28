@@ -39,4 +39,6 @@ private:
 	void StartGame();
 	int firstGame;
 	void Throw();
+	static const int reloadTime;
+	int timeSinceLastReload;
 };

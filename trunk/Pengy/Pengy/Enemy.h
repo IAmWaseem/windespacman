@@ -20,6 +20,8 @@ class Enemy
 		virtual void ReceiveMessageInternal(UINT message, WPARAM wParam, LPARAM lParam) = 0;
 		bool isDeleted;
 		void EndLevel();
+		bool LocationInEnemyX(Location * pplocationPengy, Location * pLocationEnemy);
+		bool LocationInEnemyY(Location * plocationPengy, Location * pLocationEnemy);
 
 	public:
 		Enemy(Surface * pSurface);

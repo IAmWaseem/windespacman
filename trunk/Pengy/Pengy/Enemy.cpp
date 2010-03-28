@@ -109,3 +109,47 @@ int Enemy::GetHealth()
 {
 	return health;
 }
+
+bool Enemy::LocationInEnemyX(Location * pplocationPengy, Location * pLocationEnemy)
+{
+	bool inEnemy = false;
+	if(pLocationEnemy->X <= pplocationPengy->X && (pLocationEnemy->X + pLocationEnemy->width) >= (pplocationPengy->X + pplocationPengy->width))
+	{
+		inEnemy = true;
+	}
+	if(pLocationEnemy->X >= pplocationPengy->X && (pLocationEnemy->X + pLocationEnemy->width) <= (pplocationPengy->X + pplocationPengy->width))
+	{
+		inEnemy = true;
+	}
+	if(pLocationEnemy->X <= pplocationPengy->X && (pLocationEnemy->X + pLocationEnemy->width) <= (pplocationPengy->X + pplocationPengy->width) && (pLocationEnemy->X + pLocationEnemy->width) > pplocationPengy->X)
+	{
+		inEnemy = true;
+	}
+	if(pLocationEnemy->X >= pplocationPengy->X && pLocationEnemy->X <= (pplocationPengy->X + pplocationPengy->width) && (pLocationEnemy->X + pLocationEnemy->width) >= (pplocationPengy->X + pplocationPengy->width))
+	{
+		inEnemy = true;
+	}
+	return inEnemy;
+}
+
+bool Enemy::LocationInEnemyY(Location * plocationPengy, Location * pLocationEnemy)
+{
+	bool inEnemy = false;
+	if(pLocationEnemy->Y  >= plocationPengy->Y && (pLocationEnemy->Y + pLocationEnemy->height) <= (plocationPengy->Y + plocationPengy->height))
+	{
+		inEnemy = true;
+	}
+	if(pLocationEnemy->Y  <= plocationPengy->Y && (pLocationEnemy->Y + pLocationEnemy->height) >= (plocationPengy->Y + plocationPengy->height))
+	{
+		inEnemy = true;
+	}
+	if(plocationPengy->Y >= pLocationEnemy->Y && plocationPengy->Y <= (pLocationEnemy->Y + pLocationEnemy->height))
+	{
+		inEnemy = true;
+	}
+	if((plocationPengy->Y + plocationPengy->height) >= pLocationEnemy->Y && (plocationPengy->Y + plocationPengy->height) <= (pLocationEnemy->Y + pLocationEnemy->height))
+	{
+		inEnemy = true;
+	}
+	return inEnemy;
+}

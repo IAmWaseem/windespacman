@@ -39,9 +39,6 @@ void Weapon::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		timeElapsed = (int)wParam;
 		Update(timeElapsed);
 		break;
-	case CM_LEVEL_LOAD:
-		delete this;
-		break;
 	}
 }
 
@@ -80,19 +77,11 @@ void Weapon::ChechkCollision()
 	if(this->LocationInGadgetX(toCheck, this->pLocation) && this->LocationInGadgetY(toCheck, this->pLocation))
 	{
 		if(hitPengy) {
-			MessageQueue::Instance()->SendMessage(CM_CHARACTER_HIT_BY_ROTTEN_FISH, NULL, NULL);
-			delete this;
+			MessageQueue::Instance()->SendMessage(CM_CHARACTER_HIT_BY_ROTTEN_FISH, NULL, NULL);	
 		}
 		else {
-			if(pEnemy->EndsLevel()  && pEnemy->GetHealth() <= 100)
-			{
-				pEnemy->DoDamage(100);
-			}
-			else
-			{
-				pEnemy->DoDamage(100);
-				delete this;
-			}
+			pEnemy->DoDamage(100);
 		}
+		delete this;
 	}
 }

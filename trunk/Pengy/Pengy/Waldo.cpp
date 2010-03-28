@@ -94,7 +94,7 @@ void Waldo::CheckPengyCollision()
 	bool collision = false;
 	this->isVulnerable = false;
 
-	if(LocationInWaldoX(pPengyLocation, pLocation) && LocationInWaldoY(pPengyLocation, pLocation))
+	if(LocationInEnemyX(pPengyLocation, pLocation) && LocationInEnemyY(pPengyLocation, pLocation))
 	{		
 		collision = true;
 
@@ -119,49 +119,6 @@ void Waldo::CheckPengyCollision()
 	}
 }
 
-bool Waldo::LocationInWaldoX(Location * pplocationPengy, Location * pLocationWaldo)
-{
-	bool inGadget = false;
-	if(pLocationWaldo->X <= pplocationPengy->X && (pLocationWaldo->X + pLocationWaldo->width) >= (pplocationPengy->X + pplocationPengy->width))
-	{
-		inGadget = true;
-	}
-	if(pLocationWaldo->X >= pplocationPengy->X && (pLocationWaldo->X + pLocationWaldo->width) <= (pplocationPengy->X + pplocationPengy->width))
-	{
-		inGadget = true;
-	}
-	if(pLocationWaldo->X <= pplocationPengy->X && (pLocationWaldo->X + pLocationWaldo->width) <= (pplocationPengy->X + pplocationPengy->width) && (pLocationWaldo->X + pLocationWaldo->width) > pplocationPengy->X)
-	{
-		inGadget = true;
-	}
-	if(pLocationWaldo->X >= pplocationPengy->X && pLocationWaldo->X <= (pplocationPengy->X + pplocationPengy->width) && (pLocationWaldo->X + pLocationWaldo->width) >= (pplocationPengy->X + pplocationPengy->width))
-	{
-		inGadget = true;
-	}
-	return inGadget;
-}
-
-bool Waldo::LocationInWaldoY(Location * plocationPengy, Location * pLocationWaldo)
-{
-	bool inGadget = false;
-	if(pLocationWaldo->Y  >= plocationPengy->Y && (pLocationWaldo->Y + pLocationWaldo->height) <= (plocationPengy->Y + plocationPengy->height))
-	{
-		inGadget = true;
-	}
-	if(pLocationWaldo->Y  <= plocationPengy->Y && (pLocationWaldo->Y + pLocationWaldo->height) >= (plocationPengy->Y + plocationPengy->height))
-	{
-		inGadget = true;
-	}
-	if(plocationPengy->Y >= pLocationWaldo->Y && plocationPengy->Y <= (pLocationWaldo->Y + pLocationWaldo->height))
-	{
-		inGadget = true;
-	}
-	if((plocationPengy->Y + plocationPengy->height) >= pLocationWaldo->Y && (plocationPengy->Y + plocationPengy->height) <= (pLocationWaldo->Y + pLocationWaldo->height))
-	{
-		inGadget = true;
-	}
-	return inGadget;
-}
 
 void Waldo::RandomDirection()
 {

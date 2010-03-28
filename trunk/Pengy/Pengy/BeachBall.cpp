@@ -1,6 +1,7 @@
 #include "BeachBall.h"
 #include "BeachBallView.h"
 #include "BeachBallStateMachine.h"
+#include "messages.h"
 
 BeachBall::~BeachBall(void)
 {
@@ -21,6 +22,22 @@ BeachBall::BeachBall(Surface * pSurface) : Enemy(pSurface)
 }
 
 void BeachBall::ReceiveMessageInternal(UINT message, WPARAM wParam, LPARAM lParam) {
+	if(!this->isAlive)
+		return;
+	switch(message)
+	{
+	case CM_UPDATE:
+		CheckCollision();
+		break;
+	}
 	if(this->isAlive)
 		this->pBeachBallStateMachine->ReceiveMessage(message, wParam, lParam);
+}
+
+void BeachBall::CheckCollision()
+{
+	if(LocationInEnemyX(pPengyLocation, pLocation) && LocationInEnemyY(pPengyLocation, pLocation))
+	{		
+		MessageQueue::Instance()->SendMessage(CM_CHARACTER_KILLED, NULL, NULL);
+	}
 }

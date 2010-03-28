@@ -39,6 +39,10 @@ void Weapon::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		timeElapsed = (int)wParam;
 		Update(timeElapsed);
 		break;
+	case CM_LEVEL_LOAD:
+		if(hitPengy)
+			delete this;
+		break;
 	}
 }
 

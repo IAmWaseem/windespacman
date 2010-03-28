@@ -304,6 +304,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\LevelIntro.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\MovingSurface.cpp"
 				>
 			</File>
@@ -332,6 +336,10 @@
 				</File>
 				<File
 					RelativePath=".\LevelData.h"
+					>
+				</File>
+				<File
+					RelativePath=".\LevelIntro.h"
 					>
 				</File>
 				<File
@@ -372,6 +380,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\LevelIntroView.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\LevelView.cpp"
 				>
 			</File>
@@ -408,6 +420,10 @@
 				</File>
 				<File
 					RelativePath=".\GadgetView.h"
+					>
+				</File>
+				<File
+					RelativePath=".\LevelIntroView.h"
 					>
 				</File>
 				<File

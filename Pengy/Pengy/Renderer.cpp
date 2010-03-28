@@ -18,6 +18,7 @@ Renderer::Renderer()
 {
 	bitmap.LoadDIBFile("res/background.bmp");
 	numViews = 0;
+	singleRender = false;
 }
 
 Renderer::~Renderer(){
@@ -73,14 +74,21 @@ void Renderer::Render(HDC hdc)
 		xTo = levelLength;
 		xFrom = levelLength - 1024;
 	}
-	if(numViews > 0)
+	if(singleRender)
 	{
-		vector<View*>::iterator iterator = myViews.begin();
-		while(iterator!=myViews.end())
+		singleView->Draw(hdc, rect, xFrom, xTo);
+	}
+	else
+	{
+		if(numViews > 0)
 		{
-			View * pView = *iterator;
-			pView->Draw(hdc, rect, xFrom, xTo);
-			iterator++;
+			vector<View*>::iterator iterator = myViews.begin();
+			while(iterator!=myViews.end())
+			{
+				View * pView = *iterator;
+				pView->Draw(hdc, rect, xFrom, xTo);
+				iterator++;
+			}
 		}
 	}
 
@@ -117,6 +125,13 @@ void Renderer::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		pTo = (Location*)lParam;
 		characterX = (int)pTo->X;
 
+		break;
+	case CM_RENDERER_ONLY_DRAW_THIS:
+		singleRender = true;
+		singleView = (View*)wParam; 
+		break;
+	case CM_RENDERER_NORMAL_RENDER:
+		singleRender = false;
 		break;
 	}
 }

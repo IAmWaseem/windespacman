@@ -30,6 +30,7 @@ Character::Character(void)
 	isKilled = false;
 	firstGame = 0;
 	timeSinceLastReload = 0;
+	isPaused = false;
 }
 
 Character::~Character(void)
@@ -38,6 +39,11 @@ Character::~Character(void)
 
 void Character::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 {
+	if(message == CM_UNPAUSE)
+		isPaused = false;
+	if(isPaused)
+		return;
+
 	this->pCharacterStateMachine->ReceiveMessage(message, wParam, lParam);
 
 	int timeElapsed;
@@ -92,6 +98,10 @@ void Character::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		MessageQueue::Instance()->SendMessage(CM_CHARACTER_MOVE_X_FROM_TO, (int)pLocation, (int)pLocation);
 		MessageQueue::Instance()->SendMessage(CM_CHARACTER_FALL_Y_FROM_TO, (int)pLocation, (int)pLocation);
 		pickedupWeapons = 0;
+		
+		break;
+	case CM_PAUSE:
+		isPaused = true;
 		break;
 
 	case CM_UPDATE:

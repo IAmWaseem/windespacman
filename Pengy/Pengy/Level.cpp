@@ -2,7 +2,7 @@
 #include "Location.h"
 #include "Math.h"
 #include "Waldo.h"
-
+#include "LevelIntro.h"
 
 
 Level* Level::pInstance = NULL;
@@ -78,10 +78,12 @@ void Level::LoadLevel(int level)
 	vector<Tile> myTiles;
 	vector<int*> data;
 	LPCSTR path = "";
+	LevelIntro * levelIntro;
 	switch(level)
 	{
 	case 1:
 		delete currentLevel;
+		levelIntro = new LevelIntro("res/IntroSummer.bmp", "res/IntroSummerInfo.bmp", 1000, 4000);
 		currentLevel = new BeachLevel();
 		path = "res/tilemap.bmp";
 		data = currentLevel->GetTiles();
@@ -135,4 +137,5 @@ void Level::LoadLevel(int level)
 	
 	levelView.SetSurface(&surfaces);
 	levelView.SetTiles(myTiles, path);
+	MessageQueue::Instance()->SendMessage(CM_PAUSE, NULL, NULL);
 }

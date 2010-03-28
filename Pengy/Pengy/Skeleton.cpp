@@ -42,8 +42,8 @@ LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		pLocation->X = 200;
 		pLocation->Y = 300;
 		
-		pMessageQueue->Instance()->Attach(pLevel->Instance());
 		pMessageQueue->Instance()->Attach(pCharacter->Instance());
+		pMessageQueue->Instance()->Attach(pLevel->Instance());
 		pMessageQueue->Instance()->Attach(pRenderer->Instance());
 		pMessageQueue->Instance()->Attach(pSound->Instance());
 		pMessageQueue->Instance()->Attach(GadgetFactory::Instance());

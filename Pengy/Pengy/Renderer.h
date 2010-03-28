@@ -35,4 +35,6 @@ public:
 	int numViews;
 	int levelLength;
 	int characterX;
+	bool singleRender;
+	View * singleView;
 };

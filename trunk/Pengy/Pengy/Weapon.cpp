@@ -1,5 +1,6 @@
 #pragma once
 #include "Weapon.h"
+#include "EnemyFactory.h"
 
 Weapon::Weapon(Location * pLocation, GadgetView::GadgetImage gadgetImage, Direction direction, float speed, int maxDistance, Character * pPengy) : Gadget(0, pLocation, gadgetImage)
 {
@@ -38,6 +39,9 @@ void Weapon::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		timeElapsed = (int)wParam;
 		Update(timeElapsed);
 		break;
+	case CM_LEVEL_LOAD:
+		delete this;
+		break;
 	}
 }
 
@@ -65,6 +69,8 @@ void Weapon::Update(int timeElapsed)
 
 void Weapon::ChechkCollision()
 {
+	if(this == NULL)
+		return;
 	Location * toCheck;
  	if(hitPengy)
 		toCheck = pPengy->GetLocation();
@@ -78,8 +84,15 @@ void Weapon::ChechkCollision()
 			delete this;
 		}
 		else {
-			pEnemy->Delete();
-			delete this;
+			if(pEnemy->EndsLevel()  && pEnemy->GetHealth() <= 100)
+			{
+				pEnemy->DoDamage(100);
+			}
+			else
+			{
+				pEnemy->DoDamage(100);
+				delete this;
+			}
 		}
 	}
 }

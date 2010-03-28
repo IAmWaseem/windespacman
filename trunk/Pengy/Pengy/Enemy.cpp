@@ -2,6 +2,7 @@
 #include "messages.h"
 #include "MessageQueue.h"
 #include "View.h"
+#include "EnemyFactory.h"
 
 Enemy::Enemy(Surface * pSurface)
 {
@@ -71,6 +72,8 @@ void Enemy::Delete()
 		pView->UnRegisterToGraphics();
 		delete pView;
 	}
+	if(endsLevel)
+		EndLevel();
 }
 
 bool Enemy::IsDeleted()
@@ -81,4 +84,28 @@ bool Enemy::IsDeleted()
 bool Enemy::IsAlive()
 {
 	return isAlive;
+}
+
+void Enemy::EndLevel()
+{
+	EnemyFactory::SendMessagesToChildren = false;
+	MessageQueue::Instance()->SendMessage(CM_LEVEL_START, NULL, NULL);
+	EnemyFactory::SendMessagesToChildren = true;
+}
+
+void Enemy::DoDamage(int amount)
+{
+	health -= amount;
+	if(health <= 0)
+		this->Delete();
+}
+
+bool Enemy::EndsLevel()
+{
+	return endsLevel;
+}
+
+int Enemy::GetHealth()
+{
+	return health;
 }

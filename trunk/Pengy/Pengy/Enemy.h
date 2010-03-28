@@ -16,8 +16,10 @@ class Enemy
 		Location * pPengyLocation;
 		bool isAlive;
 		int health;
+		bool endsLevel;
 		virtual void ReceiveMessageInternal(UINT message, WPARAM wParam, LPARAM lParam) = 0;
 		bool isDeleted;
+		void EndLevel();
 
 	public:
 		Enemy(Surface * pSurface);
@@ -31,4 +33,7 @@ class Enemy
 		void Delete();
 		bool IsAlive();
 		bool IsDeleted();
+		void DoDamage(int amount);
+		bool EndsLevel();
+		int GetHealth();
 };

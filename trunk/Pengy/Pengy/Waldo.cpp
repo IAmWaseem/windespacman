@@ -22,7 +22,7 @@ Waldo::Waldo(Surface * pSurface, int x, bool isSuper):Enemy(pSurface)
 
 	this->isVulnerable = false;
 
-	this->superWaldo = isSuper;
+	this->endsLevel = isSuper;
 }
 
 Waldo::Waldo(Surface * pSurface, int x) : Enemy(pSurface)
@@ -42,7 +42,7 @@ Waldo::Waldo(Surface * pSurface, int x) : Enemy(pSurface)
 	pWaldoStateMachine->Transition(pWaldoStateMachine->pWander);
 
 	this->isVulnerable = false;
-	this->superWaldo = false;
+	this->endsLevel = false;
 }
 
 Waldo::Waldo(Surface * pSurface) : Enemy(pSurface)
@@ -62,7 +62,7 @@ Waldo::Waldo(Surface * pSurface) : Enemy(pSurface)
 	pWaldoStateMachine->Transition(pWaldoStateMachine->pPatrol);
 
 	this->isVulnerable = false;
-	this->superWaldo = false;
+	this->endsLevel = false;
 }
 
 Waldo::~Waldo(void)
@@ -110,22 +110,7 @@ void Waldo::CheckPengyCollision()
 	{
 		if(this->isVulnerable)
 		{
-			/*this->pView->UnRegisterToGraphics();
-			MessageQueue::Instance()->SendMessage(CM_WALDO_KILLED, NULL, NULL);
-			this->isAlive = false;
-			delete this->pLocation;
-			delete this->pWaldoStateMachine;
-			delete this->pView;*/
-			this->Delete();
-
-			//extra waldo zodat je naar volgend level gaat
-			if(superWaldo)
-			{
-				//MessageQueue::Instance()->SendMessage(CM_LEVEL_END, NULL, NULL);
-				EnemyFactory::SendMessagesToChildren = false;
-				MessageQueue::Instance()->SendMessage(CM_LEVEL_START, NULL, NULL);
-				//MessageQueue::Instance()->SendMessage(CM_LEVEL_BEGIN, NULL, NULL);
-			}
+			DoDamage(100);
 		}
 		else
 		{

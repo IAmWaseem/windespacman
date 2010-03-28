@@ -16,4 +16,5 @@ protected:
 private:
 	vector<Gadget*> * pGadgets; 
 	static GadgetFactory * pInstance;
+	void CleanUp();
 };

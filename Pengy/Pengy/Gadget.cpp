@@ -29,8 +29,7 @@ int Gadget::GetId()
 
 Gadget::~Gadget(void)
 {
-	pGadgetView->UnRegisterToGraphics();
-	delete pGadgetView;
+	
 }
 
 void Gadget::Update()
@@ -54,10 +53,13 @@ void Gadget::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam) {
 
 void Gadget::Remove()
 {
-	pGadgetView->UnRegisterToGraphics();
-	delete pGadgetView;
-	delete pGadgetStateMachine;
-	isRemoved = true;
+	if(!isRemoved)
+	{
+		pGadgetView->UnRegisterToGraphics();
+		delete pGadgetView;
+		delete pGadgetStateMachine;
+		isRemoved = true;
+	}
 }
 
 bool Gadget::IsRemoved()

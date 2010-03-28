@@ -52,6 +52,7 @@ void World::LoadNextLevel()
 	if(level<3)
 	{
 		level++;
+		GadgetFactory::Instance()->StartGame();
 		pMessageQueue->Instance()->SendMessage(CM_LEVEL_LOAD, NULL, NULL);
 	}
 }

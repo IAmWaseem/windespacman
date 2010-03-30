@@ -4,6 +4,7 @@
 #include "CharacterStateMachine.h"
 #include "Location.h"
 #include "Direction.h"
+#include "GadgetView.h"
 
 class Character : public Observer
 {
@@ -24,6 +25,7 @@ public:
 	int GetAmountLives();
 	bool isKilled;
 	int timeToStayKilled;
+	GadgetView::GadgetImage GetWeaponType();
 private:
 	Direction direction;
 	static Character * pInstance;
@@ -40,4 +42,5 @@ private:
 	void Throw();
 	static const int reloadTime;
 	int timeSinceLastReload;
+	GadgetView::GadgetImage weaponType;
 };

@@ -66,6 +66,7 @@ void Character::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 			pCharacterView->LoadCVImage(CharacterView::CharacterImage::FallingRight, "res/PengySummerFallingRight.bmp");
 			pCharacterView->LoadCVImage(CharacterView::CharacterImage::JumpLeft, "res/PengySummerJump2.bmp");
 			pCharacterView->LoadCVImage(CharacterView::CharacterImage::JumpRight, "res/PengySummerJump.bmp");
+			weaponType = GadgetView::GadgetImage::Piranha;
 			break;
 		case 2:
 			pCharacterView->LoadCVImage(CharacterView::CharacterImage::Left, "res/PengyAutumnLeft.bmp");
@@ -76,6 +77,7 @@ void Character::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 			pCharacterView->LoadCVImage(CharacterView::CharacterImage::JumpRight, "res/PengyAutumnJump.bmp");
 			pCharacterView->LoadCVImage(CharacterView::CharacterImage::FallingLeft, "res/PengyAutumnFallingLeft.bmp");
 			pCharacterView->LoadCVImage(CharacterView::CharacterImage::FallingRight, "res/PengyAutumnFallingRight.bmp");
+			weaponType = GadgetView::GadgetImage::Ladybug;
 			break;
 		case 3:
 			pCharacterView->LoadCVImage(CharacterView::CharacterImage::Left, "res/PengyWinterLeft.bmp");
@@ -86,6 +88,7 @@ void Character::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 			pCharacterView->LoadCVImage(CharacterView::CharacterImage::FallingRight, "res/PengyWinterFallingRight.bmp");
 			pCharacterView->LoadCVImage(CharacterView::CharacterImage::JumpLeft, "res/PengyWinterJump2.bmp");
 			pCharacterView->LoadCVImage(CharacterView::CharacterImage::JumpRight, "res/PengyWinterJump.bmp");
+			weaponType = GadgetView::GadgetImage::SnowBall;
 			break;
 		}
 		
@@ -254,7 +257,7 @@ void Character::Throw()
 					pWl->X = Character::Instance()->GetLocation()->X;
 					pWl->Y = Character::Instance()->GetLocation()->Y + (Character::Instance()->GetLocation()->height/2);
 
-					Weapon * weapon = new Weapon(pWl, GadgetView::GadgetImage::Piranha, Character::Instance()->GetDirection(), 0.5, shootingDistance, pEnemy);
+					Weapon * weapon = new Weapon(pWl, weaponType, Character::Instance()->GetDirection(), 0.5, shootingDistance, pEnemy);
 					pickedupWeapons--;
 				}
 			}
@@ -328,4 +331,9 @@ void Character::StartGame()
 	lives=4;
 	pickedupFish = 0;
 	pickedupWeapons = 0;
+}
+
+GadgetView::GadgetImage Character::GetWeaponType()
+{
+	return weaponType;
 }

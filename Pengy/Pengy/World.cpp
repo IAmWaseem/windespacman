@@ -2,6 +2,7 @@
 #include "Menu.h"
 #include "GadgetFactory.h"
 #include "EnemyFactory.h"
+#include "Character.h"
 
 World* World::pInstance = NULL;
 
@@ -45,6 +46,12 @@ void World::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		}
 		break;
 	}
+	case CM_UPDATE:
+		if(Character::Instance()->GetAmountLives() == 0)
+		{
+			MessageQueue::Instance()->SendMessage();
+		}
+		break;
 }
 
 void World::LoadNextLevel()

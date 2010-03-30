@@ -96,7 +96,7 @@ void WaldoAttack::Throw()
 			Weapon * weapon = new Weapon(pWl, GadgetView::GadgetImage::RottenFish, Direction::Left, 0.3, 300, Character::Instance());
 		
 		throws = 0;
-		throwsInterval = RandomIntBetween(1000, 1200);
+		throwsInterval = RandomIntBetween(800, 1000);
 	}
 	else
 		throws++;

@@ -21,6 +21,6 @@ void LevelIntroView::Draw(HDC hdc, RECT rect, int xFrom, int xTo)
 	HDC bufDC = CreateCompatibleDC(hdc);
 	SelectObject(bufDC, currentBitmap);
 
-	BitBlt(hdc, 0, 0, 1000, 700, bufDC, 0, 0, SRCCOPY);	
+	BitBlt(hdc, 0, 0, 1014, 671, bufDC, 0, 0, SRCCOPY);	
 	DeleteDC(bufDC);
 }

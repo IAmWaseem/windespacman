@@ -13,7 +13,6 @@ public:
 	~Character(void);
 	void ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam);
 	static Character* Instance();
-	void Update();
 	Location * GetLocation();
 	void SetLocation(Location * pLocation);
 	static float DistanceToMove;

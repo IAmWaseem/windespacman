@@ -71,28 +71,6 @@ vector<Surface*> BeachLevel::GetSurfaces()
 	landRight->yTo = 670;
 	pSurfaces->push_back(landRight);	
 
-	// two slopes for testing purposes
-
-	/*Surface * slopeLeft = new Surface();
-	slopeLeft->xFrom = 320;
-	slopeLeft->xTo = 384;
-	slopeLeft->yFrom = 449;
-	slopeLeft->yTo = 530;
-	slopeLeft->isSlope=1;
-	slopeLeft->SlopeCoefficientA = cal.CalculateSlopCoeffA(320,449,384,530);
-	slopeLeft->SlopeCoefficientB = cal.CalculateSlopCoeffB(320,448,slopeLeft->SlopeCoefficientA);
-	pSurfaces->push_back(slopeLeft);*/
-
-	/*Surface * slopeRight = new Surface();
-	slopeRight->xFrom = 840;
-	slopeRight->xTo = 904;
-	slopeRight->yFrom = 449;
-	slopeRight->yTo = 530;
-	slopeRight->isSlope=2;
-	slopeRight->SlopeCoefficientA = cal.CalculateSlopCoeffA(840,530,904,449);
-	slopeRight->SlopeCoefficientB = cal.CalculateSlopCoeffB(840,530,slopeRight->SlopeCoefficientA);
-	pSurfaces->push_back(slopeRight);*/
-
 	//////////////////////////////////////////////////////////////////////////////
 	// for letting the array be stil the same, indexes are used in the program	//
 	Surface * waterLeft = new Surface();										//
@@ -612,7 +590,6 @@ void BeachLevel::LoadGadgets()
 	Location * pL2 = new Location();
 	Location * pL3 = new Location();
 	Location * pL4 = new Location();
-	Location * pL5 = new Location();
 	Location * pL6 = new Location();
 	Location * pL7 = new Location();
 	Location * pL8 = new Location();
@@ -640,10 +617,6 @@ void BeachLevel::LoadGadgets()
 	Location * pL30 = new Location();
 	Location * pL31 = new Location();
 	Location * pL32 = new Location();
-	Location * pL33 = new Location();
-	Location * pL34 = new Location();
-	Location * pL35 = new Location();
-	Location * pL36 = new Location();
 
 	// goldfish
 	pL2->X = 420;
@@ -652,11 +625,11 @@ void BeachLevel::LoadGadgets()
 	pL3->X = 544;
 	pL3->Y = 495;
 	
-	pL26->X = 482;
+	pL26->X = 499;
 	pL26->Y = 465;
 
-	pL27->X = 510;
-	pL27->Y = 280;
+	pL27->X = 650;
+	pL27->Y = 180;
 
 	pL15->X = 450;
 	pL15->Y = 495;
@@ -705,7 +678,12 @@ void BeachLevel::LoadGadgets()
 	
 	pL14->X = 1432;
 	pL14->Y = 110;
-	// end of gf
+	
+	pL28->X = 2040;
+	pL28->Y = 410;
+
+	pL31->X = 2040;
+	pL31->Y = 350;
 
 	// piranah
 	pL1->X = 862;
@@ -725,29 +703,20 @@ void BeachLevel::LoadGadgets()
 
 	pL10->X = 2050;
 	pL10->Y = 600;
-	// end of piranha
 
-
-	pL28->X = 2040;
-	pL28->Y = 410;
-
-	pL31->X = 2040;
-	pL31->Y = 350;
-
-	pL30->X = 2040;
-	pL30->Y = 210;
-	
 	pL29->X = 2040;
 	pL29->Y = 290;
 
-	pL32->X = 446;
-	pL32->Y = 250;
+	pL32->X = 570;
+	pL32->Y = 220;
+
+	pL30->X = 2340;
+	pL30->Y = 210;
 
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)pL1, NULL);
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL2, NULL);
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL3, NULL);
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL4, NULL);
-	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL5, NULL);
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL11, NULL);
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL12, NULL);
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL13, NULL);

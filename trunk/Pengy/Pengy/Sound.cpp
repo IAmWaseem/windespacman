@@ -30,7 +30,8 @@ Sound* Sound::Instance(){
 
 Sound::Sound(void)
 {
-	Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096);	
+	Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096);
+	pMusic = NULL;
 }
 
 Sound::~Sound(void)
@@ -46,7 +47,7 @@ void Sound::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	switch (message) 
 	{
 	case CM_SOUND_LOOP:
-	 	pMusic=NULL;
+	 	pMusic = NULL;
  		pMusic = Mix_LoadMUS((const char *)wParam);
 		if (Mix_PlayMusic(pMusic, -1) == -1)
 		{
@@ -54,7 +55,8 @@ void Sound::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		}
 		break;
 	case CM_SOUND_END_LOOP:
-		Mix_FreeMusic(pMusic);
+		if(pMusic != NULL)
+			Mix_FreeMusic(pMusic);
 		break;
 	case CM_SOUND_EVENT:
 		pEffect = NULL;

@@ -79,11 +79,13 @@ void Level::LoadLevel(int level)
 	vector<int*> data;
 	LPCSTR path = "";
 	LevelIntro * levelIntro;
+	MessageQueue::Instance()->SendMessage(CM_SOUND_END_LOOP, NULL, NULL);
 	switch(level)
 	{
 	case 1:
 		delete currentLevel;
 		levelIntro = new LevelIntro("res/IntroSummer.bmp", "res/IntroSummerInfo.bmp", 1000, 4000);
+		MessageQueue::Instance()->SendMessage(CM_SOUND_LOOP, (WPARAM)(LPCTSTR)"res/Waves/1_beach.wav", NULL);
 		currentLevel = new BeachLevel();
 		path = "res/tilemap.bmp";
 		data = currentLevel->GetTiles();
@@ -95,6 +97,7 @@ void Level::LoadLevel(int level)
 	case 2:
 		delete currentLevel;
 		levelIntro = new LevelIntro("res/IntroSummer.bmp", "res/IntroSummerInfo.bmp", 1000, 4000);
+		MessageQueue::Instance()->SendMessage(CM_SOUND_LOOP, (WPARAM)(LPCTSTR)"res/Waves/3_forest.wav", NULL);
 		currentLevel = new ForestLevel();
 		path = "res/tilemap.bmp";
 		data = currentLevel->GetTiles();
@@ -106,6 +109,7 @@ void Level::LoadLevel(int level)
 	case 3:
 		delete currentLevel;
 		levelIntro = new LevelIntro("res/IntroSummer.bmp", "res/IntroSummerInfo.bmp", 1000, 4000);
+		MessageQueue::Instance()->SendMessage(CM_SOUND_LOOP, (WPARAM)(LPCTSTR)"res/Waves/2_snow.wav", NULL);
 		currentLevel = new SnowLevel();
 		path = "res/tilemap.bmp";
 		data = currentLevel->GetTiles();

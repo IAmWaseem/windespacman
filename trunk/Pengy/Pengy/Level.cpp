@@ -94,8 +94,8 @@ void Level::LoadLevel(int level)
 		break;
 	case 2:
 		delete currentLevel;
-		currentLevel = new SnowLevel();
 		levelIntro = new LevelIntro("res/IntroSummer.bmp", "res/IntroSummerInfo.bmp", 1000, 4000);
+		currentLevel = new ForestLevel();
 		path = "res/tilemap.bmp";
 		data = currentLevel->GetTiles();
 		surfaces = currentLevel->GetSurfaces();
@@ -105,8 +105,8 @@ void Level::LoadLevel(int level)
 		break;
 	case 3:
 		delete currentLevel;
-		currentLevel = new SnowLevel();
 		levelIntro = new LevelIntro("res/IntroSummer.bmp", "res/IntroSummerInfo.bmp", 1000, 4000);
+		currentLevel = new SnowLevel();
 		path = "res/tilemap.bmp";
 		data = currentLevel->GetTiles();
 		surfaces = currentLevel->GetSurfaces();

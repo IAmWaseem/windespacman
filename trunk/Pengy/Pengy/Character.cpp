@@ -270,11 +270,6 @@ Character* Character::Instance()
 	return pInstance;
 }
 
-void Character::Update()
-{
-	
-}
-
 Location * Character::GetLocation()
 {
 	return pLocation;

@@ -45,13 +45,14 @@ void World::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 			pMenuObject->Instance()->LoadGameMenu();
 		}
 		break;
-	}
 	case CM_UPDATE:
 		if(Character::Instance()->GetAmountLives() == 0)
 		{
-			MessageQueue::Instance()->SendMessage();
+			MessageQueue::Instance()->SendMessage(CM_GAME_OVER, NULL, NULL);
 		}
 		break;
+	}
+	
 }
 
 void World::LoadNextLevel()

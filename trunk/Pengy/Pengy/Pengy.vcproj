@@ -388,6 +388,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\MisterFrostView.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\MovingSurfaceView.cpp"
 				>
 			</File>
@@ -428,6 +432,10 @@
 				</File>
 				<File
 					RelativePath=".\LevelView.h"
+					>
+				</File>
+				<File
+					RelativePath=".\MisterFrostView.h"
 					>
 				</File>
 				<File
@@ -604,6 +612,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\MisterFrost.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Waldo.cpp"
 				>
 			</File>
@@ -624,6 +636,22 @@
 				</File>
 				<File
 					RelativePath=".\BeachBallStateMachine.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\MisterFrostAttack.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\MisterFrostPatrol.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\MisterFrostState.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\MisterFrostStateMachine.cpp"
 					>
 				</File>
 				<File
@@ -666,6 +694,22 @@
 						>
 					</File>
 					<File
+						RelativePath=".\MisterFrostAttack.h"
+						>
+					</File>
+					<File
+						RelativePath=".\MisterFrostPatrol.h"
+						>
+					</File>
+					<File
+						RelativePath=".\MisterFrostState.h"
+						>
+					</File>
+					<File
+						RelativePath=".\MisterFrostStateMachine.h"
+						>
+					</File>
+					<File
 						RelativePath=".\WaldoAttack.h"
 						>
 					</File>
@@ -700,6 +744,10 @@
 				</File>
 				<File
 					RelativePath=".\EnemyFactory.h"
+					>
+				</File>
+				<File
+					RelativePath=".\MisterFrost.h"
 					>
 				</File>
 				<File

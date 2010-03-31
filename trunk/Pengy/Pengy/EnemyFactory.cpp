@@ -4,6 +4,7 @@
 #include "Waldo.h"
 #include "Enemy.h"
 #include "BeachBall.h"
+#include "MisterFrost.h"
 
 EnemyFactory * EnemyFactory::pInstance = NULL;
 bool EnemyFactory::SendMessagesToChildren = false;
@@ -51,6 +52,12 @@ void EnemyFactory::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		pSurface = (Surface*)wParam;
 		x = lParam;
 		pEnemy = new BeachBall(pSurface);
+		pEnemies->push_back(pEnemy);
+		break;
+	case CM_ENEMYFACTORY_CREATE_MISTERFROST:
+		pSurface = (Surface*)wParam;
+		x = lParam;
+		pEnemy = new MisterFrost(pSurface);
 		pEnemies->push_back(pEnemy);
 		break;
 	case CM_ENEMYFACTORY_CREATE_WALDO_WANDER:

@@ -305,7 +305,7 @@ vector<int*> ForestLevel::GetTiles()
 		int tileX = x;
 		for(int y = 0; y <= 11;y++)
 		{
-			int tileY = y + 15;
+			int tileY = y + 15 - 15;
 			int *tempTile = new int[6];
 			tempTile[0] = x;
 			tempTile[1] = y;
@@ -323,7 +323,7 @@ vector<int*> ForestLevel::GetTiles()
 		int tileX = x;
 		for(int y = 5; y <= 11;y++)
 		{
-			int tileY = y + 21;
+			int tileY = y + 21 - 15;
 			int *tempTile = new int[6];
 			tempTile[0] = x;
 			tempTile[1] = y;
@@ -341,7 +341,7 @@ vector<int*> ForestLevel::GetTiles()
 		int tileX = x;
 		for(int y = 5; y <= 11;y++)
 		{
-			int tileY = y + 27;
+			int tileY = y + 27 - 15;
 			int *tempTile = new int[6];
 			tempTile[0] = x;
 			tempTile[1] = y;
@@ -357,7 +357,7 @@ vector<int*> ForestLevel::GetTiles()
 	for(int x = 0; x <= 7; x++)
 	{
 		int tileX = 38;
-		int tileY = 15;
+		int tileY = 15 - 15;
 		int *tempTile = new int[6];
 		tempTile[0] = x;
 		tempTile[1] = 9;
@@ -368,7 +368,7 @@ vector<int*> ForestLevel::GetTiles()
 		tiles.push_back(tempTile);
 
 		tileX = 38;
-		tileY = 16;
+		tileY = 16 - 15;
 		tempTile = new int[6];
 		tempTile[0] = x;
 		tempTile[1] = 10;
@@ -382,7 +382,7 @@ vector<int*> ForestLevel::GetTiles()
 	for(int x = 8; x <= 9; x++)
 	{
 		int tileX = 24 + x;
-		int tileY = 15;
+		int tileY = 15 - 15;
 		int *tempTile = new int[6];
 		tempTile[0] = x;
 		tempTile[1] = 9;
@@ -392,7 +392,7 @@ vector<int*> ForestLevel::GetTiles()
 		tempTile[5] = 0;
 		tiles.push_back(tempTile);
 
-		tileY = 16;
+		tileY = 16 - 15;
 		tempTile = new int[6];
 		tempTile[0] = x;
 		tempTile[1] = 10;
@@ -409,7 +409,7 @@ vector<int*> ForestLevel::GetTiles()
 		int tileX = x + 18;
 		for(int y = 7; y <= 10;y++)
 		{
-			int tileY = y + 11;
+			int tileY = y + 11 - 15;
 			int *tempTile = new int[6];
 			tempTile[0] = x;
 			tempTile[1] = y;
@@ -426,7 +426,7 @@ vector<int*> ForestLevel::GetTiles()
 		int tileX = x + 7;
 		for(int y = 7; y <= 10;y++)
 		{
-			int tileY = y + 11;
+			int tileY = y + 11 - 15;
 			int *tempTile = new int[6];
 			tempTile[0] = x;
 			tempTile[1] = y;
@@ -443,7 +443,7 @@ vector<int*> ForestLevel::GetTiles()
 		int tileX = x + 2;
 		for(int y = 9; y <= 10;y++)
 		{
-			int tileY = y + 9;
+			int tileY = y + 9 - 15;
 			int *tempTile = new int[6];
 			tempTile[0] = x;
 			tempTile[1] = y;
@@ -459,7 +459,7 @@ vector<int*> ForestLevel::GetTiles()
 	for(int x = 38; x <= 41; x++)
 	{
 		int tileX = x - 4;
-		int tileY = 15;
+		int tileY = 15 - 15;
 		int *tempTile = new int[6];
 		tempTile[0] = x;
 		tempTile[1] = 9;
@@ -469,7 +469,7 @@ vector<int*> ForestLevel::GetTiles()
 		tempTile[5] = 0;
 		tiles.push_back(tempTile);
 
-		tileY = 16;
+		tileY = 16 - 15;
 		tempTile = new int[6];
 		tempTile[0] = x;
 		tempTile[1] = 10;
@@ -483,7 +483,7 @@ vector<int*> ForestLevel::GetTiles()
 	for(int x = 42; x <= 56; x++)
 	{
 		int tileX = 38;
-		int tileY = 15;
+		int tileY = 15 - 15;
 		int *tempTile = new int[6];
 		tempTile[0] = x;
 		tempTile[1] = 9;
@@ -494,7 +494,7 @@ vector<int*> ForestLevel::GetTiles()
 		tiles.push_back(tempTile);
 
 		tileX = 38;
-		tileY = 16;
+		tileY = 16 - 15;
 		tempTile = new int[6];
 		tempTile[0] = x;
 		tempTile[1] = 10;
@@ -508,7 +508,7 @@ vector<int*> ForestLevel::GetTiles()
 	for(int x = 18; x <= 28; x++)
 	{
 		int tileX = x + 14;
-		int tileY = 17;
+		int tileY = 17 - 15;
 		int *tempTile = new int[6];
 		tempTile[0] = x;
 		tempTile[1] = 2;

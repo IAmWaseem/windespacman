@@ -18,6 +18,7 @@ public:
     ~Level();
     void ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam);
 	void LoadLevel(int level);
+	bool GetLevelRunning();
 protected:
 	Level();
 private:
@@ -30,6 +31,7 @@ private:
 	int levelLength;
 	void SetLevelLength();
 	World* pWorld;
+	bool levelRunning;
 	
 	/*bool LocationInSurfaceX(Location * location, Surface * surface);
 	bool LocationInSurfaceY(Location * location, Surface * surface);*/

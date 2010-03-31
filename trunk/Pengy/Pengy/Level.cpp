@@ -16,6 +16,7 @@ Level* Level::Instance(){
 
 Level::Level()
 { 
+	levelRunning = false;
 	currentLevel = new BeachLevel();
 }
 
@@ -75,6 +76,7 @@ void Level::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 
 void Level::LoadLevel(int level)
 {
+	levelRunning = false;
 	vector<Tile> myTiles;
 	vector<int*> data;
 	LPCSTR path = "";
@@ -82,7 +84,7 @@ void Level::LoadLevel(int level)
 	MessageQueue::Instance()->SendMessage(CM_SOUND_END_LOOP, NULL, NULL);
 	switch(level)
 	{
-	case 1:
+	case 2:
 		delete currentLevel;
 		levelIntro = new LevelIntro("res/IntroSummer.bmp", "res/IntroSummerInfo.bmp", 1000, 4000);
 		MessageQueue::Instance()->SendMessage(CM_SOUND_LOOP, (WPARAM)(LPCTSTR)"res/Waves/1_beach.wav", NULL);
@@ -94,12 +96,12 @@ void Level::LoadLevel(int level)
 		currentLevel->LoadEnemies();
 		SetLevelLength();
 		break;
-	case 2:
+	case 1:
 		delete currentLevel;
 		levelIntro = new LevelIntro("res/IntroSummer.bmp", "res/IntroSummerInfo.bmp", 1000, 4000);
 		MessageQueue::Instance()->SendMessage(CM_SOUND_LOOP, (WPARAM)(LPCTSTR)"res/Waves/3_forest.wav", NULL);
 		currentLevel = new ForestLevel();
-		path = "res/tilemap.bmp";
+		path = "res/tilemap_forest.bmp";
 		data = currentLevel->GetTiles();
 		surfaces = currentLevel->GetSurfaces();
 		currentLevel->LoadGadgets();
@@ -144,4 +146,10 @@ void Level::LoadLevel(int level)
 	levelView.SetSurface(&surfaces);
 	levelView.SetTiles(myTiles, path);
 	MessageQueue::Instance()->SendMessage(CM_PAUSE, NULL, NULL);
+	levelRunning = true;
+}
+
+bool Level::GetLevelRunning()
+{
+	return levelRunning;
 }

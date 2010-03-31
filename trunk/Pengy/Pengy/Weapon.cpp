@@ -41,7 +41,7 @@ void Weapon::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 	case CM_LEVEL_LOAD:
 		if(hitPengy)
-			delete this;
+			//delete this;
 		break;
 	}
 }

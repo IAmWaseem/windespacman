@@ -88,9 +88,6 @@ bool Enemy::IsAlive()
 
 void Enemy::EndLevel()
 {
-	EnemyFactory::SendMessagesToChildren = false;
-	MessageQueue::Instance()->SendMessage(CM_LEVEL_START, NULL, NULL);
-	EnemyFactory::SendMessagesToChildren = true;
 }
 
 void Enemy::DoDamage(int amount)

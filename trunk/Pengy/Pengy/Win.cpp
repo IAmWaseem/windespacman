@@ -29,7 +29,7 @@ CWin::CWin()
 
 	this->m_hWnd = NULL;
 	this->m_dwCreationFlags  = 0L;
-	this->m_dwWindowStyle		= (WS_OVERLAPPEDWINDOW | WS_SYSMENU) & ~(WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_THICKFRAME) ;
+	this->m_dwWindowStyle		= (WS_OVERLAPPEDWINDOW | WS_SYSMENU ) & ~(WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_THICKFRAME) ;
 	this->m_dwExWindowStyle	= WS_EX_OVERLAPPEDWINDOW;
 	this->m_dwCreationFlags	= SW_SHOW;
 	this->m_PosX			= CW_USEDEFAULT;	
@@ -97,7 +97,7 @@ HRESULT CWin::Create()
 
 	wcex.cbSize = sizeof(WNDCLASSEX); 
 
-	wcex.style			= CS_HREDRAW | CS_VREDRAW;
+	wcex.style			= CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS;
 	wcex.lpfnWndProc	= (WNDPROC)WndProc;
 	wcex.cbClsExtra		= 0;
 	wcex.cbWndExtra		= 0;

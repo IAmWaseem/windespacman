@@ -69,7 +69,7 @@ void Level::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 	case CM_GAME_START:
 		levelView.StartGame();
-		MessageQueue::Instance()->SendMessage(CM_LEVEL_BEGIN, NULL, NULL);
+		//MessageQueue::Instance()->SendMessage(CM_LEVEL_BEGIN, NULL, NULL);
 		break;
 	}
 }
@@ -81,10 +81,10 @@ void Level::LoadLevel(int level)
 	vector<int*> data;
 	LPCSTR path = "";
 	LevelIntro * levelIntro;
-	MessageQueue::Instance()->SendMessage(CM_SOUND_END_LOOP, NULL, NULL);
+	//MessageQueue::Instance()->SendMessage(CM_SOUND_END_LOOP, NULL, NULL);
 	switch(level)
 	{
-	case 2:
+	case 1:
 		delete currentLevel;
 		levelIntro = new LevelIntro("res/IntroSummer.bmp", "res/IntroSummerInfo.bmp", 1000, 4000);
 		MessageQueue::Instance()->SendMessage(CM_SOUND_LOOP, (WPARAM)(LPCTSTR)"res/Waves/1_beach.wav", NULL);
@@ -96,7 +96,7 @@ void Level::LoadLevel(int level)
 		currentLevel->LoadEnemies();
 		SetLevelLength();
 		break;
-	case 1:
+	case 2:
 		delete currentLevel;
 		levelIntro = new LevelIntro("res/IntroSummer.bmp", "res/IntroSummerInfo.bmp", 1000, 4000);
 		MessageQueue::Instance()->SendMessage(CM_SOUND_LOOP, (WPARAM)(LPCTSTR)"res/Waves/3_forest.wav", NULL);

@@ -15,8 +15,8 @@ World* World::Instance(){
 
 World::World()
 { 
-	level = 0;
-	menu = false;
+	level = 1;
+	menu = true;
 }
 
 World::~World(){
@@ -52,6 +52,9 @@ void World::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 			level = 1;
 		}
 		break;
+	case CM_GAME_RESTART:
+		StartGame();
+		break;
 	}
 	
 }
@@ -68,6 +71,6 @@ void World::LoadNextLevel()
 
 void World::StartGame()
 {
-	level = 3;	
+	level = 1;	
 	pMessageQueue->Instance()->SendMessage(CM_LEVEL_LOAD, NULL, NULL);
 }

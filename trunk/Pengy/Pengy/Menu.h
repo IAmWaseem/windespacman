@@ -3,6 +3,7 @@
 #include "World.h"
 #include "messages.h"
 #include "MessageQueue.h"
+#include "MenuView.h"
 
 class Menu : public Observer
 {
@@ -20,6 +21,11 @@ private:
 	World * pWorld;
 	MessageQueue * pMessageQueue;
 	void OpenFileDialog();
+	void Update();
+	View * menuView;
+	void MenuClick(int x, int y);
+	bool gameRunning;
+	bool firstRun;
 };
 
 

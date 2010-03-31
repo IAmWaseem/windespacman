@@ -767,6 +767,8 @@ void SnowLevel::LoadEnemies()
 	MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_WANDER, (int)pGround3, (int)pGround3->xTo - 10);
 	MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_WANDER, (int)pGround3, (int)pGround3->xFrom + 0.5*(pGround3->xTo - pGround3->xFrom));
 	MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_WANDER, (int)pGround3, (int)pGround3->xFrom + 10);
+
+	MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_MISTERFROST, (int)pGround3, NULL);
 }
 
 void SnowLevel::LoadGadgets()

@@ -4,7 +4,7 @@
 #include "Waldo.h"
 #include "Enemy.h"
 #include "BeachBall.h"
-#include "MisterFrost.h"
+//#include "MisterFrost.h"
 
 EnemyFactory * EnemyFactory::pInstance = NULL;
 bool EnemyFactory::SendMessagesToChildren = false;
@@ -57,7 +57,7 @@ void EnemyFactory::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	case CM_ENEMYFACTORY_CREATE_MISTERFROST:
 		pSurface = (Surface*)wParam;
 		x = lParam;
-		pEnemy = new MisterFrost(pSurface);
+		//pEnemy = new MisterFrost(pSurface);
 		pEnemies->push_back(pEnemy);
 		break;
 	case CM_ENEMYFACTORY_CREATE_WALDO_WANDER:
@@ -88,20 +88,12 @@ void EnemyFactory::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 	}
 	
-	if(EnemyFactory::SendMessagesToChildren)
+	vector<Enemy*>::iterator iterator = pEnemies->begin();
+	while(iterator != pEnemies->end())
 	{
-		vector<Enemy*>::iterator iterator = pEnemies->begin();
-		while(iterator != pEnemies->end()&& EnemyFactory::SendMessagesToChildren)
-		{
-			pEnemy = *iterator;
-			pEnemy->ReceiveMessage(message, wParam, lParam);
-			if(!EnemyFactory::SendMessagesToChildren)
-			{
-				EnemyFactory::SendMessagesToChildren = true;
-				break;
-			}
-			iterator++;
-		}
+		pEnemy = *iterator;
+		pEnemy->ReceiveMessage(message, wParam, lParam);
+		iterator++;
 	}
 }
 void EnemyFactory::StartGame()

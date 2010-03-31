@@ -32,6 +32,9 @@ LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 	switch (uMsg) 
 	{
+	case WM_LBUTTONDBLCLK:
+		pMessageQueue->Instance()->SendMessage(uMsg, wParam, lParam);
+		break;
 	case WM_CREATE:
 		pSplash.Init(hWnd, this->m_hInstance, IDB_BITMAP2 );
 		pSplash.Show();
@@ -57,11 +60,14 @@ LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		{
 			case 'm':
 			case 'M':
-				pMessageQueue->Instance()->SendMessage(CM_MENU_LOAD, NULL, NULL);
-				paused = true;
-
+				if(pWorld->Instance()->menu)
+					pWorld->Instance()->menu = false;
+				else
+					pWorld->Instance()->menu = true;
+				break;
 			case 't':
 			case 'T':
+				MessageQueue::Instance()->SendMessage(CM_GAME_RESTART, NULL, NULL);
 				pMessageQueue->Instance()->SendMessage(CM_CHARACTER_RESET_POSITION, NULL, -90);
 				break;
 
@@ -131,8 +137,7 @@ LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 void CSkeleton::GameInit()
 {
-	pMessageQueue->Instance()->SendMessage(CM_MENU_LOAD, NULL, NULL);
-	paused = true;
+	paused = false;
 	RECT rect;
 	rect.left = 0;
 	rect.top = 0;
@@ -157,6 +162,10 @@ void CSkeleton::GameInit()
 
 	ULONGLONG systemTimeIn_ms( uli.QuadPart/10000 );
 	previousUpdateTime = systemTimeIn_ms;
+
+	/*pMessageQueue->Instance()->SendMessage(CM_PAUSE, NULL, NULL);
+	pMessageQueue->Instance()->SendMessage(CM_UNPAUSE, NULL, NULL);
+	pMessageQueue->Instance()->SendMessage(CM_GAME_START, NULL, NULL);*/
 }
 
 void CSkeleton::GameLoop()

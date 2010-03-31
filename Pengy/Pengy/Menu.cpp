@@ -1,4 +1,5 @@
 #include "Menu.h"
+#include "windowsx.h"
 
 Menu* Menu::pInstance = NULL;
 
@@ -11,6 +12,9 @@ Menu* Menu::Instance(){
 
 Menu::Menu()
 { 
+	menuView = new MenuView();
+	gameRunning = false;
+	firstRun = false;
 }
 
 Menu::~Menu(){
@@ -19,25 +23,61 @@ Menu::~Menu(){
 
 void Menu::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam) 
  {
+	 int xPos;
+	 int yPos;
 	 switch (message) 
 	 {
-	 case CM_GAME_NEW:	
-		 pMessageQueue->Instance()->SendMessage(CM_GAME_START, NULL, NULL);
-		 DeleteGameMenu();
-		 pWorld->Instance()->menu = false;
+	 case CM_UPDATE:
+		Update();
 		 break;
-	 case CM_GAME_OPEN:
-		 OpenFileDialog();
+	 case WM_LBUTTONDBLCLK:
+			xPos = GET_X_LPARAM(lParam); 
+			yPos = GET_Y_LPARAM(lParam); 
+			MenuClick(xPos, yPos);
 		 break;
-	 case CM_GAME_SAVE:
-		 MessageBox(windowHandle, "Save", "Menu", 0); 
+	 case CM_GAME_OVER:
+			gameRunning = false;
 		 break;
-	 case CM_GAME_EXIT:
-		 PostQuitMessage(0); 
-	 case CM_GAME_ABOUT:
-		 MessageBox(windowHandle, "About", "Menu", 0); 
-		 break;	
 	 }
+}
+
+void Menu::MenuClick(int x, int y)
+{
+	if(x > 430)
+	{
+		if(y >= 0 && y < 100)
+		{
+			gameRunning = true;
+			MessageQueue::Instance()->SendMessage(CM_UNPAUSE, NULL, NULL);
+			World::Instance()->menu = false;
+			if(firstRun)
+				pMessageQueue->Instance()->SendMessage(CM_GAME_START, NULL, NULL);
+			else
+				MessageQueue::Instance()->SendMessage(CM_GAME_RESTART, NULL, NULL);
+			firstRun = true;
+		}
+	}
+}
+
+void Menu::Update()
+{
+	if(pWorld->Instance()->menu)
+	{
+		MessageQueue::Instance()->SendMessage(CM_PAUSE, NULL, NULL);
+		menuView->RegisterToGraphics();
+	}
+	else
+	{
+		if(!gameRunning)
+		{
+			pWorld->Instance()->menu = true;
+		}
+		else
+		{
+			menuView->UnRegisterToGraphics();
+			MessageQueue::Instance()->SendMessage(CM_UNPAUSE, NULL, NULL);
+		}
+	}
 }
 
 void Menu::LoadGameMenu()

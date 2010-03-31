@@ -49,6 +49,7 @@ void World::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		if(Character::Instance()->GetAmountLives() == 0)
 		{
 			MessageQueue::Instance()->SendMessage(CM_GAME_OVER, NULL, NULL);
+			level = 1;
 		}
 		break;
 	}

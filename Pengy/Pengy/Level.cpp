@@ -98,7 +98,7 @@ void Level::LoadLevel(int level)
 		break;
 	case 2:
 		delete currentLevel;
-		levelIntro = new LevelIntro("res/IntroSummer.bmp", "res/IntroSummerInfo.bmp", 1000, 4000);
+		levelIntro = new LevelIntro("res/IntroForest.bmp", "res/IntroForestInfo.bmp", 1000, 4000);
 		MessageQueue::Instance()->SendMessage(CM_SOUND_LOOP, (WPARAM)(LPCTSTR)"res/Waves/3_forest.wav", NULL);
 		currentLevel = new ForestLevel();
 		path = "res/tilemap_forest.bmp";
@@ -110,7 +110,7 @@ void Level::LoadLevel(int level)
 		break;
 	case 3:
 		delete currentLevel;
-		levelIntro = new LevelIntro("res/IntroSummer.bmp", "res/IntroSummerInfo.bmp", 1000, 4000);
+		levelIntro = new LevelIntro("res/IntroWinter.bmp", "res/IntroWinterInfo.bmp", 1000, 4000);
 		MessageQueue::Instance()->SendMessage(CM_SOUND_LOOP, (WPARAM)(LPCTSTR)"res/Waves/2_snow.wav", NULL);
 		currentLevel = new SnowLevel();
 		path = "res/tilemap.bmp";

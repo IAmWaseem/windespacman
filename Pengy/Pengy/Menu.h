@@ -26,6 +26,7 @@ private:
 	void MenuClick(int x, int y);
 	bool gameRunning;
 	bool firstRun;
+	bool menuRunning;
 };
 
 

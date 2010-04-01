@@ -3,6 +3,7 @@
 #include "GadgetFactory.h"
 #include "EnemyFactory.h"
 #include "Character.h"
+#include "GameOverView.h"
 
 World* World::pInstance = NULL;
 
@@ -49,6 +50,7 @@ void World::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		if(Character::Instance()->GetAmountLives() == 0)
 		{
 			MessageQueue::Instance()->SendMessage(CM_GAME_OVER, NULL, NULL);
+			//GameOverView * gameOver = new GameOverView();
 			level = 1;
 		}
 		break;

@@ -380,6 +380,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\GameOverView.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\LevelIntroView.cpp"
 				>
 			</File>
@@ -428,6 +432,10 @@
 				</File>
 				<File
 					RelativePath=".\GadgetView.h"
+					>
+				</File>
+				<File
+					RelativePath=".\GameOverView.h"
 					>
 				</File>
 				<File

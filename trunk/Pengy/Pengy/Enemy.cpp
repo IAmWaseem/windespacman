@@ -88,6 +88,7 @@ bool Enemy::IsAlive()
 
 void Enemy::EndLevel()
 {
+	MessageQueue::Instance()->SendMessage(CM_LEVEL_START, NULL, NULL);
 }
 
 void Enemy::DoDamage(int amount)

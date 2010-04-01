@@ -15,6 +15,7 @@ Menu::Menu()
 	menuView = new MenuView();
 	gameRunning = false;
 	firstRun = false;
+	menuRunning = false;
 }
 
 Menu::~Menu(){
@@ -61,12 +62,13 @@ void Menu::MenuClick(int x, int y)
 
 void Menu::Update()
 {
-	if(pWorld->Instance()->menu)
+	if(pWorld->Instance()->menu && !menuRunning)
 	{
 		MessageQueue::Instance()->SendMessage(CM_PAUSE, NULL, NULL);
 		menuView->RegisterToGraphics();
+		menuRunning = true;
 	}
-	else
+	else if(!pWorld->Instance()->menu)
 	{
 		if(!gameRunning)
 		{
@@ -76,6 +78,7 @@ void Menu::Update()
 		{
 			menuView->UnRegisterToGraphics();
 			MessageQueue::Instance()->SendMessage(CM_UNPAUSE, NULL, NULL);
+			menuRunning = false;
 		}
 	}
 }

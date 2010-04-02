@@ -4,7 +4,8 @@
 #include "Waldo.h"
 #include "Enemy.h"
 #include "BeachBall.h"
-//#include "MisterFrost.h"
+#include "MisterFrost.h"
+#include "LeafEye.h"
 
 EnemyFactory * EnemyFactory::pInstance = NULL;
 bool EnemyFactory::SendMessagesToChildren = false;
@@ -57,7 +58,13 @@ void EnemyFactory::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	case CM_ENEMYFACTORY_CREATE_MISTERFROST:
 		pSurface = (Surface*)wParam;
 		x = lParam;
-		//pEnemy = new MisterFrost(pSurface);
+		pEnemy = new MisterFrost(pSurface);
+		pEnemies->push_back(pEnemy);
+		break;
+	case CM_ENEMYFACTORY_CREATE_LEAFEYE:
+		pSurface = (Surface*)wParam;
+		x = lParam;
+		pEnemy = new LeafEye(pSurface);
 		pEnemies->push_back(pEnemy);
 		break;
 	case CM_ENEMYFACTORY_CREATE_WALDO_WANDER:

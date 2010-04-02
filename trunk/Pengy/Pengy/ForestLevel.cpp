@@ -535,5 +535,7 @@ void ForestLevel::LoadEnemies()
 	MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_WANDER, (int)landRight, landRight->xFrom + 40 );
 	MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_WANDER, (int)landRight, ((landRight->xTo + landRight->xFrom) / 2));
 	MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_WANDER, (int)landRight, landRight->xTo - 40 );
+	
+	MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_LEAFEYE, (int)landRight, NULL);
 }
 

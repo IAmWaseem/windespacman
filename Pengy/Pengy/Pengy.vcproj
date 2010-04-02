@@ -384,6 +384,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\LeafEyeView.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\LevelIntroView.cpp"
 				>
 			</File>
@@ -436,6 +440,10 @@
 				</File>
 				<File
 					RelativePath=".\GameOverView.h"
+					>
+				</File>
+				<File
+					RelativePath=".\LeafEyeView.h"
 					>
 				</File>
 				<File
@@ -628,6 +636,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\LeafEye.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\MisterFrost.cpp"
 				>
 			</File>
@@ -652,6 +664,22 @@
 				</File>
 				<File
 					RelativePath=".\BeachBallStateMachine.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\LeafEyeAttack.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\LeafEyePatrol.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\LeafEyeState.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\LeafEyeStateMachine.cpp"
 					>
 				</File>
 				<File
@@ -710,6 +738,22 @@
 						>
 					</File>
 					<File
+						RelativePath=".\LeafEyeAttack.h"
+						>
+					</File>
+					<File
+						RelativePath=".\LeafEyePatrol.h"
+						>
+					</File>
+					<File
+						RelativePath=".\LeafEyeState.h"
+						>
+					</File>
+					<File
+						RelativePath=".\LeafEyeStateMachine.h"
+						>
+					</File>
+					<File
 						RelativePath=".\MisterFrostAttack.h"
 						>
 					</File>
@@ -760,6 +804,10 @@
 				</File>
 				<File
 					RelativePath=".\EnemyFactory.h"
+					>
+				</File>
+				<File
+					RelativePath=".\LeafEye.h"
 					>
 				</File>
 				<File

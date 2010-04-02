@@ -3,7 +3,7 @@
 #include "GadgetFactory.h"
 #include "EnemyFactory.h"
 #include "Character.h"
-#include "GameOverView.h"
+//#include "GameOverView.h"
 
 World* World::pInstance = NULL;
 

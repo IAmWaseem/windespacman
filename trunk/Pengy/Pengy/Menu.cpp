@@ -44,9 +44,9 @@ void Menu::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 
 void Menu::MenuClick(int x, int y)
 {
-	if(x > 430)
+	if(x > 468 && x < 664)
 	{
-		if(y >= 0 && y < 100)
+		if(y >= 594 && y < 622)
 		{
 			gameRunning = true;
 			MessageQueue::Instance()->SendMessage(CM_UNPAUSE, NULL, NULL);

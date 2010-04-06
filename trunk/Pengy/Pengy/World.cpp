@@ -78,6 +78,6 @@ void World::LoadNextLevel()
 void World::StartGame()
 {
 	gameOver = false;
-	level = 2;	
+	level = 1;	
 	pMessageQueue->Instance()->SendMessage(CM_LEVEL_LOAD, NULL, NULL);
 }

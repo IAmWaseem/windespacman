@@ -12,6 +12,7 @@ public:
 
 private:
 	HANDLE bitmap;
+	HANDLE mask;
 	int timeToShow;
 	int timeShown;
 };

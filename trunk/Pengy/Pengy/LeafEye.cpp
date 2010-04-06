@@ -12,8 +12,8 @@ LeafEye::LeafEye(Surface * pSurface) : Enemy(pSurface)
 	pView=new LeafEyeView(this);
 	pLeafEyeStateMachine = new LeafEyeStateMachine(this);
 	pView->RegisterToGraphics();
-	this->pLocation->width = 301;
-	this->pLocation->height = 207;
+	this->pLocation->width = 304;
+	this->pLocation->height = 350;
 
 	this->pLocation->X = pSurface->xTo - this->pLocation->width;
 	this->pLocation->Y = pSurface->yFrom - this->pLocation->height;

@@ -50,7 +50,7 @@ void World::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	case CM_UPDATE:
 		if(Character::Instance()->GetAmountLives() == 0 && this->gameOver == false)
 		{
-			MessageQueue::Instance()->SendMessage(CM_GAME_OVER, NULL, NULL);
+			
 			MessageQueue::Instance()->SendMessage(CM_SOUND_END_LOOP, NULL, NULL);
 			GameOverView * gameOver = new GameOverView();
 			level = 1;

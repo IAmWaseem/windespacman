@@ -19,6 +19,7 @@ Renderer::Renderer()
 	bitmap.LoadDIBFile("res/background.bmp");
 	numViews = 0;
 	singleRender = false;
+	drawUntop = false;
 }
 
 Renderer::~Renderer(){
@@ -89,6 +90,10 @@ void Renderer::Render(HDC hdc)
 				pView->Draw(hdc, rect, xFrom, xTo);
 				iterator++;
 			}
+			if(drawUntop)
+			{
+				untopView->Draw(hdc, rect, xFrom, xTo);
+			}
 		}
 	}
 
@@ -132,6 +137,11 @@ void Renderer::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 	case CM_RENDERER_NORMAL_RENDER:
 		singleRender = false;
+		drawUntop = false;
+		break;
+	case CM_RENDERER_DRAW_ONTOP:
+		drawUntop = true;
+		untopView = (View*)wParam; 
 		break;
 	}
 }

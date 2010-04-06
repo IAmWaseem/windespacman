@@ -192,7 +192,7 @@ void Character::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 			MessageQueue::Instance()->SendMessage(CM_SOUND_EVENT, (WPARAM)(LPCTSTR)"res/Waves/death.wav", 0);
 		}
 		MessageQueue::Instance()->SendMessage(CM_CHARACTER_RESET_POSITION, 50, 200);
-		pCharacterView->RegisterToGraphics();
+		//pCharacterView->RegisterToGraphics();
 		break;
 
 	case CM_GADGET_SNOWBALL_PICKEDUP:

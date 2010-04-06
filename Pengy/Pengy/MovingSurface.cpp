@@ -15,6 +15,7 @@ MovingSurface::MovingSurface(void)
 	this->difY = 20;
 	this->speed = 0.10f;
 	this->maxDif = 0;
+	isPaused = false;
 }
 MovingSurface::MovingSurface(int FromX, int FromY, int ToX, int ToY, int theMaxDif, bool MoveUp, MovingSurfaceType type)
 {
@@ -33,6 +34,7 @@ MovingSurface::MovingSurface(int FromX, int FromY, int ToX, int ToY, int theMaxD
 	this->maxDif = theMaxDif;
 	msView = new MovingSurfaceView(this, type);
 	msView->RegisterToGraphics();
+	isPaused = false;
 }
 
 void MovingSurface::Update(int timeElapsed)
@@ -61,11 +63,18 @@ void MovingSurface::Update(int timeElapsed)
 void MovingSurface::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 {
 	int timeElapsed;
+	if(message == CM_UNPAUSE)
+		isPaused = false;
+	if(isPaused)
+		return;
 
 	switch(message) {
 		case CM_UPDATE:
 			timeElapsed = wParam;
 			this->Update(timeElapsed);
+			break;
+		case CM_PAUSE:
+			isPaused = true;
 			break;
 	}
 }

@@ -8,6 +8,8 @@
 #include "resource.h"
 using namespace dotnetguy;
 
+bool CSkeleton::paused = false;
+
 
 /////////////////////////////////////
 // Constructors / Destructors      //
@@ -32,6 +34,14 @@ LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 	switch (uMsg) 
 	{
+	case WM_ENTERSIZEMOVE :
+		pMessageQueue->Instance()->SendMessage(CM_PAUSE, NULL, NULL);
+		paused = true;
+		break;
+	case WM_EXITSIZEMOVE:
+		pMessageQueue->Instance()->SendMessage(CM_UNPAUSE, NULL, NULL);
+		paused = false;
+		break;
 	case WM_LBUTTONDBLCLK:
 		pMessageQueue->Instance()->SendMessage(uMsg, wParam, lParam);
 		break;
@@ -203,7 +213,8 @@ void CSkeleton::Update()
 
 	ULONGLONG systemTimeIn_ms( uli.QuadPart/10000 );
 	int elapsedTime = (int)(systemTimeIn_ms - previousUpdateTime);
-	
+	if(elapsedTime > 50)
+		elapsedTime = 0;
 	if(!paused == true)
 		pMessageQueue->Instance()->SendMessage(CM_UPDATE, elapsedTime, NULL);
 	previousUpdateTime = systemTimeIn_ms;

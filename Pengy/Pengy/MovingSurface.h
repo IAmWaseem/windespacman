@@ -15,6 +15,7 @@ class MovingSurface : public Surface, public Observer
 {
 private:
 	MovingSurfaceView * msView;
+	bool isPaused;
 
 public:
 	bool initMoveUp;

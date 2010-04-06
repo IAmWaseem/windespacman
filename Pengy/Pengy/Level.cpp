@@ -3,7 +3,7 @@
 #include "Math.h"
 #include "Waldo.h"
 #include "LevelIntro.h"
-
+#include "Skeleton.h"
 
 Level* Level::pInstance = NULL;
 
@@ -76,6 +76,7 @@ void Level::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 
 void Level::LoadLevel(int level)
 {
+	CSkeleton::paused = true;
 	levelRunning = false;
 	vector<Tile> myTiles;
 	vector<int*> data;

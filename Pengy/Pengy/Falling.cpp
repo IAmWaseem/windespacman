@@ -1,6 +1,7 @@
 #include "Falling.h"
 #include "Character.h"
 #include "Surface.h"
+#include "Sliding.h"
 
 Falling::Falling(void)
 {
@@ -116,7 +117,10 @@ void Falling::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		}
 		if(pSurface->isSlope != 0)
 		{
-			vector<Surface*> * slopes = (vector<Surface*>*) lParam; 
+			vector<Surface*> * slopes = (vector<Surface*>*) lParam;
+			Sliding * sliding = (Sliding*)pStateMachine->pSliding;
+			sliding->SetSlopes(slopes);
+			pStateMachine->Transition(pStateMachine->pSliding);
 			break;
 		}
 		pCharacterLocation = Character::Instance()->GetLocation();

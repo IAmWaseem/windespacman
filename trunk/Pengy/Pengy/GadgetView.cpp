@@ -65,7 +65,11 @@ GadgetView::GadgetView(GadgetImage image, Gadget * gadget)
 		break;
 
 	case GadgetImage::Ladybug:
-
+		bitmap = LoadImage(NULL, LADYBUG_IMAGE, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+		b->LoadDIBFile(LADYBUG_IMAGE);
+		width_height[0] = b->Width();
+		width_height[1] = b->Height();
+		mask = CreateBitmapMask(bitmap, RGB(5, 5, 5), width_height[0], width_height[1]);
 		break;
 
 	case GadgetImage::Switch:

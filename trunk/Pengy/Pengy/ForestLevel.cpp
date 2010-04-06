@@ -163,16 +163,16 @@ void ForestLevel::LoadGadgets()
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL1, NULL);
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL2, NULL);
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL3, NULL);
-	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)pL4, NULL);
+	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_LADYBUG, (int)pL4, NULL);
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL5, NULL);
-	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)pL6, NULL);
+	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_LADYBUG, (int)pL6, NULL);
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL7, NULL);
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_ROTTENFISH, (int)pL8, NULL);
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL9, NULL);
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL10, NULL);
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL11, NULL);
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL12, NULL);
-	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)pL13, NULL);
+	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_LADYBUG, (int)pL13, NULL);
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL14, NULL);
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL15, NULL);
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL16, NULL);
@@ -181,18 +181,18 @@ void ForestLevel::LoadGadgets()
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL19, NULL);
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_ROTTENFISH, (int)pL20, NULL);
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL21, NULL);
-	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)pL22, NULL);
+	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_LADYBUG, (int)pL22, NULL);
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_ROTTENFISH, (int)pL23, NULL);
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL24, NULL);
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_GOLDFISH, (int)pL25, NULL);
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_ROTTENFISH, (int)pL26, NULL);
-	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)pL27, NULL);
+	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_LADYBUG, (int)pL27, NULL);
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_ROTTENFISH, (int)pL28, NULL);
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_ROTTENFISH, (int)pL29, NULL);
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_ROTTENFISH, (int)pL30, NULL);
-	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)pL31, NULL);
+	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_LADYBUG, (int)pL31, NULL);
 	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_EXTRALIFE, (int)pL32, NULL);
-	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_PIRANHA, (int)pL33, NULL);
+	MessageQueue::Instance()->SendMessage(CM_GADGETFACTORY_CREATE_LADYBUG, (int)pL33, NULL);
 }
 
 vector<Surface*> ForestLevel::GetSurfaces()

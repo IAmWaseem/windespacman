@@ -29,7 +29,12 @@ int Gadget::GetId()
 
 Gadget::~Gadget(void)
 {
-	
+	if(!isRemoved)
+	{
+		pGadgetView->UnRegisterToGraphics();
+		delete pGadgetView;
+		delete pGadgetStateMachine;
+	}
 }
 
 void Gadget::Update()

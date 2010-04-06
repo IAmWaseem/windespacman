@@ -166,6 +166,10 @@ void Character::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		pickedupWeapons++;
 		break;
 
+	case CM_GADGET_LADYBUG_PICKEDUP:
+		pickedupWeapons++;
+		break;
+
 	case CM_CHARACTER_GET_LOCATION:
 		MessageQueue::Instance()->SendMessage(CM_CHARACTER_RETURN_LOCATION, (int)pLocation, NULL);
 		break;

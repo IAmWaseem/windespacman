@@ -5,3 +5,4 @@
 #define EXTRALIFE_IMAGE "res/GadgetExtraLife.bmp"
 #define SNOWBOOTS_IMAGE "res/GadgetSnowboots.bmp"
 #define ROTTENFISH_IMAGE "res/GadgetRottenFish.bmp"
+#define LADYBUG_IMAGE "res/GadgetLadyBug.bmp"

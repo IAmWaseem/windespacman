@@ -71,6 +71,11 @@ void GadgetFactory::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		pGadget = new Gadget(pGadgets->size(), pLocation, GadgetView::GadgetImage::RottenFish);
 		pGadgets->push_back(pGadget);
 		break;
+	case CM_GADGETFACTORY_CREATE_LADYBUG:
+		pLocation = (Location*)wParam;
+		pGadget = new Gadget(pGadgets->size(), pLocation, GadgetView::GadgetImage::Ladybug);
+		pGadgets->push_back(pGadget);
+		break;
 	case CM_GADGETFACTORY_CLEAR:
 		StartGame();
 		break;

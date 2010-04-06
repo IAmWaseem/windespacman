@@ -51,6 +51,10 @@ void PickedUp::PickUp()
 	case GadgetView::GadgetImage::RottenFish:
 		MessageQueue::Instance()->SendMessage(CM_SOUND_EVENT,(WPARAM)(LPCTSTR)"res/Waves/NEGATIVESOUND.wav", 0);
 		MessageQueue::Instance()->SendMessage(CM_GADGET_ROTTENFISH_PICKEDUP, NULL, NULL);
+	case GadgetView::GadgetImage::Ladybug:
+		MessageQueue::Instance()->SendMessage(CM_SOUND_EVENT,(WPARAM)(LPCTSTR)"res/Waves/SQUEAK2.wav", 0);
+		MessageQueue::Instance()->SendMessage(CM_GADGET_LADYBUG_PICKEDUP, NULL, NULL);
+		break;
 	}
 
 	pGadget->Remove();

@@ -89,7 +89,8 @@ void WaldoAttack::Throw()
    		Location * pWl = new Location();
 		pWl->X = pWaldo->GetLocation()->X;
 		pWl->Y = pWaldo->GetLocation()->Y + (pWaldo->GetLocation()->height/2);
-
+		
+		MessageQueue::Instance()->SendMessage(CM_SOUND_EVENT,(WPARAM)(LPCTSTR)"res/Waves/fireball.wav", 0);
 		if(pWaldo->GetLocation()->X < pWaldo->GetPengyLocation()->X)
 			Weapon * weapon = new Weapon(pWl, GadgetView::GadgetImage::RottenFish, Direction::Right, 0.3, 300, Character::Instance());
 		else

@@ -264,7 +264,8 @@ void Character::Throw()
 					Location * pWl = new Location();
 					pWl->X = Character::Instance()->GetLocation()->X;
 					pWl->Y = Character::Instance()->GetLocation()->Y + (Character::Instance()->GetLocation()->height/2);
-
+					
+					MessageQueue::Instance()->SendMessage(CM_SOUND_EVENT,(WPARAM)(LPCTSTR)"res/Waves/SQUEAK3.wav", 0);
 					Weapon * weapon = new Weapon(pWl, weaponType, Character::Instance()->GetDirection(), 0.5, shootingDistance, pEnemy);
 					pickedupWeapons--;
 				}

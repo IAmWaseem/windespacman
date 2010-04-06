@@ -36,5 +36,7 @@ public:
 	int levelLength;
 	int characterX;
 	bool singleRender;
+	bool drawUntop;
 	View * singleView;
+	View * untopView;
 };

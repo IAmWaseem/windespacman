@@ -68,7 +68,7 @@ void World::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 void World::LoadNextLevel()
 {
 	gameOver = false;
-	if(level<1)
+	if(level<3)
 	{
 		level++;
 		GadgetFactory::Instance()->StartGame();

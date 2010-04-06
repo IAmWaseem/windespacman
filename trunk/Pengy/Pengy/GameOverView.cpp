@@ -7,6 +7,7 @@ GameOverView::GameOverView(void)
 	bitmap = LoadImage(NULL, "res/gameover.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
 	MessageQueue::Instance()->Attach(this);
 	MessageQueue::Instance()->SendMessage(CM_RENDERER_ONLY_DRAW_THIS, (int)(View*)this, NULL);
+	MessageQueue::Instance()->SendMessage(CM_SOUND_EVENT, (WPARAM)(LPCTSTR)"res/Waves/Game Over.wav", 0);
 }
 
 GameOverView::~GameOverView(void)

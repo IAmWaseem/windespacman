@@ -203,7 +203,7 @@ vector<Surface*> ForestLevel::GetSurfaces()
 	borderBottom->xFrom = 0;
 	borderBottom->xTo = 3302;
 	borderBottom->yFrom = 670;
-	borderBottom->yTo = 1000;
+	borderBottom->yTo = 2000;
 	borderBottom->isSurfaceOfDeath = true;
 	surfaces.push_back(borderBottom);
 

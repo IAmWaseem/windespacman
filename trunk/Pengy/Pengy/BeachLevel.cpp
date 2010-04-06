@@ -32,7 +32,7 @@ vector<Surface*> BeachLevel::GetSurfaces()
 	borderBottom->xFrom = 0;
 	borderBottom->xTo = 3072;
 	borderBottom->yFrom = 670;
-	borderBottom->yTo = 700;
+	borderBottom->yTo = 2000;
 	borderBottom->isSurfaceOfDeath = true;
 	pSurfaces->push_back(borderBottom);
 

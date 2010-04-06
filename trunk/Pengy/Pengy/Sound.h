@@ -10,6 +10,7 @@ class Sound : public Observer
 public:
 	Mix_Music* pMusic;
 	Mix_Chunk* pEffect;
+	WPARAM backgroundWPARAM;
 	static Sound* Instance();
     ~Sound();
     void ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam);

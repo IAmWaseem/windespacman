@@ -12,7 +12,7 @@ using namespace std;
 
 Character* Character::pInstance = NULL;
 float Character::DistanceToMove = 1.5f;
-const int Character::reloadTime = 3000;
+const int Character::reloadTime = 1000;
 
 Character::Character(void)
 {
@@ -91,7 +91,7 @@ void Character::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 			weaponType = GadgetView::GadgetImage::SnowBall;
 			break;
 		}
-		
+
 		pCharacterView->LoadCVImage(CharacterView::CharacterImage::Climb, "res/PengyClimb.bmp");
 		pCharacterView->LoadCVImage(CharacterView::CharacterImage::Climb2, "res/PengyClimb2.bmp");
 		pCharacterView->LoadCVImage(CharacterView::CharacterImage::Sliding, "res/PengySliding.bmp");
@@ -101,7 +101,7 @@ void Character::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		MessageQueue::Instance()->SendMessage(CM_CHARACTER_MOVE_X_FROM_TO, (int)pLocation, (int)pLocation);
 		MessageQueue::Instance()->SendMessage(CM_CHARACTER_FALL_Y_FROM_TO, (int)pLocation, (int)pLocation);
 		pickedupWeapons = 0;
-		
+
 		break;
 	case CM_PAUSE:
 		isPaused = true;
@@ -159,6 +159,7 @@ void Character::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 
 		MessageQueue::Instance()->SendMessage(CM_CHARACTER_MOVE_X_FROM_TO, (int)pLocation, (int)pLocation);
 		MessageQueue::Instance()->SendMessage(CM_CHARACTER_FALL_Y_FROM_TO, (int)pLocation, (int)pLocation);
+		MessageQueue::Instance()->SendMessage(CM_SOUND_LOOP, NULL, 1);
 		break;
 
 	case CM_GADGET_PIRANHA_PICKEDUP:
@@ -170,14 +171,21 @@ void Character::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 
 	case CM_CHARACTER_KILLED:
-		if(!isKilled) {
+		MessageQueue::Instance()->SendMessage(CM_SOUND_END_LOOP, NULL, NULL);
+		if(!isKilled)
+		{
 			this->lives--;
 			this->isKilled = true;
-			this->timeToStayKilled = 2000;
+			this->timeToStayKilled = 4000;
 
 			if(this->lives == 0) {
 				pCharacterView->UnRegisterToGraphics();
-			}
+			}			
+		}
+
+		if(this->lives > 0)
+		{
+			MessageQueue::Instance()->SendMessage(CM_SOUND_EVENT, (WPARAM)(LPCTSTR)"res/Waves/death.wav", 0);
 		}
 		MessageQueue::Instance()->SendMessage(CM_CHARACTER_RESET_POSITION, 50, 200);
 		pCharacterView->RegisterToGraphics();
@@ -247,7 +255,7 @@ void Character::Throw()
 				}
 				iteratorCloseEnemies++;
 			}
-			
+
 			double distanceBetween = Character::Instance()->GetLocation()->X - pEnemy->GetLocation()->X;
 			double distanceBetween2 = fabs(distanceBetween);
 

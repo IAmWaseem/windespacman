@@ -51,6 +51,7 @@ void World::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		if(Character::Instance()->GetAmountLives() == 0 && this->gameOver == false)
 		{
 			MessageQueue::Instance()->SendMessage(CM_GAME_OVER, NULL, NULL);
+			MessageQueue::Instance()->SendMessage(CM_SOUND_END_LOOP, NULL, NULL);
 			GameOverView * gameOver = new GameOverView();
 			level = 1;
 			this->gameOver = true;
@@ -77,6 +78,6 @@ void World::LoadNextLevel()
 void World::StartGame()
 {
 	gameOver = false;
-	level = 2;	
+	level = 1;	
 	pMessageQueue->Instance()->SendMessage(CM_LEVEL_LOAD, NULL, NULL);
 }

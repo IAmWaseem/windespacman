@@ -39,6 +39,7 @@ public:
 	 static short keystateRight;
 	 static short keystateDown;
 	 static short keystateSpace;
+	 static short keystateControl;
 };
 
 #endif

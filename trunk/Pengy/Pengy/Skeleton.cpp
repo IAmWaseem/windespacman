@@ -67,7 +67,6 @@ LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				break;
 			case 't':
 			case 'T':
-				MessageQueue::Instance()->SendMessage(CM_GAME_RESTART, NULL, NULL);
 				pMessageQueue->Instance()->SendMessage(CM_CHARACTER_RESET_POSITION, NULL, -90);
 				break;
 
@@ -106,9 +105,6 @@ LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 					Renderer::ShowDebug = false;
 				else
 					Renderer::ShowDebug = true;
-				break;
-			case 17:
-				pMessageQueue->Instance()->SendMessage(CM_CHARACTER_THROW, NULL, NULL);
 				break;
 		}
 		break;

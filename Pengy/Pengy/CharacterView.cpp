@@ -97,123 +97,126 @@ void CharacterView::Draw(HDC hdc, RECT rect, int xFrom, int xTo)
 {
 	if(!pWorld->Instance()->menu)
 	{
-			HANDLE bitmap = pImages->find(currentImage)->second;
-			HANDLE mask = pMasks->find(currentImage)->second;
-			int* wh = pWidthHeight->find(currentImage)->second;
-			
-			HDC bufDC = CreateCompatibleDC(hdc);
-			SelectObject(bufDC, bitmap);
+		HANDLE bitmap = pImages->find(currentImage)->second;
+		HANDLE mask = pMasks->find(currentImage)->second;
+		int* wh = pWidthHeight->find(currentImage)->second;
 
-			int x = Character::Instance()->GetLocation()->X - xFrom;
-			int y = Character::Instance()->GetLocation()->Y;
-			int width = Character::Instance()->GetLocation()->width;
-			int height = Character::Instance()->GetLocation()->height;
-			int imageW = wh[0];
-			int imageH = wh[1];
+		HDC bufDC = CreateCompatibleDC(hdc);
+		SelectObject(bufDC, bitmap);
 
-			int difWidth = (width - imageW) / 2;
-			int difHeight = height - imageH;
+		int x = Character::Instance()->GetLocation()->X - xFrom;
+		int y = Character::Instance()->GetLocation()->Y;
+		int width = Character::Instance()->GetLocation()->width;
+		int height = Character::Instance()->GetLocation()->height;
+		int imageW = wh[0];
+		int imageH = wh[1];
 
-			BitBltTransparant(hdc, x + difWidth, y + difHeight, imageW, imageH, bufDC, 0, 0, bitmap, mask);
-			DrawHud(hdc);
-			DeleteDC(bufDC);
-		
-	
-	ostringstream weaponPickedUp;
-	weaponPickedUp << "Weapons: " << Character::Instance()->GetPickedWeapons();
-	LPCSTR weapon = "";
-	string temp; 
-	temp = weaponPickedUp.str();
-	weapon = temp.c_str();
-	TextOut(hdc, 15, 75, weapon, strlen(weapon));
+		int difWidth = (width - imageW) / 2;
+		int difHeight = height - imageH;
 
-	ostringstream fishPickedUp;
-	fishPickedUp << "Fish: " << Character::Instance()->GetPickedGoldFish();
-	LPCSTR fish = "";
-	string temp2; 
-	temp2 = fishPickedUp.str();
-	fish = temp2.c_str();
-	TextOut(hdc, 15, 95, fish, strlen(fish));
-
-	ostringstream lives;
-	lives << "Lives: " << Character::Instance()->GetAmountLives();
-	LPCSTR livesLeft = "";
-	string temp3; 
-	temp3 = lives.str();
-	livesLeft = temp3.c_str();
-	TextOut(hdc, 15, 115, livesLeft, strlen(livesLeft));		
+		BitBltTransparant(hdc, x + difWidth, y + difHeight, imageW, imageH, bufDC, 0, 0, bitmap, mask);
+		DrawHud(hdc);
+		DeleteDC(bufDC);
 
 #pragma region debug
-	if(Renderer::ShowDebug)
-	{
-		ostringstream s;
-		ostringstream s2;
-		int x = (float)(Character::Instance()->GetLocation()->X);
-		int y = (float)(Character::Instance()->GetLocation()->Y);
-		int width = (float)(Character::Instance()->GetLocation()->width);
-		int height = (float)(Character::Instance()->GetLocation()->height);
-		s << "Location = ( " << x << ", " << y << " )";
-		s2 << "Location = ( " << (int)(x / 64) << ", " << (int)(y / 64) << " )";
-		
-		LPCSTR PengyDirection = "";
-		if(Character::Instance()->GetDirection() == Direction::Left)
-			PengyDirection = "left";
-		else
-			PengyDirection = "right";
+		if(Renderer::ShowDebug)
+		{
 
-		s << " & direction = " << PengyDirection;
-		
-		// cast to c_string
-		LPCSTR character = "";
-		string temp; 
-		temp = s.str();
-		character = temp.c_str();
+			ostringstream weaponPickedUp;
+			weaponPickedUp << "Weapons: " << Character::Instance()->GetPickedWeapons();
+			LPCSTR weapon = "";
+			string temp; 
+			temp = weaponPickedUp.str();
+			weapon = temp.c_str();
+			TextOut(hdc, 15, 75, weapon, strlen(weapon));
 
-		LPCSTR character2 = "";
-		string temp2; 
-		temp2 = s2.str();
-		character2 = temp2.c_str();
+			ostringstream fishPickedUp;
+			fishPickedUp << "Fish: " << Character::Instance()->GetPickedGoldFish();
+			LPCSTR fish = "";
+			string temp2; 
+			temp2 = fishPickedUp.str();
+			fish = temp2.c_str();
+			TextOut(hdc, 15, 95, fish, strlen(fish));
 
-		TextOut(hdc, 15, 35, character, strlen(character));
+			ostringstream lives;
+			lives << "Lives: " << Character::Instance()->GetAmountLives();
+			LPCSTR livesLeft = "";
+			string temp3; 
+			temp3 = lives.str();
+			livesLeft = temp3.c_str();
+			TextOut(hdc, 15, 115, livesLeft, strlen(livesLeft));		
+		}
 
-		TextOut(hdc, 15, 55, character2, strlen(character2));
-		
-		// lines of the border of the image current used by pengy
-		POINT leftOfPengy[2];	
-		leftOfPengy[0].x = x - xFrom;
-		leftOfPengy[0].y = y;
-		leftOfPengy[1].x = x - xFrom;
-		leftOfPengy[1].y = y + height;
-		
-		POINT bottomOfPengy[2]; 
-		bottomOfPengy[0].x = x - xFrom;
-		bottomOfPengy[0].y = y + height;
-		bottomOfPengy[1].x = x + width - xFrom;
-		bottomOfPengy[1].y = y + height;
-		
-		POINT topOfPengy[2];	
-		topOfPengy[0].x = x - xFrom;
-		topOfPengy[0].y = y;
-		topOfPengy[1].x = x + width - xFrom;
-		topOfPengy[1].y = y;
-		
-		POINT rightOfPengy[2];	
-		rightOfPengy[0].x = x + width - xFrom;
-		rightOfPengy[0].y = y;
-		rightOfPengy[1].x= x + width - xFrom;
-		rightOfPengy[1].y = y + height;
+		if(Renderer::ShowDebug)
+		{
+			ostringstream s;
+			ostringstream s2;
+			int x = (float)(Character::Instance()->GetLocation()->X);
+			int y = (float)(Character::Instance()->GetLocation()->Y);
+			int width = (float)(Character::Instance()->GetLocation()->width);
+			int height = (float)(Character::Instance()->GetLocation()->height);
+			s << "Location = ( " << x << ", " << y << " )";
+			s2 << "Location = ( " << (int)(x / 64) << ", " << (int)(y / 64) << " )";
 
-		HPEN hPen = CreatePen(PS_SOLID, 1, RGB(255, 0, 255));
-		SelectObject(hdc, hPen);
+			LPCSTR PengyDirection = "";
+			if(Character::Instance()->GetDirection() == Direction::Left)
+				PengyDirection = "left";
+			else
+				PengyDirection = "right";
 
-		// draw the lines
-		Polyline(hdc, leftOfPengy, 2);
-		Polyline(hdc, bottomOfPengy, 2);
-		Polyline(hdc, topOfPengy, 2);
-		Polyline(hdc, rightOfPengy, 2);
+			s << " & direction = " << PengyDirection;
 
-		DeleteObject(hPen);
-	}
+			// cast to c_string
+			LPCSTR character = "";
+			string temp; 
+			temp = s.str();
+			character = temp.c_str();
+
+			LPCSTR character2 = "";
+			string temp2; 
+			temp2 = s2.str();
+			character2 = temp2.c_str();
+
+			TextOut(hdc, 15, 35, character, strlen(character));
+
+			TextOut(hdc, 15, 55, character2, strlen(character2));
+
+			// lines of the border of the image current used by pengy
+			POINT leftOfPengy[2];	
+			leftOfPengy[0].x = x - xFrom;
+			leftOfPengy[0].y = y;
+			leftOfPengy[1].x = x - xFrom;
+			leftOfPengy[1].y = y + height;
+
+			POINT bottomOfPengy[2]; 
+			bottomOfPengy[0].x = x - xFrom;
+			bottomOfPengy[0].y = y + height;
+			bottomOfPengy[1].x = x + width - xFrom;
+			bottomOfPengy[1].y = y + height;
+
+			POINT topOfPengy[2];	
+			topOfPengy[0].x = x - xFrom;
+			topOfPengy[0].y = y;
+			topOfPengy[1].x = x + width - xFrom;
+			topOfPengy[1].y = y;
+
+			POINT rightOfPengy[2];	
+			rightOfPengy[0].x = x + width - xFrom;
+			rightOfPengy[0].y = y;
+			rightOfPengy[1].x= x + width - xFrom;
+			rightOfPengy[1].y = y + height;
+
+			HPEN hPen = CreatePen(PS_SOLID, 1, RGB(255, 0, 255));
+			SelectObject(hdc, hPen);
+
+			// draw the lines
+			Polyline(hdc, leftOfPengy, 2);
+			Polyline(hdc, bottomOfPengy, 2);
+			Polyline(hdc, topOfPengy, 2);
+			Polyline(hdc, rightOfPengy, 2);
+
+			DeleteObject(hPen);
+		}
 #pragma endregion
 	}
 }
@@ -250,7 +253,7 @@ CharacterView::CharacterImage CharacterView::GetCurrentImage()
 
 void CharacterView::ChangeCurrentImage(CharacterImage image)
 {
- 	 currentImage = image;
+	currentImage = image;
 }
 
 void CharacterView::DrawHud(HDC hdc)
@@ -292,7 +295,7 @@ void CharacterView::DrawHud(HDC hdc)
 
 void CharacterView::DrawRowFish(HDC hdc, int numFish)
 {
-	
+
 	int numDigits = 1;
 	if(numFish > 9)
 	{
@@ -309,7 +312,7 @@ void CharacterView::DrawRowFish(HDC hdc, int numFish)
 	SelectObject(bufDC, goldFishImage);
 	BitBltTransparant(hdc, startX, 10, goldFishImageWidth, goldFishImageHeight, bufDC, 0, 0, goldFishImage, goldFishImageMask);
 	DeleteDC(bufDC);
-	
+
 	startX += goldFishImageWidth;
 	bufDC = CreateCompatibleDC(hdc);
 	SelectObject(bufDC, imageX);
@@ -370,7 +373,7 @@ void CharacterView::DrawRowFish(HDC hdc, int numFish)
 		BitBltTransparant(hdc, startX, 10, imageWidth, imageHeight, bufDC, 0, 0, digitImage, digitMask);
 		DeleteDC(bufDC);
 	}
-	
+
 	startX += imageWidth;
 
 	HANDLE digitImage;
@@ -426,7 +429,7 @@ void CharacterView::DrawRowFish(HDC hdc, int numFish)
 
 void CharacterView::DrawRowWeapons(HDC hdc, int numWeapons, HANDLE weaponImage, HANDLE weaponMask, int imageHeight, int imageWidth)
 {
-		
+
 	int numDigits = 1;
 	if(numWeapons > 9)
 	{
@@ -443,7 +446,7 @@ void CharacterView::DrawRowWeapons(HDC hdc, int numWeapons, HANDLE weaponImage, 
 	SelectObject(bufDC, goldFishImage);
 	BitBltTransparant(hdc, startX, 50, imageWidth, imageHeight, bufDC, 0, 0, weaponImage, weaponMask);
 	DeleteDC(bufDC);
-	
+
 	startX += imageWidth;
 
 	bufDC = CreateCompatibleDC(hdc);
@@ -505,7 +508,7 @@ void CharacterView::DrawRowWeapons(HDC hdc, int numWeapons, HANDLE weaponImage, 
 		BitBltTransparant(hdc, startX, 50, this->imageWidth, this->imageHeight, bufDC, 0, 0, digitImage, digitMask);
 		DeleteDC(bufDC);
 	}
-	
+
 	startX += this->imageWidth;
 
 	HANDLE digitImage;
@@ -577,7 +580,7 @@ void CharacterView::DrawRowLives(HDC hdc, int numLives)
 	SelectObject(bufDC, livesImage);
 	BitBltTransparant(hdc, startX, 90, livesImageWidth, livesImageHeight, bufDC, 0, 0, livesImage, livesImageMask);
 	DeleteDC(bufDC);
-	
+
 	startX += livesImageWidth;
 
 	bufDC = CreateCompatibleDC(hdc);
@@ -639,7 +642,7 @@ void CharacterView::DrawRowLives(HDC hdc, int numLives)
 		BitBltTransparant(hdc, startX, 110, this->imageWidth, this->imageHeight, bufDC, 0, 0, digitImage, digitMask);
 		DeleteDC(bufDC);
 	}
-	
+
 	startX += this->imageWidth;
 
 	HANDLE digitImage;

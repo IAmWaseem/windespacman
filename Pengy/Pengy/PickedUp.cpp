@@ -26,16 +26,14 @@ void PickedUp::PickUp()
 	{
 	case GadgetView::GadgetImage::Goldfish:
 		MessageQueue::Instance()->SendMessage(CM_GADGET_GOLDFISH_PICKEDUP, NULL, NULL);
+		MessageQueue::Instance()->SendMessage(CM_SOUND_EVENT,(WPARAM)(LPCTSTR)"res/Waves/coin.wav", 0);
 		break;
-
 	case GadgetView::GadgetImage::Piranha:
 		MessageQueue::Instance()->SendMessage(CM_GADGET_PIRANHA_PICKEDUP, NULL, NULL);
 		break;
-
 	case GadgetView::GadgetImage::SnowBall:
 		MessageQueue::Instance()->SendMessage(CM_GADGET_SNOWBALL_PICKEDUP, NULL, NULL);
 		break;
-
 	case GadgetView::GadgetImage::ExtraLife:
 		MessageQueue::Instance()->SendMessage(CM_GADGET_EXTRALIFE_PICKEDUP, NULL, NULL);
 		break;
@@ -48,6 +46,6 @@ void PickedUp::PickUp()
 	case GadgetView::GadgetImage::RottenFish:
 		MessageQueue::Instance()->SendMessage(CM_GADGET_ROTTENFISH_PICKEDUP, NULL, NULL);
 	}
-	
+
 	pGadget->Remove();
 }

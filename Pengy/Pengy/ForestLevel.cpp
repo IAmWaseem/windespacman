@@ -21,8 +21,7 @@ ForestLevel::~ForestLevel(void)
 	if(movingSurface_4 != NULL)
 		delete movingSurface_4;
 	if(movingSurface_5 != NULL)
-		delete movingSurface_5;
-	
+		delete movingSurface_5;	
 }
 
 void ForestLevel::LoadGadgets()
@@ -204,7 +203,7 @@ vector<Surface*> ForestLevel::GetSurfaces()
 	borderBottom->xFrom = 0;
 	borderBottom->xTo = 3302;
 	borderBottom->yFrom = 670;
-	borderBottom->yTo = 700;
+	borderBottom->yTo = 1000;
 	borderBottom->isSurfaceOfDeath = true;
 	surfaces.push_back(borderBottom);
 
@@ -329,7 +328,10 @@ vector<int*> ForestLevel::GetTiles()
 			tempTile[1] = y;
 			tempTile[2] = tileX;
 			tempTile[3] = tileY;
-			tempTile[4] = 1;
+			if(y == 5 || y == 6)
+				tempTile[4] = 1;
+			else
+				tempTile[4] = 0;
 			tempTile[5] = 2;
 			tiles.push_back(tempTile);
 		}
@@ -347,7 +349,10 @@ vector<int*> ForestLevel::GetTiles()
 			tempTile[1] = y;
 			tempTile[2] = tileX;
 			tempTile[3] = tileY;
-			tempTile[4] = 1;
+			if(y == 5 || y == 6 ||  y == 7)
+				tempTile[4] = 1;
+			else
+				tempTile[4] = 0;
 			tempTile[5] = 1;
 			tiles.push_back(tempTile);
 		}

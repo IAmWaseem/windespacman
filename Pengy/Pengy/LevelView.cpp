@@ -5,7 +5,7 @@ vector<Surface*>* LevelView::surfaces = NULL;
 HANDLE LevelView::tilemap = NULL;
 LPCSTR LevelView::tilemapPath = "";
 int LevelView::tilemapWidth = 4096;
-int LevelView::tilemapHeight = 1024;
+int LevelView::tilemapHeight = 2440;
 HANDLE LevelView::myMask = NULL;
 
 LevelView::LevelView(){ 

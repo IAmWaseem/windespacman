@@ -10,6 +10,7 @@ short CWin::keystateLeft = 0;
 short CWin::keystateRight = 0;
 short CWin::keystateUp = 0;
 short CWin::keystateSpace = 0;
+short CWin::keystateControl = 0;
 HINSTANCE CWin::m_hInstance = GetModuleHandle(NULL);
 
 //////////////////////////////////////////////////////////////////
@@ -63,7 +64,8 @@ int CWin::Run()
 		keystateUp = GetAsyncKeyState(38);
 		keystateRight = GetAsyncKeyState(39);
 		keystateDown = GetAsyncKeyState(40);
-
+		keystateControl = GetAsyncKeyState(17);
+		
 		if(keystateSpace != 0)
 			MessageQueue::Instance()->SendMessage(CM_CHARACTER_SPACEBAR, NULL, NULL);
 		if(keystateLeft != 0)
@@ -74,7 +76,9 @@ int CWin::Run()
 			MessageQueue::Instance()->SendMessage(CM_CHARACTER_RIGHT, NULL, NULL);
 		if(keystateDown != 0)
 			MessageQueue::Instance()->SendMessage(CM_CHARACTER_DOWN, NULL, NULL);
-
+		if(keystateControl != 0)
+			MessageQueue::Instance()->SendMessage(CM_CHARACTER_THROW, NULL, NULL);
+		
 		if( PeekMessage( &msg, NULL, 0U, 0U, PM_REMOVE ) )
 		{
 			TranslateMessage( &msg );

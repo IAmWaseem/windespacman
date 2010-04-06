@@ -384,6 +384,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\GameWinView.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\LeafEyeView.cpp"
 				>
 			</File>
@@ -440,6 +444,10 @@
 				</File>
 				<File
 					RelativePath=".\GameOverView.h"
+					>
+				</File>
+				<File
+					RelativePath=".\GameWinView.h"
 					>
 				</File>
 				<File

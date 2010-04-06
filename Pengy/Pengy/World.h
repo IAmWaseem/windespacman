@@ -13,6 +13,7 @@ public:
     void ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam);
 	int level;
 	bool menu;
+	bool gameOver;
 protected:
 	World();
 private:

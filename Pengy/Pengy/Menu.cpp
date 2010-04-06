@@ -52,9 +52,9 @@ void Menu::MenuClick(int x, int y)
 			MessageQueue::Instance()->SendMessage(CM_UNPAUSE, NULL, NULL);
 			World::Instance()->menu = false;
 			if(firstRun)
-				pMessageQueue->Instance()->SendMessage(CM_GAME_START, NULL, NULL);
+				pMessageQueue->Instance()->SendMessage(CM_GAME_RESTART, NULL, NULL);
 			else
-				MessageQueue::Instance()->SendMessage(CM_GAME_RESTART, NULL, NULL);
+				MessageQueue::Instance()->SendMessage(CM_GAME_START, NULL, NULL);
 			firstRun = true;
 		}
 	}

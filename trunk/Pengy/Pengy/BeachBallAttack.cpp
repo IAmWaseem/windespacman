@@ -46,9 +46,12 @@ void BeachBallAttack::Throw()
 		pWl->Y = pBeachBall->GetPengyLocation()->Y - (0.5 * pBeachBall->GetPengyLocation()->height);
 		if(pWl->Y > pBeachBall->GetLocation()->Y)
 			pWl->Y = pBeachBall->GetLocation()->Y;
+
+		
+		MessageQueue::Instance()->SendMessage(CM_SOUND_EVENT,(WPARAM)(LPCTSTR)"res/Waves/fireball.wav", 0);
 		Weapon * weapon = new Weapon(pWl, GadgetView::GadgetImage::RottenFish, Direction::Left, 0.4, 500, Character::Instance());
 		throws = 0;
-		throwsInterval = RandomIntBetween(5, 20);
+		throwsInterval = RandomIntBetween(5, 10);
 	}
 	else
 		throws++;

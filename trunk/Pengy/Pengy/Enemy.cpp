@@ -86,6 +86,8 @@ bool Enemy::IsAlive()
 
 void Enemy::EndLevel()
 {
+	MessageQueue::Instance()->SendMessage(CM_SOUND_END_LOOP, NULL, NULL);
+	MessageQueue::Instance()->SendMessage(CM_SOUND_EVENT,(WPARAM)(LPCTSTR)"res/Waves/Win Stage.wav", 0);
 	MessageQueue::Instance()->SendMessage(CM_LEVEL_START, NULL, NULL);
 }
 

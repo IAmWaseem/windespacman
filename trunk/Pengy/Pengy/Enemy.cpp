@@ -72,8 +72,6 @@ void Enemy::Delete()
 		pView->UnRegisterToGraphics();
 		delete pView;
 	}
-	if(endsLevel)
-		EndLevel();
 }
 
 bool Enemy::IsDeleted()
@@ -95,7 +93,12 @@ void Enemy::DoDamage(int amount)
 {
 	health -= amount;
 	if(health <= 0)
+	{
 		this->Delete();
+		if(endsLevel)
+			EndLevel();
+		
+	}
 }
 
 bool Enemy::EndsLevel()

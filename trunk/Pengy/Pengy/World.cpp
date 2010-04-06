@@ -3,7 +3,7 @@
 #include "GadgetFactory.h"
 #include "EnemyFactory.h"
 #include "Character.h"
-//#include "GameOverView.h"
+#include "GameOverView.h"
 
 World* World::pInstance = NULL;
 
@@ -18,6 +18,7 @@ World::World()
 { 
 	level = 1;
 	menu = true;
+	gameOver = true;
 }
 
 World::~World(){
@@ -47,11 +48,12 @@ void World::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		}
 		break;
 	case CM_UPDATE:
-		if(Character::Instance()->GetAmountLives() == 0)
+		if(Character::Instance()->GetAmountLives() == 0 && this->gameOver == false)
 		{
 			MessageQueue::Instance()->SendMessage(CM_GAME_OVER, NULL, NULL);
-			//GameOverView * gameOver = new GameOverView();
+			GameOverView * gameOver = new GameOverView();
 			level = 1;
+			this->gameOver = true;
 		}
 		break;
 	case CM_GAME_RESTART:
@@ -63,6 +65,7 @@ void World::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 
 void World::LoadNextLevel()
 {
+	gameOver = false;
 	if(level<3)
 	{
 		level++;
@@ -73,6 +76,7 @@ void World::LoadNextLevel()
 
 void World::StartGame()
 {
+	gameOver = false;
 	level = 1;	
 	pMessageQueue->Instance()->SendMessage(CM_LEVEL_LOAD, NULL, NULL);
 }

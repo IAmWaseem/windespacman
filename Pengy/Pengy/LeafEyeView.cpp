@@ -9,13 +9,13 @@ LeafEyeView::LeafEyeView(LeafEye * pLeafEye)
 	this->pLeafEye = pLeafEye;
 
 	Bitmap * b = new Bitmap();
-	b->LoadDIBFile("res/Snowman.bmp");
+	b->LoadDIBFile("res/Leafeye.bmp");
 	width_height = new int[2]; width_height[0] = b->Width(); width_height[1] = b->Height();
 	b->~Bitmap();
 
-	pBitmapLeft = LoadImage(NULL, "res/Snowman.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+	pBitmapLeft = LoadImage(NULL, "res/Leafeye.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
 	pMaskLeft = CreateBitmapMask(pBitmapLeft, RGB(0, 0, 0), width_height[0], width_height[1]);
-	pBitmapRight = LoadImage(NULL, "res/Snowman.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+	pBitmapRight = LoadImage(NULL, "res/Leafeye.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
 	pMaskRight = CreateBitmapMask(pBitmapRight, RGB(0, 0, 0), width_height[0], width_height[1]);
 }
 

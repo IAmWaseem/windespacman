@@ -58,6 +58,8 @@ void Character::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		switch(pWorld->Instance()->level)
 		{
 		case 1:
+			pickedupFish = 0;
+			lives=4;
 			pCharacterView->LoadCVImage(CharacterView::CharacterImage::Left, "res/PengySummerLeft.bmp");
 			pCharacterView->LoadCVImage(CharacterView::CharacterImage::Left2, "res/PengySummerLeft2.bmp");
 			pCharacterView->LoadCVImage(CharacterView::CharacterImage::Right, "res/PengySummerRight.bmp");
@@ -100,7 +102,6 @@ void Character::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		pCharacterView->RegisterToGraphics();
 		MessageQueue::Instance()->SendMessage(CM_CHARACTER_MOVE_X_FROM_TO, (int)pLocation, (int)pLocation);
 		MessageQueue::Instance()->SendMessage(CM_CHARACTER_FALL_Y_FROM_TO, (int)pLocation, (int)pLocation);
-		pickedupWeapons = 0;
 
 		break;
 	case CM_PAUSE:
@@ -341,8 +342,6 @@ void Character::StartGame()
 	pLocation->height = 96;
 	pCharacterStateMachine = new CharacterStateMachine();
 	direction = Direction::Right;
-	lives=4;
-	pickedupFish = 0;
 	pickedupWeapons = 0;
 }
 

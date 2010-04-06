@@ -4,6 +4,7 @@
 #include "EnemyFactory.h"
 #include "Character.h"
 #include "GameOverView.h"
+#include "GameWinView.h"
 
 World* World::pInstance = NULL;
 
@@ -67,11 +68,18 @@ void World::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 void World::LoadNextLevel()
 {
 	gameOver = false;
-	if(level<3)
+	if(level<1)
 	{
 		level++;
 		GadgetFactory::Instance()->StartGame();
 		pMessageQueue->Instance()->SendMessage(CM_LEVEL_LOAD, NULL, NULL);
+	}
+	else
+	{
+		MessageQueue::Instance()->SendMessage(CM_SOUND_END_LOOP, NULL, NULL);
+		GameWinView * gameWin = new GameWinView();
+		level = 1;
+		this->gameOver = true;
 	}
 }
 

@@ -66,6 +66,7 @@ void Jumping::Spacebar()
 	if(upwardVelocity == 0)
 	{
 		upwardVelocity = 0.330f;
+		MessageQueue::Instance()->SendMessage(CM_SOUND_EVENT, (WPARAM)(LPCTSTR)"res/Waves/Mario Jump.wav", 0);
 	}
 
 	

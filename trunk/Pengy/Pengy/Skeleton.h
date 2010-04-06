@@ -23,6 +23,7 @@ public:
 	void GameInit();
 	void GameLoop();
 	void GameEnd();
+	static bool paused;
 private:
 	Character* pCharacter;
 	Renderer* pRenderer;
@@ -35,7 +36,6 @@ private:
 	void Render(HWND);
 	HDC bufDC;
 	ULONGLONG previousUpdateTime;
-	bool paused;
 };
 
 #endif

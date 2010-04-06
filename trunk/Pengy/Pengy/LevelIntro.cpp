@@ -1,4 +1,5 @@
 #include "LevelIntro.h"
+#include "Skeleton.h"
 
 LevelIntro::LevelIntro(LPCSTR levelPicturePath, LPCSTR levelInfoPicturePath, int timeLevelPicture, int timeLevelInfoPicture)
 {
@@ -20,6 +21,7 @@ LevelIntro::~LevelIntro(void)
 	MessageQueue::Instance()->SendMessage(CM_RENDERER_NORMAL_RENDER, NULL, NULL);
 	view->UnRegisterToGraphics();
 	delete view;
+	CSkeleton::paused = false;
 }
 
 void LevelIntro::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)

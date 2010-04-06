@@ -44,8 +44,8 @@ void BeachBallAttack::Throw()
 		Location * pWl = new Location();
 		pWl->X = pBeachBall->GetLocation()->X;
 		pWl->Y = pBeachBall->GetPengyLocation()->Y - (0.5 * pBeachBall->GetPengyLocation()->height);
-		if(pWl->Y > pBeachBall->GetLocation()->Y)
-			pWl->Y = pBeachBall->GetLocation()->Y;
+		if(pWl->Y < (pBeachBall->GetLocation()->Y - 50))
+   			pWl->Y = RandomIntBetween((pBeachBall->GetLocation()->Y - 50), (pBeachBall->GetLocation()->Y + (0.5*pBeachBall->GetLocation()->height)));
 
 		
 		MessageQueue::Instance()->SendMessage(CM_SOUND_EVENT,(WPARAM)(LPCTSTR)"res/Waves/fireball.wav", 0);

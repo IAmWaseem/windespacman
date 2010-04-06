@@ -38,7 +38,10 @@ void Sliding::Throw()
 
 void Sliding::Spacebar()
 {
-
+	this->speed = 0.1f;
+	this->pStateMachine->pJumping->Spacebar();
+	this->pStateMachine->pJumping->Right();
+	this->pStateMachine->Transition(this->pStateMachine->pJumping);
 }
 
 void Sliding::Update(int timeElapsed)
@@ -51,6 +54,7 @@ void Sliding::Update(int timeElapsed)
 		Surface * currentSlope = CurrentSlope(characterLocation);
 		if(currentSlope == NULL)
 		{
+			this->speed = 0.1f;
 			pStateMachine->Transition(pStateMachine->pWalking);
 			return;
 		}	

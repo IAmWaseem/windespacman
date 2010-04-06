@@ -135,9 +135,11 @@ vector<Surface*> SnowLevel::GetSurfaces()
 	pGround1->xFrom = 960;
 	pGround1->xTo = 1225;
 	pGround1->yFrom = 575;
-	pGround1->yTo = 700;
+	pGround1->yTo = 575;
 	pGround1->isSlope = 1;
-	pSlopes->push_back(slope6);
+	pGround1->SlopeCoefficientA = cal.CalculateSlopCoeffA(pGround1->xFrom,pGround1->yFrom,pGround1->xTo,pGround1->yTo);
+	pGround1->SlopeCoefficientB = cal.CalculateSlopCoeffB(pGround1->xFrom,pGround1->yFrom,pGround1->SlopeCoefficientA);
+	pSlopes->push_back(pGround1);
 	surfaces.push_back(pGround1);
 
 	Surface * ladder1Step1 = new Surface();

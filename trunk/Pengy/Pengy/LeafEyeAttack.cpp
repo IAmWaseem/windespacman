@@ -45,11 +45,19 @@ void LeafEyeAttack::Jump()
 	Location * pPengyLocation = pLeafEye->GetPengyLocation();
 	float distanceMoved = timeElapsed * this->speed;
 
-	//jump to pengy
+	//jump to pengy if a random decission is 1
+	int directionRandom = rand()% 2;
+
 	if(pPengyLocation->X < oldLocation->X)
-		oldLocation->X -= distanceMoved;
+	{
+		if(directionRandom == 1)
+			oldLocation->X -= distanceMoved;
+	}
 	else if(pPengyLocation->X > oldLocation->X)
-		oldLocation->X += distanceMoved;
+		{
+		if(directionRandom == 1)
+			oldLocation->X += distanceMoved;
+	}
 	
 	Location * newLocation = new Location();
 	newLocation->X = oldLocation->X;

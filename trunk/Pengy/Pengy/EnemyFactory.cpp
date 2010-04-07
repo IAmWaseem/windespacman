@@ -73,12 +73,6 @@ void EnemyFactory::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		pEnemy = new Waldo(pSurface, x);
 		pEnemies->push_back(pEnemy);
 		break;
-	case CM_ENEMYFACTORY_CREATE_SUPERWALDO_WANDER:
-		pSurface = (Surface*)wParam;
-		x = lParam;
-		pEnemy = new Waldo(pSurface, x, true);
-		pEnemies->push_back(pEnemy);
-		break;
 	case CM_LEVEL_END:
 		EnemyFactory::SendMessagesToChildren = false;
 		break;

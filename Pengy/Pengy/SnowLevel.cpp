@@ -20,28 +20,27 @@ vector<Surface*> SnowLevel::GetSurfaces()
 	borderBottom->xTo = 3779;
 	borderBottom->yFrom = 662;
 	borderBottom->yTo = 2000;
-	borderBottom->isSurfaceOfDeath = true;
 	surfaces.push_back(borderBottom);
 
 	Surface * borderLeft = new Surface();
 	borderLeft->xFrom = 0;
 	borderLeft->xTo = 8;
-	borderLeft->yFrom = 0;
+	borderLeft->yFrom = -100;
 	borderLeft->yTo = 700;
 	surfaces.push_back(borderLeft);	
 
 	Surface * borderRight = new Surface();
 	borderRight->xFrom = 3776;
 	borderRight->xTo = 3779;
-	borderRight->yFrom = 0;
+	borderRight->yFrom = -100;
 	borderRight->yTo = 700;
 	surfaces.push_back(borderRight);
 
 	Surface * borderTop = new Surface();
 	borderTop->xFrom = 0;
 	borderTop->xTo = 3779;
-	borderTop->yFrom = 0;
-	borderTop->yTo = 8;
+	borderTop->yFrom = -120;
+	borderTop->yTo = -100;
 	surfaces.push_back(borderTop);
 
 	Surface * slopeTop = new Surface();
@@ -122,6 +121,7 @@ vector<Surface*> SnowLevel::GetSurfaces()
 	slopeTopBar->xTo = 510;
 	slopeTopBar->yFrom = 145;
 	slopeTopBar->yTo = 175;
+	slopeTopBar->isCloud = true;
 	surfaces.push_back(slopeTopBar);
 
 	Surface * bar2 = new Surface();
@@ -195,6 +195,7 @@ vector<Surface*> SnowLevel::GetSurfaces()
 	bar3->xTo = 1258;
 	bar3->yFrom = 270;
 	bar3->yTo = 300;
+	bar3->isCloud = true;
 	surfaces.push_back(bar3);
 
 	Surface * bar4 = new Surface();
@@ -202,6 +203,7 @@ vector<Surface*> SnowLevel::GetSurfaces()
 	bar4->xTo = 1258;
 	bar4->yFrom = 140;
 	bar4->yTo = 170;
+	bar4->isCloud = true;
 	surfaces.push_back(bar4);
 
 	Surface * bar5 = new Surface();
@@ -216,6 +218,7 @@ vector<Surface*> SnowLevel::GetSurfaces()
 	pGround2->xTo = 2180;
 	pGround2->yFrom = 575;
 	pGround2->yTo = 700;
+	pGround2->isIce = true;
 	surfaces.push_back(pGround2);
 
 	Surface * bar6 = new Surface();
@@ -252,6 +255,7 @@ vector<Surface*> SnowLevel::GetSurfaces()
 	pGround3->xTo = 3776;
 	pGround3->yFrom = 575;
 	pGround3->yTo = 700;
+	pGround3->isIce = true;
 	surfaces.push_back(pGround3);
 
 	Surface * ladder2Step1 = new Surface();

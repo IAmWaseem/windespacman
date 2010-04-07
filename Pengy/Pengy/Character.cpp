@@ -231,7 +231,7 @@ void Character::Throw()
 		vector<Enemy*>::iterator iterator = enemies->begin();
 		vector<Enemy*> * pEnemiesInTouch = new vector<Enemy*>();
 
-		int shootingDistance = 600;
+		int shootingDistance = 400;
 
 		int Y = Character::Instance()->GetLocation()->Y + (Character::Instance()->GetLocation()->height/2);
 

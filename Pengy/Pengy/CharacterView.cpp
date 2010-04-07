@@ -306,17 +306,17 @@ void CharacterView::DrawRowFish(HDC hdc, int numFish)
 	int secondDigit = numFish % 10;
 	int firstDigit = numFish / 10;
 
-	int startX = 1000 - (2 * imageWidth) - goldFishImageWidth - imageXWidth;
+	int startX = 950 - (2 * imageWidth) - goldFishImageWidth - imageXWidth;
 
 	HDC bufDC = CreateCompatibleDC(hdc);
 	SelectObject(bufDC, goldFishImage);
-	BitBltTransparant(hdc, startX, 10, goldFishImageWidth, goldFishImageHeight, bufDC, 0, 0, goldFishImage, goldFishImageMask);
+	BitBltTransparant(hdc, startX, 590, goldFishImageWidth, goldFishImageHeight, bufDC, 0, 0, goldFishImage, goldFishImageMask);
 	DeleteDC(bufDC);
 
 	startX += goldFishImageWidth;
 	bufDC = CreateCompatibleDC(hdc);
 	SelectObject(bufDC, imageX);
-	BitBltTransparant(hdc, startX, 10, imageXWidth, imageXHeight, bufDC, 0, 0, imageX, imageXMask);
+	BitBltTransparant(hdc, startX, 590, imageXWidth, imageXHeight, bufDC, 0, 0, imageX, imageXMask);
 	DeleteDC(bufDC);
 
 	startX += imageXWidth;
@@ -370,8 +370,8 @@ void CharacterView::DrawRowFish(HDC hdc, int numFish)
 		}
 		bufDC = CreateCompatibleDC(hdc);
 		SelectObject(bufDC, digitImage);
-		BitBltTransparant(hdc, startX, 10, imageWidth, imageHeight, bufDC, 0, 0, digitImage, digitMask);
-		DeleteDC(bufDC);
+		BitBltTransparant(hdc, startX, 590, imageWidth, imageHeight, bufDC, 0, 0, digitImage, digitMask);
+ 		DeleteDC(bufDC);
 	}
 
 	startX += imageWidth;
@@ -423,7 +423,7 @@ void CharacterView::DrawRowFish(HDC hdc, int numFish)
 	}
 	bufDC = CreateCompatibleDC(hdc);
 	SelectObject(bufDC, digitImage);
-	BitBltTransparant(hdc, startX, 10, imageWidth, imageHeight, bufDC, 0, 0, digitImage, digitMask);
+	BitBltTransparant(hdc, startX, 590, imageWidth, imageHeight, bufDC, 0, 0, digitImage, digitMask);
 	DeleteDC(bufDC);
 }
 
@@ -440,18 +440,18 @@ void CharacterView::DrawRowWeapons(HDC hdc, int numWeapons, HANDLE weaponImage, 
 	int secondDigit = numWeapons % 10;
 	int firstDigit = numWeapons / 10;
 
-	int startX = 1000 - (2 * this->imageWidth) - imageWidth - imageXWidth;
+	int startX = 950 - (2 * this->imageWidth) - imageWidth - imageXWidth;
 
 	HDC bufDC = CreateCompatibleDC(hdc);
 	SelectObject(bufDC, goldFishImage);
-	BitBltTransparant(hdc, startX, 50, imageWidth, imageHeight, bufDC, 0, 0, weaponImage, weaponMask);
+	BitBltTransparant(hdc, startX, 630, imageWidth, imageHeight, bufDC, 0, 0, weaponImage, weaponMask);
 	DeleteDC(bufDC);
 
 	startX += imageWidth;
 
 	bufDC = CreateCompatibleDC(hdc);
 	SelectObject(bufDC, imageX);
-	BitBltTransparant(hdc, startX, 50, imageXWidth, imageXHeight, bufDC, 0, 0, imageX, imageXMask);
+	BitBltTransparant(hdc, startX, 630, imageXWidth, imageXHeight, bufDC, 0, 0, imageX, imageXMask);
 	DeleteDC(bufDC);
 
 	startX += imageXWidth;
@@ -505,7 +505,7 @@ void CharacterView::DrawRowWeapons(HDC hdc, int numWeapons, HANDLE weaponImage, 
 		}
 		bufDC = CreateCompatibleDC(hdc);
 		SelectObject(bufDC, digitImage);
-		BitBltTransparant(hdc, startX, 50, this->imageWidth, this->imageHeight, bufDC, 0, 0, digitImage, digitMask);
+		BitBltTransparant(hdc, startX, 630, this->imageWidth, this->imageHeight, bufDC, 0, 0, digitImage, digitMask);
 		DeleteDC(bufDC);
 	}
 
@@ -558,7 +558,7 @@ void CharacterView::DrawRowWeapons(HDC hdc, int numWeapons, HANDLE weaponImage, 
 	}
 	bufDC = CreateCompatibleDC(hdc);
 	SelectObject(bufDC, digitImage);
-	BitBltTransparant(hdc, startX, 50, this->imageWidth, this->imageHeight, bufDC, 0, 0, digitImage, digitMask);
+	BitBltTransparant(hdc, startX, 630, this->imageWidth, this->imageHeight, bufDC, 0, 0, digitImage, digitMask);
 	DeleteDC(bufDC);
 }
 
@@ -574,18 +574,18 @@ void CharacterView::DrawRowLives(HDC hdc, int numLives)
 	int secondDigit = numLives % 10;
 	int firstDigit = numLives / 10;
 
-	int startX = 1000 - (2 * this->imageWidth) - livesImageWidth - imageXWidth;
+	int startX = 825 - (2 * this->imageWidth) - livesImageWidth - imageXWidth;
 
 	HDC bufDC = CreateCompatibleDC(hdc);
 	SelectObject(bufDC, livesImage);
-	BitBltTransparant(hdc, startX, 90, livesImageWidth, livesImageHeight, bufDC, 0, 0, livesImage, livesImageMask);
+	BitBltTransparant(hdc, startX, 580, livesImageWidth, livesImageHeight, bufDC, 0, 0, livesImage, livesImageMask);
 	DeleteDC(bufDC);
 
 	startX += livesImageWidth;
 
 	bufDC = CreateCompatibleDC(hdc);
 	SelectObject(bufDC, imageX);
-	BitBltTransparant(hdc, startX, 110, imageXWidth, imageXHeight, bufDC, 0, 0, imageX, imageXMask);
+	BitBltTransparant(hdc, startX, 590, imageXWidth, imageXHeight, bufDC, 0, 0, imageX, imageXMask);
 	DeleteDC(bufDC);
 
 	startX += imageXWidth;
@@ -639,7 +639,7 @@ void CharacterView::DrawRowLives(HDC hdc, int numLives)
 		}
 		bufDC = CreateCompatibleDC(hdc);
 		SelectObject(bufDC, digitImage);
-		BitBltTransparant(hdc, startX, 110, this->imageWidth, this->imageHeight, bufDC, 0, 0, digitImage, digitMask);
+		BitBltTransparant(hdc, startX, 590, this->imageWidth, this->imageHeight, bufDC, 0, 0, digitImage, digitMask);
 		DeleteDC(bufDC);
 	}
 
@@ -692,7 +692,7 @@ void CharacterView::DrawRowLives(HDC hdc, int numLives)
 	}
 	bufDC = CreateCompatibleDC(hdc);
 	SelectObject(bufDC, digitImage);
-	BitBltTransparant(hdc, startX, 110, this->imageWidth, this->imageHeight, bufDC, 0, 0, digitImage, digitMask);
+	BitBltTransparant(hdc, startX, 590, this->imageWidth, this->imageHeight, bufDC, 0, 0, digitImage, digitMask);
 	DeleteDC(bufDC);
 }
 

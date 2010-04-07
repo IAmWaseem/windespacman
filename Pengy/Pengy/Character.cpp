@@ -12,7 +12,7 @@ using namespace std;
 
 Character* Character::pInstance = NULL;
 float Character::DistanceToMove = 1.5f;
-const int Character::reloadTime = 1000;
+const int Character::reloadTime = 1500;
 
 Character::Character(void)
 {
@@ -160,7 +160,6 @@ void Character::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 
 		MessageQueue::Instance()->SendMessage(CM_CHARACTER_MOVE_X_FROM_TO, (int)pLocation, (int)pLocation);
 		MessageQueue::Instance()->SendMessage(CM_CHARACTER_FALL_Y_FROM_TO, (int)pLocation, (int)pLocation);
-		MessageQueue::Instance()->SendMessage(CM_SOUND_LOOP, NULL, 1);
 		break;
 
 	case CM_GADGET_PIRANHA_PICKEDUP:
@@ -224,13 +223,14 @@ void Character::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 
 void Character::Throw()
 {
-	if(pickedupWeapons>0 && timeSinceLastReload >= Character::reloadTime) {
+	if(CanShoot())
+	{
 		timeSinceLastReload = 0;
 		vector<Enemy*> * enemies = EnemyFactory::Instance()->GetEnemies();
 		vector<Enemy*>::iterator iterator = enemies->begin();
 		vector<Enemy*> * pEnemiesInTouch = new vector<Enemy*>();
 
-		int shootingDistance = 400;
+		int shootingDistance = 600;
 
 		int Y = Character::Instance()->GetLocation()->Y + (Character::Instance()->GetLocation()->height/2);
 
@@ -277,6 +277,15 @@ void Character::Throw()
 			}
 		}
 	}
+}
+
+bool Character::CanShoot()
+{
+	if(pickedupWeapons > 0 && timeSinceLastReload >= Character::reloadTime)
+	{
+		return true;
+	}
+	return false;
 }
 
 Character* Character::Instance()

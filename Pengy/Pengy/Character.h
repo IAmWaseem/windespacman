@@ -25,6 +25,7 @@ public:
 	int GetAmountLives();
 	bool isKilled;
 	int timeToStayKilled;
+	bool CanShoot();
 	GadgetView::GadgetImage GetWeaponType();
 private:
 	Direction direction;

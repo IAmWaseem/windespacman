@@ -107,11 +107,7 @@ bool Physics::FallYFromTo(Location * pFromLocation,Location * pToLocation,vector
 			}
 			else if((pSurface->yFrom <= toLocationY && pSurface->yFrom >= fromLocationY) || toLocationYdiff < 5)
 			{
-				if(pSurface->isCloud && CWin::keystateDown != 0)
-				{
-
-				}
-				else
+				if(!pSurface->isCloud || CWin::keystateDown == 0)
 				{
 					isFalling = false;
 					pOnSurface = pSurface;

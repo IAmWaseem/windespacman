@@ -51,7 +51,9 @@ void LevelView::Draw(HDC hDC, RECT rect, int xFrom, int xTo)
 			}
 			
 			HPEN hPen = CreatePen(PS_SOLID, 1, RGB(255, 25, 5));
+			HPEN hPenIce = CreatePen(PS_SOLID, 1, RGB(25, 5, 255));
 			HPEN cloud = CreatePen(PS_DOT, 1, RGB(255, 25, 5));
+			HPEN cloudIce = CreatePen(PS_DOT, 1, RGB(25, 5, 255));
 			SelectObject(hDC, hPen);
 
 			vector<Surface*>::iterator surfIterator = tempList.begin();
@@ -59,10 +61,16 @@ void LevelView::Draw(HDC hDC, RECT rect, int xFrom, int xTo)
 			{				
 				Surface * surface = *surfIterator;
 
-				if(surface->isCloud)
-					SelectObject(hDC, cloud);
+				if(surface->isIce)
+					if(surface->isCloud)
+						SelectObject(hDC, cloudIce);
+					else
+						SelectObject(hDC, hPenIce);
 				else
-					SelectObject(hDC, hPen);
+					if(surface->isCloud)
+						SelectObject(hDC, cloud);
+					else
+						SelectObject(hDC, hPen);
 
 				if(surface->isSlope!=0)
 				{
@@ -84,6 +92,8 @@ void LevelView::Draw(HDC hDC, RECT rect, int xFrom, int xTo)
 			}
 			DeleteObject(hPen);
 			DeleteObject(cloud);		
+			DeleteObject(hPenIce);
+			DeleteObject(cloudIce);		
 		}
 #pragma endregion
 

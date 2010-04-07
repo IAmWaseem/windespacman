@@ -20,6 +20,7 @@ vector<Surface*> SnowLevel::GetSurfaces()
 	borderBottom->xTo = 3779;
 	borderBottom->yFrom = 662;
 	borderBottom->yTo = 2000;
+	borderBottom->isSurfaceOfDeath = true;
 	surfaces.push_back(borderBottom);
 
 	Surface * borderLeft = new Surface();

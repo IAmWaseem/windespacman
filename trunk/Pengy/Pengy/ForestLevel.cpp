@@ -69,13 +69,13 @@ void ForestLevel::LoadGadgets()
 	
 	pL3->X = 560;
 	pL3->Y = 440;
-//piranha
+//ladybug
 	pL4->X = 600;
 	pL4->Y = 440;
 //goldfish
 	pL5->X = 880;
 	pL5->Y = 470;
-//piranha
+//ladybug
 	pL6->X = 925;
 	pL6->Y = 440;
 //goldfish
@@ -96,7 +96,7 @@ void ForestLevel::LoadGadgets()
 
 	pL12->X = 560;
 	pL12->Y = 140;
-//piranha
+//ladybug
 	pL13->X = 450;
 	pL13->Y = 180;
 //goldfish
@@ -123,7 +123,7 @@ void ForestLevel::LoadGadgets()
 //goldfish
 	pL21->X = 1910;
 	pL21->Y = 465;
-//piranha
+//ladybug
 	pL22->X = 1830;
 	pL22->Y = 435;
 //rottenfish
@@ -138,7 +138,7 @@ void ForestLevel::LoadGadgets()
 //rottenfish
 	pL26->X = 2290;
 	pL26->Y = 560;
-//piranha
+//ladybug
 	pL27->X = 2275;
 	pL27->Y = 525;
 //rottenfish
@@ -150,7 +150,7 @@ void ForestLevel::LoadGadgets()
 
 	pL30->X = 1400;
 	pL30->Y = 294;
-//piranha
+//ladybug
 	pL31->X = 1340;
 	pL31->Y = 230;
 

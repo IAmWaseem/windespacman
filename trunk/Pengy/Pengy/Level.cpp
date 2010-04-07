@@ -84,7 +84,6 @@ void Level::LoadLevel(int level)
 	vector<int*> data;
 	LPCSTR path = "";
 	LevelIntro * levelIntro;
-	//MessageQueue::Instance()->SendMessage(CM_SOUND_END_LOOP, NULL, NULL);
 	switch(level)
 	{
 	case 1:

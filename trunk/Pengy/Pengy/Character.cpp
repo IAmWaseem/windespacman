@@ -176,7 +176,7 @@ void Character::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 
 	case CM_CHARACTER_KILLED:
-		MessageQueue::Instance()->SendMessage(CM_SOUND_END_LOOP, NULL, NULL);
+		//MessageQueue::Instance()->SendMessage(CM_SOUND_END_LOOP, NULL, NULL);
 		if(!isKilled)
 		{
 			this->lives--;

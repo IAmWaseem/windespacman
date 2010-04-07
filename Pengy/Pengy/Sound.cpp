@@ -1,22 +1,3 @@
-//////////////////////////////////////////////////////////////////////////////////////////////////
-//																								//
-//  This version of Sound is using SDL. It's capable of playing background sound and			//
-//	multiple sounds of events at the same time.													//
-//																								//
-//	To play sound such messages as below have to be sent.										//
-//																								//
-//	To start backround sound in a loop:															//
-//	MessageQueue::Inst()->sendMessage(CM_SOUND_LOOP,(WPARAM)(LPCTSTR)"path here", 0);			//
-//																								//
-//	To end backround sound:																		//
-//	MessageQueue::Inst()->sendMessage(CM_SOUND_END_LOOP, 0, 0);									//
-//																								//
-//	To play sound of an event:																	//
-//	MessageQueue::Inst()->sendMessage(CM_SOUND_EVENT,(WPARAM)(LPCTSTR)"path here", n_of_times);	//
-//																								//
-//	n_of_times = integer how many sound shall be played ( 0 = play 1 time, 1 = 2 times ect. )	//
-//																								//
-//////////////////////////////////////////////////////////////////////////////////////////////////
 #include "Sound.h"
 
 Sound* Sound::pInstance = NULL;

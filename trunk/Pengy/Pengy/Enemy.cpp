@@ -94,6 +94,7 @@ void Enemy::EndLevel()
 void Enemy::DoDamage(int amount)
 {
 	health -= amount;
+	MessageQueue::Instance()->SendMessage(CM_SOUND_EVENT,(WPARAM)(LPCTSTR)"res/Waves/crack.wav", 0);
 	if(health <= 0)
 	{
 		this->Delete();

@@ -26,7 +26,6 @@ void IceWalking::Up()
 
 void IceWalking::Down()
 {
-	//this->pStateMachine->Transition(this->pStateMachine->pFalling);
 	this->distanceToMove = 0;
 	this->speed = 0;
 }

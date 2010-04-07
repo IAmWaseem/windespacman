@@ -180,6 +180,7 @@ void Walking::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		}
 		if(pSurface->isIce == true && Character::Instance()->hasSnowBoots == false)
 		{
+			MessageQueue::Instance()->SendMessage(CM_SOUND_EVENT,(WPARAM)(LPCTSTR)"res/Waves/smash.wav", 0);
 			pStateMachine->pIceWalking->Throw();
 			pStateMachine->Transition(pStateMachine->pIceWalking);
 			break;

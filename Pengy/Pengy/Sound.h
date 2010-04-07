@@ -2,8 +2,9 @@
 
 #include "Observer.h"
 #include "MessageQueue.h"
-#include <SDL_mixer.h>
-
+//#include <stdlib.h>
+#include "SDL_mixer.h"
+//#include "SDL_mixer.h"
 
 class Sound : public Observer
 {

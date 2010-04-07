@@ -33,8 +33,23 @@ public:
 		FallingRight
 	};
 
+	enum DigitImage
+	{
+		d0,
+		d1,
+		d2,
+		d3,
+		d4,
+		d5,
+		d6,
+		d7,
+		d8,
+		d9
+	};
+
 	void Update();
 	void LoadCVImage(CharacterImage image, LPCSTR path);
+	void LoadDigitImage(DigitImage image, LPCSTR path);
 	CharacterImage GetCurrentImage();
 	void ChangeCurrentImage(CharacterImage image);
 	void Draw(HDC hdc, RECT rect, int xFrom, int xTo);
@@ -43,6 +58,8 @@ public:
 private:
 	map<CharacterImage, HANDLE> * pImages;
 	map<CharacterImage, HANDLE> * pMasks;
+	map<DigitImage, HANDLE> * pDigitImages;
+	map<DigitImage, HANDLE> * pDigitMasks;
 	map<CharacterImage, int*> * pWidthHeight;
 	HANDLE goldFishImage;
 	HANDLE goldFishImageMask;
@@ -56,31 +73,11 @@ private:
 	HANDLE livesImageMask;
 	HANDLE imageX;
 	HANDLE imageXMask;
-	HANDLE image0;
-	HANDLE image0Mask;
-	HANDLE image1;
-	HANDLE image1Mask;
-	HANDLE image2;
-	HANDLE image2Mask;
-	HANDLE image3;
-	HANDLE image3Mask;
-	HANDLE image4;
-	HANDLE image4Mask;
-	HANDLE image5;
-	HANDLE image5Mask;
-	HANDLE image6;
-	HANDLE image6Mask;
-	HANDLE image7;
-	HANDLE image7Mask;
-	HANDLE image8;
-	HANDLE image8Mask;
-	HANDLE image9;
-	HANDLE image9Mask;
-
+	
 	int imageXWidth;
 	int imageXHeight;
-	int imageWidth;
-	int imageHeight;
+	int digitWidth;
+	int digitHeight;
 	int snowBallImageHeight;
 	int snowBallImageWidth;
 	int piranhaImageHeight;
@@ -91,8 +88,6 @@ private:
 	int livesImageWidth;
 	int goldFishImageHeight;
 	int goldFishImageWidth;
-
-
 
 	CharacterImage currentImage;
 	World * pWorld;

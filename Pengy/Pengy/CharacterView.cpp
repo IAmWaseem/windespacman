@@ -7,6 +7,9 @@ CharacterView::CharacterView(void)
 	pImages = new map<CharacterImage, HANDLE>();
 	pMasks = new map<CharacterImage, HANDLE>();
 	pWidthHeight = new map<CharacterImage, int*>();
+	pDigitImages = new map<DigitImage, HANDLE>();
+	pDigitMasks = new map<DigitImage, HANDLE>();
+
 	Bitmap * bitmap = new Bitmap();
 
 	snowBallImage = LoadImage(NULL, "res/GadgetSnowball.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
@@ -48,42 +51,21 @@ CharacterView::CharacterView(void)
 	bitmap->LoadDIBFile("res/hudX.bmp");
 	imageXHeight = bitmap->Height();
 	imageXWidth = bitmap->Width();
-	imageXMask = CreateBitmapMask(imageX, RGB(0,0,0), imageXWidth, imageXHeight);
+	imageXMask = CreateBitmapMask(imageX, RGB(46, 46, 46), imageXWidth, imageXHeight);
 
-	image0 = LoadImage(NULL, "res/number0.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
-	bitmap->DeleteObject();
-	bitmap->LoadDIBFile("res/number0.bmp");
-	imageHeight = bitmap->Height();
-	imageWidth = bitmap->Width();
-	image0Mask = CreateBitmapMask(image0, RGB(0,0,0), imageWidth, imageHeight);
+	this->digitHeight = 30;
+	this->digitWidth = 19;
 
-	image1 = LoadImage(NULL, "res/number1.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
-	image1Mask = CreateBitmapMask(image1, RGB(0,0,0), imageWidth, imageHeight);
-
-	image2 = LoadImage(NULL, "res/number2.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
-	image2Mask = CreateBitmapMask(image2, RGB(0,0,0), imageWidth, imageHeight);
-
-	image3 = LoadImage(NULL, "res/number3.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
-	image3Mask = CreateBitmapMask(image3, RGB(0,0,0), imageWidth, imageHeight);
-
-	image4 = LoadImage(NULL, "res/number4.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
-	image4Mask = CreateBitmapMask(image4, RGB(0,0,0), imageWidth, imageHeight);
-
-	image5 = LoadImage(NULL, "res/number5.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
-	image5Mask = CreateBitmapMask(image5, RGB(0,0,0), imageWidth, imageHeight);
-
-	image6 = LoadImage(NULL, "res/number6.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
-	image6Mask = CreateBitmapMask(image6, RGB(0,0,0), imageWidth, imageHeight);
-
-	image7 = LoadImage(NULL, "res/number7.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
-	image7Mask = CreateBitmapMask(image7, RGB(0,0,0), imageWidth, imageHeight);
-
-	image8 = LoadImage(NULL, "res/number8.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
-	image8Mask = CreateBitmapMask(image8, RGB(0,0,0), imageWidth, imageHeight);
-
-	image9 = LoadImage(NULL, "res/number9.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
-	image9Mask = CreateBitmapMask(image9, RGB(0,0,0), imageWidth, imageHeight);
-
+	LoadDigitImage(DigitImage::d0, "res/number0.bmp");
+	LoadDigitImage(DigitImage::d1, "res/number1.bmp");
+	LoadDigitImage(DigitImage::d2, "res/number2.bmp");
+	LoadDigitImage(DigitImage::d3, "res/number3.bmp");
+	LoadDigitImage(DigitImage::d4, "res/number4.bmp");
+	LoadDigitImage(DigitImage::d5, "res/number5.bmp");
+	LoadDigitImage(DigitImage::d6, "res/number6.bmp");
+	LoadDigitImage(DigitImage::d7, "res/number7.bmp");
+	LoadDigitImage(DigitImage::d8, "res/number8.bmp");
+	LoadDigitImage(DigitImage::d9, "res/number9.bmp");
 }
 
 CharacterView::~CharacterView(void)
@@ -91,6 +73,8 @@ CharacterView::~CharacterView(void)
 	delete pImages;
 	delete pMasks;
 	delete pWidthHeight;
+	delete pDigitImages;
+	delete pDigitMasks;
 }
 
 void CharacterView::Draw(HDC hdc, RECT rect, int xFrom, int xTo)
@@ -246,6 +230,18 @@ void CharacterView::LoadCVImage(CharacterImage image, LPCSTR path)
 	pWidthHeight->insert(make_pair(image, widthheight));
 }
 
+void CharacterView::LoadDigitImage(DigitImage image, LPCSTR path)
+{
+	HANDLE bitmap;
+	bitmap = LoadImage(NULL, path, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);	
+
+	HANDLE mask;
+	mask = CreateBitmapMask(bitmap, RGB(46, 46, 46), this->digitWidth, this->digitHeight);
+	
+	pDigitImages->insert( make_pair(image, bitmap) );	
+	pDigitMasks->insert(  make_pair(image, mask)   );
+}
+
 CharacterView::CharacterImage CharacterView::GetCurrentImage()
 {
 	return currentImage;
@@ -306,7 +302,7 @@ void CharacterView::DrawRowFish(HDC hdc, int numFish)
 	int secondDigit = numFish % 10;
 	int firstDigit = numFish / 10;
 
-	int startX = 950 - (2 * imageWidth) - goldFishImageWidth - imageXWidth;
+	int startX = 950 - (2 * digitWidth) - goldFishImageWidth - imageXWidth;
 
 	HDC bufDC = CreateCompatibleDC(hdc);
 	SelectObject(bufDC, goldFishImage);
@@ -323,107 +319,97 @@ void CharacterView::DrawRowFish(HDC hdc, int numFish)
 
 	if(numDigits == 2)
 	{
+		DigitImage currentDigit = DigitImage::d0;
 		HANDLE digitImage;
 		HANDLE digitMask;
 		switch(firstDigit)
 		{
 		case 0:
-			digitImage = image0;
-			digitMask = image0Mask;
+			currentDigit = DigitImage::d0;
 			break;
 		case 1:
-			digitImage = image1;
-			digitMask = image1Mask;
+			currentDigit = DigitImage::d1;
 			break;
 		case 2:
-			digitImage = image2;
-			digitMask = image2Mask;
+			currentDigit = DigitImage::d2;
 			break;
 		case 3:
-			digitImage = image3;
-			digitMask = image3Mask;
+			currentDigit = DigitImage::d3;
 			break;
 		case 4:
-			digitImage = image4;
-			digitMask = image4Mask;
+			currentDigit = DigitImage::d4;
 			break;
 		case 5:
-			digitImage = image5;
-			digitMask = image5Mask;
+			currentDigit = DigitImage::d5;
 			break;
 		case 6:
-			digitImage = image6;
-			digitMask = image6Mask;
+			currentDigit = DigitImage::d6;
 			break;
 		case 7:
-			digitImage = image7;
-			digitMask = image7Mask;
+			currentDigit = DigitImage::d7;
 			break;
 		case 8:
-			digitImage = image8;
-			digitMask = image8Mask;
+			currentDigit = DigitImage::d8;
 			break;
 		case 9:
-			digitImage = image9;
-			digitMask = image9Mask;
+			currentDigit = DigitImage::d9;
 			break;
 		}
+
+		digitImage = pDigitImages->find(currentDigit)->second;
+		digitMask = pDigitMasks->find(currentDigit)->second;
+
 		bufDC = CreateCompatibleDC(hdc);
 		SelectObject(bufDC, digitImage);
-		BitBltTransparant(hdc, startX, 590, imageWidth, imageHeight, bufDC, 0, 0, digitImage, digitMask);
+		BitBltTransparant(hdc, startX, 590, digitWidth, digitHeight, bufDC, 0, 0, digitImage, digitMask);
  		DeleteDC(bufDC);
 	}
 
-	startX += imageWidth;
+	startX += digitWidth;
 
+	DigitImage currentDigit = DigitImage::d0;
 	HANDLE digitImage;
 	HANDLE digitMask;
 	switch(secondDigit)
 	{
 	case 0:
-		digitImage = image0;
-		digitMask = image0Mask;
+		currentDigit = DigitImage::d0;
 		break;
 	case 1:
-		digitImage = image1;
-		digitMask = image1Mask;
+		currentDigit = DigitImage::d1;
 		break;
 	case 2:
-		digitImage = image2;
-		digitMask = image2Mask;
+		currentDigit = DigitImage::d2;
 		break;
 	case 3:
-		digitImage = image3;
-		digitMask = image3Mask;
+		currentDigit = DigitImage::d3;
 		break;
 	case 4:
-		digitImage = image4;
-		digitMask = image4Mask;
+		currentDigit = DigitImage::d4;
 		break;
 	case 5:
-		digitImage = image5;
-		digitMask = image5Mask;
+		currentDigit = DigitImage::d5;
 		break;
 	case 6:
-		digitImage = image6;
-		digitMask = image6Mask;
+		currentDigit = DigitImage::d6;
 		break;
 	case 7:
-		digitImage = image7;
-		digitMask = image7Mask;
+		currentDigit = DigitImage::d7;
 		break;
 	case 8:
-		digitImage = image8;
-		digitMask = image8Mask;
+		currentDigit = DigitImage::d8;
 		break;
 	case 9:
-		digitImage = image9;
-		digitMask = image9Mask;
+		currentDigit = DigitImage::d9;
 		break;
 	}
+
+	digitImage = pDigitImages->find(currentDigit)->second;
+	digitMask = pDigitMasks->find(currentDigit)->second;
+
 	bufDC = CreateCompatibleDC(hdc);
 	SelectObject(bufDC, digitImage);
-	BitBltTransparant(hdc, startX, 590, imageWidth, imageHeight, bufDC, 0, 0, digitImage, digitMask);
+	BitBltTransparant(hdc, startX, 590, digitWidth, digitHeight, bufDC, 0, 0, digitImage, digitMask);
 	DeleteDC(bufDC);
 }
 
@@ -440,7 +426,7 @@ void CharacterView::DrawRowWeapons(HDC hdc, int numWeapons, HANDLE weaponImage, 
 	int secondDigit = numWeapons % 10;
 	int firstDigit = numWeapons / 10;
 
-	int startX = 950 - (2 * this->imageWidth) - imageWidth - imageXWidth;
+	int startX = 950 - (2 * this->digitWidth) - imageWidth - imageXWidth;
 
 	HDC bufDC = CreateCompatibleDC(hdc);
 	SelectObject(bufDC, goldFishImage);
@@ -458,107 +444,98 @@ void CharacterView::DrawRowWeapons(HDC hdc, int numWeapons, HANDLE weaponImage, 
 
 	if(numDigits == 2)
 	{
+		DigitImage currentDigit = DigitImage::d0;
 		HANDLE digitImage;
 		HANDLE digitMask;
 		switch(firstDigit)
 		{
 		case 0:
-			digitImage = image0;
-			digitMask = image0Mask;
+			currentDigit = DigitImage::d0;
 			break;
 		case 1:
-			digitImage = image1;
-			digitMask = image1Mask;
+			currentDigit = DigitImage::d1;
 			break;
 		case 2:
-			digitImage = image2;
-			digitMask = image2Mask;
+			currentDigit = DigitImage::d2;
 			break;
 		case 3:
-			digitImage = image3;
-			digitMask = image3Mask;
+			currentDigit = DigitImage::d3;
 			break;
 		case 4:
-			digitImage = image4;
-			digitMask = image4Mask;
+			currentDigit = DigitImage::d4;
 			break;
 		case 5:
-			digitImage = image5;
-			digitMask = image5Mask;
+			currentDigit = DigitImage::d5;
 			break;
 		case 6:
-			digitImage = image6;
-			digitMask = image6Mask;
+			currentDigit = DigitImage::d6;
 			break;
 		case 7:
-			digitImage = image7;
-			digitMask = image7Mask;
+			currentDigit = DigitImage::d7;
 			break;
 		case 8:
-			digitImage = image8;
-			digitMask = image8Mask;
+			currentDigit = DigitImage::d8;
 			break;
 		case 9:
-			digitImage = image9;
-			digitMask = image9Mask;
+			currentDigit = DigitImage::d9;
 			break;
 		}
+
+		digitImage = pDigitImages->find(currentDigit)->second;
+		digitMask = pDigitMasks->find(currentDigit)->second;
 		bufDC = CreateCompatibleDC(hdc);
 		SelectObject(bufDC, digitImage);
-		BitBltTransparant(hdc, startX, 630, this->imageWidth, this->imageHeight, bufDC, 0, 0, digitImage, digitMask);
+		BitBltTransparant(hdc, startX, 630, this->digitWidth, this->digitHeight, bufDC, 0, 0, digitImage, digitMask);
 		DeleteDC(bufDC);
 	}
 
-	startX += this->imageWidth;
+	startX += this->digitWidth;
 
-	HANDLE digitImage;
-	HANDLE digitMask;
-	switch(secondDigit)
-	{
-	case 0:
-		digitImage = image0;
-		digitMask = image0Mask;
-		break;
-	case 1:
-		digitImage = image1;
-		digitMask = image1Mask;
-		break;
-	case 2:
-		digitImage = image2;
-		digitMask = image2Mask;
-		break;
-	case 3:
-		digitImage = image3;
-		digitMask = image3Mask;
-		break;
-	case 4:
-		digitImage = image4;
-		digitMask = image4Mask;
-		break;
-	case 5:
-		digitImage = image5;
-		digitMask = image5Mask;
-		break;
-	case 6:
-		digitImage = image6;
-		digitMask = image6Mask;
-		break;
-	case 7:
-		digitImage = image7;
-		digitMask = image7Mask;
-		break;
-	case 8:
-		digitImage = image8;
-		digitMask = image8Mask;
-		break;
-	case 9:
-		digitImage = image9;
-		digitMask = image9Mask;
-		break;
-	}
+	DigitImage currentDigit = DigitImage::d0;
+		HANDLE digitImage;
+		HANDLE digitMask;
+		switch(secondDigit)
+		{
+		case 0:
+			currentDigit = DigitImage::d0;
+			break;
+		case 1:
+			currentDigit = DigitImage::d1;
+			break;
+		case 2:
+			currentDigit = DigitImage::d2;
+			break;
+		case 3:
+			currentDigit = DigitImage::d3;
+			break;
+		case 4:
+			currentDigit = DigitImage::d4;
+			break;
+		case 5:
+			currentDigit = DigitImage::d5;
+			break;
+		case 6:
+			currentDigit = DigitImage::d6;
+			break;
+		case 7:
+			currentDigit = DigitImage::d7;
+			break;
+		case 8:
+			currentDigit = DigitImage::d8;
+			break;
+		case 9:
+			currentDigit = DigitImage::d9;
+			break;
+		}
+
+	digitImage = pDigitImages->find(currentDigit)->second;
+	digitMask = pDigitMasks->find(currentDigit)->second;
+
 	bufDC = CreateCompatibleDC(hdc);
+
 	SelectObject(bufDC, digitImage);
-	BitBltTransparant(hdc, startX, 630, this->imageWidth, this->imageHeight, bufDC, 0, 0, digitImage, digitMask);
+	BitBltTransparant(hdc, startX, 630, this->digitWidth, this->digitHeight, bufDC, 0, 0, digitImage, digitMask);
+	
 	DeleteDC(bufDC);
 }
 
@@ -574,7 +551,7 @@ void CharacterView::DrawRowLives(HDC hdc, int numLives)
 	int secondDigit = numLives % 10;
 	int firstDigit = numLives / 10;
 
-	int startX = 825 - (2 * this->imageWidth) - livesImageWidth - imageXWidth;
+	int startX = 825 - (2 * this->digitWidth) - livesImageWidth - imageXWidth;
 
 	HDC bufDC = CreateCompatibleDC(hdc);
 	SelectObject(bufDC, livesImage);
@@ -592,107 +569,95 @@ void CharacterView::DrawRowLives(HDC hdc, int numLives)
 
 	if(numDigits == 2)
 	{
+		DigitImage currentDigit = DigitImage::d0;
 		HANDLE digitImage;
 		HANDLE digitMask;
 		switch(firstDigit)
 		{
 		case 0:
-			digitImage = image0;
-			digitMask = image0Mask;
+			currentDigit = DigitImage::d0;
 			break;
 		case 1:
-			digitImage = image1;
-			digitMask = image1Mask;
+			currentDigit = DigitImage::d1;
 			break;
 		case 2:
-			digitImage = image2;
-			digitMask = image2Mask;
+			currentDigit = DigitImage::d2;
 			break;
 		case 3:
-			digitImage = image3;
-			digitMask = image3Mask;
+			currentDigit = DigitImage::d3;
 			break;
 		case 4:
-			digitImage = image4;
-			digitMask = image4Mask;
+			currentDigit = DigitImage::d4;
 			break;
 		case 5:
-			digitImage = image5;
-			digitMask = image5Mask;
+			currentDigit = DigitImage::d5;
 			break;
 		case 6:
-			digitImage = image6;
-			digitMask = image6Mask;
+			currentDigit = DigitImage::d6;
 			break;
 		case 7:
-			digitImage = image7;
-			digitMask = image7Mask;
+			currentDigit = DigitImage::d7;
 			break;
 		case 8:
-			digitImage = image8;
-			digitMask = image8Mask;
+			currentDigit = DigitImage::d8;
 			break;
 		case 9:
-			digitImage = image9;
-			digitMask = image9Mask;
+			currentDigit = DigitImage::d9;
 			break;
 		}
+
+		digitImage = pDigitImages->find(currentDigit)->second;
+		digitMask = pDigitMasks->find(currentDigit)->second;
 		bufDC = CreateCompatibleDC(hdc);
 		SelectObject(bufDC, digitImage);
-		BitBltTransparant(hdc, startX, 590, this->imageWidth, this->imageHeight, bufDC, 0, 0, digitImage, digitMask);
+		BitBltTransparant(hdc, startX, 590, this->digitWidth, this->digitHeight, bufDC, 0, 0, digitImage, digitMask);
 		DeleteDC(bufDC);
 	}
 
-	startX += this->imageWidth;
+	startX += this->digitWidth;
 
-	HANDLE digitImage;
-	HANDLE digitMask;
-	switch(secondDigit)
-	{
-	case 0:
-		digitImage = image0;
-		digitMask = image0Mask;
-		break;
-	case 1:
-		digitImage = image1;
-		digitMask = image1Mask;
-		break;
-	case 2:
-		digitImage = image2;
-		digitMask = image2Mask;
-		break;
-	case 3:
-		digitImage = image3;
-		digitMask = image3Mask;
-		break;
-	case 4:
-		digitImage = image4;
-		digitMask = image4Mask;
-		break;
-	case 5:
-		digitImage = image5;
-		digitMask = image5Mask;
-		break;
-	case 6:
-		digitImage = image6;
-		digitMask = image6Mask;
-		break;
-	case 7:
-		digitImage = image7;
-		digitMask = image7Mask;
-		break;
-	case 8:
-		digitImage = image8;
-		digitMask = image8Mask;
-		break;
-	case 9:
-		digitImage = image9;
-		digitMask = image9Mask;
-		break;
-	}
+	DigitImage currentDigit = DigitImage::d0;
+		HANDLE digitImage;
+		HANDLE digitMask;
+		switch(secondDigit)
+		{
+		case 0:
+			currentDigit = DigitImage::d0;
+			break;
+		case 1:
+			currentDigit = DigitImage::d1;
+			break;
+		case 2:
+			currentDigit = DigitImage::d2;
+			break;
+		case 3:
+			currentDigit = DigitImage::d3;
+			break;
+		case 4:
+			currentDigit = DigitImage::d4;
+			break;
+		case 5:
+			currentDigit = DigitImage::d5;
+			break;
+		case 6:
+			currentDigit = DigitImage::d6;
+			break;
+		case 7:
+			currentDigit = DigitImage::d7;
+			break;
+		case 8:
+			currentDigit = DigitImage::d8;
+			break;
+		case 9:
+			currentDigit = DigitImage::d9;
+			break;
+		}
+
+	digitImage = pDigitImages->find(currentDigit)->second;
+	digitMask = pDigitMasks->find(currentDigit)->second;
 	bufDC = CreateCompatibleDC(hdc);
 	SelectObject(bufDC, digitImage);
-	BitBltTransparant(hdc, startX, 590, this->imageWidth, this->imageHeight, bufDC, 0, 0, digitImage, digitMask);
+	BitBltTransparant(hdc, startX, 590, this->digitWidth, this->digitHeight, bufDC, 0, 0, digitImage, digitMask);
 	DeleteDC(bufDC);
 }
 

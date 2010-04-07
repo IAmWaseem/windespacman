@@ -116,6 +116,12 @@ LRESULT CSkeleton::MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				else
 					Renderer::ShowDebug = true;
 				break;
+
+					// show the debug
+			case 'n':
+			case 'N':
+				MessageQueue::Instance()->SendMessage(CM_LEVEL_START, NULL, NULL);
+				break;
 		}
 		break;
 	case WM_COMMAND:  

@@ -12,7 +12,7 @@ BeachBallAttack::BeachBallAttack(BeachBall * pBeachBall, BeachBallStateMachine *
 {
 	this->speed = 0.10f;
 	throws = 0;
-	throwsInterval = RandomIntBetween(5, 20);
+	throwsInterval = RandomIntBetween(1, 5);
 }
 
 
@@ -51,7 +51,7 @@ void BeachBallAttack::Throw()
 		MessageQueue::Instance()->SendMessage(CM_SOUND_EVENT,(WPARAM)(LPCTSTR)"res/Waves/fireball.wav", 0);
 		Weapon * weapon = new Weapon(pWl, GadgetView::GadgetImage::RottenFish, Direction::Left, 0.4, 500, Character::Instance());
 		throws = 0;
-		throwsInterval = RandomIntBetween(5, 10);
+		throwsInterval = RandomIntBetween(1, 5);
 	}
 	else
 		throws++;

@@ -91,6 +91,7 @@ void Falling::Update(int timeElapsed)
 
 	float newDownwardVelocity = (float)(downwardVelocity + (0.000400 * timeElapsed));
 	float averageVelocity = (downwardVelocity + newDownwardVelocity) / 2;
+	averageVelocity = min(averageVelocity, 0.525);
 	float distance = averageVelocity * timeElapsed;
 	Character::Instance()->GetLocation()->Y += distance;
 	float newCharacterLocation = Character::Instance()->GetLocation()->Y + distance;

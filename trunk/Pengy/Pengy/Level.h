@@ -19,10 +19,10 @@ public:
     void ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam);
 	void LoadLevel(int level);
 	bool GetLevelRunning();
+	vector<Surface*> surfaces;
 protected:
 	Level();
 private:
-	vector<Surface*> surfaces;
 	vector<MovingSurface*> movingSurfaces;
     static Level* pInstance;
 	LevelView levelView;

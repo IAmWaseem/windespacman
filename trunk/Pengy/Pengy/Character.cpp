@@ -31,6 +31,7 @@ Character::Character(void)
 	firstGame = 0;
 	timeSinceLastReload = 0;
 	isPaused = false;
+	hasSnowBoots = false;
 }
 
 Character::~Character(void)

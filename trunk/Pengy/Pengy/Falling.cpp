@@ -124,6 +124,16 @@ void Falling::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 			pStateMachine->Transition(pStateMachine->pSliding);
 			break;
 		}
+		if(pSurface->isIce == true && Character::Instance()->hasSnowBoots == false)
+		{
+			pStateMachine->pIceWalking->Throw();
+			if(Character::Instance()->GetDirection() != Direction::Right) 
+				Character::Instance()->GetCharacterView()->ChangeCurrentImage(CharacterView::CharacterImage::Left);
+			else 
+				Character::Instance()->GetCharacterView()->ChangeCurrentImage(CharacterView::CharacterImage::Right);
+			pStateMachine->Transition(pStateMachine->pIceWalking);
+			break;
+		}
 		pCharacterLocation = Character::Instance()->GetLocation();
 		pCharacterLocation->Y = pSurface->yFrom - pCharacterLocation->height;
 		Character::Instance()->SetLocation(pCharacterLocation);

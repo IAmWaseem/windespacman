@@ -20,6 +20,7 @@ vector<Surface*> SnowLevel::GetSurfaces()
 	borderBottom->xTo = 3779;
 	borderBottom->yFrom = 662;
 	borderBottom->yTo = 2000;
+	borderBottom->isSurfaceOfDeath = true;
 	surfaces.push_back(borderBottom);
 
 	Surface * borderLeft = new Surface();
@@ -136,7 +137,6 @@ vector<Surface*> SnowLevel::GetSurfaces()
 	pGround1->xTo = 1225;
 	pGround1->yFrom = 575;
 	pGround1->yTo = 575;
-	pGround1->isSlope = 1;
 	pGround1->SlopeCoefficientA = cal.CalculateSlopCoeffA(pGround1->xFrom,pGround1->yFrom,pGround1->xTo,pGround1->yTo);
 	pGround1->SlopeCoefficientB = cal.CalculateSlopCoeffB(pGround1->xFrom,pGround1->yFrom,pGround1->SlopeCoefficientA);
 	pSlopes->push_back(pGround1);
@@ -244,6 +244,7 @@ vector<Surface*> SnowLevel::GetSurfaces()
 	pIce->xTo = 2749;
 	pIce->yFrom = 590;
 	pIce->yTo = 700;
+	pIce->isIce = true;
 	surfaces.push_back(pIce);
 
 	pGround3 = new Surface();

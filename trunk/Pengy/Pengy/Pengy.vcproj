@@ -235,6 +235,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\IceWalking.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\Idle.cpp"
 					>
 				</File>
@@ -263,6 +267,10 @@
 					</File>
 					<File
 						RelativePath=".\Falling.h"
+						>
+					</File>
+					<File
+						RelativePath=".\IceWalking.h"
 						>
 					</File>
 					<File

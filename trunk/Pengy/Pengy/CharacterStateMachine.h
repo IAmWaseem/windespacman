@@ -14,6 +14,7 @@ public:
 	CharacterState * pJumping;
 	CharacterState * pFalling;
 	CharacterState * pSliding;
+	CharacterState * pIceWalking;
 
 	CharacterStateMachine(void);
 	~CharacterStateMachine(void);

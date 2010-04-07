@@ -69,7 +69,6 @@ bool Physics::FallYFromTo(Location * pFromLocation,Location * pToLocation,vector
 	bool isFalling;
 	vector<Surface*>::iterator iterator;
 	Surface * pOnSurface;
-	//float fromLocationYdiff;
 	float toLocationYdiff;
 	float fromLocationY;
 	float toLocationY;
@@ -80,7 +79,6 @@ bool Physics::FallYFromTo(Location * pFromLocation,Location * pToLocation,vector
 	while(iterator != surfaces.end())
 	{
 		Surface * pSurface = *iterator;
-		//fromLocationYdiff = fabs(fromLocationY - pSurface->xFrom);
 		toLocationYdiff = fabs(toLocationY - pSurface->yFrom);
 		
 		if(LocationInSurfaceX(pToLocation, pSurface))
@@ -94,10 +92,6 @@ bool Physics::FallYFromTo(Location * pFromLocation,Location * pToLocation,vector
 						isFalling = false;
 						pOnSurface = CopySurface(pSurface);
 						pOnSurface->yFrom = toLocationY;
-						/*isFalling = false;
-						pOnSurface = new Surface;	
-						pOnSurface->isSurfaceOfDeath = false;
-						pOnSurface->yFrom = toLocationY;*/
 					}
 				}
 				else
@@ -107,10 +101,6 @@ bool Physics::FallYFromTo(Location * pFromLocation,Location * pToLocation,vector
 						isFalling = false;
 						pOnSurface = CopySurface(pSurface);
 						pOnSurface->yFrom = toLocationY;
-						/*isFalling = false;
-						pOnSurface = new Surface;		
-						pOnSurface->isSurfaceOfDeath = false;
-						pOnSurface->yFrom = toLocationY;*/
 					}
 				}
 				
@@ -143,13 +133,11 @@ bool Physics::FallYFromTo(Location * pFromLocation,Location * pToLocation,vector
 
 bool Physics::JumpYFromTo(Location * pFromLocation, Location * pToLocation, vector<Surface*> surfaces) 
 {
-	//float fromLocationYdiff;
 	float toLocationYdiff;
 	float fromLocationY;
 	float toLocationY;
 	fromLocationY = pFromLocation->Y;
 	toLocationY = pToLocation->Y;
-	//bool hit;
 	vector<Surface*>::iterator iterator;
 	Surface * pOnSurface;
 	bool bumpHead;
@@ -158,7 +146,6 @@ bool Physics::JumpYFromTo(Location * pFromLocation, Location * pToLocation, vect
 	while(iterator != surfaces.end())
 	{
 		Surface * pSurface = *iterator;
-		//fromLocationYdiff = fabs(fromLocationY - pSurface->xTo);
 		toLocationYdiff = fabs(toLocationY - pSurface->yTo);
 		
 		if(LocationInSurfaceX(pToLocation, pSurface))

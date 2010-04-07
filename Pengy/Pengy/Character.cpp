@@ -210,6 +210,7 @@ void Character::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 	case CM_CHARACTER_HIT_BY_ROTTEN_FISH:
 		pickedupFish -= 2;
+		MessageQueue::Instance()->SendMessage(CM_SOUND_EVENT,(WPARAM)(LPCTSTR)"res/Waves/hit.wav", 0);
 		if(pickedupFish < 0)
 		{
 			pickedupFish = 0;

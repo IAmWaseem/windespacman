@@ -3,27 +3,6 @@
 #include "WaldoStateMachine.h"
 #include "MessageQueue.h"
 
-//extra voor superWaldo
-Waldo::Waldo(Surface * pSurface, int x, bool isSuper):Enemy(pSurface)
-{
-	RandomDirection();
-	
-	this->pView = new WaldoView(this);
-	this->pView->RegisterToGraphics();
-
-	this->pLocation->width = 60;
-	this->pLocation->height = 60;
-
-	this->pLocation->X = x;
-	this->pLocation->Y = pSurface->yFrom - this->pLocation->height;
-
-	this->pWaldoStateMachine = new WaldoStateMachine(this);
-	pWaldoStateMachine->Transition(pWaldoStateMachine->pWander);
-
-	this->isVulnerable = false;
-
-	this->endsLevel = isSuper;
-}
 
 Waldo::Waldo(Surface * pSurface, int x) : Enemy(pSurface)
 {

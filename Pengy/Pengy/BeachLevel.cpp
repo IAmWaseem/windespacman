@@ -576,12 +576,12 @@ vector<int*> BeachLevel::GetTiles()
 
 void BeachLevel::LoadEnemies()
 {
-	MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_WANDER, (int)pSurfaces->at(6), (pSurfaces->at(6)->xFrom + pSurfaces->at(6)->xTo) / 2 + 10 );
-	MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_WANDER, (int)pSurfaces->at(6), (pSurfaces->at(6)->xTo) - 10 );
-	MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_WANDER, (int)pSurfaces->at(6), (pSurfaces->at(6)->xFrom) + 10 );
-	MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_PATROL, (int)pSurfaces->at(14), NULL);
+	//MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_WANDER, (int)pSurfaces->at(6), (pSurfaces->at(6)->xFrom + pSurfaces->at(6)->xTo) / 2 + 10 );
+	//MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_WANDER, (int)pSurfaces->at(6), (pSurfaces->at(6)->xTo) - 10 );
+	//MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_WANDER, (int)pSurfaces->at(6), (pSurfaces->at(6)->xFrom) + 10 );
+	//MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_WALDO_PATROL, (int)pSurfaces->at(14), NULL);
 	
-	MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_BEACHBALL, (int)pSurfaces->at(25), (pSurfaces->at(25)->xFrom + pSurfaces->at(25)->xTo) / 4 + 10 );
+	MessageQueue::Instance()->SendMessage(CM_ENEMYFACTORY_CREATE_MISTERFROST, (int)pSurfaces->at(6), (pSurfaces->at(25)->xFrom + pSurfaces->at(25)->xTo) / 4 + 10 );
 }
 
 void BeachLevel::LoadGadgets()

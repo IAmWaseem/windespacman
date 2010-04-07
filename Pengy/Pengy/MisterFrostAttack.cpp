@@ -41,14 +41,18 @@ void MisterFrostAttack::Update(int timeElapsed)
 void MisterFrostAttack::Throw() 
 {	if(throws == throwsInterval)
 	{
-		Location * pWl = new Location();
-		pWl->X = pMisterFrost->GetLocation()->X;
-		pWl->Y = pMisterFrost->GetPengyLocation()->Y + (0.5 * pMisterFrost->GetPengyLocation()->height);
-		if(pWl->Y > pMisterFrost->GetLocation()->Y + pMisterFrost->GetLocation()->height)
-			pWl->Y = pMisterFrost->GetLocation()->Y + pMisterFrost->GetLocation()->height;
-		Weapon * weapon = new Weapon(pWl, GadgetView::GadgetImage::RottenFish, Direction::Left, 0.4, 500, Character::Instance());
-		throws = 0;
-		throwsInterval = RandomIntBetween(5, 20);
+		int randomInt = rand()% 7;
+		if(randomInt == 1)
+		{
+			Location * pWl = new Location();
+			pWl->X = pMisterFrost->GetLocation()->X;
+			pWl->Y = pMisterFrost->GetPengyLocation()->Y + (0.5 * pMisterFrost->GetPengyLocation()->height);
+			if(pWl->Y > pMisterFrost->GetLocation()->Y + pMisterFrost->GetLocation()->height)
+				pWl->Y = pMisterFrost->GetLocation()->Y + pMisterFrost->GetLocation()->height;
+			Weapon * weapon = new Weapon(pWl, GadgetView::GadgetImage::RottenFish, Direction::Left, 0.4, 500, Character::Instance());
+			throws = 0;
+			throwsInterval = RandomIntBetween(5, 20);
+		}
 	}
 	else
 		throws++;

@@ -19,11 +19,7 @@ class Waldo : public Enemy
 		bool LocationInWaldoY(Location * pLocationPengy, Location * pLocationWaldo);
 		void RandomDirection();
 
-		//tijdelijk voor extra waldo zodat je naar volgend level gaat
-		bool superWaldo;
-
 	public:
-		Waldo(Surface * pSurface, int x, bool isSuper);
 		Waldo(Surface * pSurface, int x);
 		Waldo(Surface * pSurface);
 		~Waldo(void);

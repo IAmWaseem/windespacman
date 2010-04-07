@@ -5,72 +5,85 @@
 #include "Idle.h"
 #include "Jumping.h"
 #include "Sliding.h"
+#include "IceWalking.h"
 
-Walking::Walking(void)
+IceWalking::IceWalking(void)
 {
-	this->speed = 0.18f;
+	this->speed = 0.9f;
 	this->moved = 0;
 }
 
-Walking::Walking(CharacterStateMachine * pStateMachine) : CharacterState(pStateMachine)
+IceWalking::IceWalking(CharacterStateMachine * pStateMachine) : CharacterState(pStateMachine)
 {
-	this->speed = 0.18f;
+	this->speed = 0.9f;
 	this->moved = 0;
 }
 
-void Walking::Up()
+void IceWalking::Up()
 {
 
 }
 
-void Walking::Down()
+void IceWalking::Down()
 {
-	this->pStateMachine->Transition(this->pStateMachine->pFalling);
+	//this->pStateMachine->Transition(this->pStateMachine->pFalling);
+	this->distanceToMove = 0;
+	this->speed = 0;
 }
 
 
-void Walking::Left()
+void IceWalking::Left()
 {
 	if(Character::Instance()->GetDirection() != Direction::Left)
 	{
 		Character::Instance()->GetCharacterView()->ChangeCurrentImage(CharacterView::CharacterImage::Left);
+		this->speed *= 0.90;
+		SwapPicture();
 	}
+	else
+		this->speed *= 1.10;
+	if (this->speed <= 0.05f)
+	{
 	Character::Instance()->SetDirection(Direction::Left);
-	this->distanceToMove = 5;
+	this->speed = 0.06f;
+	}
 }
 
 
-void Walking::Right()
+void IceWalking::Right()
 {
 	if(Character::Instance()->GetDirection() != Direction::Right) 
 	{
 		Character::Instance()->GetCharacterView()->ChangeCurrentImage(CharacterView::CharacterImage::Right);
+		this->speed *= 0.90;
+		SwapPicture();
 	}
+	else
+		this->speed *= 1.10;
+	if (this->speed <= 0.05f)
+	{
 	Character::Instance()->SetDirection(Direction::Right);
-	this->distanceToMove = 5;
+	this->speed = 0.06f;
+	}
 }
 
-void Walking::Throw()
+void IceWalking::Throw()
 {
-
+	this->speed = 0.9f;
+	this->moved = 0;
 }
 
 
-void Walking::Spacebar()
+void IceWalking::Spacebar()
 {
 	this->pStateMachine->pJumping->Spacebar();
-	if(this->distanceToMove > 0.5)
-	{
-		if(Character::Instance()->GetDirection()  == Direction::Left)
-			this->pStateMachine->pJumping->Left();
-		else
-			this->pStateMachine->pJumping->Right();
-	}
 	this->pStateMachine->Transition(this->pStateMachine->pJumping);
 }
 
-void Walking::Update(int timeElapsed)
+void IceWalking::Update(int timeElapsed)
 {
+	this->distanceToMove = 5;
+	this->speed *= 0.95;
 	Location * oldLocation = Character::Instance()->GetLocation();
 	Location * newLocation = new Location();
 	newLocation->width = oldLocation->width;
@@ -95,17 +108,9 @@ void Walking::Update(int timeElapsed)
 	}
 	
 	MessageQueue::Instance()->SendMessage(CM_CHARACTER_MOVE_X_FROM_TO,  (int)oldLocation, (int)newLocation);
-	MessageQueue::Instance()->SendMessage(CM_CHARACTER_FALL_Y_FROM_TO,  (int)oldLocation, (int)newLocation);
-
-	SwapPicture();
-	
-	if(distanceToMove == 0)
-	{
-		this->pStateMachine->Transition(this->pStateMachine->pIdle);
-	}
 }
 
-void Walking::SwapPicture()
+void IceWalking::SwapPicture()
 {
 	if((int)this->moved % 15 < 1)
 	{
@@ -135,7 +140,7 @@ void Walking::SwapPicture()
 	}
 }
 
-void Walking::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
+void IceWalking::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 {
 	Surface * pSurface;
 	switch(message)
@@ -150,7 +155,6 @@ void Walking::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 			Character::Instance()->GetCharacterView()->ChangeCurrentImage(CharacterView::CharacterImage::FallingRight);
 		}
 		this->pStateMachine->Transition(this->pStateMachine->pFalling);
-
 		break;
 	case CM_CHARACTER_BUMPS_INTO:
 		pSurface = (Surface*)wParam;
@@ -176,12 +180,6 @@ void Walking::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 			Sliding * sliding = (Sliding*)pStateMachine->pSliding;
 			sliding->SetSlopes(slopes);
 			pStateMachine->Transition(pStateMachine->pSliding);
-			break;
-		}
-		if(pSurface->isIce == true && Character::Instance()->hasSnowBoots == false)
-		{
-			pStateMachine->pIceWalking->Throw();
-			pStateMachine->Transition(pStateMachine->pIceWalking);
 			break;
 		}
 		Character::Instance()->GetLocation()->Y = pSurface->yFrom - Character::Instance()->GetLocation()->height;

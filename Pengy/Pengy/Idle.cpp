@@ -74,6 +74,12 @@ void Idle::ReceiveMessage(UINT message, WPARAM wParam, LPARAM lParam)
 			MessageQueue::Instance()->SendMessage(CM_IS_SLOPING, lParam, NULL);
 			break;
 		}
+		if(pOnSurface->isIce == true && Character::Instance()->hasSnowBoots == false)
+		{
+			pStateMachine->pIceWalking->Throw();
+			pStateMachine->Transition(pStateMachine->pIceWalking);
+			break;
+		}
 		Character::Instance()->GetLocation()->Y = pOnSurface->yFrom - Character::Instance()->GetLocation()->height;
 		break;
 	}

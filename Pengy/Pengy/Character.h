@@ -26,6 +26,7 @@ public:
 	bool isKilled;
 	int timeToStayKilled;
 	bool CanShoot();
+	bool hasSnowBoots;
 	GadgetView::GadgetImage GetWeaponType();
 private:
 	Direction direction;
@@ -36,7 +37,6 @@ private:
 	int pickedupFish;
 	int pickedupWeapons;
 	int lives;
-	bool hasSnowBoots;
 	World* pWorld;
 	void StartGame();
 	int firstGame;

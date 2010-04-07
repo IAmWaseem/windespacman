@@ -5,6 +5,7 @@
 #include "Walking.h"
 #include "Falling.h"
 #include "Sliding.h"
+#include "IceWalking.h"
 
 CharacterStateMachine::CharacterStateMachine(void)
 {
@@ -13,6 +14,7 @@ CharacterStateMachine::CharacterStateMachine(void)
 	pJumping = new Jumping(this);
 	pFalling = new Falling(this);
 	pSliding = new Sliding(this);
+	pIceWalking = new IceWalking(this);
 	pCurrentState = pIdle;
 }
 

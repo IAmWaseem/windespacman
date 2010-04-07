@@ -37,7 +37,7 @@ CharacterView::CharacterView(void)
 	bitmap->LoadDIBFile("res/hudLadyBug.bmp");
 	ladyBugImageHeight = bitmap->Height();
 	ladyBugImageWidth = bitmap->Width();
-	ladyBugImageMask = CreateBitmapMask(ladyBugImage, RGB(0,0,0), ladyBugImageWidth, ladyBugImageHeight);
+	ladyBugImageMask = CreateBitmapMask(ladyBugImage, RGB(46,46,46), ladyBugImageWidth, ladyBugImageHeight);
 
 	livesImage = LoadImage(NULL, "res/GadgetExtraLife.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
 	bitmap->DeleteObject();
@@ -302,7 +302,7 @@ void CharacterView::DrawRowFish(HDC hdc, int numFish)
 	int secondDigit = numFish % 10;
 	int firstDigit = numFish / 10;
 
-	int startX = 950 - (2 * digitWidth) - goldFishImageWidth - imageXWidth;
+	int startX = 275 - (2 * digitWidth) - goldFishImageWidth - imageXWidth;
 
 	HDC bufDC = CreateCompatibleDC(hdc);
 	SelectObject(bufDC, goldFishImage);
@@ -426,7 +426,7 @@ void CharacterView::DrawRowWeapons(HDC hdc, int numWeapons, HANDLE weaponImage, 
 	int secondDigit = numWeapons % 10;
 	int firstDigit = numWeapons / 10;
 
-	int startX = 950 - (2 * this->digitWidth) - imageWidth - imageXWidth;
+	int startX = 275 - (2 * this->digitWidth) - imageWidth - imageXWidth;
 
 	HDC bufDC = CreateCompatibleDC(hdc);
 	SelectObject(bufDC, goldFishImage);
@@ -551,7 +551,7 @@ void CharacterView::DrawRowLives(HDC hdc, int numLives)
 	int secondDigit = numLives % 10;
 	int firstDigit = numLives / 10;
 
-	int startX = 825 - (2 * this->digitWidth) - livesImageWidth - imageXWidth;
+	int startX = 150 - (2 * this->digitWidth) - livesImageWidth - imageXWidth;
 
 	HDC bufDC = CreateCompatibleDC(hdc);
 	SelectObject(bufDC, livesImage);

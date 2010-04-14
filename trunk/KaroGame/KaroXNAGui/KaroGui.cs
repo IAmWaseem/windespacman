@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
 
-namespace KaroXNAGui
+namespace Karo.Gui
 {
     /// <summary>
     /// This is the main type for your game
@@ -20,6 +20,9 @@ namespace KaroXNAGui
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+
+        // Maybe other location for this?
+        public KaroEngine KaroEngine { get; set; }
 
         public KaroGui()
         {

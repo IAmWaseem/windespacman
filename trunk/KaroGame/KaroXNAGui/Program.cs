@@ -1,6 +1,6 @@
 using System;
 
-namespace KaroXNAGui
+namespace Karo.Gui
 {
     static class Program
     {

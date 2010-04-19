@@ -1,0 +1,13 @@
+	-> UML class diagram
+-> FO
+-> State diagrams
+-> Code versioning (.CVS)
+-> Coding standard
+-> Documentation standard for the source code.
+-> Test-document 
+	-> bug-list 
+	-> test-tables for the functions used.
+-> Game DVD/CD (Installation)
+-> Planning (who+milestones)
+-> Plan of attack
+-> Presentation

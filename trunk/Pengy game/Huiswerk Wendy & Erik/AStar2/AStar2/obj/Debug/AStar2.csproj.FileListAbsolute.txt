@@ -1,0 +1,28 @@
+C:\Users\Gebruiker\Documents\Visual Studio 2008\Projects\AStar2\AStar2\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Gebruiker\Documents\Visual Studio 2008\Projects\AStar2\AStar2\obj\Debug\AStar2.Properties.Resources.resources
+C:\Users\Gebruiker\Documents\Visual Studio 2008\Projects\AStar2\AStar2\obj\Debug\AStar2.csproj.GenerateResource.Cache
+C:\Users\Gebruiker\Documents\Visual Studio 2008\Projects\AStar2\AStar2\bin\Debug\AStar2.exe
+C:\Users\Gebruiker\Documents\Visual Studio 2008\Projects\AStar2\AStar2\bin\Debug\AStar2.pdb
+C:\Users\Gebruiker\Documents\Visual Studio 2008\Projects\AStar2\AStar2\obj\Debug\AStar2.exe
+C:\Users\Gebruiker\Documents\Visual Studio 2008\Projects\AStar2\AStar2\obj\Debug\AStar2.pdb
+C:\Users\Public\Documents\school\Game Programming\kunstmatige intelligentie\AStar2\AStar2\obj\Debug\AStar2.exe
+C:\Users\Public\Documents\school\Game Programming\kunstmatige intelligentie\AStar2\AStar2\obj\Debug\AStar2.pdb
+C:\Users\Public\Documents\school\Game Programming\kunstmatige intelligentie\AStar2\AStar2\bin\Debug\AStar2.exe
+C:\Users\Public\Documents\school\Game Programming\kunstmatige intelligentie\AStar2\AStar2\bin\Debug\AStar2.pdb
+C:\Users\Public\Documents\school\Game Programming\kunstmatige intelligentie\AStar2\AStar2\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Public\Documents\school\Game Programming\kunstmatige intelligentie\AStar2\AStar2\obj\Debug\AStar2.Properties.Resources.resources
+C:\Users\Public\Documents\school\Game Programming\kunstmatige intelligentie\AStar2\AStar2\obj\Debug\AStar2.csproj.GenerateResource.Cache
+C:\Users\Public\Documents\school\Project\Huiswerk Wendy & Erik\AStar2\AStar2\obj\Debug\AStar2.exe
+C:\Users\Public\Documents\school\Project\Huiswerk Wendy & Erik\AStar2\AStar2\obj\Debug\AStar2.pdb
+C:\Users\Public\Documents\school\Project\Huiswerk Wendy & Erik\AStar2\AStar2\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Public\Documents\school\Project\Huiswerk Wendy & Erik\AStar2\AStar2\obj\Debug\AStar2.Properties.Resources.resources
+C:\Users\Public\Documents\school\Project\Huiswerk Wendy & Erik\AStar2\AStar2\obj\Debug\AStar2.csproj.GenerateResource.Cache
+C:\Users\Public\Documents\school\Project\Huiswerk Wendy & Erik\AStar2\AStar2\bin\Debug\AStar2.exe
+C:\Users\Public\Documents\school\Project\Huiswerk Wendy & Erik\AStar2\AStar2\bin\Debug\AStar2.pdb
+C:\Users\Erik\Desktop\WindesPacMan\Huiswerk Wendy & Erik\AStar2\AStar2\obj\Debug\AStar2.exe
+C:\Users\Erik\Desktop\WindesPacMan\Huiswerk Wendy & Erik\AStar2\AStar2\obj\Debug\AStar2.pdb
+C:\Users\Erik\Desktop\WindesPacMan\Huiswerk Wendy & Erik\AStar2\AStar2\bin\Debug\AStar2.exe
+C:\Users\Erik\Desktop\WindesPacMan\Huiswerk Wendy & Erik\AStar2\AStar2\bin\Debug\AStar2.pdb
+C:\Users\Erik\Desktop\WindesPacMan\Huiswerk Wendy & Erik\AStar2\AStar2\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Erik\Desktop\WindesPacMan\Huiswerk Wendy & Erik\AStar2\AStar2\obj\Debug\AStar2.Properties.Resources.resources
+C:\Users\Erik\Desktop\WindesPacMan\Huiswerk Wendy & Erik\AStar2\AStar2\obj\Debug\AStar2.csproj.GenerateResource.Cache

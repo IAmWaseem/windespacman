@@ -7,7 +7,12 @@ namespace Karo
 {
     class Board : IComparable, ICloneable
     {
-        private BoardPosition[][] boardPositions;
+        private BoardPosition[,] boardPositions;
+
+        public Board()
+        {
+            boardPositions = new BoardPosition[21,20];
+        }
 
         public List<Board> GenerateMoves()
         {

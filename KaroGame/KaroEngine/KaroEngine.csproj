@@ -63,6 +63,7 @@
       <DependentUpon>Logger.cs</DependentUpon>
     </Compile>
     <Compile Include="MiniMax.cs" />
+    <Compile Include="PlayerSettings.cs" />
     <Compile Include="Random.cs" />
     <Compile Include="UIConnector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

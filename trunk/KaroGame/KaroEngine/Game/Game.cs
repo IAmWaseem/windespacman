@@ -95,7 +95,7 @@ namespace Karo
         }
 
         /// <summary>
-        /// starts a new game
+        /// starts a new game with a startboard and a turningplayer
         /// </summary>
         /// <param name="playerA">playersettings of player A</param>
         /// <param name="playerB">playersettings of player B</param>
@@ -107,11 +107,11 @@ namespace Karo
             this.playerB = new AIPlayer(playerB);
             this.board = startBoard;
             this.turnPlayerA = (startPlayer == 0 ? true : false);
-            Logger.AddLine("start new game, with startboard en turningPlayer");
+            Logger.AddLine("start new game, with startboard and turningPlayer");
         }
 
         /// <summary>
-        /// starts a new game
+        /// starts a new game with a starboard
         /// </summary>
         /// <param name="playerA">playersettings of player A</param>
         /// <param name="playerB">playersettings of player B</param>

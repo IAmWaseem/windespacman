@@ -8,7 +8,7 @@ namespace Karo
 {
     public class UIConnector
     {
-        public static UIConnector instance;
+        private static UIConnector instance;
 
         public UIConnector()
         {
@@ -26,27 +26,27 @@ namespace Karo
             }
         }
 
-        void StartGame(PlayerSettings playerA, PlayerSettings playerB)
+        public void StartGame(PlayerSettings playerA, PlayerSettings playerB)
         {
             // IMPLEMENTATION NEEDED
         }
 
-        void StartGame(PlayerSettings playerA, PlayerSettings playerB, Board startBoard)
+        public void StartGame(PlayerSettings playerA, PlayerSettings playerB, Board startBoard)
         {
             // IMPLEMENTATION NEEDED
         }
 
-        void StartGame(PlayerSettings playerA, PlayerSettings playerB, Board startBoard, int startingPlayer)
+        public void StartGame(PlayerSettings playerA, PlayerSettings playerB, Board startBoard, int startingPlayer)
         {
             // IMPLEMENTATION NEEDED
         }
 
-        void MoveTile(Point a, Point b)
+        public void MoveTile(Point a, Point b)
         {
             // IMPLEMENTATION NEEDED
         }
 
-        void MovePiece(Point a, Point b)
+        public void MovePiece(Point a, Point b)
         {
             // IMPLEMENTATION NEEDED
         }
@@ -55,27 +55,22 @@ namespace Karo
         /// Get the boardstate
         /// </summary>
         /// <returns>The current board</returns>
-        Board GetBoard()
+        public Board GetBoard()
         {
             // IMPLEMENTATION NEEDED
             return null;
         }
 
-        string GetCurrentPlayer()
+        public string GetCurrentPlayer()
         {
             // IMPLEMENTATION NEEDED
             return null;
         }
 
-        bool IsWon()
+        public bool IsWon()
         {
             // IMPLEMENTATION NEEDED
             return false;
-        }
-
-        void Showlog()
-        {
-            // IMPLEMENTATION NEEDED
         }
     }
 }

@@ -131,6 +131,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "KaroGui";
             this.Text = "Form1";
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.KaroGui_Paint);
             this.mStatusStrip.ResumeLayout(false);
             this.mStatusStrip.PerformLayout();
             this.menuStrip1.ResumeLayout(false);

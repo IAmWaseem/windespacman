@@ -28,6 +28,11 @@ namespace Karo
             }
         }
 
+        /// <summary>
+        /// Starts the game with two players
+        /// </summary>
+        /// <param name="playerA">Player A</param>
+        /// <param name="playerB">Player B</param>
         public void StartGame(PlayerSettings playerA, PlayerSettings playerB)
         {
             Game.Instance.StartGame(playerA, playerB);

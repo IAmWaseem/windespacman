@@ -15,19 +15,19 @@ namespace Karo
         public Board()
         {
             boardPositions = new BoardPosition[21,20];
-            boardPositions[8,8] = BoardPosition.Tile;
+            boardPositions[8,8] = BoardPosition.RedHead;
             boardPositions[8,9] = BoardPosition.Tile;
-            boardPositions[8,10] = BoardPosition.Tile;
+            boardPositions[8,10] = BoardPosition.RedTail;
             boardPositions[8,11] = BoardPosition.Tile;
 
             boardPositions[9,8] = BoardPosition.Tile;
-            boardPositions[9,9] = BoardPosition.Tile;
+            boardPositions[9,9] = BoardPosition.WhiteHead;
             boardPositions[9,10] = BoardPosition.Tile;
             boardPositions[9,11] = BoardPosition.Tile;
 
             boardPositions[10,8] = BoardPosition.Tile;
             boardPositions[10,9] = BoardPosition.Tile;
-            boardPositions[10,10] = BoardPosition.Tile;
+            boardPositions[10,10] = BoardPosition.WhiteTail;
             boardPositions[10,11] = BoardPosition.Tile;
 
             boardPositions[11,8] = BoardPosition.Tile;

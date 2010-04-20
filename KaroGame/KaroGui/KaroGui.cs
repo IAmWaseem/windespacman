@@ -56,7 +56,7 @@ namespace Karo.Gui
             if (currentBoard != null)
             {
                 // Get the board state
-                BoardPosition[,] board = currentBoard.GetBoardState();
+                BoardPosition[,] board = currentBoard.BoardSituation;
 
                 // loop trough X positions
                 for (int x = 0; x < 21; x++)

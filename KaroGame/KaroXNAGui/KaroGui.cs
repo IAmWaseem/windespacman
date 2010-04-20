@@ -22,7 +22,7 @@ namespace Karo.Gui
         SpriteBatch spriteBatch;
 
         // Maybe other location for this?
-        public KaroEngine KaroEngine { get; set; }
+        public UIConnector KaroEngine { get; set; }
 
         public KaroGui()
         {

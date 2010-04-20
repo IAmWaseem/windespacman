@@ -16,18 +16,18 @@ namespace Karo.Gui
         /// <summary>
         /// The engine for the game
         /// </summary>
-        public KaroEngine KaroEngine { get; set; }
+        public UIConnector KaroEngine { get; set; }
 
         public KaroGui()
         {
             InitializeComponent();
 
             // Load the Karo Engine
-            this.KaroEngine = new KaroEngine();
+            this.KaroEngine = new UIConnector();
             this.mEngineVersionLabel.Text = "Engine used: " + KaroEngine.ToString() + " v" + KaroEngine.GetVersionNumber();
 
             // Other stuff
-
+            Logger.AddLine("Hoi");
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Karo
 {
-    class Board : IComparable, ICloneable
+    public class Board : IComparable, ICloneable
     {
         private BoardPosition[,] boardPositions;
 

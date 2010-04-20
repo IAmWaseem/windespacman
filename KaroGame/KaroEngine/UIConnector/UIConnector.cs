@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Drawing;
 
 namespace Karo
 {
@@ -53,7 +54,7 @@ namespace Karo
         Board GetBoard()
         {
             // IMPLEMENTATION NEEDED
-            return Board;
+            return null;
         }
 
         string GetCurrentPlayer()

@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace Karo
 {
-    public class KaroEngine
+    public class UIConnector
     {
 
         /// <summary>

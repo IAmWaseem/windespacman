@@ -54,10 +54,19 @@
     <Compile Include="KaroGui.Designer.cs">
       <DependentUpon>KaroGui.cs</DependentUpon>
     </Compile>
+    <Compile Include="PlayerSetup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PlayerSetup.Designer.cs">
+      <DependentUpon>PlayerSetup.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="KaroGui.resx">
       <DependentUpon>KaroGui.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PlayerSetup.resx">
+      <DependentUpon>PlayerSetup.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

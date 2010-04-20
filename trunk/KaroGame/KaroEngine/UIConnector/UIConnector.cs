@@ -16,6 +16,10 @@ namespace Karo
 
         }
 
+        /// <summary>
+        /// returns an instance of UIConnector
+        /// </summary>
+        /// <returns>UIConnector</returns>
         public static UIConnector Instance
         {
             get
@@ -29,45 +33,81 @@ namespace Karo
         }
 
         /// <summary>
-        /// Starts the game with two players
+        /// starts a new game
         /// </summary>
-        /// <param name="playerA">Player A</param>
-        /// <param name="playerB">Player B</param>
+        /// <param name="playerA">playersettings of player A</param>
+        /// <param name="playerB">playersettings of player B</param>
         public void StartGame(PlayerSettings playerA, PlayerSettings playerB)
         {
             Game.Instance.StartGame(playerA, playerB);
         }
 
+
+        /// <summary>
+        /// starts a new game
+        /// </summary>
+        /// <param name="playerA">playersettings of player A</param>
+        /// <param name="playerB">playersettings of player B</param>
+        /// <param name="startBoard">a board to start with</param>
         public void StartGame(PlayerSettings playerA, PlayerSettings playerB, Board startBoard)
         {
             Game.Instance.StartGame(playerA, playerB, startBoard);
         }
 
+        /// <summary>
+        /// starts a new game
+        /// </summary>
+        /// <param name="playerA">playersettings of player A</param>
+        /// <param name="playerB">playersettings of player B</param>
+        /// <param name="startBoard">a board to start with</param>
+        /// <param name="startPlayer">player that turns first</param>
         public void StartGame(PlayerSettings playerA, PlayerSettings playerB, Board startBoard, int startPlayer)
         {
             Game.Instance.StartGame(playerA, playerB, startBoard, startPlayer);
         }
 
+        /// <summary>
+        /// moves the tile
+        /// </summary>
+        /// <param name="a"> position from which to take the tile </param>
+        /// <param name="b"> position to place the tile </param>
         public void MoveTile(Point a, Point b)
         {
             Game.Instance.MoveTile(a, b);
         }
 
+        /// <summary>
+        /// moves the piece
+        /// </summary>
+        /// <param name="a"> position from which to take the piece </param>
+        /// <param name="b"> position to place the piece </param>
         public void MovePiece(Point a, Point b)
         {
             Game.Instance.MovePiece(a, b);
         }
 
+        /// <summary>
+        /// places a piece on board
+        /// </summary>
+        /// <param name="a"> position to place the piece </param>
         public void PlacePiece(Point a)
         {
             Game.Instance.PlacePiece(a);
         }
 
+        /// <summary>
+        /// gets the current board
+        /// </summary>
+        /// <returns> current board </returns>
         public Board GetBoard()
         {
             return Game.Instance.GetBoard();
         }
 
+        /// <summary>
+        /// returns current player
+        /// </summary>
+        /// <returns> player name : A or B </returns>
         public string GetCurrentPlayer()
         {
             if (Game.Instance.GetTurn())
@@ -76,6 +116,10 @@ namespace Karo
                 return "Player B";
         }
 
+        /// <summary>
+        /// returns if the game has ended
+        /// </summary>
+        /// <returns> bool true for winning state </returns>
         public bool IsWon()
         {
             if (Game.Instance.GetBoard().IsWon())
@@ -83,10 +127,5 @@ namespace Karo
             else
                 return false;
         }
-
-        //void Showlog()
-        //{
-        //    Logger.ShowLog();
-        //}
     }
 }

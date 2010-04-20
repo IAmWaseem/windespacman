@@ -26,19 +26,6 @@ namespace Karo
             }
         }
 
-        public static Game GetInstance()
-        {
-            if (game != null)
-            {
-                return game;
-            }
-            else
-            {
-                game = new Game();
-                return game;
-            }
-        }
-
         public Board GetBoard()
         {
             return board;

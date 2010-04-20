@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Karo
 {
-    class PlayerSettings
+    public class PlayerSettings
     {
         #region "Properties"
 

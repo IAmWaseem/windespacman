@@ -51,6 +51,10 @@ namespace Karo
             // IMPLEMENTATION NEEDED
         }
 
+        /// <summary>
+        /// Get the boardstate
+        /// </summary>
+        /// <returns>The current board</returns>
         Board GetBoard()
         {
             // IMPLEMENTATION NEEDED

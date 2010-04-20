@@ -9,6 +9,7 @@ namespace Karo
     {
         private BoardPosition[,] boardPositions;
 
+
         public Board()
         {
             boardPositions = new BoardPosition[21,20];

@@ -65,7 +65,8 @@ namespace Karo
         public void MoveTile(Point a, Point b)
         {
             board.GetBoardState()[b.X, b.Y] = BoardPosition.Tile;
-            board.GetBoardState()[a.X, a.Y] = BoardPosition.Empty;   
+            board.GetBoardState()[a.X, a.Y] = BoardPosition.Empty; 
+            Logger.AddLine("Moved tile from: "+a.X+", "+a.Y+" to "+b.X+", "+b.Y);
         }
 
         /// <summary>
@@ -79,6 +80,7 @@ namespace Karo
             board.GetBoardState()[b.X, b.Y] = old;
             board.GetBoardState()[a.X, a.Y] = BoardPosition.Tile;
             turnPlayerA = (turnPlayerA ? false : true);
+            Logger.AddLine("Moved piece from: " + a.X + ", " + a.Y + " to " + b.X + ", " + b.Y);
         }
 
         /// <summary>
@@ -89,6 +91,7 @@ namespace Karo
         {
             board.GetBoardState()[point.X, point.Y] = (turnPlayerA ? BoardPosition.RedTail : BoardPosition.WhiteTail);
             turnPlayerA = (turnPlayerA ? false : true);
+            Logger.AddLine("Placed piece on: " + point.X + ", " + point.Y);
         }
 
         /// <summary>
@@ -104,6 +107,7 @@ namespace Karo
             this.playerB = new AIPlayer(playerB);
             this.board = startBoard;
             this.turnPlayerA = (startPlayer == 0 ? true : false);
+            Logger.AddLine("start new game, with startboard en turningPlayer");
         }
 
         /// <summary>
@@ -118,6 +122,7 @@ namespace Karo
             this.playerB = new AIPlayer(playerB);
             this.board = startBoard;
             turnPlayerA = true;
+            Logger.AddLine("start new game, with startboard");
         }
 
         /// <summary>
@@ -131,6 +136,7 @@ namespace Karo
             this.playerB = new AIPlayer(playerB);
             turnPlayerA = true;
             board = new Board();
+            Logger.AddLine("start new game");
         }
     }
 }

@@ -7,10 +7,16 @@ using System.Drawing;
 
 namespace Karo
 {
+    /// <summary>
+    /// Wrapper class for connecting to the game
+    /// </summary>
     public class UIConnector
     {
         private static UIConnector instance;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public UIConnector()
         {
 
@@ -41,8 +47,7 @@ namespace Karo
         {
             Game.Instance.StartGame(playerA, playerB);
         }
-
-
+        
         /// <summary>
         /// starts a new game
         /// </summary>

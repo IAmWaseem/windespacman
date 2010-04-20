@@ -13,18 +13,9 @@ namespace Karo.Gui
 {
     public partial class KaroGui : Form
     {
-        /// <summary>
-        /// The engine for the game
-        /// </summary>
-        public UIConnector KaroEngine { get; set; }
-
         public KaroGui()
         {
-            InitializeComponent();
-
-            // Load the Karo Engine
-            this.KaroEngine = new UIConnector();
-
+            InitializeComponent();            
             
         }
 
@@ -46,6 +37,11 @@ namespace Karo.Gui
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Logger.CloseLog();
+        }
+
+        private void KaroGui_Paint(object sender, PaintEventArgs e)
+        {
+            //Board currentBoard = UIConnector.Instance
         }
     }
 }

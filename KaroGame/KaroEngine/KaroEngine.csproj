@@ -53,7 +53,7 @@
     <Compile Include="Algorithm\AlgorithmType.cs" />
     <Compile Include="Algorithm\AlphaBeta.cs" />
     <Compile Include="Board\Board.cs" />
-    <Compile Include="Board\BoardEnum.cs" />
+    <Compile Include="Board\BoardPosition.cs" />
     <Compile Include="Game\Game.cs" />
     <Compile Include="Algorithm\IAlgorithm.cs" />
     <Compile Include="Logger.cs">

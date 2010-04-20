@@ -16,6 +16,7 @@ namespace Karo.Gui
         public KaroGui()
         {
             InitializeComponent();
+            this.DoubleBuffered = true;
             Logger.ShowLog();
 
             PlayerSettings playerA = new PlayerSettings();

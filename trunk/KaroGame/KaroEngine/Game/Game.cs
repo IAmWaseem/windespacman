@@ -38,10 +38,17 @@ namespace Karo
 
         public void MoveTile(Point a, Point b)
         {
+            turnPlayerA = (turnPlayerA ? false : true);
         }
 
         public void MovePiece(Point a, Point b)
         {
+            turnPlayerA = (turnPlayerA ? false : true);
+        }
+
+        public void PlacePiece(Point point)
+        {
+            turnPlayerA = (turnPlayerA ? false : true);
         }
 
         public void StartGame(PlayerSettings playerA, PlayerSettings playerB, Board startBoard, int startPlayer)
@@ -57,12 +64,15 @@ namespace Karo
             this.playerA = new AIPlayer(playerA);
             this.playerB = new AIPlayer(playerB);
             this.board = startBoard;
+            turnPlayerA = true;
         }
 
         public void StartGame(PlayerSettings playerA, PlayerSettings playerB)
         {
             this.playerA = new AIPlayer(playerA);
             this.playerB = new AIPlayer(playerB);
+            turnPlayerA = true;
+            board = new Board();
         }
     }
 }

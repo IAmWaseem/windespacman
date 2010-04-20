@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Karo
 {
-    class PlayerSetting
+    class PlayerSettings
     {
         #region "Properties"
 
@@ -39,7 +39,7 @@ namespace Karo
         /// <summary>
         /// Creates a human player
         /// </summary>
-        public PlayerSetting()
+        public PlayerSettings()
         {
             IsAI = false;
             AlgorithmType = AlgorithmType.Random;
@@ -56,7 +56,7 @@ namespace Karo
         /// <param name="pPlieDepth">Plie depth used by the algorithm (if MiniMax or AlphaBeta)</param>
         /// <param name="pTransTable">Algorithm uses transposition table (if MiniMax or AlphaBeta)</param>
         /// <param name="pMoveOrdering">Algorithm sorts the moves (if AlphaBeta)</param>
-        public PlayerSetting(bool pIsAI, AlgorithmType pAlgorithmType, int pPlieDepth, bool pTransTable, bool pMoveOrdering)
+        public PlayerSettings(bool pIsAI, AlgorithmType pAlgorithmType, int pPlieDepth, bool pTransTable, bool pMoveOrdering)
         {
             IsAI = pIsAI;
             AlgorithmType = pAlgorithmType;

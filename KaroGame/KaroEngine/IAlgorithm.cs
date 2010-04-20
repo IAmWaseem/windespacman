@@ -7,6 +7,6 @@ namespace Karo
 {
     interface IAlgorithm
     {
-        public Board NextMove(Board currentBoard);
+        Board NextMove(Board currentBoard);
     }
 }

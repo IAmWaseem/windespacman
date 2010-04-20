@@ -9,7 +9,7 @@ namespace Karo
     {
         public Board NextMove(Board currentBoard)
         {
-
+            return null;
         }
     }
 }

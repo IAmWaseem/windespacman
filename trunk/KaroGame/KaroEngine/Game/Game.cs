@@ -64,8 +64,8 @@ namespace Karo
         /// <param name="b">to point</param>
         public void MoveTile(Point a, Point b)
         {
-            board.GetBoardState()[b.X, b.Y] = BoardPosition.Tile;
-            board.GetBoardState()[a.X, a.Y] = BoardPosition.Empty; 
+            board.BoardSituation[b.X, b.Y] = BoardPosition.Tile;
+            board.BoardSituation[a.X, a.Y] = BoardPosition.Empty; 
             Logger.AddLine("Moved tile from: "+a.X+", "+a.Y+" to "+b.X+", "+b.Y);
         }
 
@@ -76,9 +76,9 @@ namespace Karo
         /// <param name="b">to point</param>
         public void MovePiece(Point a, Point b)
         {
-            BoardPosition old = board.GetBoardState()[a.X, a.Y];
-            board.GetBoardState()[b.X, b.Y] = old;
-            board.GetBoardState()[a.X, a.Y] = BoardPosition.Tile;
+            BoardPosition old = board.BoardSituation[a.X, a.Y];
+            board.BoardSituation[b.X, b.Y] = old;
+            board.BoardSituation[a.X, a.Y] = BoardPosition.Tile;
             turnPlayerA = (turnPlayerA ? false : true);
             Logger.AddLine("Moved piece from: " + a.X + ", " + a.Y + " to " + b.X + ", " + b.Y);
         }
@@ -89,7 +89,7 @@ namespace Karo
         /// <param name="point">point for piece</param>
         public void PlacePiece(Point point)
         {
-            board.GetBoardState()[point.X, point.Y] = (turnPlayerA ? BoardPosition.RedTail : BoardPosition.WhiteTail);
+            board.BoardSituation[point.X, point.Y] = (turnPlayerA ? BoardPosition.RedTail : BoardPosition.WhiteTail);
             turnPlayerA = (turnPlayerA ? false : true);
             Logger.AddLine("Placed piece on: " + point.X + ", " + point.Y);
         }

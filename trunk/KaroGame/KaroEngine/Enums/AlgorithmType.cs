@@ -5,7 +5,10 @@ using System.Text;
 
 namespace Karo
 {
-    class Enums
+    enum AlgorithmType
     {
+        Random = 0,
+        MiniMax = 1,
+        AlphaBeta = 2
     }
 }

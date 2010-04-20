@@ -1,3 +1,0 @@
-put all pictures to this folder before / if burning to cd
-
-cause I don't want to put too much stuff to svn :P

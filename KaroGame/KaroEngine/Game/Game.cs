@@ -29,6 +29,7 @@ namespace Karo
                 return instance;
             }
         }
+
         /// <summary>
         /// gets the current board
         /// </summary>
@@ -36,6 +37,15 @@ namespace Karo
         public Board GetBoard()
         {
             return board;
+        }
+
+        /// <summary>
+        /// gets the current player
+        /// </summary>
+        /// <returns>bool turn of PlayerA</returns>
+        public Boolean GetTurn()
+        {
+            return turnPlayerA;
         }
 
         /// <summary>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 
+
 namespace Karo
 {
     public class UIConnector
@@ -12,6 +13,7 @@ namespace Karo
 
         public UIConnector()
         {
+
         }
 
         public static UIConnector Instance
@@ -28,33 +30,34 @@ namespace Karo
 
         public void StartGame(PlayerSettings playerA, PlayerSettings playerB)
         {
-            // IMPLEMENTATION NEEDED
+            Game.Instance.StartGame(playerA, playerB);
         }
 
         public void StartGame(PlayerSettings playerA, PlayerSettings playerB, Board startBoard)
         {
-            // IMPLEMENTATION NEEDED
+            Game.Instance.StartGame(playerA, playerB, startBoard);
         }
 
-        public void StartGame(PlayerSettings playerA, PlayerSettings playerB, Board startBoard, int startingPlayer)
+        public void StartGame(PlayerSettings playerA, PlayerSettings playerB, Board startBoard, int startPlayer)
         {
-            // IMPLEMENTATION NEEDED
+            Game.Instance.StartGame(playerA, playerB, startBoard, startPlayer);
         }
 
         public void MoveTile(Point a, Point b)
         {
-            // IMPLEMENTATION NEEDED
+            Game.Instance.MoveTile(a, b);
         }
 
         public void MovePiece(Point a, Point b)
         {
-            // IMPLEMENTATION NEEDED
+            Game.Instance.MovePiece(a, b);
         }
 
-        /// <summary>
-        /// Get the boardstate
-        /// </summary>
-        /// <returns>The current board</returns>
+        public void PlacePiece(Point a)
+        {
+            Game.Instance.PlacePiece(a);
+        }
+
         public Board GetBoard()
         {
             return Game.Instance.GetBoard();
@@ -62,14 +65,23 @@ namespace Karo
 
         public string GetCurrentPlayer()
         {
-            // IMPLEMENTATION NEEDED
-            return null;
+            if (Game.Instance.GetTurn())
+                return "Player A";
+            else
+                return "Player B";
         }
 
         public bool IsWon()
         {
-            // IMPLEMENTATION NEEDED
-            return false;
+            if (Game.Instance.GetBoard().IsWon())
+                return true;
+            else
+                return false;
         }
+
+        //void Showlog()
+        //{
+        //    Logger.ShowLog();
+        //}
     }
 }

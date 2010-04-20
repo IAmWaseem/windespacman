@@ -54,6 +54,7 @@
     <Compile Include="AlphaBeta.cs" />
     <Compile Include="Board.cs" />
     <Compile Include="BoardEnum.cs" />
+    <Compile Include="Game.cs" />
     <Compile Include="IAlgorithm.cs" />
     <Compile Include="Logger.cs">
       <SubType>Form</SubType>

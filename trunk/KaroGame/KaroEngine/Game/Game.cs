@@ -16,6 +16,10 @@ namespace Karo
 
         private Game() { }
 
+        /// <summary>
+        /// returns an instance of game
+        /// </summary>
+        /// <returns>game</returns>
         public static Game Instance
         {
             get
@@ -25,32 +29,60 @@ namespace Karo
                 return instance;
             }
         }
-
+        /// <summary>
+        /// gets the current board
+        /// </summary>
+        /// <returns>current board</returns>
         public Board GetBoard()
         {
             return board;
         }
 
+        /// <summary>
+        /// sets the board
+        /// </summary>
+        /// <param name="board">the new board</param>
         public void SetBoard(Board board)
         {
             this.board = board;
         }
 
+        /// <summary>
+        /// move tile to a new point
+        /// </summary>
+        /// <param name="a">from point</param>
+        /// <param name="b">to point</param>
         public void MoveTile(Point a, Point b)
         {
             turnPlayerA = (turnPlayerA ? false : true);
         }
 
+        /// <summary>
+        /// move piece to a new point
+        /// </summary>
+        /// <param name="a">from point</param>
+        /// <param name="b">to point</param>
         public void MovePiece(Point a, Point b)
         {
             turnPlayerA = (turnPlayerA ? false : true);
         }
 
+        /// <summary>
+        /// place pace to a point
+        /// </summary>
+        /// <param name="point">point for piece</param>
         public void PlacePiece(Point point)
         {
             turnPlayerA = (turnPlayerA ? false : true);
         }
 
+        /// <summary>
+        /// starts a new game
+        /// </summary>
+        /// <param name="playerA">playersettings of player A</param>
+        /// <param name="playerB">playersettings of player B</param>
+        /// <param name="startBoard">a board to start with</param>
+        /// <param name="startPlayer">player that turns first</param>
         public void StartGame(PlayerSettings playerA, PlayerSettings playerB, Board startBoard, int startPlayer)
         {
             this.playerA = new AIPlayer(playerA);
@@ -59,6 +91,12 @@ namespace Karo
             this.turnPlayerA = (startPlayer == 0 ? true : false);
         }
 
+        /// <summary>
+        /// starts a new game
+        /// </summary>
+        /// <param name="playerA">playersettings of player A</param>
+        /// <param name="playerB">playersettings of player B</param>
+        /// <param name="startBoard">a board to start with</param>
         public void StartGame(PlayerSettings playerA, PlayerSettings playerB, Board startBoard)
         {
             this.playerA = new AIPlayer(playerA);
@@ -67,6 +105,11 @@ namespace Karo
             turnPlayerA = true;
         }
 
+        /// <summary>
+        /// starts a new game
+        /// </summary>
+        /// <param name="playerA">playersettings of player A</param>
+        /// <param name="playerB">playersettings of player B</param>
         public void StartGame(PlayerSettings playerA, PlayerSettings playerB)
         {
             this.playerA = new AIPlayer(playerA);

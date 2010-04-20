@@ -25,13 +25,27 @@ namespace Karo.Gui
             // Load the Karo Engine
             this.KaroEngine = new UIConnector();
 
-            // Other stuff
-            Logger.AddLine("Hoi");
-            Logger.AddLine("Ik");
-            Logger.AddLine("Ben");
-            Logger.AddLine("Logger");
-            Logger.ShowLog();
             
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void clearToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Logger.ClearLog();
+        }
+
+        private void showToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Logger.ShowLog();
+        }
+
+        private void closeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Logger.CloseLog();
         }
     }
 }

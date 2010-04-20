@@ -40,13 +40,15 @@ namespace Karo
 
         public static void AddLine(string s)
         {
-            Instance.textBox1.Text += s + Environment.NewLine;
+            Instance.mLogTextBox.Text += s + Environment.NewLine;
         }
 
         public static void ClearLog()
         {
-            Instance.textBox1.Text = "";
+            Instance.mLogTextBox.Text = "";
         }
+
+        #region "Event Handling"
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -62,5 +64,7 @@ namespace Karo
         {
             mLogger = null;
         }
+
+        #endregion
     }
 }

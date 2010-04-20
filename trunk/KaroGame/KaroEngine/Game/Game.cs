@@ -6,12 +6,38 @@ using System.Drawing;
 
 namespace Karo
 {
-    class Game
+    public class Game
     {
         private AIPlayer playerA;
         private AIPlayer playerB;
         private Boolean turnPlayerA;
         private Board board;
+        private static Game instance;
+
+        private Game() { }
+
+        public static Game Instance
+        {
+            get
+            {
+                if (instance == null)
+                    instance = new Game();
+                return instance;
+            }
+        }
+
+        public static Game GetInstance()
+        {
+            if (game != null)
+            {
+                return game;
+            }
+            else
+            {
+                game = new Game();
+                return game;
+            }
+        }
 
         public Board GetBoard()
         {

@@ -24,7 +24,6 @@ namespace Karo.Gui
 
             // Load the Karo Engine
             this.KaroEngine = new UIConnector();
-            this.mEngineVersionLabel.Text = "Engine used: " + KaroEngine.ToString() + " v" + KaroEngine.GetVersionNumber();
 
             // Other stuff
             Logger.AddLine("Hoi");

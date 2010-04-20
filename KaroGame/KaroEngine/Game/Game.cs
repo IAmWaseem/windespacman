@@ -64,25 +64,30 @@ namespace Karo
         /// <param name="b">to point</param>
         public void MoveTile(Point a, Point b)
         {
-            turnPlayerA = (turnPlayerA ? false : true);
+            board.GetBoardState()[b.X, b.Y] = BoardPosition.Tile;
+            board.GetBoardState()[a.X, a.Y] = BoardPosition.Empty;   
         }
 
         /// <summary>
-        /// move piece to a new point
+        /// move piece to a new point and switches the turn
         /// </summary>
         /// <param name="a">from point</param>
         /// <param name="b">to point</param>
         public void MovePiece(Point a, Point b)
         {
+            BoardPosition old = board.GetBoardState()[a.X, a.Y];
+            board.GetBoardState()[b.X, b.Y] = old;
+            board.GetBoardState()[a.X, a.Y] = BoardPosition.Tile;
             turnPlayerA = (turnPlayerA ? false : true);
         }
 
         /// <summary>
-        /// place pace to a point
+        /// place pace to a point and switches the turn
         /// </summary>
         /// <param name="point">point for piece</param>
         public void PlacePiece(Point point)
         {
+            board.GetBoardState()[point.X, point.Y] = (turnPlayerA ? BoardPosition.RedTail : BoardPosition.WhiteTail);
             turnPlayerA = (turnPlayerA ? false : true);
         }
 

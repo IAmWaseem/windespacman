@@ -9,14 +9,27 @@ using System.Windows.Forms;
 
 namespace Karo
 {
+    /// <summary>
+    /// WinForms window with a textbox on it to show log information
+    /// </summary>
     public partial class Logger : Form
     {
-        public Logger()
+        /// <summary>
+        /// Constructor for the logger
+        /// </summary>
+        private Logger()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Contains the instance
+        /// </summary>
         private static Logger mLogger;
+        
+        /// <summary>
+        /// Instance of the logger
+        /// </summary>
         private static Logger Instance
         {
             get
@@ -33,16 +46,34 @@ namespace Karo
             }
         }
 
+        /// <summary>
+        /// Will show the log window
+        /// </summary>
         public static void ShowLog()
         {
             Instance.Show();
         }
 
+        /// <summary>
+        /// Will close the log window
+        /// </summary>
+        public static void CloseLog()
+        {
+            Instance.Close();
+        }
+
+        /// <summary>
+        /// Adds a line to the log textbox
+        /// </summary>
+        /// <param name="s">Text to add</param>
         public static void AddLine(string s)
         {
             Instance.mLogTextBox.Text += s + Environment.NewLine;
         }
 
+        /// <summary>
+        /// Clears the log
+        /// </summary>
         public static void ClearLog()
         {
             Instance.mLogTextBox.Text = "";
@@ -55,7 +86,7 @@ namespace Karo
             this.Close();
         }
 
-        private void clearToolStripMenuItem_Click(object sender, EventArgs e)
+        private void clearToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             ClearLog();
         }
@@ -65,6 +96,6 @@ namespace Karo
             mLogger = null;
         }
 
-        #endregion
+        #endregion        
     }
 }

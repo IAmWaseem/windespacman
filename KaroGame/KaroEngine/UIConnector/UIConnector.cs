@@ -6,7 +6,7 @@ using System.Drawing;
 
 namespace Karo
 {
-    class UIConnector
+    public class UIConnector
     {
         public static UIConnector instance;
 

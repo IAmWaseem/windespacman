@@ -15,8 +15,12 @@ namespace Karo.Gui
     {
         public KaroGui()
         {
-            InitializeComponent();            
-            
+            InitializeComponent();     
+            PlayerSettings playerA = new PlayerSettings();
+            PlayerSettings playerB = new PlayerSettings();
+
+            UIConnector.Instance.StartGame(playerA, playerB);
+                        
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -41,7 +45,16 @@ namespace Karo.Gui
 
         private void KaroGui_Paint(object sender, PaintEventArgs e)
         {
-            //Board currentBoard = UIConnector.Instance
+            Board currentBoard = UIConnector.Instance.GetBoard();
+            if (currentBoard != null)
+            {
+                BoardPosition[,] board = currentBoard.GetBoardState();
+
+                foreach (BoardPosition b in board)
+                {
+
+                }
+            }
         }
     }
 }

@@ -13,16 +13,23 @@ namespace Karo.Gui
 {
     public partial class KaroGui : Form
     {
+        private DialogResult ds;
         public KaroGui()
         {
             InitializeComponent();
             this.DoubleBuffered = true;
             Logger.ShowLog();
 
-            PlayerSettings playerA = new PlayerSettings();
-            PlayerSettings playerB = new PlayerSettings();
+            PlayerSetup ps = new PlayerSetup();
+            ds = ps.ShowDialog();
+            
+            if (ds != DialogResult.Abort)
+            {
+                PlayerSettings playerA = ps.PlayerA;
+                PlayerSettings playerB = ps.PlayerB;
 
-            UIConnector.Instance.StartGame(playerA, playerB);       
+                UIConnector.Instance.StartGame(playerA, playerB);
+            }            
         }        
 
         /// <summary>
@@ -42,15 +49,19 @@ namespace Karo.Gui
         /// <param name="e"></param>
         private void mDrawPanel_Paint(object sender, PaintEventArgs e)
         {
-            // get graphics
-            Graphics g = e.Graphics;
+            if (ds == DialogResult.Abort)
+                this.Close();
+            else
+            {
+                // get graphics
+                Graphics g = e.Graphics;
 
-            // get currentboard from the game
-            Board currentBoard = UIConnector.Instance.GetBoard();
+                // get currentboard from the game
+                Board currentBoard = UIConnector.Instance.GetBoard();
 
-            // calculate width and height of the tiles
-            tileWidth = mDrawPanel.Width / 21;
-            tileHeight = mDrawPanel.Height / 20;
+                // calculate width and height of the tiles
+                tileWidth = mDrawPanel.Width / 21;
+                tileHeight = mDrawPanel.Height / 20;
 
             // if we got a current board, continue
             if (currentBoard != null)
@@ -58,88 +69,89 @@ namespace Karo.Gui
                 // Get the board state
                 BoardPosition[,] board = currentBoard.BoardSituation;
 
-                // loop trough X positions
-                for (int x = 0; x < 21; x++)
-                {
-                    // loop trough Y positions
-                    for (int y = 0; y < 20; y++)
+                    // loop trough X positions
+                    for (int x = 0; x < 21; x++)
                     {
-                        // Get current position
-                        BoardPosition bp = board[x, y];
-
-                        // standard brush for empty space
-                        Brush brush = Brushes.White;
-
-                        // if not empty, there is a tile beneath
-                        if (bp != BoardPosition.Empty)
-                            brush = Brushes.Black;
-
-                        // if tile is clicked, show as gray
-                        if (mClickedPosition != null)
-                            if (mClickedPosition.X == x && mClickedPosition.Y == y && bp == BoardPosition.Tile)
-                                brush = Brushes.DimGray;
-
-                        // draw tile and raster
-                        g.FillRectangle(brush,
-                            x * tileWidth, y * tileHeight, tileWidth, tileHeight);
-                        g.DrawRectangle(Pens.Gray,
-                            x * tileWidth, y * tileHeight, tileWidth, tileHeight);
-
-                        // if tile is more then empty or just a tile continue here
-                        if (bp != BoardPosition.Empty && bp != BoardPosition.Tile)
+                        // loop trough Y positions
+                        for (int y = 0; y < 20; y++)
                         {
-                            // there is a piece, standard red
-                            Brush pieceColor = Brushes.Red;
+                            // Get current position
+                            BoardPosition bp = board[x, y];
 
-                            // if not red, change now
-                            if (bp == BoardPosition.WhiteHead || bp == BoardPosition.WhiteTail)
-                                pieceColor = Brushes.White;
+                            // standard brush for empty space
+                            Brush brush = Brushes.White;
 
-                            // if we clicked once, continue
+                            // if not empty, there is a tile beneath
+                            if (bp != BoardPosition.Empty)
+                                brush = Brushes.Black;
+
+                            // if tile is clicked, show as gray
                             if (mClickedPosition != null)
+                                if (mClickedPosition.X == x && mClickedPosition.Y == y && bp == BoardPosition.Tile)
+                                    brush = Brushes.DimGray;
+
+                            // draw tile and raster
+                            g.FillRectangle(brush,
+                                x * tileWidth, y * tileHeight, tileWidth, tileHeight);
+                            g.DrawRectangle(Pens.Gray,
+                                x * tileWidth, y * tileHeight, tileWidth, tileHeight);
+
+                            // if tile is more then empty or just a tile continue here
+                            if (bp != BoardPosition.Empty && bp != BoardPosition.Tile)
                             {
-                                // did we clicked here?
-                                if (mClickedPosition.X == x && mClickedPosition.Y == y)
+                                // there is a piece, standard red
+                                Brush pieceColor = Brushes.Red;
+
+                                // if not red, change now
+                                if (bp == BoardPosition.WhiteHead || bp == BoardPosition.WhiteTail)
+                                    pieceColor = Brushes.White;
+
+                                // if we clicked once, continue
+                                if (mClickedPosition != null)
                                 {
-                                    // if red, show now as gold instead of red
-                                    // if white, show now as deep pink instead of white
-                                    if (bp == BoardPosition.RedHead || bp == BoardPosition.RedTail)
+                                    // did we clicked here?
+                                    if (mClickedPosition.X == x && mClickedPosition.Y == y)
                                     {
-                                        pieceColor = Brushes.Gold;
-                                    }
-                                    else if (bp == BoardPosition.WhiteHead || bp == BoardPosition.WhiteTail)
-                                    {
-                                        pieceColor = Brushes.DeepPink;
+                                        // if red, show now as gold instead of red
+                                        // if white, show now as deep pink instead of white
+                                        if (bp == BoardPosition.RedHead || bp == BoardPosition.RedTail)
+                                        {
+                                            pieceColor = Brushes.Gold;
+                                        }
+                                        else if (bp == BoardPosition.WhiteHead || bp == BoardPosition.WhiteTail)
+                                        {
+                                            pieceColor = Brushes.DeepPink;
+                                        }
                                     }
                                 }
-                            }
 
-                            // drawing of the piece
-                            // piece is round, so the Math.Min of height and weight is the width and heigt
-                            // also make it a big smaller then the tile
-                            float maxPieceWidth = Math.Min(tileHeight, tileWidth) * 0.75f;
+                                // drawing of the piece
+                                // piece is round, so the Math.Min of height and weight is the width and heigt
+                                // also make it a big smaller then the tile
+                                float maxPieceWidth = Math.Min(tileHeight, tileWidth) * 0.75f;
 
-                            // because it is a bit smaller, calculate offset
-                            float pieceX = (tileWidth - maxPieceWidth) / 2f;
-                            float pieceY = (tileHeight - maxPieceWidth) / 2f;                            
+                                // because it is a bit smaller, calculate offset
+                                float pieceX = (tileWidth - maxPieceWidth) / 2f;
+                                float pieceY = (tileHeight - maxPieceWidth) / 2f;
 
-                            // draw the ellipse of the piece
-                            g.FillEllipse(pieceColor,
-                                x * tileWidth + pieceX, y * tileHeight + pieceY, maxPieceWidth, maxPieceWidth);
-                            
-                            // if piece has head up, draw a round on top which is a bit smaller
-                            if (bp == BoardPosition.RedHead || bp == BoardPosition.WhiteHead)
-                            {
-                                // calculate the width
-                                float maxHeadWidth = (Math.Min(tileHeight, tileWidth) * 0.50f);
+                                // draw the ellipse of the piece
+                                g.FillEllipse(pieceColor,
+                                    x * tileWidth + pieceX, y * tileHeight + pieceY, maxPieceWidth, maxPieceWidth);
 
-                                // calculate offset
-                                float headX = (tileWidth - maxHeadWidth) / 2f;
-                                float headY = (tileHeight - maxHeadWidth) / 2f;
+                                // if piece has head up, draw a round on top which is a bit smaller
+                                if (bp == BoardPosition.RedHead || bp == BoardPosition.WhiteHead)
+                                {
+                                    // calculate the width
+                                    float maxHeadWidth = (Math.Min(tileHeight, tileWidth) * 0.50f);
 
-                                // draw the ellipse
-                                g.DrawEllipse(Pens.Black,
-                                    x * tileWidth + headX, y * tileHeight + headY, maxHeadWidth, maxHeadWidth);
+                                    // calculate offset
+                                    float headX = (tileWidth - maxHeadWidth) / 2f;
+                                    float headY = (tileHeight - maxHeadWidth) / 2f;
+
+                                    // draw the ellipse
+                                    g.DrawEllipse(Pens.Black,
+                                        x * tileWidth + headX, y * tileHeight + headY, maxHeadWidth, maxHeadWidth);
+                                }
                             }
                         }
                     }

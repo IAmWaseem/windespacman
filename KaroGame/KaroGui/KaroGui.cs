@@ -28,6 +28,7 @@ namespace Karo.Gui
 
             // Other stuff
             Logger.AddLine("Hoi");
+            
         }
     }
 }

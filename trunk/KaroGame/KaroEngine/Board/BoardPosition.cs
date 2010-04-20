@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Karo
 {
-    enum BoardPosition
+    public enum BoardPosition
     {
         Empty = 0,
         Tile = 1,

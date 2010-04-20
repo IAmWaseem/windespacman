@@ -39,11 +39,18 @@ namespace Karo
             boardPositions[12,9] = BoardPosition.Tile;
             boardPositions[12,10] = BoardPosition.Tile;
             boardPositions[12,11] = BoardPosition.Tile;
+            Logger.AddLine("Board created!");
+        }
+
+        public BoardPosition[,] GetBoardState()
+        {
+            return boardPositions;
         }
 
         public List<Board> GenerateMoves()
         {
             // IMPLEMENTATION NEEDED
+            Logger.AddLine("Generated moves");
             return null;
         }
 

@@ -57,8 +57,7 @@ namespace Karo
         /// <returns>The current board</returns>
         public Board GetBoard()
         {
-            // IMPLEMENTATION NEEDED
-            return null;
+            return Game.Instance.GetBoard();
         }
 
         public string GetCurrentPlayer()

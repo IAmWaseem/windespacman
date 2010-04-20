@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{F54208A2-06BC-481A-B5D9-D2D434BE5A81}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -49,13 +49,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Enums.cs" />
+    <Compile Include="AIPlayer.cs" />
+    <Compile Include="AlgorithmType.cs" />
+    <Compile Include="AlphaBeta.cs" />
+    <Compile Include="Board.cs" />
+    <Compile Include="BoardEnum.cs" />
+    <Compile Include="IAlgorithm.cs" />
     <Compile Include="Logger.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Logger.Designer.cs">
       <DependentUpon>Logger.cs</DependentUpon>
     </Compile>
+    <Compile Include="MiniMax.cs" />
+    <Compile Include="Random.cs" />
     <Compile Include="UIConnector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

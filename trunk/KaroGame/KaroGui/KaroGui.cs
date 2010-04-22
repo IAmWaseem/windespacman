@@ -188,7 +188,7 @@ namespace Karo.Gui
             int y = (int) Math.Truncate(e.Y / tileHeight);
             mClickedPosition = new Point(x, y);
             mDrawPanel.Invalidate();
-            Logger.AddLine("Mouse X:" + x + " Y:" + y);
+            Logger.AddLine("Clicked at column:\t" + x + "\trow:\t" + y);
         }
 
         #region "Event handling"

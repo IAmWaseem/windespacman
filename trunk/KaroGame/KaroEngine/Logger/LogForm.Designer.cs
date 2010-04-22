@@ -1,6 +1,6 @@
 ﻿namespace Karo
 {
-    partial class Logger
+    partial class LogForm
     {
         /// <summary>
         /// Required designer variable.
@@ -47,6 +47,8 @@
             this.mLogTextBox.Location = new System.Drawing.Point(3, 16);
             this.mLogTextBox.Multiline = true;
             this.mLogTextBox.Name = "mLogTextBox";
+            this.mLogTextBox.ReadOnly = true;
+            this.mLogTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.mLogTextBox.Size = new System.Drawing.Size(573, 373);
             this.mLogTextBox.TabIndex = 0;
             // 
@@ -73,13 +75,13 @@
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
             this.saveToolStripMenuItem.Text = "Save";
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -94,7 +96,7 @@
             // clearToolStripMenuItem
             // 
             this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
-            this.clearToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.clearToolStripMenuItem.Size = new System.Drawing.Size(101, 22);
             this.clearToolStripMenuItem.Text = "Clear";
             this.clearToolStripMenuItem.Click += new System.EventHandler(this.clearToolStripMenuItem_Click_1);
             // 
@@ -111,7 +113,7 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Log";
             // 
-            // Logger
+            // LogForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -119,10 +121,9 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Name = "Logger";
+            this.Name = "LogForm";
             this.ShowIcon = false;
             this.Text = "Logger";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Logger_FormClosing);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.groupBox1.ResumeLayout(false);

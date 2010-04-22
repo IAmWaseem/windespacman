@@ -7,7 +7,7 @@ namespace Karo
 {
     class AIPlayer
     {
-        private IAlgorithm algorithm;
+        private IAlgorithm algorithm = null;
 
         public AIPlayer(PlayerSettings playerSettings)
         {

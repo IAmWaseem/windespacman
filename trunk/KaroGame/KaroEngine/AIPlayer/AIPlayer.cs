@@ -21,6 +21,10 @@ namespace Karo
         public AIPlayer(PlayerSettings playerSettings)
         {
             PlayerSettings = playerSettings;
+            if (playerSettings.AlgorithmType == AlgorithmType.Random)
+            {
+                algorithm = new Random();
+            }
         }
 
         /// <summary>
@@ -31,7 +35,8 @@ namespace Karo
         {
             if (algorithm != null)
             {
-                algorithm.NextMove(currentBoard);
+                Board next = algorithm.NextMove(currentBoard);
+                Game.Instance.SetBoard(next);
             }
         }
     }

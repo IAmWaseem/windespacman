@@ -9,7 +9,10 @@ namespace Karo
     {
         public Board NextMove(Board currentBoard)
         {
-            return null;
+            List<Board> nextMoves = currentBoard.GenerateMoves(Game.Instance.GetTurn());
+            System.Random random = new System.Random();
+            int move = random.Next(0, nextMoves.Count);
+            return nextMoves[move];
         }
     }
 }

@@ -114,6 +114,12 @@ namespace Karo
         public void PlacePiece(Point point)
         {
             board.BoardSituation[point.X, point.Y] = (turnPlayerA ? BoardPosition.RedTail : BoardPosition.WhiteTail);
+            
+            if (turnPlayerA)
+                board.RedItems++;
+            else
+                board.WhiteItems++;
+
             turnPlayerA = (turnPlayerA ? false : true);
             Logger.AddLine("Placed piece on: " + point.X + ", " + point.Y);
         }

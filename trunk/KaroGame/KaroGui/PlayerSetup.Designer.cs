@@ -437,16 +437,17 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(304, 346);
+            this.ClientSize = new System.Drawing.Size(312, 346);
             this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox1);
-            this.MaximumSize = new System.Drawing.Size(320, 382);
-            this.MinimumSize = new System.Drawing.Size(320, 382);
+            this.MaximumSize = new System.Drawing.Size(328, 382);
+            this.MinimumSize = new System.Drawing.Size(328, 382);
             this.Name = "PlayerSetup";
             this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Player setup";
             this.groupBox1.ResumeLayout(false);
             this.groupBox6.ResumeLayout(false);

@@ -22,6 +22,9 @@ namespace Karo
         {
             InitializeComponent();
             mLogTextBox.WordWrap = true;
+
+            this.SetDesktopLocation(680, 0);
+            this.StartPosition = FormStartPosition.Manual;
         }
 
         /// <summary>

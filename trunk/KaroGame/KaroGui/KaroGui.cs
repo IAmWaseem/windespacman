@@ -18,7 +18,6 @@ namespace Karo.Gui
         {
             InitializeComponent();
             this.DoubleBuffered = true;
-            
 
             PlayerSetup ps = new PlayerSetup();
             ds = ps.ShowDialog();
@@ -34,6 +33,9 @@ namespace Karo.Gui
             mCurrentPlayerLabel.Text = "Current player: " + UIConnector.Instance.GetCurrentPlayer();
 
             Logger.ShowLog();
+
+            this.SetDesktopLocation(0, 0);
+            this.StartPosition = FormStartPosition.Manual;
         }
 
         /// <summary>
@@ -189,9 +191,9 @@ namespace Karo.Gui
         /// <param name="e"></param>
         private void mDrawPanel_MouseUp(object sender, MouseEventArgs e)
         {
-
             int x = (int)Math.Truncate(e.X / tileWidth);
             int y = (int)Math.Truncate(e.Y / tileHeight);
+
             if (mClickedPosition == new Point())
             {
                 BoardPosition bp = UIConnector.Instance.AtPosition(x, y);
@@ -246,6 +248,7 @@ namespace Karo.Gui
             }
             mCurrentPlayerLabel.Text = "Current player: " + UIConnector.Instance.GetCurrentPlayer();
             mDrawPanel.Invalidate();
+            
             Logger.AddLine(UIConnector.Instance.GetCurrentPlayerNumber() + "-> Clicked at column: " + x + " row: " + y);
         }
 

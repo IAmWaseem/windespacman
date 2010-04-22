@@ -197,7 +197,12 @@ namespace Karo.Gui
                 {
                     if (bp == BoardPosition.Tile)
                     {
-                        mClickedPosition = new Point(x, y);
+                        if (UIConnector.Instance.CurrentPlayerNumPieces() < 6)
+                        {
+                            UIConnector.Instance.PlacePiece(new Point(x,y));
+                        }
+                        else
+                            mClickedPosition = new Point(x, y);
                     }
                     else if (UIConnector.Instance.GetCurrentPlayerNumber() == 1)
                     {

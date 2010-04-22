@@ -104,6 +104,19 @@ namespace Karo
             return boards;
         }
 
+        public void Print()
+        {
+            for (int y = 0; y < 20; y++)
+            {
+                for (int x = 0; x < 21; x++)
+                {
+                    System.Console.Out.Write(boardPositions[x, y] + " ");
+                }
+                System.Console.Out.Write("\r\n");
+            }
+            System.Console.Out.Write("\r\n");
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -145,6 +158,8 @@ namespace Karo
                                         newBoardPosition[x + i, y + j] = boardPositions[x, y];
 
                                         Board newBoard = new Board(newBoardPosition);
+                                        newBoard.RedItems = this.RedItems;
+                                        newBoard.WhiteItems = this.WhiteItems;
                                         newBoard.IsTileMoved = false;
                                         boards.Add(newBoard);
                                     }
@@ -162,6 +177,8 @@ namespace Karo
                                                 newBoardPosition[x + i + i, y + j + j] = colorTail;
 
                                             Board newBoard = new Board(newBoardPosition);
+                                            newBoard.RedItems = this.RedItems;
+                                            newBoard.WhiteItems = this.WhiteItems;
                                             newBoard.IsTileMoved = false;
                                             boards.Add(newBoard);
                                         }
@@ -180,6 +197,8 @@ namespace Karo
                                             newBoardPosition[movablePoint.X, movablePoint.Y] = BoardPosition.Empty;
                                             newBoardPosition[moveTileTo.X, moveTileTo.Y] = BoardPosition.Tile;
                                             Board newBoard = new Board(newBoardPosition);
+                                            newBoard.RedItems = this.RedItems;
+                                            newBoard.WhiteItems = this.WhiteItems;
                                             newBoard.IsTileMoved = true;
                                             boards.Add(newBoard);
                                         }
@@ -251,8 +270,23 @@ namespace Karo
         /// <returns></returns>
         public int CompareTo(object obj)
         {
-            // IMPLEMENTATION NEEDED
-            throw new NotImplementedException();
+            Board b = (Board) obj;
+
+            if (b.WhiteItems == this.WhiteItems &&
+                b.IsTileMoved == this.IsTileMoved &&
+                b.RedItems == this.RedItems) {
+
+                for (int x = 0; x < 21; x++)
+                {
+                    for (int y = 0; y < 20; y++)
+                    {
+                        if (b.BoardSituation[x, y] != this.boardPositions[x, y])
+                            return 1;
+                    }
+                }
+                return 0;
+            }
+            return 1;
         }
 
         /// <summary>
@@ -261,8 +295,12 @@ namespace Karo
         /// <returns></returns>
         public object Clone()
         {
-            // IMPLEMENTATION NEEDED
-            throw new NotImplementedException();
+            Board b = new Board((BoardPosition[,])this.BoardSituation.Clone());
+            b.WhiteItems = this.WhiteItems;
+            b.IsTileMoved = this.IsTileMoved;
+            b.RedItems = this.RedItems;
+
+            return b;
         }
 
         /// <summary>

@@ -40,7 +40,6 @@ namespace Karo
         /// <returns>current board</returns>
         public Board GetBoard()
         {
-            List<Board> moves = board.GenerateMoves(turnPlayerA);
             return board;
         }
 
@@ -103,12 +102,31 @@ namespace Karo
         /// <param name="b">to point</param>
         public void MovePiece(Point a, Point b)
         {
-            BoardPosition old = board.BoardSituation[a.X, a.Y];
-            board.BoardSituation[b.X, b.Y] = old;
-            board.BoardSituation[a.X, a.Y] = BoardPosition.Tile;
+            Board cloneBoard = (Board)board.Clone();
 
-            Logger.AddLine(GetCurrentPlayerNumber() + "-> Moved piece from: " + a.X + ", " + a.Y + " to " + b.X + ", " + b.Y);
-            ChangePlayer();
+
+            BoardPosition old = cloneBoard.BoardSituation[a.X, a.Y];
+
+            cloneBoard.BoardSituation[b.X, b.Y] = old;
+            cloneBoard.BoardSituation[a.X, a.Y] = BoardPosition.Tile;
+
+            List<Board> possibleMoves = board.GenerateMoves(turnPlayerA);
+            bool isInList = false;
+
+            foreach (Board pm in possibleMoves)
+            {
+                if (pm.CompareTo(cloneBoard) == 0)
+                    isInList = true;
+                //pm.Print();
+            }
+
+            if(isInList)
+            {
+                turnPlayerA = (turnPlayerA ? false : true);
+                Logger.AddLine("Moved piece from: " + a.X + ", " + a.Y + " to " + b.X + ", " + b.Y);
+
+                board = cloneBoard;
+            }
         }
 
         /// <summary>
@@ -117,15 +135,36 @@ namespace Karo
         /// <param name="point">point for piece</param>
         public void PlacePiece(Point point)
         {
-            board.BoardSituation[point.X, point.Y] = (turnPlayerA ? BoardPosition.RedTail : BoardPosition.WhiteTail);
-            
-            if (turnPlayerA)
-                board.RedItems++;
-            else
-                board.WhiteItems++;
+            Board b = (Board)board.Clone();
+            b.BoardSituation[point.X, point.Y] = (turnPlayerA ? BoardPosition.RedTail : BoardPosition.WhiteTail);
 
-            Logger.AddLine(GetCurrentPlayerNumber() + "-> Placed piece on: " + point.X + ", " + point.Y);
-            ChangePlayer();
+            if (turnPlayerA)
+                b.RedItems++;
+            else
+                b.WhiteItems++;
+
+            bool isInList = false;
+
+            List<Board> possibleMoves = board.GenerateMoves(turnPlayerA);
+
+            foreach (Board pm in possibleMoves)
+            {
+                if(pm.CompareTo(b)==0)
+                    isInList = true;
+            }
+
+            if (isInList)
+            {
+                board = b;
+
+                turnPlayerA = (turnPlayerA ? false : true);
+                Logger.AddLine("Placed piece on: " + point.X + ", " + point.Y);
+            }
+            else
+            {
+                Logger.AddLine("Placing piece on: " + point.X + ", " + point.Y + " is not a valid move");
+            }
+
         }
 
         /// <summary>

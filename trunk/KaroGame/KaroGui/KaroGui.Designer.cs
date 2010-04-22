@@ -124,7 +124,7 @@
             // 
             // mDrawPanel
             // 
-            this.mDrawPanel.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.mDrawPanel.BackColor = System.Drawing.Color.Beige;
             this.mDrawPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mDrawPanel.Location = new System.Drawing.Point(0, 24);
             this.mDrawPanel.Name = "mDrawPanel";

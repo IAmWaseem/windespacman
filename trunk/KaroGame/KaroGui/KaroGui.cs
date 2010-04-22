@@ -244,7 +244,7 @@ namespace Karo.Gui
             }
             mCurrentPlayerLabel.Text = "Current player: " + UIConnector.Instance.GetCurrentPlayer();
             mDrawPanel.Invalidate();
-            Logger.AddLine("Clicked at column: " + x + " row: " + y);
+            Logger.AddLine(UIConnector.Instance.GetCurrentPlayerNumber() + "-> Clicked at column: " + x + " row: " + y);
         }
 
         #region "Event handling"

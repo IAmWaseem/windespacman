@@ -92,6 +92,7 @@ namespace Karo
         {
             board.BoardSituation[b.X, b.Y] = BoardPosition.Tile;
             board.BoardSituation[a.X, a.Y] = BoardPosition.Empty;
+
             Logger.AddLine(GetCurrentPlayerNumber() + "-> Moved tile from: " + a.X + ", " + a.Y + " to " + b.X + ", " + b.Y);
         }
 
@@ -105,8 +106,9 @@ namespace Karo
             BoardPosition old = board.BoardSituation[a.X, a.Y];
             board.BoardSituation[b.X, b.Y] = old;
             board.BoardSituation[a.X, a.Y] = BoardPosition.Tile;
-            ChangePlayer();
+
             Logger.AddLine(GetCurrentPlayerNumber() + "-> Moved piece from: " + a.X + ", " + a.Y + " to " + b.X + ", " + b.Y);
+            ChangePlayer();
         }
 
         /// <summary>
@@ -122,8 +124,8 @@ namespace Karo
             else
                 board.WhiteItems++;
 
-            ChangePlayer();
             Logger.AddLine(GetCurrentPlayerNumber() + "-> Placed piece on: " + point.X + ", " + point.Y);
+            ChangePlayer();
         }
 
         /// <summary>
@@ -139,6 +141,7 @@ namespace Karo
             this.playerB = new AIPlayer(playerB);
             this.board = startBoard;
             this.turnPlayerA = (startPlayer == 0 ? true : false);
+
             Logger.AddLine("Start new game, with startboard and turningPlayer");
         }
 
@@ -184,6 +187,7 @@ namespace Karo
                 turnPlayerA = false;
 
             board = new Board();
+
             Logger.AddLine("Start new game");
         }
 

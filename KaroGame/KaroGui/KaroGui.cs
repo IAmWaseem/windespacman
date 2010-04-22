@@ -193,16 +193,20 @@ namespace Karo.Gui
                 BoardPosition bp = UIConnector.Instance.AtPosition(x, y);
                 if (bp != BoardPosition.Empty)
                 {
-                    if (UIConnector.Instance.GetCurrentPlayerNumber() == 1)
+                    if (bp == BoardPosition.Tile)
+                    {
+                        mClickedPosition = new Point(x, y);
+                    }
+                    else if (UIConnector.Instance.GetCurrentPlayerNumber() == 1)
                     {
                         //red
-                        if (bp == BoardPosition.Tile || bp == BoardPosition.RedHead || bp == BoardPosition.RedTail)
+                        if (bp == BoardPosition.RedHead || bp == BoardPosition.RedTail)
                             mClickedPosition = new Point(x, y);
                     }
                     else
                     {
                         //white
-                        if (bp == BoardPosition.Tile || bp == BoardPosition.WhiteHead || bp == BoardPosition.WhiteTail)
+                        if (bp == BoardPosition.WhiteHead || bp == BoardPosition.WhiteTail)
                             mClickedPosition = new Point(x, y);
                     }
                 }

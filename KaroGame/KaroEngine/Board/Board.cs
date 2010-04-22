@@ -49,8 +49,8 @@ namespace Karo
             boardPositions[12, 11] = BoardPosition.Tile;
             Logger.AddLine("Board created!");
 
-            amountOfRedItems = 6;
-            amountOfWhiteItems = 6;
+            amountOfRedItems = 0;
+            amountOfWhiteItems = 0;
             CalculateMovableTiles();
         }
         public Board(BoardPosition[,] boardPositions)

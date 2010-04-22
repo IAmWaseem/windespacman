@@ -178,5 +178,17 @@ namespace Karo
             board = new Board();
             Logger.AddLine("start new game");
         }
+
+        /// <summary>
+        /// Returns the amount of pieces of the current player
+        /// </summary>
+        /// <returns>Min 0, max 6</returns>
+        public int CurrentPlayerNumPieces()
+        {
+            if (turnPlayerA)
+                return board.RedItems;
+            else
+                return board.WhiteItems;
+        }
     }
 }

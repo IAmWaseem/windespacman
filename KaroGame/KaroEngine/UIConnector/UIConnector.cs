@@ -165,5 +165,14 @@ namespace Karo
             else
                 return false;
         }
+
+        /// <summary>
+        /// Returns the amount of pieces of the current player
+        /// </summary>
+        /// <returns>Min 0, max 6</returns>
+        public int CurrentPlayerNumPieces()
+        {
+            return Game.Instance.CurrentPlayerNumPieces();
+        }
     }
 }

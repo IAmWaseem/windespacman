@@ -122,7 +122,7 @@ namespace Karo
             if(isInList)
             {
                 ChangePlayer();
-                Logger.AddLine("Moved piece from: " + a.X + ", " + a.Y + " to " + b.X + ", " + b.Y);
+                Logger.AddLine(GetCurrentPlayerNumber() + "-> Moved piece from: " + a.X + ", " + a.Y + " to " + b.X + ", " + b.Y);
 
                 board = cloneBoard;
             }
@@ -157,11 +157,11 @@ namespace Karo
                 board = b;
 
                 ChangePlayer();
-                Logger.AddLine("Placed piece on: " + point.X + ", " + point.Y);
+                Logger.AddLine(GetCurrentPlayerNumber() + "-> Placed piece on: " + point.X + ", " + point.Y);
             }
             else
             {
-                Logger.AddLine("Placing piece on: " + point.X + ", " + point.Y + " is not a valid move");
+                Logger.AddLine(GetCurrentPlayerNumber() + "-> Placing piece on: " + point.X + ", " + point.Y + " is not a valid move");
             }
 
         }
@@ -181,6 +181,8 @@ namespace Karo
             this.turnPlayerA = (startPlayer == 0 ? true : false);
 
             Logger.AddLine("Start new game, with startboard and turningPlayer");
+
+            MakeAIMove();
         }
 
         /// <summary>
@@ -204,6 +206,8 @@ namespace Karo
                 turnPlayerA = false;
 
             Logger.AddLine("Start new game, with startboard");
+
+            MakeAIMove();
         }
 
         /// <summary>
@@ -227,6 +231,8 @@ namespace Karo
             board = new Board();
 
             Logger.AddLine("Start new game");
+
+            MakeAIMove();
         }
 
         /// <summary>
@@ -247,7 +253,15 @@ namespace Karo
         public void ChangePlayer()
         {
             turnPlayerA = (turnPlayerA ? false : true);
-            DateTime beforeFunction = DateTime.Now;            
+            MakeAIMove();            
+        }
+
+        /// <summary>
+        /// Checks if currentplayer is AI and if, then execute move
+        /// </summary>
+        public void MakeAIMove()
+        {
+            DateTime beforeFunction = DateTime.Now;
 
             if (turnPlayerA && playerA.PlayerSettings.IsAI)
             {

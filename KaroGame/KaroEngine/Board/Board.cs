@@ -61,6 +61,8 @@ namespace Karo
         /// <param name="boardPositions"></param>
         public Board(BoardPosition[,] boardPositions)
         {
+            amountOfRedItems = 0;
+            amountOfWhiteItems = 0;
             this.boardPositions = boardPositions;
             CalculateMovableTiles();
         }
@@ -87,13 +89,13 @@ namespace Karo
 
                         if (toChange == BoardPosition.RedTail)
                         {
-                            newBoard.amountOfRedItems = amountOfRedItems + 1;
-                            newBoard.amountOfWhiteItems = amountOfWhiteItems;
+                            newBoard.RedItems = this.RedItems + 1;
+                            newBoard.WhiteItems = this.WhiteItems;
                         }
                         else
                         {
-                            newBoard.amountOfRedItems = amountOfRedItems;
-                            newBoard.amountOfWhiteItems = amountOfWhiteItems + 1;
+                            newBoard.RedItems = this.RedItems;
+                            newBoard.WhiteItems = this.WhiteItems + 1;
                         }
                         newBoard.IsTileMoved = false;
                         boards.Add(newBoard);
@@ -222,10 +224,10 @@ namespace Karo
         {
             List<Board> generatedMoves = new List<Board>();
 
-            if (turnPlayerA && amountOfRedItems < 6)
+            if (turnPlayerA && RedItems < 6)
                 generatedMoves.AddRange(NewBoardPosition(BoardPosition.RedTail));
 
-            else if (!turnPlayerA && amountOfWhiteItems < 6)
+            else if (!turnPlayerA && WhiteItems < 6)
                 generatedMoves.AddRange(NewBoardPosition(BoardPosition.WhiteTail));
 
             else

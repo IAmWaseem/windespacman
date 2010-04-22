@@ -18,7 +18,7 @@ namespace Karo.Gui
         {
             InitializeComponent();
             this.DoubleBuffered = true;
-            Logger.ShowLog();
+            
 
             PlayerSetup ps = new PlayerSetup();
             ds = ps.ShowDialog();
@@ -32,6 +32,8 @@ namespace Karo.Gui
             }
 
             mCurrentPlayerLabel.Text = "Current player: " + UIConnector.Instance.GetCurrentPlayer();
+
+            Logger.ShowLog();
         }
 
         /// <summary>

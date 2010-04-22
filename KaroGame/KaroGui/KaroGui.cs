@@ -185,6 +185,7 @@ namespace Karo.Gui
         /// <param name="e"></param>
         private void mDrawPanel_MouseUp(object sender, MouseEventArgs e)
         {
+            
             int x = (int) Math.Truncate(e.X / tileWidth);
             int y = (int) Math.Truncate(e.Y / tileHeight);
             if (mClickedPosition == new Point())

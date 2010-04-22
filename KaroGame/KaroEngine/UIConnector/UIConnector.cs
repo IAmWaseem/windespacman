@@ -137,9 +137,21 @@ namespace Karo
         public string GetCurrentPlayer()
         {
             if (Game.Instance.GetTurn())
-                return "Player A";
+                return "Player A (red)";
             else
-                return "Player B";
+                return "Player B (white)";
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public int GetCurrentPlayerNumber()
+        {
+            if (Game.Instance.GetTurn())
+                return 1;
+            else
+                return 2;
         }
 
         /// <summary>

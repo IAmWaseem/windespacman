@@ -254,14 +254,145 @@ namespace Karo
         }
 
         /// <summary>
-        /// 
+        /// checking if the current board state is winning for any player
         /// </summary>
-        /// <returns></returns>
+        /// <returns> true for winning state </returns>
         public bool IsWon()
         {
-            // IMPLEMENTATION NEEDED
-            return true;
+            if (IsColWinning() == true)
+                return true;
+            else
+                return false;
         }
+
+        /// <summary>
+        /// checking for winning state in columns, on Heads found check for winning in row and diagonal performed
+        /// </summary>
+        /// <returns>true for winning state</returns>
+        private bool IsColWinning()
+        {
+            int x = 0, y = 0, FourInARow = 0, count = this.amountOfRedItems + this.amountOfWhiteItems;
+            BoardPosition checking = BoardPosition.Empty;
+
+            for (; x < 21 && count != 0; x++)
+            {
+                FourInARow = 0;
+
+                for (y = 0; y < 20 && count != 0; y++)
+                {
+                    if (boardPositions[x, y] != BoardPosition.Empty && boardPositions[x, y] != BoardPosition.Tile)
+                    {
+                        count--;
+                        if (boardPositions[x, y] == BoardPosition.RedHead || boardPositions[x, y] == BoardPosition.WhiteHead)
+                        {
+                            if (IsRowWinning(x, y))
+                                return true;
+                            if (IsDiagWinning(x, y))
+                                return true;
+                            if (boardPositions[x, y] != checking)
+                            {
+                                checking = boardPositions[x, y];
+                                FourInARow = 1;
+                            }
+                            else if (++FourInARow == 4)
+                                return true;
+                        }
+                        else
+                        {
+                            checking = BoardPosition.Empty;
+                            FourInARow = 0;
+                        }
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// checking for winning state in row
+        /// </summary>
+        /// <param name="x"> x positon of piece from which to check </param>
+        /// <param name="y"> y positon of piece from which to check </param>
+        /// <returns>true for winning in a row</returns>
+        private bool IsRowWinning(int x, int y)
+        {
+            int FourInARowRight = 1, FourInARowLeft = 1;
+            bool find = false;
+            BoardPosition checking = boardPositions[x, y];
+
+            for (int i = 1; i < 4; i++)
+            {
+                if (x + i < 21)
+                    if (boardPositions[x + i, y] == checking)
+                        if (++FourInARowRight == 4)
+                        {
+                            find = true;
+                            break;
+                        }
+
+                if (x - i > -1)
+                    if (boardPositions[x - i, y] == checking)
+                        if (++FourInARowLeft == 4)
+                        {
+                            find = true;
+                            break;
+                        }
+            }
+
+            return find;
+        }
+
+        /// <summary>
+        /// checking for winning state in diagonal
+        /// </summary>
+        /// <param name="x"> x positon of piece from which to check </param>
+        /// <param name="y"> y positon of piece from which to check </param>
+        /// <returns>true for winning in a diagonal</returns>
+        private bool IsDiagWinning(int x, int y)
+        {
+            int FourInARowUpperRight = 1, FourInARowUpperLeft = 1, FourInARowLowerRight = 1, FourInARowLowerLeft = 1;
+            bool find = false;
+            BoardPosition checking = boardPositions[x, y];
+
+            for (int i = 1; i < 4; i++)
+            {
+                if (x + i < 21 && y - i > -1)
+                    if (boardPositions[x + i, y - i] == checking)
+                        if (++FourInARowUpperRight == 4)
+                        {
+                            find = true;
+                            break;
+                        }
+
+                if (x - i > -1 && y - i > -1)
+                    if (boardPositions[x - i, y - i] == checking)
+                        if (++FourInARowUpperLeft == 4)
+                        {
+                            find = true;
+                            break;
+                        }
+
+                if (x + i < 21 && y + i < 20)
+                    if (boardPositions[x + i, y + i] == checking)
+                        if (++FourInARowLowerRight == 4)
+                        {
+                            find = true;
+                            break;
+                        }
+
+                if (x - i > -1 && y + i < 20)
+                    if (boardPositions[x - i, y + i] == checking)
+                        if (++FourInARowLowerLeft == 4)
+                        {
+                            find = true;
+                            break;
+                        }
+            }
+
+            return find;
+        }
+
 
         /// <summary>
         /// 

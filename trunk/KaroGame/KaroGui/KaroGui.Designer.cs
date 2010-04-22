@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.mStatusStrip = new System.Windows.Forms.StatusStrip();
-            this.mEngineVersionLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.mCurrentPlayerLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,18 +46,19 @@
             // mStatusStrip
             // 
             this.mStatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mEngineVersionLabel});
+            this.mCurrentPlayerLabel});
             this.mStatusStrip.Location = new System.Drawing.Point(0, 585);
             this.mStatusStrip.Name = "mStatusStrip";
             this.mStatusStrip.Size = new System.Drawing.Size(652, 22);
+            this.mStatusStrip.SizingGrip = false;
             this.mStatusStrip.TabIndex = 0;
             this.mStatusStrip.Text = "mStatusStrip";
             // 
             // mEngineVersionLabel
             // 
-            this.mEngineVersionLabel.Name = "mEngineVersionLabel";
-            this.mEngineVersionLabel.Size = new System.Drawing.Size(121, 17);
-            this.mEngineVersionLabel.Text = "mEngineVersionLabel";
+            this.mCurrentPlayerLabel.Name = "mEngineVersionLabel";
+            this.mCurrentPlayerLabel.Size = new System.Drawing.Size(121, 17);
+            this.mCurrentPlayerLabel.Text = "mEngineVersionLabel";
             // 
             // menuStrip1
             // 
@@ -157,7 +158,7 @@
         #endregion
 
         private System.Windows.Forms.StatusStrip mStatusStrip;
-        private System.Windows.Forms.ToolStripStatusLabel mEngineVersionLabel;
+        private System.Windows.Forms.ToolStripStatusLabel mCurrentPlayerLabel;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;

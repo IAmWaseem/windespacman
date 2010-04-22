@@ -14,10 +14,12 @@ namespace Karo
         /// Algorithm chooses random move from the avalible moves.
         /// </summary>
         Random = 0,
+
         /// <summary>
         /// Calculate best move with minimax
         /// </summary>
         MiniMax = 1,
+
         /// <summary>
         /// Calculate best move with minimax with alpha beta pruning, better result
         /// </summary>

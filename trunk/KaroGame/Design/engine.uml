@@ -2969,7 +2969,7 @@
 <XPD:REF name="Views[1]">5JSkl/4PJ0OesNJF5RsVOgAA</XPD:REF>
 <XPD:REF name="Views[2]">ETNbjhiXMUKF2xVoIQuwSAAA</XPD:REF>
 <XPD:REF name="Views[3]">JonsuMxRbk6z3Bb38DWcQgAA</XPD:REF>
-<XPD:ATTR name="#Operations" type="integer">5</XPD:ATTR>
+<XPD:ATTR name="#Operations" type="integer">4</XPD:ATTR>
 <XPD:OBJ name="Operations[0]" type="UMLOperation" guid="Npg2tGTtOkCNkey5Cw5LWQAA">
 <XPD:ATTR name="Name" type="string">ClearLog</XPD:ATTR>
 <XPD:REF name="Owner">lR9BnGypXEeOMt7rJfdZ5AAA</XPD:REF>
@@ -2985,16 +2985,6 @@
 <XPD:OBJ name="Operations[3]" type="UMLOperation" guid="dV+aHlSJEUyAGnyz49eOGQAA">
 <XPD:ATTR name="Name" type="string">CloseLog</XPD:ATTR>
 <XPD:REF name="Owner">lR9BnGypXEeOMt7rJfdZ5AAA</XPD:REF>
-</XPD:OBJ>
-<XPD:OBJ name="Operations[4]" type="UMLOperation" guid="bS0zuCDkXUGNAyolHrLY9QAA">
-<XPD:ATTR name="Name" type="string">SaveLog</XPD:ATTR>
-<XPD:REF name="Owner">lR9BnGypXEeOMt7rJfdZ5AAA</XPD:REF>
-<XPD:ATTR name="#Parameters" type="integer">1</XPD:ATTR>
-<XPD:OBJ name="Parameters[0]" type="UMLParameter" guid="FrhV/GDxVUWjNKFkiocrmQAA">
-<XPD:ATTR name="Name" type="string">path</XPD:ATTR>
-<XPD:ATTR name="TypeExpression" type="string">String</XPD:ATTR>
-<XPD:REF name="BehavioralFeature">bS0zuCDkXUGNAyolHrLY9QAA</XPD:REF>
-</XPD:OBJ>
 </XPD:OBJ>
 <XPD:ATTR name="#Associations" type="integer">1</XPD:ATTR>
 <XPD:REF name="Associations[0]">0gZTpgoBu02R9hsLyd5COAAA</XPD:REF>
@@ -3037,7 +3027,7 @@
 <XPD:REF name="Views[1]">ilCcOL3gLESviHcNv8H6QQAA</XPD:REF>
 <XPD:REF name="Views[2]">OMaAujnp70SlobxNpijB/QAA</XPD:REF>
 <XPD:REF name="Views[3]">jOg0HbFvK0e0YT9nMqHYIgAA</XPD:REF>
-<XPD:ATTR name="#Operations" type="integer">2</XPD:ATTR>
+<XPD:ATTR name="#Operations" type="integer">3</XPD:ATTR>
 <XPD:OBJ name="Operations[0]" type="UMLOperation" guid="k4XuHX4u9EyaPEbm8ykNRAAA">
 <XPD:ATTR name="Name" type="string">AddLine</XPD:ATTR>
 <XPD:REF name="Owner">YktjDpdgMEiMWssUtez9lAAA</XPD:REF>
@@ -3051,6 +3041,16 @@
 <XPD:OBJ name="Operations[1]" type="UMLOperation" guid="pVsCb2DMHUGa3nmAaIoFbAAA">
 <XPD:ATTR name="Name" type="string">ClearLog</XPD:ATTR>
 <XPD:REF name="Owner">YktjDpdgMEiMWssUtez9lAAA</XPD:REF>
+</XPD:OBJ>
+<XPD:OBJ name="Operations[2]" type="UMLOperation" guid="w6w7p6Hmz0OZj6LathAT8gAA">
+<XPD:ATTR name="Name" type="string">SaveLog</XPD:ATTR>
+<XPD:REF name="Owner">YktjDpdgMEiMWssUtez9lAAA</XPD:REF>
+<XPD:ATTR name="#Parameters" type="integer">1</XPD:ATTR>
+<XPD:OBJ name="Parameters[0]" type="UMLParameter" guid="pEh2bUeWDkCo8zTcfjnbwgAA">
+<XPD:ATTR name="Name" type="string">path</XPD:ATTR>
+<XPD:ATTR name="TypeExpression" type="string">string</XPD:ATTR>
+<XPD:REF name="BehavioralFeature">w6w7p6Hmz0OZj6LathAT8gAA</XPD:REF>
+</XPD:OBJ>
 </XPD:OBJ>
 <XPD:ATTR name="#Associations" type="integer">1</XPD:ATTR>
 <XPD:REF name="Associations[0]">bbugDZ7LCkW+Ihl/FLf8OAAA</XPD:REF>

@@ -90,11 +90,15 @@ namespace Karo.Gui
                                 if (mClickedPosition.X == x && mClickedPosition.Y == y && bp == BoardPosition.Tile)
                                     brush = Brushes.DimGray;
 
-                            // draw tile and raster
-                            g.FillRectangle(brush,
-                                x * tileWidth, y * tileHeight, tileWidth, tileHeight);
-                            g.DrawRectangle(Pens.Gray,
-                                x * tileWidth, y * tileHeight, tileWidth, tileHeight);
+                            if (bp != BoardPosition.Empty)
+                            {
+                                // draw tile and raster
+                                g.FillRectangle(brush,
+                                    x * tileWidth, y * tileHeight, tileWidth, tileHeight);
+                            }
+                                g.DrawRectangle(Pens.Gray,
+                                    x * tileWidth, y * tileHeight, tileWidth, tileHeight);
+                            
 
                             // if tile is more then empty or just a tile continue here
                             if (bp != BoardPosition.Empty && bp != BoardPosition.Tile)
@@ -191,7 +195,7 @@ namespace Karo.Gui
                 mClickedPosition = new Point();
             }
             mDrawPanel.Invalidate();
-            Logger.AddLine("Clicked at column:\t" + x + "\trow:\t" + y);
+            Logger.AddLine("Clicked at column: " + x + " row: " + y);
         }
 
         #region "Event handling"

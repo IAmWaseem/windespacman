@@ -190,8 +190,22 @@ namespace Karo.Gui
             int y = (int) Math.Truncate(e.Y / tileHeight);
             if (mClickedPosition == new Point())
             {
-                if(UIConnector.Instance.AtPosition(x, y) != BoardPosition.Empty)
-                    mClickedPosition = new Point(x, y);
+                BoardPosition bp = UIConnector.Instance.AtPosition(x, y);
+                if (bp != BoardPosition.Empty)
+                {
+                    if (UIConnector.Instance.GetCurrentPlayerNumber() == 1)
+                    {
+                        //red
+                        if (bp == BoardPosition.Tile || bp == BoardPosition.RedHead || bp == BoardPosition.RedTail)
+                            mClickedPosition = new Point(x, y);
+                    }
+                    else
+                    {
+                        //white
+                        if (bp == BoardPosition.Tile || bp == BoardPosition.WhiteHead || bp == BoardPosition.WhiteTail)
+                            mClickedPosition = new Point(x, y);
+                    }
+                }
             }
             else if (mClickedPosition == new Point(x, y))
             {

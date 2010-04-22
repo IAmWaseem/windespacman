@@ -41,6 +41,14 @@ namespace Karo
         }
 
         /// <summary>
+        /// Brings to front
+        /// </summary>
+        public static void BringToFront()
+        {
+            Instance.mLogForm.BringToFront();
+        }
+
+        /// <summary>
         /// Will show the log window
         /// </summary>
         public static void ShowLog()

@@ -188,11 +188,29 @@ namespace Karo.Gui
             int x = (int) Math.Truncate(e.X / tileWidth);
             int y = (int) Math.Truncate(e.Y / tileHeight);
             if (mClickedPosition == new Point())
-                mClickedPosition = new Point(x, y);
+            {
+                if(UIConnector.Instance.AtPosition(x, y) != BoardPosition.Empty)
+                    mClickedPosition = new Point(x, y);
+            }
             else
             {
-                UIConnector.Instance.MoveTile(mClickedPosition, new Point(x, y));
-                mClickedPosition = new Point();
+                BoardPosition bp = UIConnector.Instance.AtPosition(mClickedPosition);
+                if (bp == BoardPosition.Tile)
+                {
+                    if (UIConnector.Instance.AtPosition(x, y) == BoardPosition.Empty)
+                    {
+                        UIConnector.Instance.MoveTile(mClickedPosition, new Point(x, y));
+                        mClickedPosition = new Point();
+                    }
+                }
+                else
+                {
+                    if (UIConnector.Instance.AtPosition(x, y) == BoardPosition.Tile)
+                    {
+                        UIConnector.Instance.MovePiece(mClickedPosition, new Point(x, y));
+                        mClickedPosition = new Point();
+                    }
+                }
             }
             mDrawPanel.Invalidate();
             Logger.AddLine("Clicked at column: " + x + " row: " + y);

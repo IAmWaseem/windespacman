@@ -192,6 +192,10 @@ namespace Karo.Gui
                 if(UIConnector.Instance.AtPosition(x, y) != BoardPosition.Empty)
                     mClickedPosition = new Point(x, y);
             }
+            else if (mClickedPosition == new Point(x, y))
+            {
+                mClickedPosition = new Point();
+            }
             else
             {
                 BoardPosition bp = UIConnector.Instance.AtPosition(mClickedPosition);

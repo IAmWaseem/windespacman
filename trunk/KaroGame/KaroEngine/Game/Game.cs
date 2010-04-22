@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Drawing;
+using System.Timers;
 
 namespace Karo
 {
@@ -104,7 +105,7 @@ namespace Karo
             BoardPosition old = board.BoardSituation[a.X, a.Y];
             board.BoardSituation[b.X, b.Y] = old;
             board.BoardSituation[a.X, a.Y] = BoardPosition.Tile;
-            turnPlayerA = (turnPlayerA ? false : true);
+            ChangePlayer();
             Logger.AddLine("Moved piece from: " + a.X + ", " + a.Y + " to " + b.X + ", " + b.Y);
         }
 
@@ -121,7 +122,7 @@ namespace Karo
             else
                 board.WhiteItems++;
 
-            turnPlayerA = (turnPlayerA ? false : true);
+            ChangePlayer();
             Logger.AddLine("Placed piece on: " + point.X + ", " + point.Y);
         }
 
@@ -196,6 +197,38 @@ namespace Karo
                 return board.RedItems;
             else
                 return board.WhiteItems;
+        }
+
+        /// <summary>
+        /// Changes the current player and checks if he want to do something
+        /// </summary>
+        public void ChangePlayer()
+        {
+            turnPlayerA = (turnPlayerA ? false : true);
+            DateTime beforeFunction = DateTime.Now;            
+
+            if (turnPlayerA && playerA.PlayerSettings.IsAI)
+            {
+                playerA.Execute(board);
+
+                // Elapsed time
+                DateTime afterFunction = DateTime.Now;
+                TimeSpan elapsedTime = afterFunction - beforeFunction;
+                Logger.AddLine("AI calculated in: " + elapsedTime.TotalMilliseconds.ToString() + " ms");
+
+                ChangePlayer();
+            }
+            else if (!turnPlayerA && playerB.PlayerSettings.IsAI)
+            {
+                playerB.Execute(board);
+
+                // Elapsed time
+                DateTime afterFunction = DateTime.Now;
+                TimeSpan elapsedTime = afterFunction - beforeFunction;
+                Logger.AddLine("AI calculated in: " + elapsedTime.TotalMilliseconds.ToString() + " ms");
+
+                ChangePlayer();
+            }
         }
     }
 }

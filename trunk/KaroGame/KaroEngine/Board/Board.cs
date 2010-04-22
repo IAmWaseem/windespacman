@@ -47,12 +47,18 @@ namespace Karo
             boardPositions[12, 9] = BoardPosition.Tile;
             boardPositions[12, 10] = BoardPosition.Tile;
             boardPositions[12, 11] = BoardPosition.Tile;
-            Logger.AddLine("Board created!");
 
             amountOfRedItems = 0;
             amountOfWhiteItems = 0;
             CalculateMovableTiles();
+
+            Logger.AddLine("Board created!");
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="boardPositions"></param>
         public Board(BoardPosition[,] boardPositions)
         {
             this.boardPositions = boardPositions;

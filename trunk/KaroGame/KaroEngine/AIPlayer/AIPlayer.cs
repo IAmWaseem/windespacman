@@ -9,11 +9,24 @@ namespace Karo
     {
         private IAlgorithm algorithm = null;
 
+        /// <summary>
+        /// PlayerSettings of player
+        /// </summary>
+        public PlayerSettings PlayerSettings { get; private set; }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="playerSettings">Playersettings</param>
         public AIPlayer(PlayerSettings playerSettings)
         {
-
+            PlayerSettings = playerSettings;
         }
 
+        /// <summary>
+        /// Executes AI move
+        /// </summary>
+        /// <param name="currentBoard">The current board</param>
         public void Execute(Board currentBoard)
         {
             algorithm.NextMove(currentBoard);

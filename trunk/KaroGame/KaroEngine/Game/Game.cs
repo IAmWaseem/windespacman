@@ -116,7 +116,7 @@ namespace Karo
             {
                 if (pm.CompareTo(cloneBoard) == 0)
                     isInList = true;
-                //pm.Print();
+                pm.Print();
             }
 
             if(isInList)

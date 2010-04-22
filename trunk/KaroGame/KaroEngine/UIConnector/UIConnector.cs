@@ -148,10 +148,7 @@ namespace Karo
         /// <returns>1 or 2</returns>
         public int GetCurrentPlayerNumber()
         {
-            if (Game.Instance.GetTurn())
-                return 1;
-            else
-                return 2;
+            return Game.Instance.GetCurrentPlayerNumber();
         }
 
         /// <summary>

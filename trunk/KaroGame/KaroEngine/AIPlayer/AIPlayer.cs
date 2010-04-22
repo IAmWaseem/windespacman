@@ -29,8 +29,10 @@ namespace Karo
         /// <param name="currentBoard">The current board</param>
         public void Execute(Board currentBoard)
         {
-            algorithm.NextMove(currentBoard);
-
+            if (algorithm != null)
+            {
+                algorithm.NextMove(currentBoard);
+            }
         }
     }
 }

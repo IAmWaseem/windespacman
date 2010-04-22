@@ -89,12 +89,15 @@ namespace Karo.Gui
                             if (mClickedPosition != null)
                                 if (mClickedPosition.X == x && mClickedPosition.Y == y && bp == BoardPosition.Tile)
                                     brush = Brushes.DimGray;
+                            if (bp != BoardPosition.Empty)
+                            {
+                                // draw tile and raster
+                                g.FillRectangle(brush,
+                                    x * tileWidth, y * tileHeight, tileWidth, tileHeight);
 
-                            // draw tile and raster
-                            g.FillRectangle(brush,
-                                x * tileWidth, y * tileHeight, tileWidth, tileHeight);
-                            g.DrawRectangle(Pens.Gray,
-                                x * tileWidth, y * tileHeight, tileWidth, tileHeight);
+                                g.DrawRectangle(Pens.Gray,
+                                    x * tileWidth, y * tileHeight, tileWidth, tileHeight);
+                            }
 
                             // if tile is more then empty or just a tile continue here
                             if (bp != BoardPosition.Empty && bp != BoardPosition.Tile)

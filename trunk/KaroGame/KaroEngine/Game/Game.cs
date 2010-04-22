@@ -148,7 +148,7 @@ namespace Karo
             
             // random first player
             System.Random r = new System.Random();
-            int player = r.Next(0, 3);
+            int player = r.Next(1, 3);
             
             turnPlayerA = true;
             if(player == 2)
@@ -169,7 +169,7 @@ namespace Karo
 
             // random first player
             System.Random r = new System.Random();
-            int player = r.Next(0, 3);
+            int player = r.Next(1, 3);
 
             turnPlayerA = true;
             if (player == 2)

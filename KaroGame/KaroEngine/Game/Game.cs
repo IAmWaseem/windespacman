@@ -39,6 +39,7 @@ namespace Karo
         /// <returns>current board</returns>
         public Board GetBoard()
         {
+            List<Board> moves = board.GenerateMoves(turnPlayerA);
             return board;
         }
 

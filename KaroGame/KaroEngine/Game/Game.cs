@@ -91,8 +91,8 @@ namespace Karo
         public void MoveTile(Point a, Point b)
         {
             board.BoardSituation[b.X, b.Y] = BoardPosition.Tile;
-            board.BoardSituation[a.X, a.Y] = BoardPosition.Empty; 
-            Logger.AddLine("Moved tile from: "+a.X+", "+a.Y+" to "+b.X+", "+b.Y);
+            board.BoardSituation[a.X, a.Y] = BoardPosition.Empty;
+            Logger.AddLine(GetCurrentPlayerNumber() + "-> Moved tile from: " + a.X + ", " + a.Y + " to " + b.X + ", " + b.Y);
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace Karo
             board.BoardSituation[b.X, b.Y] = old;
             board.BoardSituation[a.X, a.Y] = BoardPosition.Tile;
             ChangePlayer();
-            Logger.AddLine("Moved piece from: " + a.X + ", " + a.Y + " to " + b.X + ", " + b.Y);
+            Logger.AddLine(GetCurrentPlayerNumber() + "-> Moved piece from: " + a.X + ", " + a.Y + " to " + b.X + ", " + b.Y);
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace Karo
                 board.WhiteItems++;
 
             ChangePlayer();
-            Logger.AddLine("Placed piece on: " + point.X + ", " + point.Y);
+            Logger.AddLine(GetCurrentPlayerNumber() + "-> Placed piece on: " + point.X + ", " + point.Y);
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace Karo
             this.playerB = new AIPlayer(playerB);
             this.board = startBoard;
             this.turnPlayerA = (startPlayer == 0 ? true : false);
-            Logger.AddLine("start new game, with startboard and turningPlayer");
+            Logger.AddLine("Start new game, with startboard and turningPlayer");
         }
 
         /// <summary>
@@ -162,7 +162,7 @@ namespace Karo
             if(player == 2)
                 turnPlayerA = false;
 
-            Logger.AddLine("start new game, with startboard");
+            Logger.AddLine("Start new game, with startboard");
         }
 
         /// <summary>
@@ -184,7 +184,7 @@ namespace Karo
                 turnPlayerA = false;
 
             board = new Board();
-            Logger.AddLine("start new game");
+            Logger.AddLine("Start new game");
         }
 
         /// <summary>
@@ -214,7 +214,7 @@ namespace Karo
                 // Elapsed time
                 DateTime afterFunction = DateTime.Now;
                 TimeSpan elapsedTime = afterFunction - beforeFunction;
-                Logger.AddLine("AI calculated in: " + elapsedTime.TotalMilliseconds.ToString() + " ms");
+                Logger.AddLine(GetCurrentPlayerNumber() + "-> AI calculated in: " + elapsedTime.TotalMilliseconds.ToString() + " ms");
 
                 ChangePlayer();
             }
@@ -225,10 +225,22 @@ namespace Karo
                 // Elapsed time
                 DateTime afterFunction = DateTime.Now;
                 TimeSpan elapsedTime = afterFunction - beforeFunction;
-                Logger.AddLine("AI calculated in: " + elapsedTime.TotalMilliseconds.ToString() + " ms");
+                Logger.AddLine(GetCurrentPlayerNumber() + "-> AI calculated in: " + elapsedTime.TotalMilliseconds.ToString() + " ms");
 
                 ChangePlayer();
             }
+        }
+
+        /// <summary>
+        /// Returns current player number
+        /// </summary>
+        /// <returns>1 or 2</returns>
+        public int GetCurrentPlayerNumber()
+        {
+            if (GetTurn())
+                return 1;
+            else
+                return 2;
         }
     }
 }

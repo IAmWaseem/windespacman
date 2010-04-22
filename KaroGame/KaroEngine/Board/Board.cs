@@ -5,12 +5,18 @@ using System.Text;
 
 namespace Karo
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class Board : IComparable, ICloneable
     {
         private BoardPosition[,] boardPositions;
         private int amountOfRedItems;
         private int amountOfWhiteItems;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public Board()
         {
             boardPositions = new BoardPosition[21, 20];
@@ -44,6 +50,11 @@ namespace Karo
             amountOfWhiteItems = 0;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="toChange"></param>
+        /// <returns></returns>
         private List<Board> NewBoardPosition(BoardPosition toChange)
         {
             List<Board> boards = new List<Board>();
@@ -79,6 +90,11 @@ namespace Karo
             return boards;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="turnPlayerA"></param>
+        /// <returns></returns>
         public List<Board> ChangeBoardPosition(bool turnPlayerA)
         {
             List<Board> boards = new List<Board>();
@@ -125,6 +141,11 @@ namespace Karo
             return boards;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="turnPlayerA"></param>
+        /// <returns></returns>
         public List<Board> GenerateMoves(bool turnPlayerA)
         {
             List<Board> generatedMoves = new List<Board>();
@@ -141,47 +162,77 @@ namespace Karo
             return generatedMoves;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="board"></param>
         public void IsMoveValid(Board board)
         {
             // IMPLEMENTATION NEEDED
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public int Evaluation()
         {
             // IMPLEMENTATION NEEDED
             return 0;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public bool IsWon()
         {
             // IMPLEMENTATION NEEDED
             return true;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         public int CompareTo(object obj)
         {
             // IMPLEMENTATION NEEDED
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public object Clone()
         {
             // IMPLEMENTATION NEEDED
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public int RedItems
         {
             get { return amountOfRedItems; }
             set { amountOfRedItems = value; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public int WhiteItems
         {
             get { return amountOfWhiteItems; }
             set { amountOfWhiteItems = value; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public BoardPosition[,] BoardSituation
         {
             get { return boardPositions; }

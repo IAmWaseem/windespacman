@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Karo
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class PlayerSettings
     {
         #region "Properties"
@@ -19,7 +22,9 @@ namespace Karo
         /// </summary>
         public AlgorithmType AlgorithmType { get; set; }
 
-        // Depth of plie for the algorithm (if random, not used)
+        /// <summary>
+        /// Depth of plie for the algorithm (if random, not used)
+        /// </summary>
         public int PlieDepth { get; set; }
 
         /// <summary>

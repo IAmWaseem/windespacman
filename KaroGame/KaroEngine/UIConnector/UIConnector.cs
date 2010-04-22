@@ -72,6 +72,27 @@ namespace Karo
         }
 
         /// <summary>
+        /// Will return what is at position
+        /// </summary>
+        /// <param name="column">X value of tile</param>
+        /// <param name="row">Y value of tile</param>
+        /// <returns>BoardPosition</returns>
+        public BoardPosition AtPosition(int column, int row)
+        {
+            return Game.Instance.AtPosition(column, row);
+        }
+
+        /// <summary>
+        /// Will return what is at position
+        /// </summary>
+        /// <param name="point">Point of tile</param>
+        /// <returns></returns>
+        public BoardPosition AtPosition(Point point)
+        {
+            return Game.Instance.AtPosition(point);
+        }
+
+        /// <summary>
         /// moves the tile
         /// </summary>
         /// <param name="a"> position from which to take the tile </param>

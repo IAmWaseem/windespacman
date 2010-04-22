@@ -6,6 +6,9 @@ using System.Drawing;
 
 namespace Karo
 {
+    /// <summary>
+    /// Kind of world to contain much
+    /// </summary>
     public class Game
     {
         private AIPlayer playerA;
@@ -55,6 +58,27 @@ namespace Karo
         public void SetBoard(Board board)
         {
             this.board = board;
+        }
+
+        /// <summary>
+        /// Will return what is at position
+        /// </summary>
+        /// <param name="column">X value of tile</param>
+        /// <param name="row">Y value of tile</param>
+        /// <returns>BoardPosition</returns>
+        public BoardPosition AtPosition(int column, int row)
+        {
+            return board.BoardSituation[column, row];
+        }
+
+        /// <summary>
+        /// Will return what is at position
+        /// </summary>
+        /// <param name="point">Point of tile</param>
+        /// <returns></returns>
+        public BoardPosition AtPosition(Point point)
+        {
+            return AtPosition(point.X, point.Y);
         }
 
         /// <summary>

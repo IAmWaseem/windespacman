@@ -89,15 +89,12 @@ namespace Karo.Gui
                             if (mClickedPosition != null)
                                 if (mClickedPosition.X == x && mClickedPosition.Y == y && bp == BoardPosition.Tile)
                                     brush = Brushes.DimGray;
-                            if (bp != BoardPosition.Empty)
-                            {
-                                // draw tile and raster
-                                g.FillRectangle(brush,
-                                    x * tileWidth, y * tileHeight, tileWidth, tileHeight);
 
-                                g.DrawRectangle(Pens.Gray,
-                                    x * tileWidth, y * tileHeight, tileWidth, tileHeight);
-                            }
+                            // draw tile and raster
+                            g.FillRectangle(brush,
+                                x * tileWidth, y * tileHeight, tileWidth, tileHeight);
+                            g.DrawRectangle(Pens.Gray,
+                                x * tileWidth, y * tileHeight, tileWidth, tileHeight);
 
                             // if tile is more then empty or just a tile continue here
                             if (bp != BoardPosition.Empty && bp != BoardPosition.Tile)
@@ -175,7 +172,7 @@ namespace Karo.Gui
         /// <summary>
         /// Stores the clicked position
         /// </summary>
-        private Point mClickedPosition;
+        private Point mClickedPosition = new Point();
 
         /// <summary>
         /// When mouse released, save clicked position and invalidate
@@ -186,7 +183,13 @@ namespace Karo.Gui
         {
             int x = (int) Math.Truncate(e.X / tileWidth);
             int y = (int) Math.Truncate(e.Y / tileHeight);
-            mClickedPosition = new Point(x, y);
+            if (mClickedPosition == new Point())
+                mClickedPosition = new Point(x, y);
+            else
+            {
+                UIConnector.Instance.MoveTile(mClickedPosition, new Point(x, y));
+                mClickedPosition = new Point();
+            }
             mDrawPanel.Invalidate();
             Logger.AddLine("Clicked at column:\t" + x + "\trow:\t" + y);
         }

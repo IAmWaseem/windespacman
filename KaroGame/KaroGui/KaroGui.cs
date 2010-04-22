@@ -22,15 +22,17 @@ namespace Karo.Gui
 
             PlayerSetup ps = new PlayerSetup();
             ds = ps.ShowDialog();
-            
+
             if (ds != DialogResult.Abort)
             {
                 PlayerSettings playerA = ps.PlayerA;
                 PlayerSettings playerB = ps.PlayerB;
 
                 UIConnector.Instance.StartGame(playerA, playerB);
-            }            
-        }        
+            }
+
+            mCurrentPlayerLabel.Text = "Current player: " + UIConnector.Instance.GetCurrentPlayer();
+        }
 
         /// <summary>
         /// Average tile width, setted in the drawfunction, also used by MouseUp
@@ -63,11 +65,11 @@ namespace Karo.Gui
                 tileWidth = mDrawPanel.Width / 21;
                 tileHeight = mDrawPanel.Height / 20;
 
-            // if we got a current board, continue
-            if (currentBoard != null)
-            {
-                // Get the board state
-                BoardPosition[,] board = currentBoard.BoardSituation;
+                // if we got a current board, continue
+                if (currentBoard != null)
+                {
+                    // Get the board state
+                    BoardPosition[,] board = currentBoard.BoardSituation;
 
                     // loop trough X positions
                     for (int x = 0; x < 21; x++)
@@ -96,9 +98,9 @@ namespace Karo.Gui
                                 g.FillRectangle(brush,
                                     x * tileWidth, y * tileHeight, tileWidth, tileHeight);
                             }
-                                g.DrawRectangle(Pens.Gray,
-                                    x * tileWidth, y * tileHeight, tileWidth, tileHeight);
-                            
+                            g.DrawRectangle(Pens.Gray,
+                                x * tileWidth, y * tileHeight, tileWidth, tileHeight);
+
 
                             // if tile is more then empty or just a tile continue here
                             if (bp != BoardPosition.Empty && bp != BoardPosition.Tile)
@@ -185,9 +187,9 @@ namespace Karo.Gui
         /// <param name="e"></param>
         private void mDrawPanel_MouseUp(object sender, MouseEventArgs e)
         {
-            
-            int x = (int) Math.Truncate(e.X / tileWidth);
-            int y = (int) Math.Truncate(e.Y / tileHeight);
+
+            int x = (int)Math.Truncate(e.X / tileWidth);
+            int y = (int)Math.Truncate(e.Y / tileHeight);
             if (mClickedPosition == new Point())
             {
                 BoardPosition bp = UIConnector.Instance.AtPosition(x, y);
@@ -235,6 +237,7 @@ namespace Karo.Gui
                     }
                 }
             }
+            mCurrentPlayerLabel.Text = "Current player: " + UIConnector.Instance.GetCurrentPlayer();
             mDrawPanel.Invalidate();
             Logger.AddLine("Clicked at column: " + x + " row: " + y);
         }
@@ -261,6 +264,6 @@ namespace Karo.Gui
             Logger.CloseLog();
         }
 
-#endregion
+        #endregion
     }
 }

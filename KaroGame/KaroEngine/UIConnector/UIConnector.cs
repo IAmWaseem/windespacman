@@ -143,9 +143,9 @@ namespace Karo
         }
 
         /// <summary>
-        /// 
+        /// Returns current player number
         /// </summary>
-        /// <returns></returns>
+        /// <returns>1 or 2</returns>
         public int GetCurrentPlayerNumber()
         {
             if (Game.Instance.GetTurn())

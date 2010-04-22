@@ -90,7 +90,7 @@ namespace Karo.Gui
                             // if tile is clicked, show as gray
                             if (mClickedPosition != null)
                                 if (mClickedPosition.X == x && mClickedPosition.Y == y && bp == BoardPosition.Tile)
-                                    brush = Brushes.DimGray;
+                                    brush = Brushes.Lime;
 
                             if (bp != BoardPosition.Empty)
                             {

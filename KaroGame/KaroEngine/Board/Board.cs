@@ -115,7 +115,7 @@ namespace Karo
             {
                 for (int x = 0; x < 21; x++)
                 {
-                    System.Console.Out.Write(boardPositions[x, y] + " ");
+                    System.Console.Out.Write((int)boardPositions[x, y] + " ");
                 }
                 System.Console.Out.Write("\r\n");
             }

@@ -104,7 +104,6 @@ namespace Karo
         {
             Board cloneBoard = (Board)board.Clone();
 
-
             BoardPosition old = cloneBoard.BoardSituation[a.X, a.Y];
 
             cloneBoard.BoardSituation[b.X, b.Y] = old;
@@ -122,7 +121,7 @@ namespace Karo
 
             if(isInList)
             {
-                turnPlayerA = (turnPlayerA ? false : true);
+                ChangePlayer();
                 Logger.AddLine("Moved piece from: " + a.X + ", " + a.Y + " to " + b.X + ", " + b.Y);
 
                 board = cloneBoard;
@@ -157,7 +156,7 @@ namespace Karo
             {
                 board = b;
 
-                turnPlayerA = (turnPlayerA ? false : true);
+                ChangePlayer();
                 Logger.AddLine("Placed piece on: " + point.X + ", " + point.Y);
             }
             else

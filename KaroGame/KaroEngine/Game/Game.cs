@@ -145,7 +145,15 @@ namespace Karo
             this.playerA = new AIPlayer(playerA);
             this.playerB = new AIPlayer(playerB);
             this.board = startBoard;
+            
+            // random first player
+            System.Random r = new System.Random();
+            int player = r.Next(0, 3);
+            
             turnPlayerA = true;
+            if(player == 2)
+                turnPlayerA = false;
+
             Logger.AddLine("start new game, with startboard");
         }
 
@@ -158,7 +166,15 @@ namespace Karo
         {
             this.playerA = new AIPlayer(playerA);
             this.playerB = new AIPlayer(playerB);
+
+            // random first player
+            System.Random r = new System.Random();
+            int player = r.Next(0, 3);
+
             turnPlayerA = true;
+            if (player == 2)
+                turnPlayerA = false;
+
             board = new Board();
             Logger.AddLine("start new game");
         }

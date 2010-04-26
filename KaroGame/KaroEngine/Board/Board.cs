@@ -157,7 +157,7 @@ namespace Karo
                         {
                             for (int i = -1; i < 2; i++)
                             {
-                                if (!(i == 0 && j == 0) && (x - i >= 0 && x + i < 20) && (y - j >= 0 && y + j < 21))
+                                if (!(i == 0 && j == 0) && (x + i >= 0 && x + i < 20) && (y + j >= 0 && y + j < 21))
                                 {
                                     // Moving a piece to a empty tile next to him
                                     if (boardPositions[x + i, y + j] == BoardPosition.Tile)

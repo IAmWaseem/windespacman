@@ -38,7 +38,7 @@ namespace Karo
             boardPositions[9, 9] = BoardPosition.Tile;
             boardPositions[9, 10] = BoardPosition.Tile;
             boardPositions[9, 11] = BoardPosition.Tile;
-            
+
             boardPositions[10, 8] = BoardPosition.Tile;
             boardPositions[10, 9] = BoardPosition.Tile;
             boardPositions[10, 10] = BoardPosition.Tile;
@@ -258,163 +258,167 @@ namespace Karo
         /// <returns></returns>
         public int Evaluation(bool isRed)
         {
-            if (IsWon())
-                return 1000000;
-
             // evaluation value
             int lEvaluationValue = 0;
 
             // starttime
             DateTime lStartTime = DateTime.Now;
 
-            // temp values
-            int lEmptySpots = 0;
-            int lOwnHead = 0;
-
-            BoardPosition lHead = BoardPosition.RedHead;
-            if (!isRed)
-                lHead = BoardPosition.WhiteHead;
-
-            // loop trough board
-            for (int x = 0; x < 21; x++)
+            // if won, we don't have to do things
+            if (IsWon())
+                lEvaluationValue = 1000000;
+            else
             {
-                for (int y = 0; y < 20; y++)
+                // temp values
+                int lEmptySpots = 0;
+                int lOwnHead = 0;
+
+                BoardPosition lHead = BoardPosition.RedHead;
+                if (!isRed)
+                    lHead = BoardPosition.WhiteHead;
+
+                // loop trough board
+                for (int x = 0; x < 21; x++)
                 {
-                    if (boardPositions[x, y] == lHead)
-                        lOwnHead++;
-
-                    #region "Check if piece belongs to current player"
-
-                    bool lCheck = false;
-
-                    if (boardPositions[x, y] != BoardPosition.Empty && boardPositions[x, y] != BoardPosition.Tile)
+                    for (int y = 0; y < 20; y++)
                     {
-                        if (isRed)
+                        if (boardPositions[x, y] == lHead)
+                            lOwnHead++;
+
+                        #region "Check if piece belongs to current player"
+
+                        bool lCheck = false;
+
+                        if (boardPositions[x, y] != BoardPosition.Empty && boardPositions[x, y] != BoardPosition.Tile)
                         {
-                            if (boardPositions[x, y] == BoardPosition.RedHead || boardPositions[x, y] == BoardPosition.RedTail)
-                                lCheck = true;
+                            if (isRed)
+                            {
+                                if (boardPositions[x, y] == BoardPosition.RedHead || boardPositions[x, y] == BoardPosition.RedTail)
+                                    lCheck = true;
+                            }
+                            else if (!isRed)
+                            {
+                                if (boardPositions[x, y] == BoardPosition.WhiteHead || boardPositions[x, y] == BoardPosition.WhiteTail)
+                                    lCheck = true;
+                            }
                         }
-                        else if (!isRed)
+
+                        #endregion
+
+                        if (lCheck)
                         {
-                            if (boardPositions[x, y] == BoardPosition.WhiteHead || boardPositions[x, y] == BoardPosition.WhiteTail)
-                                lCheck = true;
-                        }
-                    }
+                            #region "Left Column"
 
-                    #endregion
-
-                    if (lCheck)
-                    {
-                        #region "Left Column"
-
-                        // x - -
-                        // x - -
-                        // x - -
-                        if (x > 0)
-                        {
                             // x - -
+                            // x - -
+                            // x - -
+                            if (x > 0)
+                            {
+                                // x - -
+                                // - - -
+                                // - - -
+                                if (y > 0)
+                                {
+                                    if (boardPositions[x - 1, y - 1] == BoardPosition.Tile)
+                                        lEmptySpots++;
+                                }
+
+                                // - - -
+                                // x - -
+                                // - - -
+                                if (boardPositions[x - 1, y] == BoardPosition.Tile)
+                                    lEmptySpots++;
+
+                                // - - -
+                                // - - -
+                                // x - -
+                                if (y < (20 - 1))
+                                {
+                                    if (boardPositions[x - 1, y + 1] == BoardPosition.Tile)
+                                        lEmptySpots++;
+                                }
+                            }
+
+                            #endregion
+
+                            #region "Middle column"
+
+                            // - x -
+                            // - x -
+                            // - x -
+
+                            // - x -
                             // - - -
                             // - - -
                             if (y > 0)
                             {
-                                if (boardPositions[x - 1, y - 1] == BoardPosition.Tile)
+                                if (boardPositions[x, y - 1] == BoardPosition.Tile)
                                     lEmptySpots++;
                             }
 
                             // - - -
-                            // x - -
+                            // - x -
                             // - - -
-                            if (boardPositions[x - 1, y] == BoardPosition.Tile)
-                                lEmptySpots++;
+                            // needs no check, is this position
 
                             // - - -
                             // - - -
-                            // x - -
+                            // - x -
                             if (y < (20 - 1))
                             {
-                                if (boardPositions[x - 1, y + 1] == BoardPosition.Tile)
+                                if (boardPositions[x, y + 1] == BoardPosition.Tile)
                                     lEmptySpots++;
                             }
-                        }
 
-                        #endregion
+                            #endregion
 
-                        #region "Middle column"
+                            #region "Right column"
 
-                        // - x -
-                        // - x -
-                        // - x -
-
-                        // - x -
-                        // - - -
-                        // - - -
-                        if (y > 0)
-                        {
-                            if (boardPositions[x, y - 1] == BoardPosition.Tile)
-                                lEmptySpots++;
-                        }
-
-                        // - - -
-                        // - x -
-                        // - - -
-                        // needs no check, is this position
-
-                        // - - -
-                        // - - -
-                        // - x -
-                        if (y < (20 - 1))
-                        {
-                            if (boardPositions[x, y + 1] == BoardPosition.Tile)
-                                lEmptySpots++;
-                        }
-
-                        #endregion
-
-                        #region "Right column"
-
-                        // - - x
-                        // - - x
-                        // - - x
-                        if (x < (21 - 1))
-                        {
                             // - - x
-                            // - - -
-                            // - - -
-                            if (y > 0)
+                            // - - x
+                            // - - x
+                            if (x < (21 - 1))
                             {
-                                if (boardPositions[x + 1, y - 1] == BoardPosition.Tile)
+                                // - - x
+                                // - - -
+                                // - - -
+                                if (y > 0)
+                                {
+                                    if (boardPositions[x + 1, y - 1] == BoardPosition.Tile)
+                                        lEmptySpots++;
+                                }
+
+                                // - - -
+                                // - - x
+                                // - - -
+                                if (boardPositions[x + 1, y] == BoardPosition.Tile)
                                     lEmptySpots++;
+
+                                // - - -
+                                // - - -
+                                // - - x
+                                if (y < (20 - 1))
+                                {
+                                    if (boardPositions[x + 1, y + 1] == BoardPosition.Tile)
+                                        lEmptySpots++;
+                                }
                             }
 
-                            // - - -
-                            // - - x
-                            // - - -
-                            if (boardPositions[x + 1, y] == BoardPosition.Tile)
-                                lEmptySpots++;
-
-                            // - - -
-                            // - - -
-                            // - - x
-                            if (y < (20 - 1))
-                            {
-                                if (boardPositions[x + 1, y + 1] == BoardPosition.Tile)
-                                    lEmptySpots++;
-                            }
+                            #endregion
                         }
-
-                        #endregion
                     }
                 }
+
+                // calculate evalution value
+                lEvaluationValue = lEmptySpots + (lEmptySpots * (lOwnHead / Game.Instance.CurrentPlayerNumPieces()));
             }
 
-            // calculate evalution value
-            lEvaluationValue = lEmptySpots + (lEmptySpots * (lOwnHead / Game.Instance.CurrentPlayerNumPieces()));
 
             if (true)
             {
                 DateTime lStopTime = DateTime.Now;
                 TimeSpan lDiff = lStopTime - lStartTime;
-                
+
                 Logger.AddLine("Board -> Evaluation value: " + lEvaluationValue + " (calculated in: " + lDiff.TotalMilliseconds + " ms)");
                 Logger.AddLine("");
             }
@@ -570,7 +574,8 @@ namespace Karo
                 {
                     for (int y = 0; y < 20; y++)
                     {
-                        if (b.BoardSituation[x, y] != this.boardPositions[x, y]) {
+                        if (b.BoardSituation[x, y] != this.boardPositions[x, y])
+                        {
                             BoardPosition b1 = b.BoardSituation[x, y];
                             BoardPosition b2 = this.BoardSituation[x, y];
                             return 1;

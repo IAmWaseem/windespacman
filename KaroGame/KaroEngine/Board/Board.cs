@@ -146,8 +146,6 @@ namespace Karo
                 colorTail = BoardPosition.RedTail;
             }
 
-
-
             for (int x = 0; x < 21; x++)
             {
                 for (int y = 0; y < 20; y++)
@@ -572,8 +570,11 @@ namespace Karo
                 {
                     for (int y = 0; y < 20; y++)
                     {
-                        if (b.BoardSituation[x, y] != this.boardPositions[x, y])
+                        if (b.BoardSituation[x, y] != this.boardPositions[x, y]) {
+                            BoardPosition b1 = b.BoardSituation[x, y];
+                            BoardPosition b2 = this.BoardSituation[x, y];
                             return 1;
+                        }
                     }
                 }
                 return 0;

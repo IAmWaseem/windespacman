@@ -97,10 +97,31 @@ namespace Karo
         /// <param name="b">to point</param>
         public void MoveTile(Point a, Point b)
         {
-            board.BoardSituation[b.X, b.Y] = BoardPosition.Tile;
-            board.BoardSituation[a.X, a.Y] = BoardPosition.Empty;
+            Board cloneBoard = (Board)board.Clone();
 
-            Logger.AddLine(GetCurrentPlayerNumber() + "-> Moved tile from: " + a.X + ", " + a.Y + " to " + b.X + ", " + b.Y);
+            cloneBoard.BoardSituation[b.X, b.Y] = BoardPosition.Tile;
+            cloneBoard.BoardSituation[a.X, a.Y] = BoardPosition.Empty;
+            cloneBoard.IsTileMoved = true;
+
+            List<Board> possibleMoves = board.GenerateMoves(turnPlayerA);
+            bool isInList = false;
+
+            foreach (Board pm in possibleMoves)
+            {
+                if (pm.CompareTo(cloneBoard) == 0)
+                    isInList = true;
+            }
+
+            if (isInList)
+            {
+                Logger.AddLine(GetCurrentPlayerNumber() + "-> Moved tile from: " + a.X + ", " + a.Y + " to " + b.X + ", " + b.Y);
+       
+                board = cloneBoard;
+            }
+            else
+            {
+                Logger.AddLine(GetCurrentPlayerNumber() + "-> It's not possible to move tile from: " + a.X + ", " + a.Y + " to " + b.X + ", " + b.Y);
+            }
         }
 
         /// <summary>
@@ -113,6 +134,25 @@ namespace Karo
             Board cloneBoard = (Board)board.Clone();
 
             BoardPosition old = cloneBoard.BoardSituation[a.X, a.Y];
+            cloneBoard.IsTileMoved = false;
+            if(Math.Abs(a.X - b.X)==2 || Math.Abs(a.Y - b.Y) == 2)
+            {
+                switch (old)
+                {
+                    case BoardPosition.RedTail:
+                        old = BoardPosition.RedHead;
+                        break;
+                    case BoardPosition.RedHead:
+                        old = BoardPosition.RedTail;
+                        break;
+                    case BoardPosition.WhiteTail:
+                        old = BoardPosition.WhiteHead;
+                        break;
+                    case BoardPosition.WhiteHead:
+                        old = BoardPosition.WhiteTail;
+                        break;
+                }
+            }
 
             cloneBoard.BoardSituation[b.X, b.Y] = old;
             cloneBoard.BoardSituation[a.X, a.Y] = BoardPosition.Tile;
@@ -124,7 +164,6 @@ namespace Karo
             {
                 if (pm.CompareTo(cloneBoard) == 0)
                     isInList = true;
-                pm.Print();
             }
 
             if(isInList)
@@ -132,7 +171,13 @@ namespace Karo
                 Logger.AddLine(GetCurrentPlayerNumber() + "-> Moved piece from: " + a.X + ", " + a.Y + " to " + b.X + ", " + b.Y);
                 cloneBoard.Evaluation(turnPlayerA);
                 ChangePlayer();
+                Logger.AddLine(GetCurrentPlayerNumber() + " -> Moved piece from: " + a.X + ", " + a.Y + " to " + b.X + ", " + b.Y);
+
                 board = cloneBoard;
+            }
+            else
+            {
+                Logger.AddLine(GetCurrentPlayerNumber() + " -> It's not possible to move piece from: " + a.X + ", " + a.Y + " to " + b.X + ", " + b.Y);
             }
         }
 

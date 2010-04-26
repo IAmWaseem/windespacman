@@ -276,6 +276,7 @@ namespace Karo
             else
                 generatedMoves.AddRange(ChangeBoardPosition(turnPlayerA));
 
+            //Logger.AddLine("Generated moves: " + generatedMoves.Count);
             return generatedMoves;
         }
 
@@ -712,6 +713,8 @@ namespace Karo
                     }
                 }
             }
+
+            //Logger.AddLine("Calculated tiles: " + movablePoints.Count);
         }
     }
 }

@@ -168,11 +168,6 @@
             // mPlayerAPlieDepth
             // 
             this.mPlayerAPlieDepth.Location = new System.Drawing.Point(6, 19);
-            this.mPlayerAPlieDepth.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             this.mPlayerAPlieDepth.Name = "mPlayerAPlieDepth";
             this.mPlayerAPlieDepth.Size = new System.Drawing.Size(117, 20);
             this.mPlayerAPlieDepth.TabIndex = 5;
@@ -363,11 +358,6 @@
             // mPlayerBPlieDepth
             // 
             this.mPlayerBPlieDepth.Location = new System.Drawing.Point(6, 19);
-            this.mPlayerBPlieDepth.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             this.mPlayerBPlieDepth.Name = "mPlayerBPlieDepth";
             this.mPlayerBPlieDepth.Size = new System.Drawing.Size(117, 20);
             this.mPlayerBPlieDepth.TabIndex = 5;

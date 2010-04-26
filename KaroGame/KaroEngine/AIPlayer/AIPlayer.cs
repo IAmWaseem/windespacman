@@ -25,6 +25,10 @@ namespace Karo
             {
                 algorithm = new Random();
             }
+            else if (playerSettings.AlgorithmType == AlgorithmType.MiniMax)
+            {
+                algorithm = new MiniMax(playerSettings.PlieDepth);
+            }
         }
 
         /// <summary>

@@ -303,6 +303,7 @@ namespace Karo
                 int lEmptySpots = 0;
                 int lOwnHead = 0;
 
+                // temp value for storing the to be checked head position
                 BoardPosition lHead = BoardPosition.RedHead;
                 if (!isRed)
                     lHead = BoardPosition.WhiteHead;

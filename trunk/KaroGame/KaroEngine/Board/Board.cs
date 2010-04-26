@@ -157,7 +157,7 @@ namespace Karo
                         {
                             for (int i = -1; i < 2; i++)
                             {
-                                if (!(i == 0 && j == 0))
+                                if (!(i == 0 && j == 0) && (x - i >= 0 && x + i < 20) && (y - j >= 0 && y + j < 21))
                                 {
                                     // Moving a piece to a empty tile next to him
                                     if (boardPositions[x + i, y + j] == BoardPosition.Tile)
@@ -683,10 +683,14 @@ namespace Karo
                     {
                         int emptySpots = 0;
 
-                        if (boardPositions[x, y - 1] == BoardPosition.Empty) emptySpots++;
-                        if (boardPositions[x, y + 1] == BoardPosition.Empty) emptySpots++;
-                        if (boardPositions[x + 1, y] == BoardPosition.Empty) emptySpots++;
-                        if (boardPositions[x - 1, y] == BoardPosition.Empty) emptySpots++;
+                        if(y - 1 >= 0 )
+                            if (boardPositions[x, y - 1] == BoardPosition.Empty) emptySpots++;
+                        if(y + 1 < 20)
+                            if (boardPositions[x, y + 1] == BoardPosition.Empty) emptySpots++;
+                        if(x + 1 < 21)
+                            if (boardPositions[x + 1, y] == BoardPosition.Empty) emptySpots++;
+                        if(x - 1 >= 0)
+                            if (boardPositions[x - 1, y] == BoardPosition.Empty) emptySpots++;
 
                         if (emptySpots >= 2)
                         {

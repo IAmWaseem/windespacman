@@ -130,7 +130,7 @@ namespace Karo
             if(isInList)
             {
                 Logger.AddLine(GetCurrentPlayerNumber() + "-> Moved piece from: " + a.X + ", " + a.Y + " to " + b.X + ", " + b.Y);
-                cloneBoard.Evaluation();
+                cloneBoard.Evaluation(turnPlayerA);
                 ChangePlayer();
                 board = cloneBoard;
             }
@@ -165,7 +165,7 @@ namespace Karo
                 board = b;
 
                 Logger.AddLine(GetCurrentPlayerNumber() + "-> Placed piece on: " + point.X + ", " + point.Y);
-                board.Evaluation();
+                board.Evaluation(turnPlayerA);
 
                 ChangePlayer();
             }

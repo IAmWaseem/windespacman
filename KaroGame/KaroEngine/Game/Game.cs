@@ -22,7 +22,7 @@ namespace Karo
         /// Show log information in console
         /// </summary>
         public bool ShowDebug { get; set; }
-
+         
         private Game() 
         {
             ShowDebug = false;

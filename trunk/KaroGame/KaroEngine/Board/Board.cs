@@ -448,11 +448,17 @@ namespace Karo
                 }
 
                 // calculate evalution value
-                lEvaluationValue = lEmptySpots + (lEmptySpots * (lOwnHead / Game.Instance.CurrentPlayerNumPieces()));
+                int evalAdd = 0;
+                if (Game.Instance.CurrentPlayerNumPieces() > 0)
+                {
+                    evalAdd = (lEmptySpots * (lOwnHead / Game.Instance.CurrentPlayerNumPieces()));
+                }
+
+                lEvaluationValue = lEmptySpots + evalAdd;
             }
 
 
-            if (true)
+            if (false)
             {
                 DateTime lStopTime = DateTime.Now;
                 TimeSpan lDiff = lStopTime - lStartTime;

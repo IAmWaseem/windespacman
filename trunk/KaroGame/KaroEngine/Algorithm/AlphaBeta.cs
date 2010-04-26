@@ -27,21 +27,6 @@ namespace Karo
 
         private Board DoAlphaBeta(Board node, int depth, bool turnA, int alphaEval, int betaEval)
         {
-            //            function alphabeta(node, depth, α, β)         
-            //    (* β represents previous player best choice - doesn't want it if α would worsen it *)
-            //    if  depth = 0 or node is a terminal node
-            //        return the heuristic value of node
-            //    foreach child of node
-            //        α := max(α, -alphabeta(child, depth-1, -β, -α))     
-            //        (* use symmetry, -β becomes subsequently pruned α *)
-            //        if β≤α
-            //            break                             (* Beta cut-off *)
-            //    return α
-
-            //(* Initial call *)
-            //alphabeta(origin, depth, -infinity, +infinity)
-
-
             if (depth <= 0)
                 return node;
             if (node.IsWon())
@@ -59,8 +44,16 @@ namespace Karo
                     nextTurn = false;
 
                 Board beta = DoAlphaBeta(b, depth--, nextTurn, -1 * alphaEval, -1 * b.Evaluation(nextTurn));
-                if (alphaEvalution < (-1 * beta.Evaluation(nextTurn)))
+                int betaEvaluation = beta.Evaluation(nextTurn);
+                
+                if (alphaEvalution < (-1 * betaEvaluation))
+                {
+                    alphaEvalution = betaEvaluation;
                     alpha = beta;
+                }
+
+                if (betaEval <= alphaEval)
+                    break;
             }
 
             return alpha;

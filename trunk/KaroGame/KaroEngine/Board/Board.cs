@@ -212,10 +212,14 @@ namespace Karo
                                             int currentI = x + i;
                                             int currentJ = y + j;
 
-                                            if (boardPositions[currentI, currentJ - 1] != BoardPosition.Empty) isMovableTile = true;
-                                            if (boardPositions[currentI, currentJ + 1] != BoardPosition.Empty) isMovableTile = true;
-                                            if (boardPositions[currentI + 1, currentJ] != BoardPosition.Empty) isMovableTile = true;
-                                            if (boardPositions[currentI - 1, currentJ] != BoardPosition.Empty) isMovableTile = true;
+                                            if(currentJ - 1 >= 0)
+                                                if (boardPositions[currentI, currentJ - 1] != BoardPosition.Empty) isMovableTile = true;
+                                            if(currentJ + 1 < 20)
+                                                if (boardPositions[currentI, currentJ + 1] != BoardPosition.Empty) isMovableTile = true;
+                                            if(currentI + 1 < 21)
+                                                if (boardPositions[currentI + 1, currentJ] != BoardPosition.Empty) isMovableTile = true;
+                                            if(currentI - 1 >= 0)
+                                                if (boardPositions[currentI - 1, currentJ] != BoardPosition.Empty) isMovableTile = true;
                                         }
                                         else
                                             isMovableTile = true;

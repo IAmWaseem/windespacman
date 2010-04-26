@@ -22,7 +22,7 @@ namespace Karo
         {
             Board next = DoAlphaBeta(currentBoard, plieDepth, Game.Instance.GetTurn(), Int32.MinValue, Int32.MaxValue);
 
-            return null;
+            return next;
         }
 
         private Board DoAlphaBeta(Board node, int depth, bool turnA, int alphaEval, int betaEval)

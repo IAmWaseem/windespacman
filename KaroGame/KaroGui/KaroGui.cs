@@ -194,6 +194,8 @@ namespace Karo.Gui
             int x = (int)Math.Truncate(e.X / tileWidth);
             int y = (int)Math.Truncate(e.Y / tileHeight);
 
+            Logger.AddLine(UIConnector.Instance.GetCurrentPlayerNumber() + "-> Clicked at column: " + x + " row: " + y);
+
             if (mClickedPosition == new Point())
             {
                 BoardPosition bp = UIConnector.Instance.AtPosition(x, y);
@@ -247,9 +249,8 @@ namespace Karo.Gui
                 }
             }
             mCurrentPlayerLabel.Text = "Current player: " + UIConnector.Instance.GetCurrentPlayer();
-            mDrawPanel.Invalidate();
-            
-            Logger.AddLine(UIConnector.Instance.GetCurrentPlayerNumber() + "-> Clicked at column: " + x + " row: " + y);
+
+            mDrawPanel.Invalidate();            
         }
 
         #region "Event handling"

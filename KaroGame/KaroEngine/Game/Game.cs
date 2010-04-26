@@ -129,9 +129,9 @@ namespace Karo
 
             if(isInList)
             {
-                ChangePlayer();
                 Logger.AddLine(GetCurrentPlayerNumber() + "-> Moved piece from: " + a.X + ", " + a.Y + " to " + b.X + ", " + b.Y);
-
+                cloneBoard.Evaluation();
+                ChangePlayer();
                 board = cloneBoard;
             }
         }
@@ -164,8 +164,10 @@ namespace Karo
             {
                 board = b;
 
-                ChangePlayer();
                 Logger.AddLine(GetCurrentPlayerNumber() + "-> Placed piece on: " + point.X + ", " + point.Y);
+                board.Evaluation();
+
+                ChangePlayer();
             }
             else
             {
@@ -269,18 +271,22 @@ namespace Karo
         /// </summary>
         public void MakeAIMove()
         {
-            
 
+            // Check if turn of player a and if so if he is AI driven, else check the same for b
             if (turnPlayerA && playerA.PlayerSettings.IsAI)
             {
+                // execute ai move
                 playerA.Execute(board);
 
+                // change player
                 ChangePlayer();
             }
             else if (!turnPlayerA && playerB.PlayerSettings.IsAI)
             {
+                // execute ai move
                 playerB.Execute(board);
 
+                // change player
                 ChangePlayer();
             }
         }

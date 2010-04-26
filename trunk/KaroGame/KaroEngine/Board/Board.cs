@@ -258,7 +258,7 @@ namespace Karo
         /// 
         /// </summary>
         /// <returns></returns>
-        public int Evaluation()
+        public int Evaluation(bool isRed)
         {
             if (IsWon())
                 return 1000000;
@@ -273,11 +273,8 @@ namespace Karo
             int lEmptySpots = 0;
             int lOwnHead = 0;
 
-            // check which head we want to check
-            int lCurrentPlayer = Game.Instance.GetCurrentPlayerNumber();
-
             BoardPosition lHead = BoardPosition.RedHead;
-            if (lCurrentPlayer == 2)
+            if (!isRed)
                 lHead = BoardPosition.WhiteHead;
 
             // loop trough board
@@ -294,12 +291,12 @@ namespace Karo
 
                     if (boardPositions[x, y] != BoardPosition.Empty && boardPositions[x, y] != BoardPosition.Tile)
                     {
-                        if (lCurrentPlayer == 1)
+                        if (isRed)
                         {
                             if (boardPositions[x, y] == BoardPosition.RedHead || boardPositions[x, y] == BoardPosition.RedTail)
                                 lCheck = true;
                         }
-                        else if (lCurrentPlayer == 2)
+                        else if (!isRed)
                         {
                             if (boardPositions[x, y] == BoardPosition.WhiteHead || boardPositions[x, y] == BoardPosition.WhiteTail)
                                 lCheck = true;

@@ -16,7 +16,7 @@ namespace Karo.Gui
             InitializeComponent();
 
             mPlayerAAlgoComboBox.SelectedIndex = 0;
-            mPlayerBAlgoComboBox.SelectedIndex = 0;
+            mPlayerBAlgoComboBox.SelectedIndex = 1;
 
             PlayerA = new PlayerSettings();
             PlayerB = new PlayerSettings();

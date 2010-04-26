@@ -372,7 +372,7 @@
             this.mPlayerBPlieDepth.Size = new System.Drawing.Size(117, 20);
             this.mPlayerBPlieDepth.TabIndex = 5;
             this.mPlayerBPlieDepth.Value = new decimal(new int[] {
-            1,
+            3,
             0,
             0,
             0});
@@ -414,22 +414,22 @@
             // mPlayerBAINo
             // 
             this.mPlayerBAINo.AutoSize = true;
-            this.mPlayerBAINo.Checked = true;
             this.mPlayerBAINo.Location = new System.Drawing.Point(55, 20);
             this.mPlayerBAINo.Name = "mPlayerBAINo";
             this.mPlayerBAINo.Size = new System.Drawing.Size(39, 17);
             this.mPlayerBAINo.TabIndex = 1;
-            this.mPlayerBAINo.TabStop = true;
             this.mPlayerBAINo.Text = "No";
             this.mPlayerBAINo.UseVisualStyleBackColor = true;
             // 
             // mPlayerBAIYes
             // 
             this.mPlayerBAIYes.AutoSize = true;
+            this.mPlayerBAIYes.Checked = true;
             this.mPlayerBAIYes.Location = new System.Drawing.Point(6, 20);
             this.mPlayerBAIYes.Name = "mPlayerBAIYes";
             this.mPlayerBAIYes.Size = new System.Drawing.Size(43, 17);
             this.mPlayerBAIYes.TabIndex = 0;
+            this.mPlayerBAIYes.TabStop = true;
             this.mPlayerBAIYes.Text = "Yes";
             this.mPlayerBAIYes.UseVisualStyleBackColor = true;
             // 

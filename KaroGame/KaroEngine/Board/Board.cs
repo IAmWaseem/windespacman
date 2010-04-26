@@ -18,6 +18,7 @@ namespace Karo
         private int amountOfRedItems;
         private int amountOfWhiteItems;
         private List<Point> movablePoints;
+        private List<Point> piecesList;
         private bool isTileMoved = false;
 
 
@@ -26,6 +27,7 @@ namespace Karo
         /// </summary>
         public Board()
         {
+            piecesList = new List<Point>();
             boardPositions = new BoardPosition[21, 20];
             boardPositions[8, 8] = BoardPosition.Tile;
             boardPositions[8, 9] = BoardPosition.Tile;
@@ -36,7 +38,7 @@ namespace Karo
             boardPositions[9, 9] = BoardPosition.Tile;
             boardPositions[9, 10] = BoardPosition.Tile;
             boardPositions[9, 11] = BoardPosition.Tile;
-
+            
             boardPositions[10, 8] = BoardPosition.Tile;
             boardPositions[10, 9] = BoardPosition.Tile;
             boardPositions[10, 10] = BoardPosition.Tile;
@@ -268,18 +270,6 @@ namespace Karo
         /// <returns> true for winning state </returns>
         public bool IsWon()
         {
-            if (IsColWinning() == true)
-                return true;
-            else
-                return false;
-        }
-
-        /// <summary>
-        /// checking for winning state in columns, on Heads found check for winning in row and diagonal performed
-        /// </summary>
-        /// <returns>true for winning state</returns>
-        private bool IsColWinning()
-        {
             int x = 0, y = 0, FourInARow = 0, count = this.amountOfRedItems + this.amountOfWhiteItems;
             BoardPosition checking = BoardPosition.Empty;
 
@@ -319,7 +309,7 @@ namespace Karo
         }
 
         /// <summary>
-        /// checking for winning state in row
+        /// checking for winning state in row around given piece
         /// </summary>
         /// <param name="x"> x positon of piece from which to check </param>
         /// <param name="y"> y positon of piece from which to check </param>
@@ -353,7 +343,7 @@ namespace Karo
         }
 
         /// <summary>
-        /// checking for winning state in diagonal
+        /// checking for winning state in diagonal around given piece
         /// </summary>
         /// <param name="x"> x positon of piece from which to check </param>
         /// <param name="y"> y positon of piece from which to check </param>

@@ -20,6 +20,7 @@ namespace Karo
         private List<Point> movablePoints;
         private List<Point> piecesList;
         private bool isTileMoved = false;
+        private Point movedTilePosition;
 
 
         /// <summary>
@@ -161,29 +162,13 @@ namespace Karo
                                     // Moving a piece to a empty tile next to him
                                     if (boardPositions[x + i, y + j] == BoardPosition.Tile)
                                     {
-                                        BoardPosition[,] newBoardPosition = (BoardPosition[,])boardPositions.Clone();
-
-                                        newBoardPosition[x, y] = BoardPosition.Tile;
-                                        newBoardPosition[x + i, y + j] = boardPositions[x, y];
-
-                                        Board newBoard = new Board(newBoardPosition);
-                                        newBoard.RedItems = this.RedItems;
-                                        newBoard.WhiteItems = this.WhiteItems;
-                                        newBoard.IsTileMoved = false;
-                                        boards.Add(newBoard);
-                                    }
-                                    // Moving a piece by jumping over a other piece next to him
-                                    else if (boardPositions[x + i, y + j] != BoardPosition.Empty)
-                                    {
-                                        if (boardPositions[x + i + i, y + j + j] == BoardPosition.Tile)
+                                        if ((this.isTileMoved && (this.movedTilePosition.X == x + i && this.movedTilePosition.Y == y + j)) || !this.isTileMoved)
                                         {
-                                            BoardPosition[,] newBoardPosition = (BoardPosition[,])boardPositions.Clone();
-                                            newBoardPosition[x, y] = BoardPosition.Tile;
+                                            BoardPosition[,] newBoardPosition =
+                                                (BoardPosition[,]) boardPositions.Clone();
 
-                                            if (boardPositions[x, y] == colorTail)
-                                                newBoardPosition[x + i + i, y + j + j] = colorHead;
-                                            else
-                                                newBoardPosition[x + i + i, y + j + j] = colorTail;
+                                            newBoardPosition[x, y] = BoardPosition.Tile;
+                                            newBoardPosition[x + i, y + j] = boardPositions[x, y];
 
                                             Board newBoard = new Board(newBoardPosition);
                                             newBoard.RedItems = this.RedItems;
@@ -192,24 +177,69 @@ namespace Karo
                                             boards.Add(newBoard);
                                         }
                                     }
+                                    // Moving a piece by jumping over a other piece next to him
+                                    else if (boardPositions[x + i, y + j] != BoardPosition.Empty)
+                                    {
+                                        if (boardPositions[x + i + i, y + j + j] == BoardPosition.Tile)
+                                        {
+                                            if ((this.isTileMoved && (this.movedTilePosition.X == x + i + i && this.movedTilePosition.Y == y + j + j)) || !this.isTileMoved)
+                                            {
+                                                BoardPosition[,] newBoardPosition =
+                                                    (BoardPosition[,]) boardPositions.Clone();
+                                                newBoardPosition[x, y] = BoardPosition.Tile;
+
+                                                if (boardPositions[x, y] == colorTail)
+                                                    newBoardPosition[x + i + i, y + j + j] = colorHead;
+                                                else
+                                                    newBoardPosition[x + i + i, y + j + j] = colorTail;
+
+                                                Board newBoard = new Board(newBoardPosition);
+                                                newBoard.RedItems = this.RedItems;
+                                                newBoard.WhiteItems = this.WhiteItems;
+                                                newBoard.IsTileMoved = false;
+                                                boards.Add(newBoard);
+                                            }
+                                        }
+                                    }
                                     else if (!isTileMoved && (boardPositions[x + i, y + j] == BoardPosition.Empty || boardPositions[x + i + i, y + j + j] == BoardPosition.Empty))
                                     {
-                                        Point moveTileTo = new Point(x + i, y + i);
-                                        if (boardPositions[x + i, y + j] != BoardPosition.Empty)
-                                        {
-                                            moveTileTo.X += i;
-                                            moveTileTo.Y += j;
+                                        bool isMovableTile = false;
+
+                                        if((i == -1 && j == -1) ||
+                                            (i == 1 && j == 1) ||
+                                            (i == -1 && j == 1) ||
+                                            (i == 1 && j == -1)) {
+                                            int currentI = x + i;
+                                            int currentJ = y + j;
+
+                                            if (boardPositions[currentI, currentJ - 1] != BoardPosition.Empty) isMovableTile = true;
+                                            if (boardPositions[currentI, currentJ + 1] != BoardPosition.Empty) isMovableTile = true;
+                                            if (boardPositions[currentI + 1, currentJ] != BoardPosition.Empty) isMovableTile = true;
+                                            if (boardPositions[currentI - 1, currentJ] != BoardPosition.Empty) isMovableTile = true;
                                         }
-                                        foreach (Point movablePoint in movablePoints)
+                                        else
+                                            isMovableTile = true;
+
+                                        if (isMovableTile)
                                         {
-                                            BoardPosition[,] newBoardPosition = (BoardPosition[,])boardPositions.Clone();
-                                            newBoardPosition[movablePoint.X, movablePoint.Y] = BoardPosition.Empty;
-                                            newBoardPosition[moveTileTo.X, moveTileTo.Y] = BoardPosition.Tile;
-                                            Board newBoard = new Board(newBoardPosition);
-                                            newBoard.RedItems = this.RedItems;
-                                            newBoard.WhiteItems = this.WhiteItems;
-                                            newBoard.IsTileMoved = true;
-                                            boards.Add(newBoard);
+                                            Point moveTileTo = new Point(x + i, y + j);
+                                            if (boardPositions[x + i, y + j] != BoardPosition.Empty)
+                                            {
+                                                moveTileTo.X += i;
+                                                moveTileTo.Y += j;
+                                            }
+                                            foreach (Point movablePoint in movablePoints)
+                                            {
+                                                BoardPosition[,] newBoardPosition = (BoardPosition[,])boardPositions.Clone();
+                                                newBoardPosition[movablePoint.X, movablePoint.Y] = BoardPosition.Empty;
+                                                newBoardPosition[moveTileTo.X, moveTileTo.Y] = BoardPosition.Tile;
+                                                Board newBoard = new Board(newBoardPosition);
+                                                newBoard.RedItems = this.RedItems;
+                                                newBoard.WhiteItems = this.WhiteItems;
+                                                newBoard.IsTileMoved = true;
+                                                newBoard.MovedTilePosition = moveTileTo;
+                                                boards.Add(newBoard);
+                                            }
                                         }
                                     }
                                 }
@@ -626,6 +656,12 @@ namespace Karo
         {
             get { return boardPositions; }
             set { boardPositions = value; }
+        }
+
+        public Point MovedTilePosition
+        {
+            get { return this.movedTilePosition; }
+            set { this.movedTilePosition = value;}
         }
 
         public bool IsTileMoved

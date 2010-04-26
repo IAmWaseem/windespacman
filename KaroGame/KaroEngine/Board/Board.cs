@@ -164,8 +164,7 @@ namespace Karo
                                     {
                                         if ((this.isTileMoved && (this.movedTilePosition.X == x + i && this.movedTilePosition.Y == y + j)) || !this.isTileMoved)
                                         {
-                                            BoardPosition[,] newBoardPosition =
-                                                (BoardPosition[,]) boardPositions.Clone();
+                                            BoardPosition[,] newBoardPosition = (BoardPosition[,]) boardPositions.Clone();
 
                                             newBoardPosition[x, y] = BoardPosition.Tile;
                                             newBoardPosition[x + i, y + j] = boardPositions[x, y];
@@ -641,7 +640,7 @@ namespace Karo
             b.WhiteItems = this.WhiteItems;
             b.IsTileMoved = this.IsTileMoved;
             b.RedItems = this.RedItems;
-
+            b.MovedTilePosition = this.movedTilePosition;
             return b;
         }
 

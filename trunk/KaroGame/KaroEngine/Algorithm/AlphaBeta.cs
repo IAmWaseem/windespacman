@@ -33,7 +33,7 @@ namespace Karo
                 return node;
 
             int alphaEvalution = Int32.MinValue;
-            Board alpha = null;
+            Board alpha = node;
 
             List<Board> possibleMoves = node.GenerateMoves(turnA);
 
@@ -43,13 +43,13 @@ namespace Karo
                 if (turnA)
                     nextTurn = false;
 
-                Board beta = DoAlphaBeta(b, depth--, nextTurn, -1 * alphaEval, -1 * b.Evaluation(nextTurn));
+                Board beta = DoAlphaBeta(b, depth-1, nextTurn, -1 * alphaEval, -1 * b.Evaluation(nextTurn));
                 int betaEvaluation = beta.Evaluation(nextTurn);
                 
                 if (alphaEvalution < (-1 * betaEvaluation))
                 {
                     alphaEvalution = betaEvaluation;
-                    alpha = beta;
+                    alpha = b;
                 }
 
                 if (betaEval <= alphaEval)

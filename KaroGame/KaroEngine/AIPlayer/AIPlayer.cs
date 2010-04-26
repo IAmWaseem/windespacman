@@ -27,7 +27,11 @@ namespace Karo
             }
             else if (playerSettings.AlgorithmType == AlgorithmType.MiniMax)
             {
-                algorithm = new MiniMax(playerSettings.PlieDepth);
+                algorithm = new MiniMax(playerSettings.PlieDepth, playerSettings.DoTransTable);
+            }
+            else if (playerSettings.AlgorithmType == AlgorithmType.AlphaBeta)
+            {
+                algorithm = new AlphaBeta(playerSettings.PlieDepth, playerSettings.DoMoveOrdering, playerSettings.DoTransTable);
             }
         }
 

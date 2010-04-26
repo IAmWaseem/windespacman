@@ -88,7 +88,7 @@ namespace Karo
                 {
                     if (boardPositions[x, y] == BoardPosition.Tile)
                     {
-                        BoardPosition[,] newBoardPosition = (BoardPosition[,]) boardPositions.Clone();
+                        BoardPosition[,] newBoardPosition = (BoardPosition[,])boardPositions.Clone();
                         newBoardPosition[x, y] = toChange;
 
                         Board newBoard = new Board(newBoardPosition);
@@ -140,7 +140,7 @@ namespace Karo
             BoardPosition colorHead = BoardPosition.WhiteHead;
             BoardPosition colorTail = BoardPosition.WhiteTail;
 
-            if(turnPlayerA)
+            if (turnPlayerA)
             {
                 colorHead = BoardPosition.RedHead;
                 colorTail = BoardPosition.RedTail;
@@ -158,7 +158,7 @@ namespace Karo
                         {
                             for (int i = -1; i < 2; i++)
                             {
-                                if(!(i==0 && j==0))
+                                if (!(i == 0 && j == 0))
                                 {
                                     // Moving a piece to a empty tile next to him
                                     if (boardPositions[x + i, y + j] == BoardPosition.Tile)
@@ -197,12 +197,12 @@ namespace Karo
                                     else if (!isTileMoved && (boardPositions[x + i, y + j] == BoardPosition.Empty || boardPositions[x + i + i, y + j + j] == BoardPosition.Empty))
                                     {
                                         Point moveTileTo = new Point(x + i, y + i);
-                                        if(boardPositions[x + i, y + j] != BoardPosition.Empty)
+                                        if (boardPositions[x + i, y + j] != BoardPosition.Empty)
                                         {
                                             moveTileTo.X += i;
                                             moveTileTo.Y += j;
                                         }
-                                        foreach(Point movablePoint in movablePoints)
+                                        foreach (Point movablePoint in movablePoints)
                                         {
                                             BoardPosition[,] newBoardPosition = (BoardPosition[,])boardPositions.Clone();
                                             newBoardPosition[movablePoint.X, movablePoint.Y] = BoardPosition.Empty;
@@ -260,8 +260,172 @@ namespace Karo
         /// <returns></returns>
         public int Evaluation()
         {
+            if (IsWon())
+                return 1000000;
+
+            // evaluation value
+            int lEvaluationValue = 0;
+
+            // starttime
+            DateTime lStartTime = DateTime.Now;
+
+            // temp values
+            int lEmptySpots = 0;
+            int lOwnHead = 0;
+
+            // check which head we want to check
+            int lCurrentPlayer = Game.Instance.GetCurrentPlayerNumber();
+
+            BoardPosition lHead = BoardPosition.RedHead;
+            if (lCurrentPlayer == 2)
+                lHead = BoardPosition.WhiteHead;
+
+            // loop trough board
+            for (int x = 0; x < 21; x++)
+            {
+                for (int y = 0; y < 20; y++)
+                {
+                    if (boardPositions[x, y] == lHead)
+                        lOwnHead++;
+
+                    #region "Check if piece belongs to current player"
+
+                    bool lCheck = false;
+
+                    if (boardPositions[x, y] != BoardPosition.Empty && boardPositions[x, y] != BoardPosition.Tile)
+                    {
+                        if (lCurrentPlayer == 1)
+                        {
+                            if (boardPositions[x, y] == BoardPosition.RedHead || boardPositions[x, y] == BoardPosition.RedTail)
+                                lCheck = true;
+                        }
+                        else if (lCurrentPlayer == 2)
+                        {
+                            if (boardPositions[x, y] == BoardPosition.WhiteHead || boardPositions[x, y] == BoardPosition.WhiteTail)
+                                lCheck = true;
+                        }
+                    }
+
+                    #endregion
+
+                    if (lCheck)
+                    {
+                        #region "Left Column"
+
+                        // x - -
+                        // x - -
+                        // x - -
+                        if (x > 0)
+                        {
+                            // x - -
+                            // - - -
+                            // - - -
+                            if (y > 0)
+                            {
+                                if (boardPositions[x - 1, y - 1] == BoardPosition.Tile)
+                                    lEmptySpots++;
+                            }
+
+                            // - - -
+                            // x - -
+                            // - - -
+                            if (boardPositions[x - 1, y] == BoardPosition.Tile)
+                                lEmptySpots++;
+
+                            // - - -
+                            // - - -
+                            // x - -
+                            if (y < (20 - 1))
+                            {
+                                if (boardPositions[x - 1, y + 1] == BoardPosition.Tile)
+                                    lEmptySpots++;
+                            }
+                        }
+
+                        #endregion
+
+                        #region "Middle column"
+
+                        // - x -
+                        // - x -
+                        // - x -
+
+                        // - x -
+                        // - - -
+                        // - - -
+                        if (y > 0)
+                        {
+                            if (boardPositions[x, y - 1] == BoardPosition.Tile)
+                                lEmptySpots++;
+                        }
+
+                        // - - -
+                        // - x -
+                        // - - -
+                        // needs no check, is this position
+
+                        // - - -
+                        // - - -
+                        // - x -
+                        if (y < (20 - 1))
+                        {
+                            if (boardPositions[x, y + 1] == BoardPosition.Tile)
+                                lEmptySpots++;
+                        }
+
+                        #endregion
+
+                        #region "Right column"
+
+                        // - - x
+                        // - - x
+                        // - - x
+                        if (x < (21 - 1))
+                        {
+                            // - - x
+                            // - - -
+                            // - - -
+                            if (y > 0)
+                            {
+                                if (boardPositions[x + 1, y - 1] == BoardPosition.Tile)
+                                    lEmptySpots++;
+                            }
+
+                            // - - -
+                            // - - x
+                            // - - -
+                            if (boardPositions[x + 1, y] == BoardPosition.Tile)
+                                lEmptySpots++;
+
+                            // - - -
+                            // - - -
+                            // - - x
+                            if (y < (20 - 1))
+                            {
+                                if (boardPositions[x + 1, y + 1] == BoardPosition.Tile)
+                                    lEmptySpots++;
+                            }
+                        }
+
+                        #endregion
+                    }
+                }
+            }
+
+            // calculate evalution value
+            lEvaluationValue = lEmptySpots + (lEmptySpots * (lOwnHead / Game.Instance.CurrentPlayerNumPieces()));
+
+            if (true)
+            {
+                DateTime lStopTime = DateTime.Now;
+                TimeSpan lDiff = lStopTime - lStartTime;
+                
+                Logger.AddLine("Board -> Evaluation value: " + lEvaluationValue + " (calculated in: " + lDiff.TotalMilliseconds + " ms)");
+                Logger.AddLine("");
+            }
+
             // IMPLEMENTATION NEEDED
-            return 0;
+            return lEvaluationValue;
         }
 
         /// <summary>
@@ -400,11 +564,12 @@ namespace Karo
         /// <returns></returns>
         public int CompareTo(object obj)
         {
-            Board b = (Board) obj;
+            Board b = (Board)obj;
 
             if (b.WhiteItems == this.WhiteItems &&
                 b.IsTileMoved == this.IsTileMoved &&
-                b.RedItems == this.RedItems) {
+                b.RedItems == this.RedItems)
+            {
 
                 for (int x = 0; x < 21; x++)
                 {
@@ -463,7 +628,7 @@ namespace Karo
         public bool IsTileMoved
         {
             get { return isTileMoved; }
-            set { isTileMoved = value;}
+            set { isTileMoved = value; }
         }
 
         private void CalculateMovableTiles()
@@ -483,9 +648,9 @@ namespace Karo
                         if (boardPositions[x + 1, y] == BoardPosition.Empty) emptySpots++;
                         if (boardPositions[x - 1, y] == BoardPosition.Empty) emptySpots++;
 
-                        if(emptySpots>=2)
+                        if (emptySpots >= 2)
                         {
-                            Point point = new Point(x,y);
+                            Point point = new Point(x, y);
                             movablePoints.Add(point);
                         }
                     }

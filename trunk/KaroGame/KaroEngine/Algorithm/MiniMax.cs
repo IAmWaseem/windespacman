@@ -17,12 +17,12 @@ namespace Karo
         public Board NextMove(Board currentBoard)
         {
 
-            Board next = Minimax(currentBoard, plieDepth, Game.Instance.GetTurn());
+            Board next = DoMiniMax(currentBoard, plieDepth, Game.Instance.GetTurn());
 
             return null;
         }
 
-        private Board Minimax(Board node, int depth, bool turnA)
+        private Board DoMiniMax(Board node, int depth, bool turnA)
         {
             if (depth <= 0)
                 return node;
@@ -40,7 +40,7 @@ namespace Karo
                 if(turnA)
                     nextTurn = false;
 
-                Board beta = Minimax(b, depth--, nextTurn);
+                Board beta = DoMiniMax(b, depth--, nextTurn);
                 if (alphaEvalution < (-1 * beta.Evaluation(nextTurn)))
                     alpha = beta;
             }

@@ -20,18 +20,12 @@ namespace Karo
         private List<Point> movablePoints;
         private bool isTileMoved = false;
 
-        /// <summary>
-        /// Show log information in console
-        /// </summary>
-        public static bool Debug { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
         public Board()
         {
-            Debug = false;
-
             boardPositions = new BoardPosition[21, 20];
             boardPositions[8, 8] = BoardPosition.Tile;
             boardPositions[8, 9] = BoardPosition.Tile;
@@ -118,7 +112,7 @@ namespace Karo
 
         public void Print()
         {
-            if (Debug)
+            if (Game.Instance.ShowDebug)
             {
                 for (int y = 0; y < 20; y++)
                 {

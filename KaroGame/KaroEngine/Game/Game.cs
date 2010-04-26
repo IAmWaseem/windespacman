@@ -18,7 +18,15 @@ namespace Karo
         private Board board;
         private static Game instance;
 
-        private Game() { }
+        /// <summary>
+        /// Show log information in console
+        /// </summary>
+        public bool ShowDebug { get; set; }
+
+        private Game() 
+        {
+            ShowDebug = false;
+        }
 
         /// <summary>
         /// returns an instance of game

@@ -261,27 +261,17 @@ namespace Karo
         /// </summary>
         public void MakeAIMove()
         {
-            DateTime beforeFunction = DateTime.Now;
+            
 
             if (turnPlayerA && playerA.PlayerSettings.IsAI)
             {
                 playerA.Execute(board);
-
-                // Elapsed time
-                DateTime afterFunction = DateTime.Now;
-                TimeSpan elapsedTime = afterFunction - beforeFunction;
-                Logger.AddLine(GetCurrentPlayerNumber() + "-> AI calculated in: " + elapsedTime.TotalMilliseconds.ToString() + " ms");
 
                 ChangePlayer();
             }
             else if (!turnPlayerA && playerB.PlayerSettings.IsAI)
             {
                 playerB.Execute(board);
-
-                // Elapsed time
-                DateTime afterFunction = DateTime.Now;
-                TimeSpan elapsedTime = afterFunction - beforeFunction;
-                Logger.AddLine(GetCurrentPlayerNumber() + "-> AI calculated in: " + elapsedTime.TotalMilliseconds.ToString() + " ms");
 
                 ChangePlayer();
             }

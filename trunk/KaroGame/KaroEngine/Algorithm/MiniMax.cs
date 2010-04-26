@@ -8,18 +8,19 @@ namespace Karo
     class MiniMax : IAlgorithm
     {
         private int plieDepth;
+        private bool transtable;
 
-        public MiniMax(int plieDepth)
+        public MiniMax(int plieDepth, bool doTranstable)
         {
             this.plieDepth = plieDepth;
+            this.transtable = doTranstable;
         }
 
         public Board NextMove(Board currentBoard)
         {
-
             Board next = DoMiniMax(currentBoard, plieDepth, Game.Instance.GetTurn());
 
-            return null;
+            return next;
         }
 
         private Board DoMiniMax(Board node, int depth, bool turnA)
@@ -41,8 +42,12 @@ namespace Karo
                     nextTurn = false;
 
                 Board beta = DoMiniMax(b, depth--, nextTurn);
-                if (alphaEvalution < (-1 * beta.Evaluation(nextTurn)))
+                int betaEvaluation = beta.Evaluation(nextTurn);
+                if (alphaEvalution < (-1 * betaEvaluation))
+                {
+                    alphaEvalution = betaEvaluation;
                     alpha = beta;
+                }
             }
 
             return alpha;

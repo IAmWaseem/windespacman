@@ -322,7 +322,8 @@ namespace Karo
             {
                 // execute ai move
                 playerA.Execute(board);
-
+                if (board.IsTileMoved)
+                    playerA.Execute(board);
                 // change player
                 ChangePlayer();
             }
@@ -330,7 +331,8 @@ namespace Karo
             {
                 // execute ai move
                 playerB.Execute(board);
-
+                if (board.IsTileMoved)
+                    playerB.Execute(board);
                 // change player
                 ChangePlayer();
             }

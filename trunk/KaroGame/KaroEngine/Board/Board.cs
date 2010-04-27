@@ -306,6 +306,15 @@ namespace Karo
                 lEvaluationValue = 1000000;
             else
             {
+                if (IsTileMoved)
+                {
+                    List<Board> nextMoves = GenerateMoves(isRed);
+                    if (nextMoves.Count == 1)
+                    {
+                          return nextMoves[0].Evaluation(isRed);
+                    }
+                }
+
                 // temp values
                 int lEmptySpots = 0;
                 int lOwnHead = 0;

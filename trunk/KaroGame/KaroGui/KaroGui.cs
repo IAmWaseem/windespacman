@@ -12,18 +12,19 @@ using Karo;
 namespace Karo.Gui
 {
     public partial class KaroGui : Form
-        
     {
         private DialogResult ds;
         public KaroGui()
         {
             InitializeComponent();
             this.DoubleBuffered = true;
+            this.KeyUp += new KeyEventHandler(KaroGui_KeyUp);
 
             newGame();
 
-            
+
         }
+
 
         /// <summary>
         /// Average tile width, setted in the drawfunction, also used by MouseUp
@@ -178,66 +179,47 @@ namespace Karo.Gui
         /// <param name="e"></param>
         private void mDrawPanel_MouseUp(object sender, MouseEventArgs e)
         {
-            if (UIConnector.Instance.IsTwoAI())
-                UIConnector.Instance.DoAiMove(1);
-            else
+
+            int x = (int)Math.Truncate(e.X / tileWidth);
+            int y = (int)Math.Truncate(e.Y / tileHeight);
+
+            Logger.AddLine(UIConnector.Instance.GetCurrentPlayerNumber() + "-> Clicked at column: " + x + " row: " + y);
+
+            if (!UIConnector.Instance.IsTwoAI())
             {
-                int x = (int)Math.Truncate(e.X / tileWidth);
-                int y = (int)Math.Truncate(e.Y / tileHeight);
-
-                Logger.AddLine(UIConnector.Instance.GetCurrentPlayerNumber() + "-> Clicked at column: " + x + " row: " + y);
-
                 if (mClickedPosition == new Point())
                 {
-                    BoardPosition bp = UIConnector.Instance.AtPosition(x, y);
-                    if (bp != BoardPosition.Empty)
+                    if (UIConnector.Instance.CurrentPlayerNumPieces() < 6)
                     {
-                        if (bp == BoardPosition.Tile)
-                        {
-                            if (UIConnector.Instance.CurrentPlayerNumPieces() < 6)
-                            {
-                                UIConnector.Instance.PlacePiece(new Point(x, y));
-                            }
-                            else
-                                mClickedPosition = new Point(x, y);
-                        }
-                        else if (UIConnector.Instance.GetCurrentPlayerNumber() == 1)
-                        {
-                            //red
-                            if (bp == BoardPosition.RedHead || bp == BoardPosition.RedTail)
-                                mClickedPosition = new Point(x, y);
-                        }
-                        else
-                        {
-                            //white
-                            if (bp == BoardPosition.WhiteHead || bp == BoardPosition.WhiteTail)
-                                mClickedPosition = new Point(x, y);
-                        }
+                        UIConnector.Instance.PlacePiece(new Point(x, y));
+                        mClickedPosition = new Point();
                     }
+                    else
+                        mClickedPosition = new Point(x, y);
                 }
                 else if (mClickedPosition == new Point(x, y))
                 {
+                    // reset clicked position (clicked twice)
                     mClickedPosition = new Point();
                 }
                 else
                 {
                     BoardPosition bp = UIConnector.Instance.AtPosition(mClickedPosition);
+                    
+                    Point temp = mClickedPosition;
+                    mClickedPosition = new Point(x, y);
+
                     if (bp == BoardPosition.Tile)
                     {
-                        if (UIConnector.Instance.AtPosition(x, y) == BoardPosition.Empty)
-                        {
-                            UIConnector.Instance.MoveTile(mClickedPosition, new Point(x, y));
-                            mClickedPosition = new Point();
-                        }
+                        UIConnector.Instance.MoveTile(temp, new Point(x, y));
+                        mClickedPosition = new Point();
                     }
-                    else
+                    else if (bp != BoardPosition.Empty)
                     {
-                        if (UIConnector.Instance.AtPosition(x, y) == BoardPosition.Tile)
-                        {
-                            UIConnector.Instance.MovePiece(mClickedPosition, new Point(x, y));
-                            mClickedPosition = new Point();
-                        }
+                        UIConnector.Instance.MovePiece(temp, new Point(x, y));
+                        mClickedPosition = new Point();
                     }
+
                 }
             }
 
@@ -308,6 +290,35 @@ namespace Karo.Gui
 
             this.SetDesktopLocation(0, 0);
             this.StartPosition = FormStartPosition.Manual;
+        }
+
+        void KaroGui_KeyUp(object sender, KeyEventArgs e)
+        {
+            mClickedPosition = new Point(20, 19);
+
+            if (e.KeyCode == Keys.Space)
+            {
+                if (UIConnector.Instance.IsTwoAI())
+                    UIConnector.Instance.DoAiMove(1);
+            }
+            else if (e.KeyCode == Keys.Shift)
+            {
+                if (UIConnector.Instance.IsTwoAI())
+                    UIConnector.Instance.DoAiMove(2);
+            }
+
+            mCurrentPlayerLabel.Text = "Current player: " + UIConnector.Instance.GetCurrentPlayer();
+
+            mDrawPanel.Invalidate();
+
+            if (UIConnector.Instance.IsWon())
+            {
+                DialogResult ok = MessageBox.Show((UIConnector.Instance.GetCurrentPlayerNumber() == 2 ? "Player B " : "Player A ") + "has won");
+                if (ok == DialogResult.OK)
+                {
+                    newGame();
+                }
+            }
         }
     }
 }

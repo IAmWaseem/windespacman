@@ -18,8 +18,9 @@ namespace Karo
 
         public Board NextMove(Board currentBoard)
         {
-            Board next = DoMiniMax(currentBoard, plieDepth, Game.Instance.GetTurn());
 
+            Board next = DoMiniMax(currentBoard, plieDepth, Game.Instance.GetTurn());
+            Logger.AddLine("Board -> Evaluation value: " + next.Evaluation(Game.Instance.GetTurn()));
             return next;
         }
 
@@ -30,24 +31,28 @@ namespace Karo
             if (node.IsWon())
                 return node;
 
-            int alphaEvalution = Int32.MinValue;
             Board alpha = node;
+            int alphaEvalution = Int32.MinValue;
 
             List<Board> possibleMoves = node.GenerateMoves(turnA);
 
             foreach (Board b in possibleMoves)
             {
                 bool nextTurn = true;
+
                 if(turnA)
                     nextTurn = false;
 
-                Board beta = DoMiniMax(b, depth-1, nextTurn);
-                int betaEvaluation = beta.Evaluation(nextTurn);
+                Board beta = DoMiniMax(b, depth - 1, nextTurn);
+                int betaEvaluation = -1 * beta.Evaluation(nextTurn);
 
-                if (alphaEvalution < (-1 * betaEvaluation))
+                if (alphaEvalution < betaEvaluation)
                 {
                     alphaEvalution = betaEvaluation;
                     alpha = b;
+
+                    if (Game.Instance.ShowDebug)
+                        Logger.AddLine(depth + " Beta: " + betaEvaluation);
                 }
             }
 

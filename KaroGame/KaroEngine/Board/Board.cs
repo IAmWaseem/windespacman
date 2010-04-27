@@ -714,7 +714,92 @@ namespace Karo
                 }
             }
 
-            //Logger.AddLine("Calculated tiles: " + movablePoints.Count);
+            ValidateMovableTiles();
+        }
+
+        private void ValidateMovableTiles()
+        {
+            List<Point> movablePointsValidated = new List<Point>();
+
+            foreach (Point point in movablePoints)
+            {
+                List<Point> visitedPoints = new List<Point>();
+
+                BoardPosition[,] b = (BoardPosition[,])this.boardPositions.Clone();
+
+                b[point.X, point.Y] = BoardPosition.Empty;
+
+                Point pointToCheck = new Point();
+
+
+                if (point.X + 1 < 21)
+                {
+                    if (b[point.X + 1, point.Y] != BoardPosition.Empty)
+                        pointToCheck = new Point(point.X + 1, point.Y);
+                }
+
+                if (point.X - 1 > 0) {
+                    if (b[point.X - 1, point.Y] != BoardPosition.Empty)
+                        pointToCheck = new Point(point.X - 1, point.Y);
+                }
+
+                if (point.Y - 1 > 0) {
+                    if (b[point.X, point.Y - 1] != BoardPosition.Empty)
+                        pointToCheck = new Point(point.X, point.Y - 1);
+                }
+
+                if (point.Y + 1 < 20)
+                {
+                    if (b[point.X, point.Y + 1] != BoardPosition.Empty)
+                        pointToCheck = new Point(point.X, point.Y + 1);
+                }
+
+                if(pointToCheck.X != 0 && pointToCheck.Y != 0)
+                    VisitedPoints(visitedPoints, pointToCheck, b);
+
+                if(visitedPoints.Count >= 19)
+                    movablePointsValidated.Add(point);
+            }
+
+            this.movablePoints = movablePointsValidated;
+        }
+
+        private void VisitedPoints(List<Point> visitedPoints, Point point, BoardPosition[,] b)
+        {
+            if (b[point.X + 1, point.Y] != BoardPosition.Empty) {
+                Point p = new Point(point.X + 1, point.Y);
+                if(!visitedPoints.Contains(p)) {
+                    visitedPoints.Add(p);
+                    VisitedPoints(visitedPoints, p, b);
+                }
+            }
+            if (b[point.X - 1, point.Y] != BoardPosition.Empty)
+            {
+                Point p = new Point(point.X - 1, point.Y);
+                if (!visitedPoints.Contains(p))
+                {
+                    visitedPoints.Add(p);
+                    VisitedPoints(visitedPoints, p, b);
+                }
+            }
+            if (b[point.X, point.Y - 1] != BoardPosition.Empty)
+            {
+                Point p = new Point(point.X, point.Y - 1);
+                if (!visitedPoints.Contains(p))
+                {
+                    visitedPoints.Add(p);
+                    VisitedPoints(visitedPoints, p, b);
+                }
+            }
+            if (b[point.X, point.Y + 1] != BoardPosition.Empty)
+            {
+                Point p = new Point(point.X, point.Y + 1);
+                if (!visitedPoints.Contains(p))
+                {
+                    visitedPoints.Add(p);
+                    VisitedPoints(visitedPoints, p, b);
+                }
+            }
         }
     }
 }

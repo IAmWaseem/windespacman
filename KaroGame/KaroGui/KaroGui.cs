@@ -250,7 +250,28 @@ namespace Karo.Gui
             }
             mCurrentPlayerLabel.Text = "Current player: " + UIConnector.Instance.GetCurrentPlayer();
 
-            mDrawPanel.Invalidate();            
+            mDrawPanel.Invalidate();
+
+            if (UIConnector.Instance.IsWon())
+            {
+                DialogResult ok = MessageBox.Show((UIConnector.Instance.GetCurrentPlayerNumber() == 2 ? "Player B " : "Player A ") + "has won");
+                if (ok == DialogResult.OK)
+                {
+                    PlayerSetup ps = new PlayerSetup();
+                    ds = ps.ShowDialog();
+
+                    if (ds != DialogResult.Abort)
+                    {
+                        PlayerSettings playerA = ps.PlayerA;
+                        PlayerSettings playerB = ps.PlayerB;
+
+                        UIConnector.Instance.StartGame(playerA, playerB);
+                        mDrawPanel.Invalidate();
+                        BringToFront();
+                        Logger.BringToFront();
+                    }
+                }
+            }
         }
 
         #region "Event handling"

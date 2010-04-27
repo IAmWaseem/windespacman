@@ -21,7 +21,7 @@ namespace Karo
         public Board NextMove(Board currentBoard)
         {
             Board next = DoAlphaBeta(currentBoard, plieDepth, Game.Instance.GetTurn(), Int32.MinValue, Int32.MaxValue);
-
+            Logger.AddLine("Board -> Evaluation value: " + next.Evaluation(Game.Instance.GetTurn()));
             return next;
         }
 
@@ -44,12 +44,15 @@ namespace Karo
                     nextTurn = false;
 
                 Board beta = DoAlphaBeta(b, depth-1, nextTurn, -1 * alphaEval, -1 * b.Evaluation(nextTurn));
-                int betaEvaluation = beta.Evaluation(nextTurn);
-                
-                if (alphaEvalution < (-1 * betaEvaluation))
+                int betaEvaluation = -1 * beta.Evaluation(nextTurn);
+
+                if (alphaEvalution < betaEvaluation)
                 {
                     alphaEvalution = betaEvaluation;
                     alpha = b;
+
+                    if(Game.Instance.ShowDebug)
+                        Logger.AddLine(depth + " Beta: " + betaEvaluation);
                 }
 
                 if (betaEval <= alphaEval)

@@ -362,7 +362,7 @@
             this.mPlayerBPlieDepth.Size = new System.Drawing.Size(117, 20);
             this.mPlayerBPlieDepth.TabIndex = 5;
             this.mPlayerBPlieDepth.Value = new decimal(new int[] {
-            3,
+            2,
             0,
             0,
             0});

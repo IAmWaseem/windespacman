@@ -464,7 +464,7 @@ namespace Karo
                 TimeSpan lDiff = lStopTime - lStartTime;
 
                 Logger.AddLine("Board -> Evaluation value: " + lEvaluationValue + " (calculated in: " + lDiff.TotalMilliseconds + " ms)");
-                Logger.AddLine("");
+                //Logger.AddLine("");
             }
 
             // IMPLEMENTATION NEEDED

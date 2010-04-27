@@ -59,6 +59,8 @@
             this.groupBox12 = new System.Windows.Forms.GroupBox();
             this.mPlayerBAINo = new System.Windows.Forms.RadioButton();
             this.mPlayerBAIYes = new System.Windows.Forms.RadioButton();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.mAIMoves = new System.Windows.Forms.NumericUpDown();
             this.groupBox1.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -73,6 +75,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.mPlayerBPlieDepth)).BeginInit();
             this.groupBox11.SuspendLayout();
             this.groupBox12.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.mAIMoves)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -236,7 +240,7 @@
             // button1
             // 
             this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.button1.Location = new System.Drawing.Point(144, 319);
+            this.button1.Location = new System.Drawing.Point(144, 375);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 14;
@@ -247,7 +251,7 @@
             // button3
             // 
             this.button3.DialogResult = System.Windows.Forms.DialogResult.Abort;
-            this.button3.Location = new System.Drawing.Point(225, 319);
+            this.button3.Location = new System.Drawing.Point(225, 375);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 15;
@@ -257,7 +261,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(12, 319);
+            this.button4.Location = new System.Drawing.Point(12, 375);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(75, 23);
             this.button4.TabIndex = 16;
@@ -423,17 +427,49 @@
             this.mPlayerBAIYes.Text = "Yes";
             this.mPlayerBAIYes.UseVisualStyleBackColor = true;
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.mAIMoves);
+            this.groupBox2.Location = new System.Drawing.Point(12, 319);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(288, 50);
+            this.groupBox2.TabIndex = 17;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Max ai moves";
+            // 
+            // mAIMoves
+            // 
+            this.mAIMoves.Location = new System.Drawing.Point(6, 19);
+            this.mAIMoves.Maximum = new decimal(new int[] {
+            100000000,
+            0,
+            0,
+            0});
+            this.mAIMoves.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.mAIMoves.Name = "mAIMoves";
+            this.mAIMoves.Size = new System.Drawing.Size(117, 20);
+            this.mAIMoves.TabIndex = 6;
+            this.mAIMoves.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            // 
             // PlayerSetup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(312, 346);
+            this.ClientSize = new System.Drawing.Size(312, 410);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox1);
-            this.MaximumSize = new System.Drawing.Size(328, 382);
             this.MinimumSize = new System.Drawing.Size(328, 382);
             this.Name = "PlayerSetup";
             this.ShowIcon = false;
@@ -459,6 +495,8 @@
             this.groupBox11.ResumeLayout(false);
             this.groupBox12.ResumeLayout(false);
             this.groupBox12.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.mAIMoves)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -496,5 +534,7 @@
         private System.Windows.Forms.GroupBox groupBox12;
         private System.Windows.Forms.RadioButton mPlayerBAINo;
         private System.Windows.Forms.RadioButton mPlayerBAIYes;
+        private System.Windows.Forms.NumericUpDown mAIMoves;
+        private System.Windows.Forms.GroupBox groupBox2;
     }
 }

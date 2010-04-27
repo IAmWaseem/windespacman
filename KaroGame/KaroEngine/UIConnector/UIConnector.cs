@@ -38,6 +38,11 @@ namespace Karo
             }
         }
 
+        public void SetGui(IGui gui)
+        {
+            Game.Instance.Gui = gui;
+        }
+
         /// <summary>
         /// starts a new game
         /// </summary>
@@ -46,6 +51,15 @@ namespace Karo
         public void StartGame(PlayerSettings playerA, PlayerSettings playerB)
         {
             Game.Instance.StartGame(playerA, playerB);
+        }
+
+        /// <summary>
+        /// Maximum moves for a AI player
+        /// </summary>
+        /// <param name="count"></param>
+        public void MaxAIMoves(int count)
+        {
+            Game.Instance.MaxMoves = count;
         }
         
         /// <summary>

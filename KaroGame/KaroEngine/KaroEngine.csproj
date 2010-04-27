@@ -66,6 +66,7 @@
     <Compile Include="Game\PlayerSettings.cs" />
     <Compile Include="Algorithm\Random.cs" />
     <Compile Include="Logger\Logger.cs" />
+    <Compile Include="UIConnector\Interface\IGui.cs" />
     <Compile Include="UIConnector\UIConnector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

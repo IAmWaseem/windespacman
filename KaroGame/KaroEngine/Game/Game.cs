@@ -170,9 +170,7 @@ namespace Karo
             if(isInList)
             {
                 Logger.AddLine(GetCurrentPlayerNumber() + "-> Moved piece from: " + a.X + ", " + a.Y + " to " + b.X + ", " + b.Y);
-                cloneBoard.Evaluation(turnPlayerA);
                 board = cloneBoard;
-                
                 ChangePlayer();
             }
             else
@@ -210,7 +208,6 @@ namespace Karo
                 board = b;
 
                 Logger.AddLine(GetCurrentPlayerNumber() + "-> Placed piece on: " + point.X + ", " + point.Y);
-                board.Evaluation(turnPlayerA);
 
                 ChangePlayer();
             }
@@ -232,6 +229,8 @@ namespace Karo
         {
             this.playerA = new AIPlayer(playerA);
             this.playerB = new AIPlayer(playerB);
+            NumMovesA = 0;
+            NumMovesB = 0;
             this.board = startBoard;
             this.turnPlayerA = (startPlayer == 0 ? true : false);
 
@@ -250,6 +249,8 @@ namespace Karo
         {
             this.playerA = new AIPlayer(playerA);
             this.playerB = new AIPlayer(playerB);
+            NumMovesA = 0;
+            NumMovesB = 0;
             this.board = startBoard;
             
             // random first player
@@ -274,6 +275,8 @@ namespace Karo
         {
             this.playerA = new AIPlayer(playerA);
             this.playerB = new AIPlayer(playerB);
+            NumMovesA = 0;
+            NumMovesB = 0;
 
             // random first player
             System.Random r = new System.Random();
@@ -311,30 +314,70 @@ namespace Karo
             MakeAIMove();            
         }
 
+        private int NumMovesA;
+        private int NumMovesB;
+        private int maxMoves = 100;
+        public int MaxMoves
+        {
+            get
+            {
+                if (maxMoves < 1)
+                    maxMoves = 1;
+                return maxMoves;
+            }
+            set
+            {
+                if (value < 1)
+                    maxMoves = 1;
+                else
+                    maxMoves = value;
+            }
+        }
+
+        private IGui gui = null;
+        public IGui Gui { get; set; }
+
         /// <summary>
         /// Checks if currentplayer is AI and if, then execute move
         /// </summary>
         public void MakeAIMove()
         {
+            if (NumMovesA > MaxMoves || NumMovesB > MaxMoves)
+            {
+                // max moves reached
 
-            // Check if turn of player a and if so if he is AI driven, else check the same for b
-            if (turnPlayerA && playerA.PlayerSettings.IsAI)
-            {
-                // execute ai move
-                playerA.Execute(board);
-                if (board.IsTileMoved)
-                    playerA.Execute(board);
-                // change player
-                ChangePlayer();
             }
-            else if (!turnPlayerA && playerB.PlayerSettings.IsAI)
+            else
             {
-                // execute ai move
-                playerB.Execute(board);
-                if (board.IsTileMoved)
+                // Check if turn of player a and if so if he is AI driven, else check the same for b
+                if (turnPlayerA && playerA.PlayerSettings.IsAI)
+                {
+                    // execute ai move
+                    playerA.Execute(board);
+                    if (board.IsTileMoved)
+                        playerA.Execute(board);
+                    // change player
+                    NumMovesA++;
+
+                    if (Gui != null)
+                        Gui.RefreshWindow();
+
+                    ChangePlayer();
+                }
+                else if (!turnPlayerA && playerB.PlayerSettings.IsAI)
+                {
+                    // execute ai move
                     playerB.Execute(board);
-                // change player
-                ChangePlayer();
+                    if (board.IsTileMoved)
+                        playerB.Execute(board);
+                    // change player
+                    NumMovesB++;
+
+                    if (Gui != null)
+                        Gui.RefreshWindow();
+
+                    ChangePlayer();
+                }
             }
         }
 

@@ -41,7 +41,7 @@ namespace Karo
         /// <param name="currentBoard">The current board</param>
         public void Execute(Board currentBoard)
         {
-            DateTime beforeFunction = DateTime.Now;
+            
 
             if (algorithm != null)
             {
@@ -49,10 +49,6 @@ namespace Karo
                 Game.Instance.SetBoard(next);
             }
 
-            // Elapsed time
-            DateTime afterFunction = DateTime.Now;
-            TimeSpan elapsedTime = afterFunction - beforeFunction;
-            Logger.AddLine(Game.Instance.GetCurrentPlayerNumber() + "-> AI calculated in: " + elapsedTime.TotalMilliseconds.ToString() + " ms");
         }
     }
 }

@@ -316,7 +316,7 @@ namespace Karo
 
         private int NumMovesA;
         private int NumMovesB;
-        private int maxMoves = 100;
+        private int maxMoves = 1;
         public int MaxMoves
         {
             get
@@ -334,15 +334,13 @@ namespace Karo
             }
         }
 
-        private IGui gui = null;
-        public IGui Gui { get; set; }
-
         /// <summary>
         /// Checks if currentplayer is AI and if, then execute move
         /// </summary>
         public void MakeAIMove()
         {
-            if (NumMovesA > MaxMoves || NumMovesB > MaxMoves)
+            DateTime beforeFunction = DateTime.Now;
+            if (NumMovesA >= MaxMoves || NumMovesB >= MaxMoves)
             {
                 // max moves reached
 
@@ -359,8 +357,11 @@ namespace Karo
                     // change player
                     NumMovesA++;
 
-                    if (Gui != null)
-                        Gui.RefreshWindow();
+
+                    // Elapsed time
+                    DateTime afterFunction = DateTime.Now;
+                    TimeSpan elapsedTime = afterFunction - beforeFunction;
+                    Logger.AddLine(Game.Instance.GetCurrentPlayerNumber() + "-> AI calculated in: " + elapsedTime.TotalMilliseconds.ToString() + " ms");
 
                     ChangePlayer();
                 }
@@ -373,12 +374,32 @@ namespace Karo
                     // change player
                     NumMovesB++;
 
-                    if (Gui != null)
-                        Gui.RefreshWindow();
+
+                    // Elapsed time
+                    DateTime afterFunction = DateTime.Now;
+                    TimeSpan elapsedTime = afterFunction - beforeFunction;
+                    Logger.AddLine(Game.Instance.GetCurrentPlayerNumber() + "-> AI calculated in: " + elapsedTime.TotalMilliseconds.ToString() + " ms");
 
                     ChangePlayer();
                 }
             }
+        }
+
+        public void DoAIMove(int moves)
+        {
+            NumMovesA = 0;
+            NumMovesB = 0;
+
+            maxMoves = moves;
+            MakeAIMove();
+        }
+
+        public bool IsTwoAI()
+        {
+            if (playerA.PlayerSettings.IsAI && playerB.PlayerSettings.IsAI)
+                return true;
+
+            return false;
         }
 
         /// <summary>

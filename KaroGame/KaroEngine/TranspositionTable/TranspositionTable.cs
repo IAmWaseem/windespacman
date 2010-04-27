@@ -11,10 +11,10 @@ namespace Karo
     class TranspositionTable
     {
         private int tableSize;
-        private Int32[,,] hashtable;
+        private int[,,] hashtable;
         private int[] transpostionTable;
         private System.Random random = new System.Random();
-        private Int32 currentState;
+        private int currentState;
 
         /// <summary>
         /// constructor of TranspositionTable class
@@ -60,9 +60,9 @@ namespace Karo
         /// </summary>
         /// <param name="boardPositions"> board situation for calculations </param>
         /// <returns> hashvalue of input board </returns>
-        public Int32 HashValueOfBoardState(BoardPosition[,] boardPositions)
+        public int HashValueOfBoardState(BoardPosition[,] boardPositions)
         {
-            Int32 hashBoardState = 0;
+            int hashBoardState = 0;
             for (int i = 0; i < 21; i++)
             {
                 for (int j = 0; j < 20; j++)

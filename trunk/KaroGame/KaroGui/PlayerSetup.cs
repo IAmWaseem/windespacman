@@ -39,6 +39,11 @@ namespace Karo.Gui
         public PlayerSettings PlayerB { get; private set; }
 
         /// <summary>
+        /// Max ai moves
+        /// </summary>
+        public int MaxAIMoves { get; private set; }
+
+        /// <summary>
         /// Accept button
         /// </summary>
         /// <param name="sender"></param>
@@ -69,6 +74,8 @@ namespace Karo.Gui
                 mPlayerBAIYes.Checked, algoB, (int)mPlayerBPlieDepth.Value,
                 mPlayerBTransYes.Checked, mPlayerBMoveYes.Checked);
 
+            MaxAIMoves = (int)mAIMoves.Value;
+
             this.Visible = false;
         }
 
@@ -90,6 +97,8 @@ namespace Karo.Gui
             mPlayerBPlieDepth.Value = 1;
             mPlayerBTransNo.Checked = true;
             mPlayerBMoveNo.Checked = true;
+
+            mAIMoves.Value = 100;
         }
 
         /// <summary>

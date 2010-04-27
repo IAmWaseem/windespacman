@@ -6,12 +6,13 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-
+using System.Threading;
 using Karo;
 
 namespace Karo.Gui
 {
-    public partial class KaroGui : Form
+    public partial class KaroGui : Form, IGui
+        
     {
         private DialogResult ds;
         public KaroGui()
@@ -19,23 +20,9 @@ namespace Karo.Gui
             InitializeComponent();
             this.DoubleBuffered = true;
 
-            PlayerSetup ps = new PlayerSetup();
-            ds = ps.ShowDialog();
+            newGame();
 
-            if (ds != DialogResult.Abort)
-            {
-                PlayerSettings playerA = ps.PlayerA;
-                PlayerSettings playerB = ps.PlayerB;
-
-                UIConnector.Instance.StartGame(playerA, playerB);
-            }
-
-            mCurrentPlayerLabel.Text = "Current player: " + UIConnector.Instance.GetCurrentPlayer();
-
-            Logger.ShowLog();
-
-            this.SetDesktopLocation(0, 0);
-            this.StartPosition = FormStartPosition.Manual;
+            
         }
 
         /// <summary>
@@ -257,19 +244,7 @@ namespace Karo.Gui
                 DialogResult ok = MessageBox.Show((UIConnector.Instance.GetCurrentPlayerNumber() == 2 ? "Player B " : "Player A ") + "has won");
                 if (ok == DialogResult.OK)
                 {
-                    PlayerSetup ps = new PlayerSetup();
-                    ds = ps.ShowDialog();
-
-                    if (ds != DialogResult.Abort)
-                    {
-                        PlayerSettings playerA = ps.PlayerA;
-                        PlayerSettings playerB = ps.PlayerB;
-
-                        UIConnector.Instance.StartGame(playerA, playerB);
-                        mDrawPanel.Invalidate();
-                        BringToFront();
-                        Logger.BringToFront();
-                    }
+                    newGame();
                 }
             }
         }
@@ -294,6 +269,49 @@ namespace Karo.Gui
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Logger.CloseLog();
+        }
+
+        #endregion
+
+        private void newGameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            newGame();
+        }
+
+        private void newGame()
+        {
+            PlayerSetup ps = new PlayerSetup();
+            ds = ps.ShowDialog();
+
+            if (ds != DialogResult.Abort)
+            {
+                PlayerSettings playerA = ps.PlayerA;
+                PlayerSettings playerB = ps.PlayerB;
+
+                UIConnector.Instance.StartGame(playerA, playerB);
+                UIConnector.Instance.MaxAIMoves(ps.MaxAIMoves);
+                UIConnector.Instance.SetGui(this);
+                mDrawPanel.Invalidate();
+                BringToFront();
+                Logger.BringToFront();
+            }
+
+            mCurrentPlayerLabel.Text = "Current player: " + UIConnector.Instance.GetCurrentPlayer();
+
+            Logger.ShowLog();
+
+            this.SetDesktopLocation(0, 0);
+            this.StartPosition = FormStartPosition.Manual;
+        }
+
+        #region IGui Members
+
+        public void RefreshWindow()
+        {
+            mDrawPanel.Visible = true;
+            mDrawPanel.BringToFront();
+            this.Invalidate();
+            Thread.Sleep(200);
         }
 
         #endregion

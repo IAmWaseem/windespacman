@@ -330,8 +330,8 @@ namespace Karo
                 {
                     for (int y = 0; y < 20; y++)
                     {
-                        if (boardPositions[x, y] == lHead)
-                            lOwnHead++;
+                        //if (boardPositions[x, y] == lHead)
+                        //    lOwnHead++;
 
                         #region "Check if piece belongs to current player"
 
@@ -369,6 +369,8 @@ namespace Karo
                                 {
                                     if (boardPositions[x - 1, y - 1] == BoardPosition.Tile)
                                         lEmptySpots++;
+                                    else if (boardPositions[x - 1, y - 1] == lHead)
+                                        lOwnHead++;
                                 }
 
                                 // - - -
@@ -376,6 +378,8 @@ namespace Karo
                                 // - - -
                                 if (boardPositions[x - 1, y] == BoardPosition.Tile)
                                     lEmptySpots++;
+                                else if (boardPositions[x - 1, y] == lHead)
+                                    lOwnHead++;
 
                                 // - - -
                                 // - - -
@@ -384,6 +388,8 @@ namespace Karo
                                 {
                                     if (boardPositions[x - 1, y + 1] == BoardPosition.Tile)
                                         lEmptySpots++;
+                                    else if (boardPositions[x - 1, y + 1] == lHead)
+                                        lOwnHead++;
                                 }
                             }
 
@@ -402,6 +408,8 @@ namespace Karo
                             {
                                 if (boardPositions[x, y - 1] == BoardPosition.Tile)
                                     lEmptySpots++;
+                                else if (boardPositions[x, y - 1] == lHead)
+                                    lOwnHead++;
                             }
 
                             // - - -
@@ -416,6 +424,8 @@ namespace Karo
                             {
                                 if (boardPositions[x, y + 1] == BoardPosition.Tile)
                                     lEmptySpots++;
+                                else if (boardPositions[x, y + 1] == lHead)
+                                    lOwnHead++;
                             }
 
                             #endregion
@@ -434,6 +444,8 @@ namespace Karo
                                 {
                                     if (boardPositions[x + 1, y - 1] == BoardPosition.Tile)
                                         lEmptySpots++;
+                                    else if (boardPositions[x + 1, y - 1] == lHead)
+                                        lOwnHead++;
                                 }
 
                                 // - - -
@@ -441,6 +453,8 @@ namespace Karo
                                 // - - -
                                 if (boardPositions[x + 1, y] == BoardPosition.Tile)
                                     lEmptySpots++;
+                                else if (boardPositions[x + 1, y] == lHead)
+                                    lOwnHead++;
 
                                 // - - -
                                 // - - -
@@ -449,6 +463,8 @@ namespace Karo
                                 {
                                     if (boardPositions[x + 1, y + 1] == BoardPosition.Tile)
                                         lEmptySpots++;
+                                    else if (boardPositions[x + 1, y + 1] == lHead)
+                                        lOwnHead++;
                                 }
                             }
 

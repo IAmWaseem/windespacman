@@ -301,7 +301,7 @@ namespace Karo.Gui
                 if (UIConnector.Instance.IsTwoAI())
                     UIConnector.Instance.DoAiMove(1);
             }
-            else if (e.KeyCode == Keys.Shift)
+            else if (e.KeyCode == Keys.ShiftKey)
             {
                 if (UIConnector.Instance.IsTwoAI())
                     UIConnector.Instance.DoAiMove(2);

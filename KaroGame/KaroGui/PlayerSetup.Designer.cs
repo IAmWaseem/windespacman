@@ -176,7 +176,7 @@
             this.mPlayerAPlieDepth.Size = new System.Drawing.Size(117, 20);
             this.mPlayerAPlieDepth.TabIndex = 5;
             this.mPlayerAPlieDepth.Value = new decimal(new int[] {
-            1,
+            2,
             0,
             0,
             0});

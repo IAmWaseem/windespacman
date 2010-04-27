@@ -98,7 +98,7 @@ namespace Karo.Gui
             mPlayerBTransNo.Checked = true;
             mPlayerBMoveNo.Checked = true;
 
-            mAIMoves.Value = 100;
+            mAIMoves.Value = 1;
         }
 
         /// <summary>

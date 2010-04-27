@@ -38,11 +38,6 @@ namespace Karo
             }
         }
 
-        public void SetGui(IGui gui)
-        {
-            Game.Instance.Gui = gui;
-        }
-
         /// <summary>
         /// starts a new game
         /// </summary>
@@ -60,6 +55,16 @@ namespace Karo
         public void MaxAIMoves(int count)
         {
             Game.Instance.MaxMoves = count;
+        }
+
+        public void DoAiMove(int moves)
+        {
+            Game.Instance.DoAIMove(moves);
+        }
+
+        public bool IsTwoAI()
+        {
+            return Game.Instance.IsTwoAI();
         }
         
         /// <summary>

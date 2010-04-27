@@ -454,7 +454,7 @@
             this.mAIMoves.Size = new System.Drawing.Size(117, 20);
             this.mAIMoves.TabIndex = 6;
             this.mAIMoves.Value = new decimal(new int[] {
-            100,
+            1,
             0,
             0,
             0});

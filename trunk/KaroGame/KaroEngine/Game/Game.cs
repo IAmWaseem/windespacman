@@ -340,7 +340,7 @@ namespace Karo
         public void MakeAIMove()
         {
             DateTime beforeFunction = DateTime.Now;
-            if (NumMovesA >= MaxMoves || NumMovesB >= MaxMoves)
+            if ((NumMovesA >= MaxMoves || NumMovesB >= MaxMoves) && IsTwoAI())
             {
                 // max moves reached
 

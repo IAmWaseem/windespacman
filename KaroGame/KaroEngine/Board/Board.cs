@@ -164,7 +164,7 @@ namespace Karo
                                     {
                                         if ((this.isTileMoved && (this.movedTilePosition.X == x + i && this.movedTilePosition.Y == y + j)) || !this.isTileMoved)
                                         {
-                                            BoardPosition[,] newBoardPosition = (BoardPosition[,]) boardPositions.Clone();
+                                            BoardPosition[,] newBoardPosition = (BoardPosition[,])boardPositions.Clone();
 
                                             newBoardPosition[x, y] = BoardPosition.Tile;
                                             newBoardPosition[x + i, y + j] = boardPositions[x, y];
@@ -207,20 +207,21 @@ namespace Karo
                                     {
                                         bool isMovableTile = false;
 
-                                        if((i == -1 && j == -1) ||
+                                        if ((i == -1 && j == -1) ||
                                             (i == 1 && j == 1) ||
                                             (i == -1 && j == 1) ||
-                                            (i == 1 && j == -1)) {
+                                            (i == 1 && j == -1))
+                                        {
                                             int currentI = x + i;
                                             int currentJ = y + j;
 
-                                            if(currentJ - 1 >= 0)
+                                            if (currentJ - 1 >= 0)
                                                 if (boardPositions[currentI, currentJ - 1] != BoardPosition.Empty) isMovableTile = true;
-                                            if(currentJ + 1 < 20)
+                                            if (currentJ + 1 < 20)
                                                 if (boardPositions[currentI, currentJ + 1] != BoardPosition.Empty) isMovableTile = true;
-                                            if(currentI + 1 < 21)
+                                            if (currentI + 1 < 21)
                                                 if (boardPositions[currentI + 1, currentJ] != BoardPosition.Empty) isMovableTile = true;
-                                            if(currentI - 1 >= 0)
+                                            if (currentI - 1 >= 0)
                                                 if (boardPositions[currentI - 1, currentJ] != BoardPosition.Empty) isMovableTile = true;
                                         }
                                         else
@@ -311,7 +312,7 @@ namespace Karo
                     List<Board> nextMoves = GenerateMoves(isRed);
                     if (nextMoves.Count == 1)
                     {
-                          return nextMoves[0].Evaluation(isRed);
+                        return nextMoves[0].Evaluation(isRed);
                     }
                 }
 
@@ -460,23 +461,20 @@ namespace Karo
                 int evalAdd = 0;
                 if (Game.Instance.CurrentPlayerNumPieces() > 0)
                 {
-                    evalAdd = (lEmptySpots * (lOwnHead / Game.Instance.CurrentPlayerNumPieces()));
+                    //evalAdd = (lEmptySpots * (lOwnHead / Game.Instance.CurrentPlayerNumPieces()));
+                    evalAdd = lEmptySpots * (lOwnHead ^ 2);
                 }
 
                 lEvaluationValue = lEmptySpots + evalAdd;
             }
 
+            #region "debug"
+            //DateTime lStopTime = DateTime.Now;
+            //TimeSpan lDiff = lStopTime - lStartTime;
 
-            if (false)
-            {
-                DateTime lStopTime = DateTime.Now;
-                TimeSpan lDiff = lStopTime - lStartTime;
+            //Logger.AddLine("Board -> Evaluation value: " + lEvaluationValue + " (calculated in: " + lDiff.TotalMilliseconds + " ms)");
+            #endregion
 
-                Logger.AddLine("Board -> Evaluation value: " + lEvaluationValue + " (calculated in: " + lDiff.TotalMilliseconds + " ms)");
-                //Logger.AddLine("");
-            }
-
-            // IMPLEMENTATION NEEDED
             return lEvaluationValue;
         }
 
@@ -684,7 +682,7 @@ namespace Karo
         public Point MovedTilePosition
         {
             get { return this.movedTilePosition; }
-            set { this.movedTilePosition = value;}
+            set { this.movedTilePosition = value; }
         }
 
         public bool IsTileMoved
@@ -705,13 +703,13 @@ namespace Karo
                     {
                         int emptySpots = 0;
 
-                        if(y - 1 >= 0 )
+                        if (y - 1 >= 0)
                             if (boardPositions[x, y - 1] == BoardPosition.Empty) emptySpots++;
-                        if(y + 1 < 20)
+                        if (y + 1 < 20)
                             if (boardPositions[x, y + 1] == BoardPosition.Empty) emptySpots++;
-                        if(x + 1 < 21)
+                        if (x + 1 < 21)
                             if (boardPositions[x + 1, y] == BoardPosition.Empty) emptySpots++;
-                        if(x - 1 >= 0)
+                        if (x - 1 >= 0)
                             if (boardPositions[x - 1, y] == BoardPosition.Empty) emptySpots++;
 
                         if (emptySpots >= 2)
@@ -747,12 +745,14 @@ namespace Karo
                         pointToCheck = new Point(point.X + 1, point.Y);
                 }
 
-                if (point.X - 1 > 0) {
+                if (point.X - 1 > 0)
+                {
                     if (b[point.X - 1, point.Y] != BoardPosition.Empty)
                         pointToCheck = new Point(point.X - 1, point.Y);
                 }
 
-                if (point.Y - 1 > 0) {
+                if (point.Y - 1 > 0)
+                {
                     if (b[point.X, point.Y - 1] != BoardPosition.Empty)
                         pointToCheck = new Point(point.X, point.Y - 1);
                 }
@@ -763,10 +763,10 @@ namespace Karo
                         pointToCheck = new Point(point.X, point.Y + 1);
                 }
 
-                if(pointToCheck.X != 0 && pointToCheck.Y != 0)
+                if (pointToCheck.X != 0 && pointToCheck.Y != 0)
                     VisitedPoints(visitedPoints, pointToCheck, b);
 
-                if(visitedPoints.Count >= 19)
+                if (visitedPoints.Count >= 19)
                     movablePointsValidated.Add(point);
             }
 
@@ -775,9 +775,11 @@ namespace Karo
 
         private void VisitedPoints(List<Point> visitedPoints, Point point, BoardPosition[,] b)
         {
-            if (b[point.X + 1, point.Y] != BoardPosition.Empty) {
+            if (b[point.X + 1, point.Y] != BoardPosition.Empty)
+            {
                 Point p = new Point(point.X + 1, point.Y);
-                if(!visitedPoints.Contains(p)) {
+                if (!visitedPoints.Contains(p))
+                {
                     visitedPoints.Add(p);
                     VisitedPoints(visitedPoints, p, b);
                 }

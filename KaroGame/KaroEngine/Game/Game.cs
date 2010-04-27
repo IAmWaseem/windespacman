@@ -102,6 +102,7 @@ namespace Karo
             cloneBoard.BoardSituation[b.X, b.Y] = BoardPosition.Tile;
             cloneBoard.BoardSituation[a.X, a.Y] = BoardPosition.Empty;
             cloneBoard.IsTileMoved = true;
+            cloneBoard.MovedTilePosition = new Point(b.X, b.Y);
 
             List<Board> possibleMoves = board.GenerateMoves(turnPlayerA);
             bool isInList = false;

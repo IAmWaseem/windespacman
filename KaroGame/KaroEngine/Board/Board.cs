@@ -181,7 +181,7 @@ namespace Karo
                                     {
                                         if (x + i + i >= 0 && x + i + i < 21 && y + j + j >= 0 && y + j + j < 20)
                                         {
-                                            if (boardPositions[x + i + i, y + j + j] == BoardPosition.Tile)
+                                            if (boardPositions[x + i + i, y + j + j] == BoardPosition.Tile || (this.isTileMoved && boardPositions[x + i + i, y + j + j] == BoardPosition.Empty))
                                             {
                                                 if ((this.isTileMoved && (this.movedTilePosition.X == x + i + i && this.movedTilePosition.Y == y + j + j)) || !this.isTileMoved)
                                                 {

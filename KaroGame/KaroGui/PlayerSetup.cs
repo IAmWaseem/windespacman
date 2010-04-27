@@ -9,8 +9,14 @@ using System.Windows.Forms;
 
 namespace Karo.Gui
 {
+    /// <summary>
+    /// Form for creating player settings
+    /// </summary>
     public partial class PlayerSetup : Form
     {
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public PlayerSetup()
         {
             InitializeComponent();
@@ -22,9 +28,21 @@ namespace Karo.Gui
             PlayerB = new PlayerSettings();
         }
 
+        /// <summary>
+        /// Playersettings for A
+        /// </summary>
         public PlayerSettings PlayerA { get; private set; }
+
+        /// <summary>
+        /// Playersettings for B
+        /// </summary>
         public PlayerSettings PlayerB { get; private set; }
 
+        /// <summary>
+        /// Accept button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Accept(object sender, EventArgs e)
         {
             AlgorithmType algoA = AlgorithmType.Random;
@@ -54,6 +72,11 @@ namespace Karo.Gui
             this.Visible = false;
         }
 
+        /// <summary>
+        /// Reset all fields
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ResetFields(object sender, EventArgs e)
         {
             mPlayerAAINo.Checked = true;
@@ -69,6 +92,11 @@ namespace Karo.Gui
             mPlayerBMoveNo.Checked = true;
         }
 
+        /// <summary>
+        /// Close form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Close(object sender, EventArgs e)
         {
             this.Close();

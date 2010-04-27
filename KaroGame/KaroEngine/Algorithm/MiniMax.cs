@@ -5,25 +5,44 @@ using System.Text;
 
 namespace Karo
 {
+    /// <summary>
+    /// Minimax algorithm
+    /// </summary>
     class MiniMax : IAlgorithm
     {
         private int plieDepth;
         private bool transtable;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="plieDepth">Depth to plie</param>
+        /// <param name="doTranstable">Use transposition table</param>
         public MiniMax(int plieDepth, bool doTranstable)
         {
             this.plieDepth = plieDepth;
             this.transtable = doTranstable;
         }
 
+        /// <summary>
+        /// Does the next move
+        /// </summary>
+        /// <param name="currentBoard">Board to calculate best move</param>
+        /// <returns>Best boardsituation</returns>
         public Board NextMove(Board currentBoard)
         {
-
             Board next = DoMiniMax(currentBoard, plieDepth, Game.Instance.GetTurn());
             Logger.AddLine("Board -> Evaluation value: " + next.Evaluation(Game.Instance.GetTurn()));
             return next;
         }
 
+        /// <summary>
+        /// MiniMax function
+        /// </summary>
+        /// <param name="node">'Current' board</param>
+        /// <param name="depth">Plie depth</param>
+        /// <param name="turnA">Which turn</param>
+        /// <returns>Best board situation</returns>
         private Board DoMiniMax(Board node, int depth, bool turnA)
         {
             // if depth has reached zero, quit
@@ -66,6 +85,7 @@ namespace Karo
                 }
             }
 
+            // return best board situation
             return alpha;
         }
     }

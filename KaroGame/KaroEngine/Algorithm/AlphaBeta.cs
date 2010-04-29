@@ -70,7 +70,9 @@ namespace Karo
 
             // generate moves
             List<Board> possibleMoves = node.GenerateMoves(turnA);
-
+            if (moveOrdering)
+                possibleMoves = Order(possibleMoves, (Game.Instance.GetTurn() == turnA ? true : false), turnA);
+            
             // iterate trough moves
             foreach (Board b in possibleMoves)
             {
@@ -102,6 +104,21 @@ namespace Karo
 
             // return best situation
             return alpha;
+        }
+
+        /// <summary>
+        /// Order the moves, descending for max player,
+        /// ascending for min player
+        /// </summary>
+        /// <param name="moves">unordered moves</param>
+        /// <param name="descending">true->hoog naar laag</param>
+        /// <param name="isRed">necessary for evaluation function</param>
+        /// <returns></returns>
+        private List<Board> Order(List<Board> moves, Boolean descending, Boolean isRed)
+        {
+            if(descending)
+                return moves.OrderByDescending(t=>t.Evaluation(isRed)).ToList();
+            return moves.OrderBy(t => t.Evaluation(isRed)).ToList();
         }
     }
 }

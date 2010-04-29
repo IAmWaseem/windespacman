@@ -22,7 +22,10 @@ namespace Karo
         private bool isTileMoved = false;
         private Point movedTilePosition;
 
-        public int EvaluationValue;
+        /// <summary>
+        /// Property for setting evaluation value of the board, used by algorthims.
+        /// </summary>
+        public int EvaluationValue { get; set; }
 
 
         /// <summary>
@@ -30,6 +33,7 @@ namespace Karo
         /// </summary>
         public Board()
         {
+            this.EvaluationValue = 0;
             piecesList = new List<Point>();
             boardPositions = new BoardPosition[21, 20];
             boardPositions[8, 8] = BoardPosition.Tile;
@@ -70,6 +74,7 @@ namespace Karo
         /// <param name="boardPositions"></param>
         public Board(BoardPosition[,] boardPositions)
         {
+            this.EvaluationValue = 0;
             amountOfRedItems = 0;
             amountOfWhiteItems = 0;
             this.boardPositions = boardPositions;
@@ -281,6 +286,9 @@ namespace Karo
 
             else
                 generatedMoves.AddRange(ChangeBoardPosition(turnPlayerA));
+
+            foreach( Board b in generatedMoves)
+                b.EvaluationValue = b.Evaluation(turnPlayerA);
 
             //Logger.AddLine("Generated moves: " + generatedMoves.Count);
             return generatedMoves;

@@ -239,15 +239,18 @@ namespace Karo
                                             }
                                             foreach (Point movablePoint in movablePoints)
                                             {
-                                                BoardPosition[,] newBoardPosition = (BoardPosition[,])boardPositions.Clone();
-                                                newBoardPosition[movablePoint.X, movablePoint.Y] = BoardPosition.Empty;
-                                                newBoardPosition[moveTileTo.X, moveTileTo.Y] = BoardPosition.Tile;
-                                                Board newBoard = new Board(newBoardPosition);
-                                                newBoard.RedItems = this.RedItems;
-                                                newBoard.WhiteItems = this.WhiteItems;
-                                                newBoard.IsTileMoved = true;
-                                                newBoard.MovedTilePosition = moveTileTo;
-                                                boards.Add(newBoard);
+                                                if(boardPositions[movablePoint.X, movablePoint.Y] == BoardPosition.Tile)
+                                                {
+                                                    BoardPosition[,] newBoardPosition = (BoardPosition[,])boardPositions.Clone();
+                                                    newBoardPosition[movablePoint.X, movablePoint.Y] = BoardPosition.Empty;
+                                                    newBoardPosition[moveTileTo.X, moveTileTo.Y] = BoardPosition.Tile;
+                                                    Board newBoard = new Board(newBoardPosition);
+                                                    newBoard.RedItems = this.RedItems;
+                                                    newBoard.WhiteItems = this.WhiteItems;
+                                                    newBoard.IsTileMoved = true;
+                                                    newBoard.MovedTilePosition = moveTileTo;
+                                                    boards.Add(newBoard);
+                                                }
                                             }
                                         }
                                     }

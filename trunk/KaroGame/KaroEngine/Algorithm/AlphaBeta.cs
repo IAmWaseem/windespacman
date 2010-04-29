@@ -116,8 +116,8 @@ namespace Karo
         /// <returns></returns>
         private List<Board> Order(List<Board> moves, Boolean descending, Boolean isRed)
         {
-            if(descending)
-                return moves.OrderByDescending(t=>t.Evaluation(isRed)).ToList();
+            if (descending)
+                return moves.OrderByDescending(t => t.Evaluation(isRed)).ToList();
             return moves.OrderBy(t => t.Evaluation(isRed)).ToList();
         }
     }

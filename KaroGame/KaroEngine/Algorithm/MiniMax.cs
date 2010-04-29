@@ -47,15 +47,21 @@ namespace Karo
         {
             // if depth has reached zero, quit
             if (depth <= 0)
+            {
+                node.EvaluationValue = node.Evaluation(turnA);
                 return node;
+            }
 
             // if won, we also can quit
             if (node.IsWon())
+            {
+                node.EvaluationValue = node.Evaluation(turnA);
                 return node;
+            }
 
             // set alpha
             Board alpha = node;
-            int alphaEvalution = Int32.MinValue;
+            alpha.EvaluationValue = Int32.MinValue;
 
             // generate moves
             List<Board> possibleMoves = node.GenerateMoves(turnA);
@@ -70,18 +76,18 @@ namespace Karo
 
                 // calculate beta & evalution
                 Board beta = DoMiniMax(b, depth - 1, nextTurn);
-                int betaEvaluation = -1 * beta.Evaluation(nextTurn);
+                int betaEvaluation = -1 * beta.EvaluationValue;
 
                 // check if alpha is smaller then beta
-                if (alphaEvalution < betaEvaluation)
+                if (alpha.EvaluationValue < betaEvaluation)
                 {
                     // alpha = beta
-                    alphaEvalution = betaEvaluation;
+                    alpha.EvaluationValue = betaEvaluation;
                     alpha = b;
 
                     // show debug information
                     if (Game.Instance.ShowDebug)
-                        Logger.AddLine(depth + " Beta: " + betaEvaluation);
+                        Logger.AddLine(depth + " Alpha set: " + alpha.EvaluationValue);
                 }
             }
 

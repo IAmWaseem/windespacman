@@ -22,6 +22,8 @@ namespace Karo
         private bool isTileMoved = false;
         private Point movedTilePosition;
 
+        public int EvaluationValue;
+
 
         /// <summary>
         /// 
@@ -728,7 +730,7 @@ namespace Karo
                         if (x - 1 >= 0)
                             if (boardPositions[x - 1, y] == BoardPosition.Empty) emptySpots++;
 
-                        if (emptySpots >= 2)
+                        if (emptySpots >= 1)
                         {
                             Point point = new Point(x, y);
                             movablePoints.Add(point);

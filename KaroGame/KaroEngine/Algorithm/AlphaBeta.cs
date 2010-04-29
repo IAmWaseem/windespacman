@@ -35,7 +35,7 @@ namespace Karo
         public Board NextMove(Board currentBoard)
         {
             Board next = DoAlphaBeta(currentBoard, plieDepth, Game.Instance.GetTurn(), Int32.MinValue, Int32.MaxValue);
-            Logger.AddLine("Board -> Evaluation value: " + next.Evaluation(Game.Instance.GetTurn()));
+            Logger.AddLine("Board -> Evaluation value: " + next.EvaluationValue);
             return next;
         }
 
@@ -70,6 +70,7 @@ namespace Karo
 
             // generate moves
             List<Board> possibleMoves = node.GenerateMoves(turnA);
+
             if (moveOrdering)
                 possibleMoves = Order(possibleMoves, (Game.Instance.GetTurn() == turnA ? true : false), turnA);
             
@@ -116,9 +117,10 @@ namespace Karo
         /// <returns></returns>
         private List<Board> Order(List<Board> moves, Boolean descending, Boolean isRed)
         {
-            if (descending)
-                return moves.OrderByDescending(t => t.Evaluation(isRed)).ToList();
-            return moves.OrderBy(t => t.Evaluation(isRed)).ToList();
+            if(descending)
+                return moves.OrderByDescending(t=>t.EvaluationValue).ToList();
+
+            return moves.OrderBy(t => t.EvaluationValue).ToList();
         }
     }
 }

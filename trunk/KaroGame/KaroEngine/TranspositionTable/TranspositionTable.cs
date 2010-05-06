@@ -14,33 +14,42 @@ namespace Karo
         private int[,,] hashtable;
         private int[] transpostionTable;
         private System.Random random = new System.Random();
-        private int currentState;
+        private int playerA, playerB;
+        //private int currentState;
 
         /// <summary>
         /// constructor of TranspositionTable class
         /// </summary>
         /// <param name="tableSize"> desired size of the table </param>
-        public TranspositionTable( int tableSize )
+        public TranspositionTable(int tableSize)
         {
             this.tableSize = tableSize;
-            currentState = 0;
             transpostionTable = new int[tableSize];
-            creatingHashtable();
-        }
-
-        /// <summary>
-        /// function creating the hashtable
-        /// </summary>
-        private void creatingHashtable()
-        {
-            hashtable = new int[21, 20, 6];
+            playerA = random.Next();
+            while ((playerB = random.Next()) == playerA) { }
+            hashtable = new int[21, 20, 5];
             for (int i = 0; i < 21; i++)
             {
                 for (int j = 0; j < 20; j++)
                 {
-                    for (int k = 0; k < 6; k++)
+                    for (int k = 0; k < 5; k++)
                     {
+                    NotUniq:
                         hashtable[i, j, k] = random.Next();
+                        for (int m = 0; m <= i; m++)
+                        {
+                            for (int n = 0; n <= j; n++)
+                            {
+                                for (int p = 0; p < k; p++)
+                                {
+                                    if (hashtable[m, n, p] == hashtable[i, j, k] ||
+                                        playerA == hashtable[i, j, k] || playerB == hashtable[i, j, k])
+                                    {
+                                        goto NotUniq;
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -49,7 +58,7 @@ namespace Karo
         /// <summary>
         /// getter of transposition table
         /// </summary>
-        /// <returns></returns>
+        /// <returns> transpositon table </returns>
         public int[] GetTranspositionTable()
         {
             return transpostionTable;
@@ -59,66 +68,27 @@ namespace Karo
         /// function calculating hashvalue of given board situation
         /// </summary>
         /// <param name="boardPositions"> board situation for calculations </param>
+        /// <param name="turnPlayerA"> bool - which player has it's turn </param>
         /// <returns> hashvalue of input board </returns>
-        public int HashValueOfBoardState(BoardPosition[,] boardPositions)
+        public int HashValueOfBoardState(BoardPosition[,] boardPositions, bool turnPlayerA)
         {
             int hashBoardState = 0;
             for (int i = 0; i < 21; i++)
             {
                 for (int j = 0; j < 20; j++)
                 {
-                    hashBoardState = hashBoardState ^ hashtable[i, j, (int)boardPositions[i,j]];
+                    if ((int)boardPositions[i, j] != 0)
+                        hashBoardState = hashBoardState ^ hashtable[i, j, (int)boardPositions[i, j] - 1];
                 }
             }
+            if (turnPlayerA)
+                hashBoardState = hashBoardState ^ playerA;
+            else
+                hashBoardState = hashBoardState ^ playerB;
+
+            transpostionTable[hashBoardState % transpostionTable.Length] = hashBoardState;
+
             return hashBoardState;
-        }
-
-        /// <summary>
-        /// function putting a hashvalue to transposition table after adding a piece
-        /// </summary>
-        /// <param name="position_x"> x coordinate were to place piece</param>
-        /// <param name="position_y"> y coordinate were to place piece </param>
-        /// <param name="piece_type"> type of the piece </param>
-        public void Adding_a_piece(int position_x, int position_y, BoardPosition piece_type)
-        {
-            int positionInTranspositionTable;
-            currentState = currentState ^ hashtable[position_x, position_y, (int)piece_type];
-            positionInTranspositionTable = currentState % this.tableSize;
-            transpostionTable[positionInTranspositionTable] = currentState;
-        }
-
-        /// <summary>
-        /// function putting a hashvalue to transposition table after moving a piece
-        /// </summary>
-        /// <param name="position_start_x"> x coordinate where from to take piece </param>
-        /// <param name="position_start_y"> y coordinate where from to take piece </param>
-        /// <param name="position_end_x"> x coordinate were to place piece </param>
-        /// <param name="position_end_y"> y coordinate were to place piece </param>
-        /// <param name="piece_type"> type of the piece </param>
-        public void Moving_one_piece(int position_start_x, int position_start_y, int position_end_x, int position_end_y, BoardPosition piece_type)
-        {
-            int positionInTranspositionTable;
-            currentState = currentState ^ hashtable[position_start_x, position_start_y, (int)piece_type];
-            currentState = currentState ^ hashtable[position_end_x, position_end_y, (int)piece_type];
-            positionInTranspositionTable = currentState % this.tableSize;
-            transpostionTable[positionInTranspositionTable] = currentState;
-        }
-
-        /// <summary>
-        /// function putting a hashvalue to transposition table after jumping with a piece
-        /// </summary>
-        /// <param name="position_start_x"> x coordinate where from to take piece </param>
-        /// <param name="position_start_y"> y coordinate where from to take piece </param>
-        /// <param name="position_end_x"> x coordinate were to place piece </param>
-        /// <param name="position_end_y"> y coordinate were to place piece </param>
-        /// <param name="piece_type"> type of the piece </param>
-        public void Jumping_with_a_piece(int position_start_x, int position_start_y, int position_end_x, int position_end_y, BoardPosition piece_type)
-        {
-            int positionInTranspositionTable = 0;
-            currentState = currentState ^ hashtable[position_start_x, position_start_y, (int)piece_type];
-            currentState = currentState ^ hashtable[position_end_x, position_end_y, (int)piece_type + 1];
-            positionInTranspositionTable = currentState % this.tableSize;
-            transpostionTable[positionInTranspositionTable] = currentState;
         }
     }
 }

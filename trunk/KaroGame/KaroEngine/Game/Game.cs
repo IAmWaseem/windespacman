@@ -413,5 +413,15 @@ namespace Karo
             else
                 return 2;
         }
+
+        /// <summary>
+        /// Gets movable points
+        /// </summary>
+        /// <returns>List of movable points</returns>
+        public List<Point> GetMovablePoints()
+        {
+
+            return board.MovablePoints;
+        }
     }
 }

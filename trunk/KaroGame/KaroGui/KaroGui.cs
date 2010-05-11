@@ -77,7 +77,15 @@ namespace Karo.Gui
 
                             // if not empty, there is a tile beneath
                             if (bp != BoardPosition.Empty)
+                            {
                                 brush = Brushes.Black;
+
+                                if (bp == BoardPosition.Tile)
+                                {
+                                    if (UIConnector.Instance.IsMovable(x, y))
+                                        brush = Brushes.Green;
+                                }
+                            }
 
                             // if tile is clicked, show as gray
                             if (mClickedPosition != null)

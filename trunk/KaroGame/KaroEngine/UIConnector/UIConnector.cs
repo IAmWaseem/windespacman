@@ -23,6 +23,25 @@ namespace Karo
         }
 
         /// <summary>
+        /// Checks if a point is movable
+        /// </summary>
+        /// <param name="x">X coord</param>
+        /// <param name="y">Y coord</param>
+        /// <returns></returns>
+        public bool IsMovable(int x, int y)
+        {
+            List<Point> movable = Game.Instance.GetMovablePoints();
+            foreach (Point p in movable)
+            {
+                if (p.X == x && p.Y == y)
+                    return true;
+            }
+
+            return false;
+        }
+
+
+        /// <summary>
         /// returns an instance of UIConnector
         /// </summary>
         /// <returns>UIConnector</returns>

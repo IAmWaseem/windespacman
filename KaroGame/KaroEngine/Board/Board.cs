@@ -729,7 +729,7 @@ namespace Karo
             set { isTileMoved = value; }
         }
 
-        private void CalculateMovableTiles()
+        public void CalculateMovableTiles()
         {
             this.movablePoints = new List<Point>();
 

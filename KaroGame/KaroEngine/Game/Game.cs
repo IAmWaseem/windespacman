@@ -103,6 +103,7 @@ namespace Karo
             cloneBoard.BoardSituation[a.X, a.Y] = BoardPosition.Empty;
             cloneBoard.IsTileMoved = true;
             cloneBoard.MovedTilePosition = new Point(b.X, b.Y);
+            cloneBoard.CalculateMovableTiles();
 
             List<Board> possibleMoves = board.GenerateMoves(turnPlayerA);
             bool isInList = false;
@@ -157,7 +158,7 @@ namespace Karo
 
             cloneBoard.BoardSituation[b.X, b.Y] = old;
             cloneBoard.BoardSituation[a.X, a.Y] = BoardPosition.Tile;
-
+            cloneBoard.CalculateMovableTiles();
             List<Board> possibleMoves = board.GenerateMoves(turnPlayerA);
             bool isInList = false;
 
@@ -194,7 +195,7 @@ namespace Karo
                 b.WhiteItems++;
 
             bool isInList = false;
-
+            b.CalculateMovableTiles();
             List<Board> possibleMoves = board.GenerateMoves(turnPlayerA);
 
             foreach (Board pm in possibleMoves)

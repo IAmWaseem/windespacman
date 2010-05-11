@@ -42,12 +42,20 @@ namespace Karo
             }
         }
 
+
+        DateTime start = DateTime.Now;
         /// <summary>
         /// gets the current board
         /// </summary>
         /// <returns>current board</returns>
         public Board GetBoard()
         {
+            TimeSpan s = DateTime.Now - start;
+            if (s.Seconds >= 1 && playerA.PlayerSettings.IsAI && playerB.PlayerSettings.IsAI)
+            {
+                start = DateTime.Now;
+                MakeAIMove();
+            }
             return board;
         }
 
@@ -312,7 +320,8 @@ namespace Karo
         public void ChangePlayer()
         {
             turnPlayerA = (turnPlayerA ? false : true);
-            MakeAIMove();            
+            if(!(playerA.PlayerSettings.IsAI && playerB.PlayerSettings.IsAI))
+                MakeAIMove();            
         }
 
         private int NumMovesA;

@@ -22,9 +22,41 @@ namespace Karo.Gui
 
             newGame();
 
-
+            InitBGW();
         }
 
+
+        #region Backgroundworker for invalidate
+
+        private BackgroundWorker bgw;
+        private Boolean runBgw = true;
+
+        private void InitBGW()
+        {
+            // so we can stop the bgw
+            if (runBgw)
+            {
+                bgw = new BackgroundWorker();
+                bgw.DoWork += new DoWorkEventHandler(bgw_DoWork);
+                bgw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bgw_RunWorkerCompleted);
+                bgw.RunWorkerAsync();
+            }
+        }
+
+        private void bgw_DoWork(object sender, DoWorkEventArgs e)
+        {
+            // wait for a second
+            Thread.Sleep(1000);
+        }
+
+        private void bgw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            // invalidate screen, and rework
+            mDrawPanel.Invalidate();
+            InitBGW();
+        }
+
+        #endregion
 
         /// <summary>
         /// Average tile width, setted in the drawfunction, also used by MouseUp
@@ -283,6 +315,12 @@ namespace Karo.Gui
             {
                 PlayerSettings playerA = ps.PlayerA;
                 PlayerSettings playerB = ps.PlayerB;
+
+                // check to disable bgw
+                if (!playerA.IsAI || !playerB.IsAI)
+                {
+                    runBgw = false;
+                }
 
                 UIConnector.Instance.MaxAIMoves(ps.MaxAIMoves);
                 UIConnector.Instance.StartGame(playerA, playerB);

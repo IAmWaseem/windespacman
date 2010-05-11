@@ -323,19 +323,21 @@ namespace Karo
 
         private int NumMovesA;
         private int NumMovesB;
+
         private int maxMoves = 1;
+        
         public int MaxMoves
         {
             get
             {
-                if (maxMoves < 1)
-                    maxMoves = 1;
+                if (maxMoves < 0)
+                    maxMoves = 0;
                 return maxMoves;
             }
             set
             {
-                if (value < 1)
-                    maxMoves = 1;
+                if (value < 0)
+                    maxMoves = 0;
                 else
                     maxMoves = value;
             }
@@ -347,7 +349,7 @@ namespace Karo
         public void MakeAIMove()
         {
             DateTime beforeFunction = DateTime.Now;
-            if ((NumMovesA >= MaxMoves || NumMovesB >= MaxMoves) && IsTwoAI())
+            if ((NumMovesA >= MaxMoves && NumMovesB >= MaxMoves) && IsTwoAI())
             {
                 // max moves reached
 
@@ -402,7 +404,7 @@ namespace Karo
             NumMovesB = 0;
 
             maxMoves = moves;
-            MakeAIMove();
+            //MakeAIMove();
         }
 
         public bool IsTwoAI()

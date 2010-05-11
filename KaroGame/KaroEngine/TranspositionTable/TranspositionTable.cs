@@ -15,7 +15,6 @@ namespace Karo
         private int[] transpostionTable;
         private System.Random random = new System.Random();
         private int playerA, playerB;
-        //private int currentState;
 
         /// <summary>
         /// constructor of TranspositionTable class
@@ -43,7 +42,7 @@ namespace Karo
                                 for (int p = 0; p < k; p++)
                                 {
                                     if (hashtable[m, n, p] == hashtable[i, j, k] ||
-                                        playerA == hashtable[i, j, k] || playerB == hashtable[i, j, k])
+                                        playerA == hashtable[m, n, p] || playerB == hashtable[m, n, p])
                                     {
                                         goto NotUniq;
                                     }

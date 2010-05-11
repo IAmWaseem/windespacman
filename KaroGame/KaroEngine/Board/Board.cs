@@ -272,12 +272,26 @@ namespace Karo
                                                     BoardPosition[,] newBoardPosition = (BoardPosition[,])boardPositions.Clone();
                                                     newBoardPosition[movablePoint.X, movablePoint.Y] = BoardPosition.Empty;
                                                     newBoardPosition[moveTileTo.X, moveTileTo.Y] = BoardPosition.Tile;
-                                                    Board newBoard = new Board(newBoardPosition);
-                                                    newBoard.RedItems = this.RedItems;
-                                                    newBoard.WhiteItems = this.WhiteItems;
-                                                    newBoard.IsTileMoved = true;
-                                                    newBoard.MovedTilePosition = moveTileTo;
-                                                    boards.Add(newBoard);
+                                                    bool canBeMovedThere = false;
+
+                                                    if (newBoardPosition[moveTileTo.X + 1, moveTileTo.Y] != BoardPosition.Empty)
+                                                        canBeMovedThere = true;
+                                                    if (newBoardPosition[moveTileTo.X - 1, moveTileTo.Y] != BoardPosition.Empty)
+                                                        canBeMovedThere = true;
+                                                    if (newBoardPosition[moveTileTo.X, moveTileTo.Y + 1] != BoardPosition.Empty)
+                                                        canBeMovedThere = true;
+                                                    if (newBoardPosition[moveTileTo.X, moveTileTo.Y - 1] != BoardPosition.Empty)
+                                                        canBeMovedThere = true;
+
+                                                    if (canBeMovedThere)
+                                                    {
+                                                        Board newBoard = new Board(newBoardPosition);
+                                                        newBoard.RedItems = this.RedItems;
+                                                        newBoard.WhiteItems = this.WhiteItems;
+                                                        newBoard.IsTileMoved = true;
+                                                        newBoard.MovedTilePosition = moveTileTo;
+                                                        boards.Add(newBoard);
+                                                    }
                                                 }
                                             }
                                         }

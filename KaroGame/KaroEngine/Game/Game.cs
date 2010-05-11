@@ -42,18 +42,15 @@ namespace Karo
             }
         }
 
-
-        DateTime start = DateTime.Now;
         /// <summary>
         /// gets the current board
         /// </summary>
         /// <returns>current board</returns>
         public Board GetBoard()
         {
-            TimeSpan s = DateTime.Now - start;
-            if (s.Seconds >= 1 && playerA.PlayerSettings.IsAI && playerB.PlayerSettings.IsAI)
+            if (playerA.PlayerSettings.IsAI && playerB.PlayerSettings.IsAI)
             {
-                start = DateTime.Now;
+
                 MakeAIMove();
             }
             return board;
@@ -371,7 +368,9 @@ namespace Karo
                     // Elapsed time
                     DateTime afterFunction = DateTime.Now;
                     TimeSpan elapsedTime = afterFunction - beforeFunction;
-                    Logger.AddLine(Game.Instance.GetCurrentPlayerNumber() + "-> AI calculated in: " + elapsedTime.TotalMilliseconds.ToString() + " ms");
+                    
+                    int num = NumMovesA;
+                    Logger.AddLine(Game.Instance.GetCurrentPlayerNumber() + "-> AI calculated in: " + elapsedTime.TotalMilliseconds.ToString() + " ms (move: " + num + " / " + maxMoves + ")");
 
                     ChangePlayer();
                 }
@@ -388,7 +387,9 @@ namespace Karo
                     // Elapsed time
                     DateTime afterFunction = DateTime.Now;
                     TimeSpan elapsedTime = afterFunction - beforeFunction;
-                    Logger.AddLine(Game.Instance.GetCurrentPlayerNumber() + "-> AI calculated in: " + elapsedTime.TotalMilliseconds.ToString() + " ms");
+
+                    int num = NumMovesB;
+                    Logger.AddLine(Game.Instance.GetCurrentPlayerNumber() + "-> AI calculated in: " + elapsedTime.TotalMilliseconds.ToString() + " ms (move: " + num + " / " + maxMoves + ")");
 
                     ChangePlayer();
                 }

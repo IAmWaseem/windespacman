@@ -44,6 +44,11 @@ namespace Karo.Gui
         public int MaxAIMoves { get; private set; }
 
         /// <summary>
+        /// Refreshrate
+        /// </summary>
+        public int RefreshRate { get; private set; }
+
+        /// <summary>
         /// Accept button
         /// </summary>
         /// <param name="sender"></param>
@@ -75,6 +80,7 @@ namespace Karo.Gui
                 mPlayerBTransYes.Checked, mPlayerBMoveYes.Checked);
 
             MaxAIMoves = (int)mAIMoves.Value;
+            RefreshRate = (int)numericUpDown1.Value;
 
             this.Visible = false;
         }

@@ -30,6 +30,7 @@ namespace Karo.Gui
 
         private BackgroundWorker bgw;
         private Boolean runBgw = true;
+        private int bgwRefresh = 1000;
 
         private void InitBGW()
         {
@@ -46,7 +47,7 @@ namespace Karo.Gui
         private void bgw_DoWork(object sender, DoWorkEventArgs e)
         {
             // wait for a second
-            Thread.Sleep(1000);
+            Thread.Sleep(bgwRefresh);
         }
 
         private void bgw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -315,6 +316,8 @@ namespace Karo.Gui
             {
                 PlayerSettings playerA = ps.PlayerA;
                 PlayerSettings playerB = ps.PlayerB;
+
+                bgwRefresh = ps.RefreshRate;
 
                 // check to disable bgw
                 if (!playerA.IsAI || !playerB.IsAI)

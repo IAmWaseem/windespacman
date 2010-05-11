@@ -11,8 +11,8 @@ namespace Karo
     class TranspositionTable
     {
         private int tableSize;
-        private int[,,] hashtable;
-        private int[] transpostionTable;
+        private int[, ,] hashtable;
+        private List<HashObject> transpostionTable;
         private System.Random random = new System.Random();
         private int playerA, playerB;
 
@@ -23,7 +23,7 @@ namespace Karo
         public TranspositionTable(int tableSize)
         {
             this.tableSize = tableSize;
-            transpostionTable = new int[tableSize];
+            transpostionTable = new List<HashObject>(tableSize);
             playerA = random.Next();
             while ((playerB = random.Next()) == playerA) { }
             hashtable = new int[21, 20, 5];
@@ -35,14 +35,17 @@ namespace Karo
                     {
                     NotUniq:
                         hashtable[i, j, k] = random.Next();
+                        if (playerA == hashtable[i, j, k] || playerB == hashtable[i, j, k])
+                        {
+                            goto NotUniq;
+                        }
                         for (int m = 0; m <= i; m++)
                         {
                             for (int n = 0; n <= j; n++)
                             {
                                 for (int p = 0; p < k; p++)
                                 {
-                                    if (hashtable[m, n, p] == hashtable[i, j, k] ||
-                                        playerA == hashtable[m, n, p] || playerB == hashtable[m, n, p])
+                                    if (hashtable[m, n, p] == hashtable[i, j, k])
                                     {
                                         goto NotUniq;
                                     }
@@ -58,7 +61,7 @@ namespace Karo
         /// getter of transposition table
         /// </summary>
         /// <returns> transpositon table </returns>
-        public int[] GetTranspositionTable()
+        public List<HashObject> GetTranspositionTable()
         {
             return transpostionTable;
         }
@@ -66,28 +69,41 @@ namespace Karo
         /// <summary>
         /// function calculating hashvalue of given board situation
         /// </summary>
-        /// <param name="boardPositions"> board situation for calculations </param>
+        /// <param name="board"> board for calculations </param>
         /// <param name="turnPlayerA"> bool - which player has it's turn </param>
+        /// <param name="depth"> depth of search in algorithm </param>
         /// <returns> hashvalue of input board </returns>
-        public int HashValueOfBoardState(BoardPosition[,] boardPositions, bool turnPlayerA)
+        public int EvaluationByHashing(Board board, bool turnPlayerA, int depth)
         {
-            int hashBoardState = 0;
+            int hashKey = 0, position = 0;
+
             for (int i = 0; i < 21; i++)
             {
                 for (int j = 0; j < 20; j++)
                 {
-                    if ((int)boardPositions[i, j] != 0)
-                        hashBoardState = hashBoardState ^ hashtable[i, j, (int)boardPositions[i, j] - 1];
+                    if ((int)board.BoardSituation[i, j] != 0)
+                        hashKey = hashKey ^ hashtable[i, j, (int)board.BoardSituation[i, j] - 1];
                 }
             }
+
             if (turnPlayerA)
-                hashBoardState = hashBoardState ^ playerA;
+                hashKey = hashKey ^ playerA;
             else
-                hashBoardState = hashBoardState ^ playerB;
+                hashKey = hashKey ^ playerB;
 
-            transpostionTable[hashBoardState % transpostionTable.Length] = hashBoardState;
+            position = hashKey % transpostionTable.Capacity;
 
-            return hashBoardState;
+            if (transpostionTable[position].hashKey == hashKey)
+            {
+                if (transpostionTable[position].depth < depth)
+                {
+                    transpostionTable[position] = new HashObject(depth, hashKey, board.Evaluation(turnPlayerA));
+                }
+            }
+            else
+                transpostionTable[position] = new HashObject(depth, hashKey, board.Evaluation(turnPlayerA));
+
+            return transpostionTable[position].value;
         }
     }
 }

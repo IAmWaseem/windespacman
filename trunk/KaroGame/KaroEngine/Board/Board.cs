@@ -750,7 +750,7 @@ namespace Karo
                         if (x - 1 >= 0)
                             if (boardPositions[x - 1, y] == BoardPosition.Empty) emptySpots++;
 
-                        if (emptySpots >= 1)
+                        if (emptySpots >= 2)
                         {
                             Point point = new Point(x, y);
                             movablePoints.Add(point);

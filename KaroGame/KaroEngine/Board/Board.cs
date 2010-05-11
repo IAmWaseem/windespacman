@@ -27,6 +27,15 @@ namespace Karo
         /// </summary>
         public int EvaluationValue { get; set; }
 
+        /// <summary>
+        /// Property for the movable points
+        /// </summary>
+        public List<Point> MovablePoints
+        {
+            get { return movablePoints; }
+            private set { movablePoints = value; }
+        }
+
 
         /// <summary>
         /// 

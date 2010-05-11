@@ -307,6 +307,9 @@ namespace Karo.Gui
             newGame();
         }
 
+        private int maxMoves = 100;
+        private bool paused = false;
+
         private void newGame()
         {
             PlayerSetup ps = new PlayerSetup();
@@ -324,8 +327,8 @@ namespace Karo.Gui
                 {
                     runBgw = false;
                 }
-
-                UIConnector.Instance.MaxAIMoves(ps.MaxAIMoves);
+                maxMoves = ps.MaxAIMoves;
+                UIConnector.Instance.MaxAIMoves(maxMoves);
                 UIConnector.Instance.StartGame(playerA, playerB);
 
                 mDrawPanel.Invalidate();
@@ -347,18 +350,23 @@ namespace Karo.Gui
 
             if (e.KeyCode == Keys.Space)
             {
-                if (UIConnector.Instance.IsTwoAI())
-                    UIConnector.Instance.DoAiMove(1);
-            }
-            else if (e.KeyCode == Keys.ShiftKey)
-            {
-                if (UIConnector.Instance.IsTwoAI())
-                    UIConnector.Instance.DoAiMove(2);
+                if (paused)
+                {
+                    if (UIConnector.Instance.IsTwoAI())
+                        UIConnector.Instance.DoAiMove(maxMoves);
+
+                    paused = false;
+                }
+                else
+                {
+                    if (UIConnector.Instance.IsTwoAI())
+                        UIConnector.Instance.DoAiMove(0);
+
+                    paused = true;
+                }
             }
 
             mCurrentPlayerLabel.Text = "Current player: " + UIConnector.Instance.GetCurrentPlayer();
-
-            mDrawPanel.Invalidate();
 
             if (UIConnector.Instance.IsWon())
             {

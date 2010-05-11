@@ -21,6 +21,7 @@ namespace Karo
         private List<Point> piecesList;
         private bool isTileMoved = false;
         private Point movedTilePosition;
+        private IEvaluation evaluationFunction;
 
         /// <summary>
         /// Property for setting evaluation value of the board, used by algorthims.
@@ -43,6 +44,13 @@ namespace Karo
         public Board()
         {
             this.EvaluationValue = 0;
+
+            // what evaluation function to use
+            if (Game.Instance.GetCurrentPlayer().PlayerSettings.EvaluationFunction == EvaluationType.FreeSpace)
+                evaluationFunction = new FreeSpaceEvaluation();
+            else
+                evaluationFunction = new BetterEvaluation();
+
             piecesList = new List<Point>();
             boardPositions = new BoardPosition[21, 20];
             boardPositions[8, 8] = BoardPosition.Tile;
@@ -83,6 +91,12 @@ namespace Karo
         /// <param name="boardPositions"></param>
         public Board(BoardPosition[,] boardPositions)
         {
+            // what evaluation function to use
+            if (Game.Instance.GetCurrentPlayer().PlayerSettings.EvaluationFunction == EvaluationType.FreeSpace)
+                evaluationFunction = new FreeSpaceEvaluation();
+            else
+                evaluationFunction = new BetterEvaluation();
+
             this.EvaluationValue = 0;
             amountOfRedItems = 0;
             amountOfWhiteItems = 0;
@@ -318,202 +332,7 @@ namespace Karo
         /// <returns></returns>
         public int Evaluation(bool isRed)
         {
-            // evaluation value
-            int lEvaluationValue = 0;
-
-            // starttime
-            DateTime lStartTime = DateTime.Now;
-
-            // if won, we don't have to do things
-            if (IsWon())
-                lEvaluationValue = 1000000;
-            else
-            {
-                if (IsTileMoved)
-                {
-                    List<Board> nextMoves = GenerateMoves(isRed);
-                    if (nextMoves.Count == 1)
-                    {
-                        return nextMoves[0].Evaluation(isRed);
-                    }
-                }
-
-                // temp values
-                int lEmptySpots = 0;
-                int lOwnHead = 0;
-
-                // temp value for storing the to be checked head position
-                BoardPosition lHead = BoardPosition.RedHead;
-                if (!isRed)
-                    lHead = BoardPosition.WhiteHead;
-
-                // loop trough board
-                for (int x = 0; x < 21; x++)
-                {
-                    for (int y = 0; y < 20; y++)
-                    {
-                        //if (boardPositions[x, y] == lHead)
-                        //    lOwnHead++;
-
-                        #region "Check if piece belongs to current player"
-
-                        bool lCheck = false;
-
-                        if (boardPositions[x, y] != BoardPosition.Empty && boardPositions[x, y] != BoardPosition.Tile)
-                        {
-                            if (isRed)
-                            {
-                                if (boardPositions[x, y] == BoardPosition.RedHead || boardPositions[x, y] == BoardPosition.RedTail)
-                                    lCheck = true;
-                            }
-                            else if (!isRed)
-                            {
-                                if (boardPositions[x, y] == BoardPosition.WhiteHead || boardPositions[x, y] == BoardPosition.WhiteTail)
-                                    lCheck = true;
-                            }
-                        }
-
-                        #endregion
-
-                        if (lCheck)
-                        {
-                            #region "Left Column"
-
-                            // x - -
-                            // x - -
-                            // x - -
-                            if (x > 0)
-                            {
-                                // x - -
-                                // - - -
-                                // - - -
-                                if (y > 0)
-                                {
-                                    if (boardPositions[x - 1, y - 1] == BoardPosition.Tile)
-                                        lEmptySpots++;
-                                    else if (boardPositions[x - 1, y - 1] == lHead)
-                                        lOwnHead++;
-                                }
-
-                                // - - -
-                                // x - -
-                                // - - -
-                                if (boardPositions[x - 1, y] == BoardPosition.Tile)
-                                    lEmptySpots++;
-                                else if (boardPositions[x - 1, y] == lHead)
-                                    lOwnHead++;
-
-                                // - - -
-                                // - - -
-                                // x - -
-                                if (y < (20 - 1))
-                                {
-                                    if (boardPositions[x - 1, y + 1] == BoardPosition.Tile)
-                                        lEmptySpots++;
-                                    else if (boardPositions[x - 1, y + 1] == lHead)
-                                        lOwnHead++;
-                                }
-                            }
-
-                            #endregion
-
-                            #region "Middle column"
-
-                            // - x -
-                            // - x -
-                            // - x -
-
-                            // - x -
-                            // - - -
-                            // - - -
-                            if (y > 0)
-                            {
-                                if (boardPositions[x, y - 1] == BoardPosition.Tile)
-                                    lEmptySpots++;
-                                else if (boardPositions[x, y - 1] == lHead)
-                                    lOwnHead++;
-                            }
-
-                            // - - -
-                            // - x -
-                            // - - -
-                            // needs no check, is this position
-
-                            // - - -
-                            // - - -
-                            // - x -
-                            if (y < (20 - 1))
-                            {
-                                if (boardPositions[x, y + 1] == BoardPosition.Tile)
-                                    lEmptySpots++;
-                                else if (boardPositions[x, y + 1] == lHead)
-                                    lOwnHead++;
-                            }
-
-                            #endregion
-
-                            #region "Right column"
-
-                            // - - x
-                            // - - x
-                            // - - x
-                            if (x < (21 - 1))
-                            {
-                                // - - x
-                                // - - -
-                                // - - -
-                                if (y > 0)
-                                {
-                                    if (boardPositions[x + 1, y - 1] == BoardPosition.Tile)
-                                        lEmptySpots++;
-                                    else if (boardPositions[x + 1, y - 1] == lHead)
-                                        lOwnHead++;
-                                }
-
-                                // - - -
-                                // - - x
-                                // - - -
-                                if (boardPositions[x + 1, y] == BoardPosition.Tile)
-                                    lEmptySpots++;
-                                else if (boardPositions[x + 1, y] == lHead)
-                                    lOwnHead++;
-
-                                // - - -
-                                // - - -
-                                // - - x
-                                if (y < (20 - 1))
-                                {
-                                    if (boardPositions[x + 1, y + 1] == BoardPosition.Tile)
-                                        lEmptySpots++;
-                                    else if (boardPositions[x + 1, y + 1] == lHead)
-                                        lOwnHead++;
-                                }
-                            }
-
-                            #endregion
-                        }
-                    }
-                }
-
-                // calculate evalution value
-                int evalAdd = 0;
-                if (Game.Instance.CurrentPlayerNumPieces() > 0)
-                {
-                    //evalAdd = (lEmptySpots * (lOwnHead / Game.Instance.CurrentPlayerNumPieces()));
-                    evalAdd = lEmptySpots * (lOwnHead ^ 2);
-                }
-
-                lEvaluationValue = lEmptySpots + evalAdd;
-            }
-
-            #region "debug"
-            //DateTime lStopTime = DateTime.Now;
-            //TimeSpan lDiff = lStopTime - lStartTime;
-
-            //Logger.AddLine("Board -> Evaluation value: " + lEvaluationValue + " (calculated in: " + lDiff.TotalMilliseconds + " ms)");
-            #endregion
-
-            return lEvaluationValue;
+            return evaluationFunction.Evaluate(this, isRed);
         }
 
         /// <summary>

@@ -281,6 +281,7 @@ namespace Karo
         {
             this.playerA = new AIPlayer(playerA);
             this.playerB = new AIPlayer(playerB);
+            
             NumMovesA = 0;
             NumMovesB = 0;
 
@@ -297,6 +298,14 @@ namespace Karo
             Logger.AddLine("Start new game");
 
             MakeAIMove();
+        }
+
+        public AIPlayer GetCurrentPlayer()
+        {
+            if (turnPlayerA)
+                return playerA;
+            else
+                return playerB;
         }
 
         /// <summary>
@@ -326,6 +335,9 @@ namespace Karo
 
         private int maxMoves = 1;
         
+        /// <summary>
+        /// Max moves that can be done by a AI player
+        /// </summary>
         public int MaxMoves
         {
             get

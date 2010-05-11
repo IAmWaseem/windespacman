@@ -5,7 +5,10 @@ using System.Text;
 
 namespace Karo
 {
-    class AIPlayer
+    /// <summary>
+    /// Contains settings for player
+    /// </summary>
+    public class AIPlayer
     {
         private IAlgorithm algorithm = null;
 

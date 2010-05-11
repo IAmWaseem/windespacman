@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.mAfreespace = new System.Windows.Forms.RadioButton();
+            this.mAbetterone = new System.Windows.Forms.RadioButton();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.mPlayerAMoveNo = new System.Windows.Forms.RadioButton();
             this.mPlayerAMoveYes = new System.Windows.Forms.RadioButton();
@@ -46,6 +49,9 @@
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.groupBox13 = new System.Windows.Forms.GroupBox();
+            this.mBfreespace = new System.Windows.Forms.RadioButton();
+            this.mBbetterone = new System.Windows.Forms.RadioButton();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.mPlayerBMoveNo = new System.Windows.Forms.RadioButton();
             this.mPlayerBMoveYes = new System.Windows.Forms.RadioButton();
@@ -60,11 +66,12 @@
             this.mPlayerBAINo = new System.Windows.Forms.RadioButton();
             this.mPlayerBAIYes = new System.Windows.Forms.RadioButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.mAIMoves = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.mAIMoves = new System.Windows.Forms.NumericUpDown();
             this.groupBox1.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.playerA_PlieBox.SuspendLayout();
@@ -72,6 +79,7 @@
             this.playerA_AlgoBox.SuspendLayout();
             this.playerA_AIBox.SuspendLayout();
             this.groupBox7.SuspendLayout();
+            this.groupBox13.SuspendLayout();
             this.groupBox8.SuspendLayout();
             this.groupBox9.SuspendLayout();
             this.groupBox10.SuspendLayout();
@@ -79,12 +87,13 @@
             this.groupBox11.SuspendLayout();
             this.groupBox12.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.mAIMoves)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mAIMoves)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.groupBox4);
             this.groupBox1.Controls.Add(this.groupBox6);
             this.groupBox1.Controls.Add(this.groupBox5);
             this.groupBox1.Controls.Add(this.playerA_PlieBox);
@@ -92,16 +101,49 @@
             this.groupBox1.Controls.Add(this.playerA_AIBox);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(141, 301);
+            this.groupBox1.Size = new System.Drawing.Size(276, 208);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Player A";
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.mAfreespace);
+            this.groupBox4.Controls.Add(this.mAbetterone);
+            this.groupBox4.Location = new System.Drawing.Point(141, 133);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(129, 72);
+            this.groupBox4.TabIndex = 16;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Evaluation function";
+            // 
+            // mAfreespace
+            // 
+            this.mAfreespace.AutoSize = true;
+            this.mAfreespace.Checked = true;
+            this.mAfreespace.Location = new System.Drawing.Point(6, 43);
+            this.mAfreespace.Name = "mAfreespace";
+            this.mAfreespace.Size = new System.Drawing.Size(78, 17);
+            this.mAfreespace.TabIndex = 1;
+            this.mAfreespace.TabStop = true;
+            this.mAfreespace.Text = "Free space";
+            this.mAfreespace.UseVisualStyleBackColor = true;
+            // 
+            // mAbetterone
+            // 
+            this.mAbetterone.AutoSize = true;
+            this.mAbetterone.Location = new System.Drawing.Point(6, 20);
+            this.mAbetterone.Name = "mAbetterone";
+            this.mAbetterone.Size = new System.Drawing.Size(74, 17);
+            this.mAbetterone.TabIndex = 0;
+            this.mAbetterone.Text = "Better one";
+            this.mAbetterone.UseVisualStyleBackColor = true;
             // 
             // groupBox6
             // 
             this.groupBox6.Controls.Add(this.mPlayerAMoveNo);
             this.groupBox6.Controls.Add(this.mPlayerAMoveYes);
-            this.groupBox6.Location = new System.Drawing.Point(6, 245);
+            this.groupBox6.Location = new System.Drawing.Point(141, 76);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(129, 51);
             this.groupBox6.TabIndex = 14;
@@ -134,7 +176,7 @@
             // 
             this.groupBox5.Controls.Add(this.mPlayerATransNo);
             this.groupBox5.Controls.Add(this.mPlayerATransYes);
-            this.groupBox5.Location = new System.Drawing.Point(6, 188);
+            this.groupBox5.Location = new System.Drawing.Point(141, 19);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(129, 51);
             this.groupBox5.TabIndex = 14;
@@ -244,7 +286,7 @@
             // button1
             // 
             this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.button1.Location = new System.Drawing.Point(144, 398);
+            this.button1.Location = new System.Drawing.Point(414, 276);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 14;
@@ -255,7 +297,7 @@
             // button3
             // 
             this.button3.DialogResult = System.Windows.Forms.DialogResult.Abort;
-            this.button3.Location = new System.Drawing.Point(225, 398);
+            this.button3.Location = new System.Drawing.Point(495, 276);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 15;
@@ -265,7 +307,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(12, 398);
+            this.button4.Location = new System.Drawing.Point(306, 276);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(75, 23);
             this.button4.TabIndex = 16;
@@ -275,23 +317,57 @@
             // 
             // groupBox7
             // 
+            this.groupBox7.Controls.Add(this.groupBox13);
             this.groupBox7.Controls.Add(this.groupBox8);
             this.groupBox7.Controls.Add(this.groupBox9);
             this.groupBox7.Controls.Add(this.groupBox10);
             this.groupBox7.Controls.Add(this.groupBox11);
             this.groupBox7.Controls.Add(this.groupBox12);
-            this.groupBox7.Location = new System.Drawing.Point(159, 12);
+            this.groupBox7.Location = new System.Drawing.Point(294, 12);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(141, 301);
+            this.groupBox7.Size = new System.Drawing.Size(276, 208);
             this.groupBox7.TabIndex = 16;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Player B";
+            // 
+            // groupBox13
+            // 
+            this.groupBox13.Controls.Add(this.mBfreespace);
+            this.groupBox13.Controls.Add(this.mBbetterone);
+            this.groupBox13.Location = new System.Drawing.Point(141, 133);
+            this.groupBox13.Name = "groupBox13";
+            this.groupBox13.Size = new System.Drawing.Size(129, 72);
+            this.groupBox13.TabIndex = 16;
+            this.groupBox13.TabStop = false;
+            this.groupBox13.Text = "Evaluation function";
+            // 
+            // mBfreespace
+            // 
+            this.mBfreespace.AutoSize = true;
+            this.mBfreespace.Location = new System.Drawing.Point(6, 43);
+            this.mBfreespace.Name = "mBfreespace";
+            this.mBfreespace.Size = new System.Drawing.Size(78, 17);
+            this.mBfreespace.TabIndex = 1;
+            this.mBfreespace.Text = "Free space";
+            this.mBfreespace.UseVisualStyleBackColor = true;
+            // 
+            // mBbetterone
+            // 
+            this.mBbetterone.AutoSize = true;
+            this.mBbetterone.Checked = true;
+            this.mBbetterone.Location = new System.Drawing.Point(6, 20);
+            this.mBbetterone.Name = "mBbetterone";
+            this.mBbetterone.Size = new System.Drawing.Size(74, 17);
+            this.mBbetterone.TabIndex = 0;
+            this.mBbetterone.TabStop = true;
+            this.mBbetterone.Text = "Better one";
+            this.mBbetterone.UseVisualStyleBackColor = true;
             // 
             // groupBox8
             // 
             this.groupBox8.Controls.Add(this.mPlayerBMoveNo);
             this.groupBox8.Controls.Add(this.mPlayerBMoveYes);
-            this.groupBox8.Location = new System.Drawing.Point(6, 245);
+            this.groupBox8.Location = new System.Drawing.Point(141, 76);
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Size = new System.Drawing.Size(129, 51);
             this.groupBox8.TabIndex = 14;
@@ -324,7 +400,7 @@
             // 
             this.groupBox9.Controls.Add(this.mPlayerBTransNo);
             this.groupBox9.Controls.Add(this.mPlayerBTransYes);
-            this.groupBox9.Location = new System.Drawing.Point(6, 188);
+            this.groupBox9.Location = new System.Drawing.Point(141, 19);
             this.groupBox9.Name = "groupBox9";
             this.groupBox9.Size = new System.Drawing.Size(129, 51);
             this.groupBox9.TabIndex = 14;
@@ -437,34 +513,30 @@
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.numericUpDown1);
             this.groupBox2.Controls.Add(this.mAIMoves);
-            this.groupBox2.Location = new System.Drawing.Point(12, 319);
+            this.groupBox2.Location = new System.Drawing.Point(12, 226);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(288, 73);
             this.groupBox2.TabIndex = 17;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Engine behaviour";
             // 
-            // mAIMoves
+            // label2
             // 
-            this.mAIMoves.Location = new System.Drawing.Point(115, 19);
-            this.mAIMoves.Maximum = new decimal(new int[] {
-            100000000,
-            0,
-            0,
-            0});
-            this.mAIMoves.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.mAIMoves.Name = "mAIMoves";
-            this.mAIMoves.Size = new System.Drawing.Size(117, 20);
-            this.mAIMoves.TabIndex = 6;
-            this.mAIMoves.Value = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 47);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(84, 13);
+            this.label2.TabIndex = 9;
+            this.label2.Text = "Refreshrate (ms)";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 21);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(72, 13);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "Max ai moves";
             // 
             // numericUpDown1
             // 
@@ -488,41 +560,48 @@
             0,
             0});
             // 
-            // label1
+            // mAIMoves
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 21);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(72, 13);
-            this.label1.TabIndex = 8;
-            this.label1.Text = "Max ai moves";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 47);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(84, 13);
-            this.label2.TabIndex = 9;
-            this.label2.Text = "Refreshrate (ms)";
+            this.mAIMoves.Location = new System.Drawing.Point(115, 19);
+            this.mAIMoves.Maximum = new decimal(new int[] {
+            100000000,
+            0,
+            0,
+            0});
+            this.mAIMoves.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.mAIMoves.Name = "mAIMoves";
+            this.mAIMoves.Size = new System.Drawing.Size(117, 20);
+            this.mAIMoves.TabIndex = 6;
+            this.mAIMoves.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
             // 
             // PlayerSetup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(312, 428);
+            this.ClientSize = new System.Drawing.Size(577, 305);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox1);
-            this.MinimumSize = new System.Drawing.Size(328, 382);
+            this.MaximumSize = new System.Drawing.Size(593, 341);
+            this.MinimumSize = new System.Drawing.Size(593, 341);
             this.Name = "PlayerSetup";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Player setup";
             this.groupBox1.ResumeLayout(false);
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
             this.groupBox5.ResumeLayout(false);
@@ -533,6 +612,8 @@
             this.playerA_AIBox.ResumeLayout(false);
             this.playerA_AIBox.PerformLayout();
             this.groupBox7.ResumeLayout(false);
+            this.groupBox13.ResumeLayout(false);
+            this.groupBox13.PerformLayout();
             this.groupBox8.ResumeLayout(false);
             this.groupBox8.PerformLayout();
             this.groupBox9.ResumeLayout(false);
@@ -544,8 +625,8 @@
             this.groupBox12.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.mAIMoves)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mAIMoves)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -588,5 +669,11 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.RadioButton mAfreespace;
+        private System.Windows.Forms.RadioButton mAbetterone;
+        private System.Windows.Forms.GroupBox groupBox13;
+        private System.Windows.Forms.RadioButton mBfreespace;
+        private System.Windows.Forms.RadioButton mBbetterone;
     }
 }

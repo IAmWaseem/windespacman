@@ -37,6 +37,11 @@ namespace Karo
         /// </summary>
         public bool DoMoveOrdering { get; set; }
 
+        /// <summary>
+        /// Evaluationtype
+        /// </summary>
+        public EvaluationType EvaluationFunction { get; set; }
+
         #endregion
 
         #region "Constructors"
@@ -51,6 +56,7 @@ namespace Karo
             PlieDepth = 0;
             DoTransTable = false;
             DoMoveOrdering = false;
+            EvaluationFunction = EvaluationType.FreeSpace;
         }
 
         /// <summary>
@@ -61,13 +67,14 @@ namespace Karo
         /// <param name="pPlieDepth">Plie depth used by the algorithm (if MiniMax or AlphaBeta)</param>
         /// <param name="pTransTable">Algorithm uses transposition table (if MiniMax or AlphaBeta)</param>
         /// <param name="pMoveOrdering">Algorithm sorts the moves (if AlphaBeta)</param>
-        public PlayerSettings(bool pIsAI, AlgorithmType pAlgorithmType, int pPlieDepth, bool pTransTable, bool pMoveOrdering)
+        public PlayerSettings(bool pIsAI, AlgorithmType pAlgorithmType, int pPlieDepth, bool pTransTable, bool pMoveOrdering, EvaluationType pEt)
         {
             IsAI = pIsAI;
             AlgorithmType = pAlgorithmType;
             PlieDepth = pPlieDepth;
             DoTransTable = pTransTable;
             DoMoveOrdering = pMoveOrdering;
+            EvaluationFunction = pEt;
         }
 
         #endregion

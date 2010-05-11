@@ -63,9 +63,17 @@ namespace Karo.Gui
             else
                 algoA = AlgorithmType.Random;
 
+            EvaluationType etA = EvaluationType.FreeSpace;
+            if (mAbetterone.Checked)
+                etA = EvaluationType.BetterOne;
+
+            EvaluationType etB = EvaluationType.FreeSpace;
+            if (mBbetterone.Checked)
+                etB = EvaluationType.BetterOne;
+
             PlayerA = new PlayerSettings(
                 mPlayerAAIYes.Checked, algoA, (int)mPlayerAPlieDepth.Value, 
-                mPlayerATransYes.Checked, mPlayerAMoveYes.Checked);
+                mPlayerATransYes.Checked, mPlayerAMoveYes.Checked, etA);
 
             AlgorithmType algoB = AlgorithmType.Random;
             if (mPlayerBAlgoComboBox.SelectedIndex == 1)
@@ -77,7 +85,7 @@ namespace Karo.Gui
 
             PlayerB = new PlayerSettings(
                 mPlayerBAIYes.Checked, algoB, (int)mPlayerBPlieDepth.Value,
-                mPlayerBTransYes.Checked, mPlayerBMoveYes.Checked);
+                mPlayerBTransYes.Checked, mPlayerBMoveYes.Checked, etB);
 
             MaxAIMoves = (int)mAIMoves.Value;
             RefreshRate = (int)numericUpDown1.Value;

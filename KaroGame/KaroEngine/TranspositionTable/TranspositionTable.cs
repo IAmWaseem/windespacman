@@ -12,7 +12,7 @@ namespace Karo
     {
         private int tableSize;
         private int[, ,] hashtable;
-        private List<HashObject> transpostionTable;
+        private HashObject[] transpostionTable;
         private System.Random random = new System.Random();
         private int playerA, playerB;
 
@@ -23,7 +23,7 @@ namespace Karo
         public TranspositionTable(int tableSize)
         {
             this.tableSize = tableSize;
-            transpostionTable = new List<HashObject>(tableSize);
+            transpostionTable = new HashObject[tableSize];
             playerA = random.Next();
             while ((playerB = random.Next()) == playerA) { }
             hashtable = new int[21, 20, 5];
@@ -61,7 +61,7 @@ namespace Karo
         /// getter of transposition table
         /// </summary>
         /// <returns> transpositon table </returns>
-        public List<HashObject> GetTranspositionTable()
+        public HashObject[] GetTranspositionTable()
         {
             return transpostionTable;
         }
@@ -91,19 +91,38 @@ namespace Karo
             else
                 hashKey = hashKey ^ playerB;
 
-            position = hashKey % transpostionTable.Capacity;
-
-            if (transpostionTable[position].hashKey == hashKey)
+            TableTooSmall:
+            position = hashKey % tableSize;
+            if (transpostionTable[position] == null) 
+            {
+                transpostionTable[position] = new HashObject(depth, hashKey, board.Evaluation(turnPlayerA));
+            } 
+            else if (transpostionTable[position].hashKey == hashKey)
             {
                 if (transpostionTable[position].depth < depth)
                 {
                     transpostionTable[position] = new HashObject(depth, hashKey, board.Evaluation(turnPlayerA));
                 }
             }
-            else
-                transpostionTable[position] = new HashObject(depth, hashKey, board.Evaluation(turnPlayerA));
+            else 
+            {
+                tableResize();
+                goto TableTooSmall;
+            }
 
             return transpostionTable[position].value;
+        }
+
+        private void tableResize()
+        {
+            tableSize *= 2;
+            HashObject[] transTable = new HashObject[tableSize];
+            foreach (HashObject obj in transpostionTable)
+            {
+                if(obj!=null)
+                    transTable[obj.hashKey % tableSize] = obj;
+            }
+            transpostionTable = transTable;
         }
     }
 }

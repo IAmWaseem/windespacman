@@ -672,8 +672,7 @@ namespace Karo
                 }
             }
 
-
-            return new List<PieceSituation>();
+            return situations;
         }
     }
 

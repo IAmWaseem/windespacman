@@ -28,6 +28,7 @@ namespace Karo
                 lEvaluationValue = 140;
             else
             {
+                // check if tile moved, if so, return evaluation value of next board of tile moved
                 if (board.IsTileMoved)
                 {
                     List<Board> nextMoves = board.GenerateMoves(isRed);
@@ -36,9 +37,25 @@ namespace Karo
                         return nextMoves[0].Evaluation(isRed);
                     }
                 }
+                else
+                {
+                    // tiles not moves, so we can continue here
+
+
+
+
+                }
             }
 
-            return lEvaluationValue;
+            // add amount of head times 5 to eval value
+            int addToEval = 0;
+
+            if (isRed)
+                addToEval += 5 * board.RedHeads;
+            else
+                addToEval += 5 * board.WhiteHeads;
+
+            return (lEvaluationValue + addToEval);
         }
 
         private List<PieceSituation> FindSituations(BoardPosition[,] boardSituation, bool isRed)

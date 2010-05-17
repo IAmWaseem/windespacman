@@ -43,6 +43,49 @@ namespace Karo
                     // tiles not moves, so we can continue here
                     List<PieceSituation> goodSituations = FindSituations(board.BoardSituation, isRed);
                     List<PieceSituation> badSituations = FindSituations(board.BoardSituation, !isRed);
+                    
+                    if (goodSituations.Count > 0)
+                    {
+                        foreach (PieceSituation ps in goodSituations)
+                        {
+                            if (ps == PieceSituation.ThreeHeads)
+                            {
+                                if (lEvaluationValue < 100)
+                                    lEvaluationValue = 100;
+                            }
+                            else if (ps == PieceSituation.ThreeHeadsBlocked)
+                            {
+                                if (lEvaluationValue < 20)
+                                    lEvaluationValue = 20;
+                            }
+                            else if (ps == PieceSituation.ThreeHeadsWithSpace)
+                            {
+                                if (lEvaluationValue < 60)
+                                    lEvaluationValue = 60;
+                            }
+                        }
+                    }
+                    else if(badSituations.Count>0)
+                    {
+                        foreach (PieceSituation ps in badSituations)
+                        {
+                            if (ps == PieceSituation.ThreeHeads)
+                            {
+                                if (lEvaluationValue > -100)
+                                    lEvaluationValue = -100;
+                            }
+                            else if (ps == PieceSituation.ThreeHeadsBlocked)
+                            {
+                                if (lEvaluationValue > -20)
+                                    lEvaluationValue = -20;
+                            }
+                            else if (ps == PieceSituation.ThreeHeadsWithSpace)
+                            {
+                                if (lEvaluationValue > -60)
+                                    lEvaluationValue = -60;
+                            }
+                        }
+                    }
 
                     if (goodSituations.Count > 0)
                     {

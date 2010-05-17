@@ -41,13 +41,117 @@ namespace Karo
             return lEvaluationValue;
         }
 
-        private List<PieceSituation> FindSituations(BoardPosition[,] boardSituation)
+        private List<PieceSituation> FindSituations(BoardPosition[,] boardSituation, bool isRed)
         {
+            BoardPosition lookFor = BoardPosition.RedHead;
+            if (!isRed)
+                lookFor = BoardPosition.WhiteHead;
+
+            List<PieceSituation> situations = new List<PieceSituation>();
+
             for (int x = 0; x < 21; x++)
             {
                 for (int y = 0; y < 20; y++)
                 {
                     BoardPosition current = boardSituation[x, y];
+
+                    if (current == lookFor)
+                    {
+                        #region LeftLeft
+
+                        // left left
+                        if (x > 0)
+                        {
+                            // check if neighbour is also head
+                            if (boardSituation[x - 1, y] == lookFor)
+                            {
+                                // check if we can move left
+                                if (x > 1)
+                                {
+                                    if (boardSituation[x - 2, y] == lookFor)
+                                    {
+                                        // if neighbour is also head
+                                        // three heads on a row
+                                        situations.Add(PieceSituation.MaxThreeHeads);
+                                    }
+                                    else if (boardSituation[x - 2, y] != BoardPosition.Empty)
+                                    {
+                                        // space is not nothing, but also not a head of yourself
+
+                                        if (boardSituation[x - 2, y] == BoardPosition.Tile)
+                                        {
+                                            // if next is tile, then we can have tree with space
+                                            if (boardSituation[x - 3, y] == lookFor)
+                                                situations.Add(PieceSituation.MaxThreeHeadsWithSpace);
+                                        }
+                                        else
+                                        {
+                                            // three with space and blocked
+                                            if (boardSituation[x - 3, y] == lookFor)
+                                                situations.Add(PieceSituation.MaxThreeHeadsBlocked);
+                                        }
+                                    }
+                                }
+                            }
+                            else if (boardSituation[x - 1, y] != BoardPosition.Empty)
+                            {
+                                // space next to piece is not nothing or not a head of himself
+                                if (x > 2)
+                                {
+                                    if (boardSituation[x - 1, y] == BoardPosition.Tile)
+                                    {
+                                        // space is tile
+                                        if (boardSituation[x - 2, y] == lookFor)
+                                        {
+                                            // if next two spaces are head of himself then max tree with space
+                                            if (boardSituation[x - 3, y] == lookFor)
+                                                situations.Add(PieceSituation.MaxThreeHeadsWithSpace);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        // space was blocked
+                                        if (boardSituation[x - 2, y] == lookFor)
+                                        {
+                                            // if next two spaces are head of himself then max tree with blocked point
+                                            if (boardSituation[x - 3, y] == lookFor)
+                                                situations.Add(PieceSituation.MaxThreeHeadsBlocked);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        #endregion
+
+                        #region RightRight
+
+                        #endregion
+
+                        #region UpUp
+
+                        #endregion
+
+                        #region DownDown
+
+                        #endregion
+
+                        #region UpLeft
+
+                        #endregion
+
+                        #region UpRight
+
+                        #endregion
+
+                        #region DownLeft
+
+                        #endregion
+
+                        #region DownRight
+
+                        #endregion
+                    }
                 }
             }
 

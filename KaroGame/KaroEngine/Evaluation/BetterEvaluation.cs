@@ -5,17 +5,7 @@ using System.Text;
 
 namespace Karo
 {
-    enum EvaluationForms
-    {
-        MaxFourHeads = 0,
-        MaxThreeHeads = 1,
-        MaxThreeHeadsWithSpace = 2,
-        MaxThreeHeadsBlocked = 3,
-        MinThreeHeadsBlocked = 4,
-        MinThreeHeadsWithSpace = 5,
-        MinThreeHeads = 6,
-        MinFourHeads = 7
-    }
+
 
     class BetterEvaluation : IEvaluation
     {
@@ -49,6 +39,32 @@ namespace Karo
             }
 
             return lEvaluationValue;
-        }    
+        }
+
+        private List<PieceSituation> FindSituations(BoardPosition[,] boardSituation)
+        {
+            for (int x = 0; x < 21; x++)
+            {
+                for (int y = 0; y < 20; y++)
+                {
+                    BoardPosition current = boardSituation[x, y];
+                }
+            }
+
+
+            return new List<PieceSituation>();
+        }
+    }
+
+    enum PieceSituation
+    {
+        MaxFourHeads = 0,
+        MaxThreeHeads = 1,
+        MaxThreeHeadsWithSpace = 2,
+        MaxThreeHeadsBlocked = 3,
+        MinThreeHeadsBlocked = 4,
+        MinThreeHeadsWithSpace = 5,
+        MinThreeHeads = 6,
+        MinFourHeads = 7
     }
 }

@@ -46,52 +46,24 @@ namespace Karo
                     
                     if (goodSituations.Count > 0)
                     {
-                        foreach (PieceSituation ps in goodSituations)
-                        {
-                            if (ps == PieceSituation.ThreeHeads)
-                            {
-                                if (lEvaluationValue < 100)
-                                    lEvaluationValue = 100;
-                            }
-                            else if (ps == PieceSituation.ThreeHeadsBlocked)
-                            {
-                                if (lEvaluationValue < 20)
-                                    lEvaluationValue = 20;
-                            }
-                            else if (ps == PieceSituation.ThreeHeadsWithSpace)
-                            {
-                                if (lEvaluationValue < 60)
-                                    lEvaluationValue = 60;
-                            }
-                        }
-                    }
-                    else if(badSituations.Count>0)
-                    {
-                        foreach (PieceSituation ps in badSituations)
-                        {
-                            if (ps == PieceSituation.ThreeHeads)
-                            {
-                                if (lEvaluationValue > -100)
-                                    lEvaluationValue = -100;
-                            }
-                            else if (ps == PieceSituation.ThreeHeadsBlocked)
-                            {
-                                if (lEvaluationValue > -20)
-                                    lEvaluationValue = -20;
-                            }
-                            else if (ps == PieceSituation.ThreeHeadsWithSpace)
-                            {
-                                if (lEvaluationValue > -60)
-                                    lEvaluationValue = -60;
-                            }
-                        }
-                    }
-
-                    if (goodSituations.Count > 0)
-                    {
                         IOrderedEnumerable<PieceSituation> orderedGood = from e in goodSituations orderby e select e;
+                        if (orderedGood.First() == PieceSituation.ThreeHeads)
+                            lEvaluationValue = 100;
+                        else if (orderedGood.First() == PieceSituation.ThreeHeadsWithSpace)
+                            lEvaluationValue = 60;
+                        else if (orderedGood.First() == PieceSituation.ThreeHeadsBlocked)
+                            lEvaluationValue = 20;
                     }
-
+                    else if (badSituations.Count > 0)
+                    {
+                        IOrderedEnumerable<PieceSituation> orderedBad = from e in badSituations orderby e select e;
+                        if (orderedBad.First() == PieceSituation.ThreeHeads)
+                            lEvaluationValue = -100;
+                        else if (orderedBad.First() == PieceSituation.ThreeHeadsWithSpace)
+                            lEvaluationValue = -60;
+                        else if (orderedBad.First() == PieceSituation.ThreeHeadsBlocked)
+                            lEvaluationValue = -20;
+                    }
                 }
             }
 

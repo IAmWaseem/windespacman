@@ -37,6 +37,40 @@ namespace Karo
             private set { movablePoints = value; }
         }
 
+        /// <summary>
+        /// Amount of red heads
+        /// </summary>
+        public int RedHeads
+        {
+            get
+            {
+                int count = 0;
+                foreach (BoardPosition b in boardPositions)
+                {
+                    if (b == BoardPosition.RedHead)
+                        count++;
+                }
+                return count;
+            }
+        }
+
+        /// <summary>
+        /// Amount of white heads
+        /// </summary>
+        public int WhiteHeads
+        {
+            get
+            {
+                int count = 0;
+                foreach (BoardPosition b in boardPositions)
+                {
+                    if (b == BoardPosition.WhiteHead)
+                        count++;
+                }
+                return count;
+            }
+        }
+
 
         /// <summary>
         /// 

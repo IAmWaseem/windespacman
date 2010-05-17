@@ -21,7 +21,6 @@ namespace Karo
         private List<Point> piecesList;
         private bool isTileMoved = false;
         private Point movedTilePosition;
-        private IEvaluation evaluationFunction;
 
         /// <summary>
         /// Property for setting evaluation value of the board, used by algorthims.
@@ -79,12 +78,6 @@ namespace Karo
         {
             this.EvaluationValue = 0;
 
-            // what evaluation function to use
-            if (Game.Instance.GetCurrentPlayer().PlayerSettings.EvaluationFunction == EvaluationType.FreeSpace)
-                evaluationFunction = new FreeSpaceEvaluation();
-            else
-                evaluationFunction = new BetterEvaluation();
-
             piecesList = new List<Point>();
             boardPositions = new BoardPosition[21, 20];
             boardPositions[8, 8] = BoardPosition.Tile;
@@ -125,12 +118,6 @@ namespace Karo
         /// <param name="boardPositions"></param>
         public Board(BoardPosition[,] boardPositions)
         {
-            // what evaluation function to use
-            if (Game.Instance.GetCurrentPlayer().PlayerSettings.EvaluationFunction == EvaluationType.FreeSpace)
-                evaluationFunction = new FreeSpaceEvaluation();
-            else
-                evaluationFunction = new BetterEvaluation();
-
             this.EvaluationValue = 0;
             amountOfRedItems = 0;
             amountOfWhiteItems = 0;
@@ -414,7 +401,11 @@ namespace Karo
         /// <returns></returns>
         public int Evaluation(bool isRed)
         {
-            return evaluationFunction.Evaluate(this, isRed);
+            // what evaluation function to use
+            if (Game.Instance.GetCurrentPlayer().PlayerSettings.EvaluationFunction == EvaluationType.FreeSpace)
+                return FreeSpaceEvaluation.Evaluate(this, isRed);
+            else
+                return BetterEvaluation.Evaluate(this, isRed);
         }
 
         /// <summary>

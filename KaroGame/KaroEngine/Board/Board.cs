@@ -265,6 +265,40 @@ namespace Karo
                                                     boards.Add(newBoard);
                                                 }
                                             }
+                                            else if (boardPositions[x + i + i, y + j + j] == BoardPosition.Empty && !isTileMoved)
+                                            {
+                                                Point moveTileTo = new Point(x + i + i, y + j + j);
+
+                                                foreach (Point movablePoint in movablePoints)
+                                                {
+                                                     if(boardPositions[movablePoint.X, movablePoint.Y] == BoardPosition.Tile)
+                                                     {
+                                                        BoardPosition[,] newBoardPosition = (BoardPosition[,])boardPositions.Clone();
+                                                        newBoardPosition[movablePoint.X, movablePoint.Y] = BoardPosition.Empty;
+                                                        newBoardPosition[moveTileTo.X, moveTileTo.Y] = BoardPosition.Tile;
+                                                        bool canBeMovedThere = false;
+
+                                                        if (newBoardPosition[moveTileTo.X + 1, moveTileTo.Y] != BoardPosition.Empty)
+                                                            canBeMovedThere = true;
+                                                        if (newBoardPosition[moveTileTo.X - 1, moveTileTo.Y] != BoardPosition.Empty)
+                                                            canBeMovedThere = true;
+                                                        if (newBoardPosition[moveTileTo.X, moveTileTo.Y + 1] != BoardPosition.Empty)
+                                                            canBeMovedThere = true;
+                                                        if (newBoardPosition[moveTileTo.X, moveTileTo.Y - 1] != BoardPosition.Empty)
+                                                            canBeMovedThere = true;
+
+                                                        if (canBeMovedThere)
+                                                        {
+                                                            Board newBoard = new Board(newBoardPosition);
+                                                            newBoard.RedItems = this.RedItems;
+                                                            newBoard.WhiteItems = this.WhiteItems;
+                                                            newBoard.IsTileMoved = true;
+                                                            newBoard.MovedTilePosition = moveTileTo;
+                                                            boards.Add(newBoard);
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         }
                                     }
                                     else if (!isTileMoved && (boardPositions[x + i, y + j] == BoardPosition.Empty || boardPositions[x + i + i, y + j + j] == BoardPosition.Empty))

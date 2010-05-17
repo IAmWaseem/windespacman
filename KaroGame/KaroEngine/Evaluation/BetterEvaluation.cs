@@ -7,7 +7,7 @@ namespace Karo
 {
 
 
-    class BetterEvaluation : IEvaluation
+    class BetterEvaluation
     {
         /// <summary>
         /// Evaluates the board
@@ -15,7 +15,7 @@ namespace Karo
         /// <param name="board">Provided board</param>
         /// <param name="isRed">Is player red's turn</param>
         /// <returns></returns>
-        public int Evaluate(Board board, bool isRed)
+        public static int Evaluate(Board board, bool isRed)
         {
             // evaluation value
             int lEvaluationValue = 0;
@@ -60,7 +60,7 @@ namespace Karo
             return (lEvaluationValue + addToEval);
         }
 
-        private List<PieceSituation> FindSituations(BoardPosition[,] boardSituation, bool isRed)
+        private static List<PieceSituation> FindSituations(BoardPosition[,] boardSituation, bool isRed)
         {
             BoardPosition lookFor = BoardPosition.RedHead;
             if (!isRed)

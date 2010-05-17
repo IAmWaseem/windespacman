@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Karo
 {
-    class FreeSpaceEvaluation : IEvaluation
+    class FreeSpaceEvaluation
     {
         /// <summary>
         /// Evaluates the board
@@ -13,7 +13,7 @@ namespace Karo
         /// <param name="board">Provided board</param>
         /// <param name="isRed">Is player red's turn</param>
         /// <returns></returns>
-        public int Evaluate(Board board, bool isRed)
+        public static int Evaluate(Board board, bool isRed)
         {
             // evaluation value
             int lEvaluationValue = 0;

@@ -270,7 +270,7 @@ namespace Karo.Gui
 
             if (UIConnector.Instance.IsWon())
             {
-                DialogResult ok = MessageBox.Show((UIConnector.Instance.GetCurrentPlayerNumber() == 2 ? "Player B " : "Player A ") + "has won");
+                DialogResult ok = MessageBox.Show((UIConnector.Instance.GetCurrentPlayerNumber() == 2 ? "Player A " : "Player B ") + "has won");
                 if (ok == DialogResult.OK)
                 {
                     newGame();

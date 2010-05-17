@@ -218,9 +218,139 @@ namespace Karo
 
                         #region UpUp
 
+                        // up up
+                        if (y > 0)
+                        {
+                            // check if neighbour is also head
+                            if (boardSituation[x, y - 1] == lookFor)
+                            {
+                                // check if we can move left
+                                if (y > 1)
+                                {
+                                    if (boardSituation[x, y - 2] == lookFor)
+                                    {
+                                        // if neighbour is also head
+                                        // three heads on a row
+                                        situations.Add(PieceSituation.MaxThreeHeads);
+                                    }
+                                    else if (boardSituation[x, y - 2] != BoardPosition.Empty)
+                                    {
+                                        // space is not nothing, but also not a head of yourself
+                                        if (y > 2)
+                                        {
+                                            if (boardSituation[x, y - 2] == BoardPosition.Tile)
+                                            {
+                                                // if next is tile, then we can have tree with space
+                                                if (boardSituation[x, y - 3] == lookFor)
+                                                    situations.Add(PieceSituation.MaxThreeHeadsWithSpace);
+                                            }
+                                            else
+                                            {
+                                                // three with space and blocked
+                                                if (boardSituation[x, y - 3] == lookFor)
+                                                    situations.Add(PieceSituation.MaxThreeHeadsBlocked);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            else if (boardSituation[x, y - 2] != BoardPosition.Empty)
+                            {
+                                // space next to piece is not nothing or not a head of himself
+                                if (y > 2)
+                                {
+                                    if (boardSituation[x, y - 1] == BoardPosition.Tile)
+                                    {
+                                        // space is tile
+                                        if (boardSituation[x, y - 2] == lookFor)
+                                        {
+                                            // if next two spaces are head of himself then max tree with space
+                                            if (boardSituation[x, y - 3] == lookFor)
+                                                situations.Add(PieceSituation.MaxThreeHeadsWithSpace);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        // space was blocked
+                                        if (boardSituation[x, y - 2] == lookFor)
+                                        {
+                                            // if next two spaces are head of himself then max tree with blocked point
+                                            if (boardSituation[x, y - 3] == lookFor)
+                                                situations.Add(PieceSituation.MaxThreeHeadsBlocked);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
                         #endregion
 
                         #region DownDown
+
+                        // down down
+                        if (y < 19)
+                        {
+                            // check if neighbour is also head
+                            if (boardSituation[x, y + 1] == lookFor)
+                            {
+                                // check if we can move left
+                                if (y < 18)
+                                {
+                                    if (boardSituation[x, y + 2] == lookFor)
+                                    {
+                                        // if neighbour is also head
+                                        // three heads on a row
+                                        situations.Add(PieceSituation.MaxThreeHeads);
+                                    }
+                                    else if (boardSituation[x, y + 2] != BoardPosition.Empty)
+                                    {
+                                        // space is not nothing, but also not a head of yourself
+                                        if (y < 17)
+                                        {
+                                            if (boardSituation[x, y + 2] == BoardPosition.Tile)
+                                            {
+                                                // if next is tile, then we can have tree with space
+                                                if (boardSituation[x, y + 3] == lookFor)
+                                                    situations.Add(PieceSituation.MaxThreeHeadsWithSpace);
+                                            }
+                                            else
+                                            {
+                                                // three with space and blocked
+                                                if (boardSituation[x, y + 3] == lookFor)
+                                                    situations.Add(PieceSituation.MaxThreeHeadsBlocked);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            else if (boardSituation[x, y + 2] != BoardPosition.Empty)
+                            {
+                                // space next to piece is not nothing or not a head of himself
+                                if (y < 17)
+                                {
+                                    if (boardSituation[x, y + 1] == BoardPosition.Tile)
+                                    {
+                                        // space is tile
+                                        if (boardSituation[x, y + 2] == lookFor)
+                                        {
+                                            // if next two spaces are head of himself then max tree with space
+                                            if (boardSituation[x, y + 3] == lookFor)
+                                                situations.Add(PieceSituation.MaxThreeHeadsWithSpace);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        // space was blocked
+                                        if (boardSituation[x, y + 2] == lookFor)
+                                        {
+                                            // if next two spaces are head of himself then max tree with blocked point
+                                            if (boardSituation[x, y + 3] == lookFor)
+                                                situations.Add(PieceSituation.MaxThreeHeadsBlocked);
+                                        }
+                                    }
+                                }
+                            }
+                        }
 
                         #endregion
 
@@ -384,9 +514,139 @@ namespace Karo
 
                         #region DownLeft
 
+                        // down left
+                        if (y < 19 && x > 0)
+                        {
+                            // check if neighbour is also head
+                            if (boardSituation[x - 1, y + 1] == lookFor)
+                            {
+                                // check if we can move left
+                                if (y < 18 && x > 1)
+                                {
+                                    if (boardSituation[x - 2, y + 2] == lookFor)
+                                    {
+                                        // if neighbour is also head
+                                        // three heads on a row
+                                        situations.Add(PieceSituation.MaxThreeHeads);
+                                    }
+                                    else if (boardSituation[x - 2, y + 2] != BoardPosition.Empty)
+                                    {
+                                        // space is not nothing, but also not a head of yourself
+                                        if (y < 17 && x > 2)
+                                        {
+                                            if (boardSituation[x - 2, y + 2] == BoardPosition.Tile)
+                                            {
+                                                // if next is tile, then we can have tree with space
+                                                if (boardSituation[x - 3, y + 3] == lookFor)
+                                                    situations.Add(PieceSituation.MaxThreeHeadsWithSpace);
+                                            }
+                                            else
+                                            {
+                                                // three with space and blocked
+                                                if (boardSituation[x - 3, y + 3] == lookFor)
+                                                    situations.Add(PieceSituation.MaxThreeHeadsBlocked);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            else if (boardSituation[x - 2, y + 2] != BoardPosition.Empty)
+                            {
+                                // space next to piece is not nothing or not a head of himself
+                                if (y < 17 && x > 2)
+                                {
+                                    if (boardSituation[x - 1, y + 1] == BoardPosition.Tile)
+                                    {
+                                        // space is tile
+                                        if (boardSituation[x - 2, y + 2] == lookFor)
+                                        {
+                                            // if next two spaces are head of himself then max tree with space
+                                            if (boardSituation[x - 3, y + 3] == lookFor)
+                                                situations.Add(PieceSituation.MaxThreeHeadsWithSpace);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        // space was blocked
+                                        if (boardSituation[x - 2, y + 2] == lookFor)
+                                        {
+                                            // if next two spaces are head of himself then max tree with blocked point
+                                            if (boardSituation[x - 3, y + 3] == lookFor)
+                                                situations.Add(PieceSituation.MaxThreeHeadsBlocked);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
                         #endregion
 
                         #region DownRight
+
+                        // down right
+                        if (y < 19 && x < 20)
+                        {
+                            // check if neighbour is also head
+                            if (boardSituation[x + 1, y + 1] == lookFor)
+                            {
+                                // check if we can move left
+                                if (y < 18 && x <19)
+                                {
+                                    if (boardSituation[x + 2, y + 2] == lookFor)
+                                    {
+                                        // if neighbour is also head
+                                        // three heads on a row
+                                        situations.Add(PieceSituation.MaxThreeHeads);
+                                    }
+                                    else if (boardSituation[x + 2, y + 2] != BoardPosition.Empty)
+                                    {
+                                        // space is not nothing, but also not a head of yourself
+                                        if (y < 17 && x <18)
+                                        {
+                                            if (boardSituation[x + 2, y + 2] == BoardPosition.Tile)
+                                            {
+                                                // if next is tile, then we can have tree with space
+                                                if (boardSituation[x + 3, y + 3] == lookFor)
+                                                    situations.Add(PieceSituation.MaxThreeHeadsWithSpace);
+                                            }
+                                            else
+                                            {
+                                                // three with space and blocked
+                                                if (boardSituation[x + 3, y + 3] == lookFor)
+                                                    situations.Add(PieceSituation.MaxThreeHeadsBlocked);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            else if (boardSituation[x + 2, y + 2] != BoardPosition.Empty)
+                            {
+                                // space next to piece is not nothing or not a head of himself
+                                if (y < 17 && x <18)
+                                {
+                                    if (boardSituation[x + 1, y + 1] == BoardPosition.Tile)
+                                    {
+                                        // space is tile
+                                        if (boardSituation[x + 2, y + 2] == lookFor)
+                                        {
+                                            // if next two spaces are head of himself then max tree with space
+                                            if (boardSituation[x + 3, y + 3] == lookFor)
+                                                situations.Add(PieceSituation.MaxThreeHeadsWithSpace);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        // space was blocked
+                                        if (boardSituation[x + 2, y + 2] == lookFor)
+                                        {
+                                            // if next two spaces are head of himself then max tree with blocked point
+                                            if (boardSituation[x + 3, y + 3] == lookFor)
+                                                situations.Add(PieceSituation.MaxThreeHeadsBlocked);
+                                        }
+                                    }
+                                }
+                            }
+                        }
 
                         #endregion
                     }

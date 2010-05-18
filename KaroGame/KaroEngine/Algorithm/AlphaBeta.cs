@@ -34,9 +34,46 @@ namespace Karo
         /// <returns>Best boardsituation</returns>
         public Board NextMove(Board currentBoard)
         {
-            Board next = DoAlphaBeta(currentBoard, plieDepth, Game.Instance.GetTurn(), Int32.MinValue, Int32.MaxValue);
-            Logger.AddLine("Board -> Evaluation value: " + next.EvaluationValue);
-            return next;
+            Board evaluationBoard = new Board();
+            int valuelast = Int32.MinValue;
+
+            int alpha = Int32.MinValue;
+            int beta = Int32.MaxValue; 
+
+            foreach (Board board in currentBoard.GenerateMoves(Game.Instance.GetTurn()))
+            {
+                int value = AlphaBetaFunction(board, plieDepth, Game.Instance.GetTurn(), alpha, beta);
+                if (value > valuelast)
+                {
+                    evaluationBoard = board;
+                    valuelast = value;
+                }
+            }
+            Logger.AddLine("Board -> Evaluation value: " + evaluationBoard.Evaluation(Game.Instance.GetTurn()));
+            return evaluationBoard;
+        }
+
+
+        private int AlphaBetaFunction(Board node, int depth, bool turnA, int alphaEval, int betaEval)
+        {
+            if (depth <= 0 || node.IsWon())
+            {
+                return node.Evaluation(turnA);
+            }
+
+            List<Board> possibleMoves = node.GenerateMoves(turnA);
+
+            if (moveOrdering)
+                possibleMoves = Order(possibleMoves, (Game.Instance.GetTurn() == turnA ? true : false), turnA);
+
+            foreach (Board board in possibleMoves)
+            {
+                alphaEval = Math.Max(alphaEval, -AlphaBetaFunction(board, depth - 1, turnA, -betaEval, -alphaEval));
+                if(betaEval <= alphaEval)
+                    return alphaEval;
+            }
+
+            return alphaEval;
         }
 
         /// <summary>

@@ -335,8 +335,10 @@ namespace Karo
                                                         canBeMovedThere = true;
                                                     if (newBoardPosition[moveTileTo.X, moveTileTo.Y + 1] != BoardPosition.Empty)
                                                         canBeMovedThere = true;
-                                                    if (newBoardPosition[moveTileTo.X, moveTileTo.Y - 1] != BoardPosition.Empty)
-                                                        canBeMovedThere = true;
+                                                    if (moveTileTo.Y - 1 >= 0) {
+                                                        if (newBoardPosition[moveTileTo.X, moveTileTo.Y - 1] != BoardPosition.Empty)
+                                                            canBeMovedThere = true;
+                                                    }
 
                                                     if (canBeMovedThere)
                                                     {
@@ -728,13 +730,15 @@ namespace Karo
                     VisitedPoints(visitedPoints, p, b);
                 }
             }
-            if (b[point.X, point.Y - 1] != BoardPosition.Empty)
-            {
-                Point p = new Point(point.X, point.Y - 1);
-                if (!visitedPoints.Contains(p))
+            if(point.Y - 1 >= 0) {
+                if (b[point.X, point.Y - 1] != BoardPosition.Empty)
                 {
-                    visitedPoints.Add(p);
-                    VisitedPoints(visitedPoints, p, b);
+                    Point p = new Point(point.X, point.Y - 1);
+                    if (!visitedPoints.Contains(p))
+                    {
+                        visitedPoints.Add(p);
+                        VisitedPoints(visitedPoints, p, b);
+                    }
                 }
             }
             if (b[point.X, point.Y + 1] != BoardPosition.Empty)

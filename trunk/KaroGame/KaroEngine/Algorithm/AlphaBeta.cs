@@ -36,40 +36,64 @@ namespace Karo
         {
             Board evaluationBoard = new Board();
             int valuelast = Int32.MinValue;
-
+            List<Board> sameHighest = new List<Board>();
             int alpha = Int32.MinValue;
             int beta = Int32.MaxValue; 
-
-            foreach (Board board in currentBoard.GenerateMoves(Game.Instance.GetTurn()))
+            List<Board> moves = currentBoard.GenerateMoves(Game.Instance.GetTurn());
+            foreach (Board board in moves)
             {
-                int value = AlphaBetaFunction(board, plieDepth, Game.Instance.GetTurn(), alpha, beta);
+                int value = AlphaBetaFunction(board, plieDepth, Game.Instance.GetTurn(), !Game.Instance.GetTurn(), alpha, beta);
                 if (value > valuelast)
                 {
+                    sameHighest = new List<Board>();
+                    sameHighest.Add(board);
                     evaluationBoard = board;
                     valuelast = value;
                 }
+                else if (value == valuelast)
+                {
+                    sameHighest.Add(board);
+                }
             }
+
+            if (sameHighest.Count > 1 && sameHighest.Contains(evaluationBoard))
+            {
+                System.Random random = new System.Random();
+                evaluationBoard = sameHighest[random.Next(0, sameHighest.Count - 1)];
+                while(evaluationBoard.IsTileMoved)
+                    evaluationBoard = sameHighest[random.Next(0, sameHighest.Count - 1)];
+            }
+            Logger.AddLine("AB: boards with same value: " + sameHighest.Count + " of " + moves.Count + " moves");
             Logger.AddLine("Board -> Evaluation value: " + evaluationBoard.Evaluation(Game.Instance.GetTurn()));
             return evaluationBoard;
         }
 
 
-        private int AlphaBetaFunction(Board node, int depth, bool turnA, int alphaEval, int betaEval)
+        private int AlphaBetaFunction(Board node, int depth, bool isPlayerAMax, bool turnPlayerA, int alphaEval, int betaEval)
         {
             if (depth <= 0 || node.IsWon())
             {
-                return node.Evaluation(turnA);
+                if (turnPlayerA == isPlayerAMax)
+                    return node.Evaluation(turnPlayerA);
+                else
+                    return -1 * node.Evaluation(turnPlayerA);
             }
 
-            List<Board> possibleMoves = node.GenerateMoves(turnA);
+            List<Board> possibleMoves = node.GenerateMoves(turnPlayerA);
 
 
             if (moveOrdering)
-                possibleMoves = Order(possibleMoves, (Game.Instance.GetTurn() == turnA ? true : false), turnA);
+                possibleMoves = Order(possibleMoves, (turnPlayerA == isPlayerAMax ? true : false), turnPlayerA);
 
+            turnPlayerA = !turnPlayerA;
             foreach (Board board in possibleMoves)
             {
-                alphaEval = Math.Max(alphaEval, -AlphaBetaFunction(board, depth - 1, turnA, -betaEval, -alphaEval));
+                bool turnPlayerB = turnPlayerA;
+                if (!board.IsTileMoved)
+                    turnPlayerB = !turnPlayerB;
+
+                alphaEval = Math.Max(alphaEval, -AlphaBetaFunction(board, depth - 1, isPlayerAMax, turnPlayerB, -betaEval, -alphaEval));
+
                 if(betaEval <= alphaEval)
                     return alphaEval;
             }

@@ -446,6 +446,11 @@ namespace Karo
                             FourInARow = 0;
                         }
                     }
+                    else
+                    {
+                        checking = BoardPosition.Empty;
+                        FourInARow = 0;
+                    }
                 }
             }
 

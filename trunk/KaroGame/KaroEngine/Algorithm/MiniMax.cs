@@ -31,10 +31,40 @@ namespace Karo
         /// <returns>Best boardsituation</returns>
         public Board NextMove(Board currentBoard)
         {
-            Board next = DoMiniMax(currentBoard, plieDepth, Game.Instance.GetTurn());
-            Logger.AddLine("Board -> Evaluation value: " + next.Evaluation(Game.Instance.GetTurn()));
-            return next;
+            Board evaluationBoard = new Board();
+            int valuelast = Int32.MinValue;
+
+            foreach (Board board in currentBoard.GenerateMoves(Game.Instance.GetTurn()))
+            {
+                int value = MiniMaxFunction(board, plieDepth, Game.Instance.GetTurn());
+                if(value>valuelast)
+                {
+                    evaluationBoard = board;
+                    valuelast = value;
+                }
+            }
+            Logger.AddLine("Board -> Evaluation value: " + evaluationBoard.Evaluation(Game.Instance.GetTurn()));
+            return evaluationBoard;
         }
+
+        private int MiniMaxFunction(Board node, int depth, bool turnA)
+        {
+            if (depth <= 0 || node.IsWon())
+            {
+                return node.Evaluation(turnA);
+            }
+            
+            int alpha = Int32.MinValue;
+            List<Board> possibleMoves = node.GenerateMoves(turnA);
+
+            foreach (Board board in possibleMoves)
+            {
+                alpha = Math.Max(alpha, MiniMaxFunction(board, depth-1, turnA));
+            }
+
+            return alpha;
+        }
+
 
         /// <summary>
         /// MiniMax function

@@ -63,6 +63,7 @@ namespace Karo
 
             List<Board> possibleMoves = node.GenerateMoves(turnA);
 
+
             if (moveOrdering)
                 possibleMoves = Order(possibleMoves, (Game.Instance.GetTurn() == turnA ? true : false), turnA);
 
@@ -72,6 +73,7 @@ namespace Karo
                 if(betaEval <= alphaEval)
                     return alphaEval;
             }
+
 
             return alphaEval;
         }

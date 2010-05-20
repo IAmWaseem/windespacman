@@ -40,18 +40,6 @@ namespace Karo.Gui
         bool rotateUp = false;
 
         float angle, totalAngle;
-        //float _angle, _angleBefore;
-        //public float RotationAngle 
-        //{
-        //    get { return _angle; }
-        //    set
-        //    {
-        //        if (value < 0)
-        //            value = 360 + value;
-        //        value = value % 360;
-        //        _angle = value;
-        //    }
-        //}
 
         /// <summary>
         /// Get's and sets the rotation angle
@@ -270,7 +258,7 @@ namespace Karo.Gui
                     rotateAngle *= -1;
                     if (totalAngle >= 0)
                     {
-                        rotateAngle = 0 - totalAngle;
+                        rotateAngle = totalAngle;
                         rotate = false;
                         angle = 0;
                     }

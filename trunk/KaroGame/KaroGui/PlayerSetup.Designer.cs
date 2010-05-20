@@ -120,22 +120,22 @@
             // mAfreespace
             // 
             this.mAfreespace.AutoSize = true;
-            this.mAfreespace.Checked = true;
             this.mAfreespace.Location = new System.Drawing.Point(6, 43);
             this.mAfreespace.Name = "mAfreespace";
             this.mAfreespace.Size = new System.Drawing.Size(78, 17);
             this.mAfreespace.TabIndex = 1;
-            this.mAfreespace.TabStop = true;
             this.mAfreespace.Text = "Free space";
             this.mAfreespace.UseVisualStyleBackColor = true;
             // 
             // mAbetterone
             // 
             this.mAbetterone.AutoSize = true;
+            this.mAbetterone.Checked = true;
             this.mAbetterone.Location = new System.Drawing.Point(6, 20);
             this.mAbetterone.Name = "mAbetterone";
             this.mAbetterone.Size = new System.Drawing.Size(74, 17);
             this.mAbetterone.TabIndex = 0;
+            this.mAbetterone.TabStop = true;
             this.mAbetterone.Text = "Better one";
             this.mAbetterone.UseVisualStyleBackColor = true;
             // 
@@ -264,22 +264,22 @@
             // mPlayerAAINo
             // 
             this.mPlayerAAINo.AutoSize = true;
-            this.mPlayerAAINo.Checked = true;
             this.mPlayerAAINo.Location = new System.Drawing.Point(55, 20);
             this.mPlayerAAINo.Name = "mPlayerAAINo";
             this.mPlayerAAINo.Size = new System.Drawing.Size(39, 17);
             this.mPlayerAAINo.TabIndex = 1;
-            this.mPlayerAAINo.TabStop = true;
             this.mPlayerAAINo.Text = "No";
             this.mPlayerAAINo.UseVisualStyleBackColor = true;
             // 
             // mPlayerAAIYes
             // 
             this.mPlayerAAIYes.AutoSize = true;
+            this.mPlayerAAIYes.Checked = true;
             this.mPlayerAAIYes.Location = new System.Drawing.Point(6, 20);
             this.mPlayerAAIYes.Name = "mPlayerAAIYes";
             this.mPlayerAAIYes.Size = new System.Drawing.Size(43, 17);
             this.mPlayerAAIYes.TabIndex = 0;
+            this.mPlayerAAIYes.TabStop = true;
             this.mPlayerAAIYes.Text = "Yes";
             this.mPlayerAAIYes.UseVisualStyleBackColor = true;
             // 
@@ -410,22 +410,22 @@
             // mPlayerBTransNo
             // 
             this.mPlayerBTransNo.AutoSize = true;
-            this.mPlayerBTransNo.Checked = true;
             this.mPlayerBTransNo.Location = new System.Drawing.Point(55, 20);
             this.mPlayerBTransNo.Name = "mPlayerBTransNo";
             this.mPlayerBTransNo.Size = new System.Drawing.Size(39, 17);
             this.mPlayerBTransNo.TabIndex = 1;
-            this.mPlayerBTransNo.TabStop = true;
             this.mPlayerBTransNo.Text = "No";
             this.mPlayerBTransNo.UseVisualStyleBackColor = true;
             // 
             // mPlayerBTransYes
             // 
             this.mPlayerBTransYes.AutoSize = true;
+            this.mPlayerBTransYes.Checked = true;
             this.mPlayerBTransYes.Location = new System.Drawing.Point(6, 20);
             this.mPlayerBTransYes.Name = "mPlayerBTransYes";
             this.mPlayerBTransYes.Size = new System.Drawing.Size(43, 17);
             this.mPlayerBTransYes.TabIndex = 0;
+            this.mPlayerBTransYes.TabStop = true;
             this.mPlayerBTransYes.Text = "Yes";
             this.mPlayerBTransYes.UseVisualStyleBackColor = true;
             // 
@@ -446,7 +446,7 @@
             this.mPlayerBPlieDepth.Size = new System.Drawing.Size(117, 20);
             this.mPlayerBPlieDepth.TabIndex = 5;
             this.mPlayerBPlieDepth.Value = new decimal(new int[] {
-            2,
+            3,
             0,
             0,
             0});

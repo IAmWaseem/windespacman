@@ -32,16 +32,20 @@ namespace Karo.Gui
         Model tile, piece;
         Matrix view, cameraView, topView, projection, world;
 
+        // zoom members
+        float zoom = 1f;
+        float zoomFactor = 0.02f;
+
         //rotation members
         bool rotateUp = true;
 
         float _angle, _angleBefore;
-        float _xAngle, _xAngleBefore;
+        float _xAngle = 45f;
 
         /// <summary>
         /// Get's and sets the rotation angle
         /// </summary>
-        public float RotationAngleZ 
+        public float RotationAngleZ
         {
             get { return _angle; }
             set
@@ -72,7 +76,7 @@ namespace Karo.Gui
         bool tPressed, rPressed, rotate, middleMousePressed, f1Pressed;
 
         // Maybe other location for this?
-        public UIConnector UIConnector 
+        public UIConnector UIConnector
         {
             get { return UIConnector.Instance; }
         }
@@ -112,7 +116,7 @@ namespace Karo.Gui
             topView = Matrix.CreateLookAt(new Vector3(0, 0, 10), new Vector3(0, 0, 0), Vector3.Up);
             cameraView = Matrix.CreateLookAt(new Vector3(0, -10, 10), new Vector3(0, 0, 0), Vector3.Up);
 
-            projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45f), 
+            projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45f),
                 ((float)GraphicsDevice.Viewport.Width / (float)GraphicsDevice.Viewport.Height), 0.1f, 100.0f);
             world = Matrix.Identity;
 
@@ -163,7 +167,7 @@ namespace Karo.Gui
             {
                 if (tPressed)
                 {
-                    if(view == topView)
+                    if (view == topView)
                         view = cameraView;
                     else
                         view = topView;
@@ -204,7 +208,7 @@ namespace Karo.Gui
                         graphics.PreferredBackBufferWidth = 1280;
                         graphics.PreferredBackBufferHeight = 800;
                     }
-                    
+
                     // apply changes
                     graphics.ApplyChanges();
 
@@ -241,9 +245,9 @@ namespace Karo.Gui
             {
                 RotationAngleZ += rotateAngle;
 
-                if (RotationAngleZ  > 180 || RotationAngleZ < 0)
+                if (RotationAngleZ > 180 || RotationAngleZ < 0)
                 {
-                    if(rotateUp)
+                    if (rotateUp)
                         rotateAngle = RotationAngleZ - 180;
                     else
                         rotateAngle = 360 - RotationAngleZ;
@@ -252,7 +256,7 @@ namespace Karo.Gui
                         RotationAngleZ = 0;
                     else
                         RotationAngleZ = 180;
-                    
+
                     // switch
                     rotate = false;
 
@@ -290,25 +294,36 @@ namespace Karo.Gui
                 RotationAngleX += rotateAngle;
 
                 world *= Matrix.CreateRotationX(MathHelper.ToRadians(rotateAngleX));
+
             }
 
             // rotate with keys
             if (Keyboard.GetState().IsKeyDown(Keys.Down))
             {
+
                 rotateAngleX *= -1;
                 RotationAngleX += rotateAngle;
 
                 world *= Matrix.CreateRotationX(MathHelper.ToRadians(rotateAngleX));
+
             }
 
-            if(Keyboard.GetState().IsKeyDown(Keys.PageUp))
+            if (Keyboard.GetState().IsKeyDown(Keys.PageUp))
             {
-                world *= Matrix.CreateScale(0.99f);
+                if (zoom > 0.05f)
+                {
+                    zoom -= zoomFactor;
+                    world *= Matrix.CreateScale(1f - zoomFactor);
+                }
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.PageDown))
             {
-                world *= Matrix.CreateScale(1.01f);
+                if (zoom < 2.5f)
+                {
+                    zoom += zoomFactor;
+                    world *= Matrix.CreateScale(1f + zoomFactor);
+                }
             }
             #endregion
 
@@ -347,7 +362,7 @@ namespace Karo.Gui
                         }
                         m.Draw();
                     }
-                }                
+                }
             }
 
             // TODO: Add your drawing code here

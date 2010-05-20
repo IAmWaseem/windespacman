@@ -18,13 +18,27 @@ namespace Karo.Gui
     /// </summary>
     public class KaroGui : Microsoft.Xna.Framework.Game
     {
+        //default members
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        FramerateComponent fc;
+        TextPrinterComponent tpc;
+
+        //background
+        SpriteBatch backgroundBatch;
+        Texture2D background;
+
+        // game models
         Model tile, piece;
         Matrix view, cameraView, topView, projection, world;
+
+        //rotation members
         bool rotateUp = true;
 
         float _angle, _angleBefore;
+        /// <summary>
+        /// Get's and sets the rotation angle
+        /// </summary>
         public float RotationAngle 
         {
             get { return _angle; }
@@ -37,10 +51,14 @@ namespace Karo.Gui
             }
         }
 
-        bool tPressed, rPressed, rotate, middleMousePressed;
+        // key pressed
+        bool tPressed, rPressed, rotate, middleMousePressed, f1Pressed;
 
         // Maybe other location for this?
-        public UIConnector KaroEngine { get; set; }
+        public UIConnector UIConnector 
+        {
+            get { return UIConnector.Instance; }
+        }
 
         public KaroGui()
         {
@@ -57,6 +75,15 @@ namespace Karo.Gui
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            graphics.PreferredBackBufferWidth = 1024;
+            graphics.PreferredBackBufferHeight = 786;
+            graphics.ApplyChanges();
+
+            // framerate
+            fc = new FramerateComponent(this);
+            tpc = new TextPrinterComponent(this, Color.White);
+            this.Components.Add(fc);
+            this.Components.Add(tpc);
 
             IsMouseVisible = true;
             tPressed = false;
@@ -68,7 +95,8 @@ namespace Karo.Gui
             topView = Matrix.CreateLookAt(new Vector3(0, 0, 10), new Vector3(0, 0, 0), Vector3.Up);
             cameraView = Matrix.CreateLookAt(new Vector3(0, -10, 10), new Vector3(0, 0, 0), Vector3.Up);
 
-            projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45f), (4f / 3f), 0.1f, 100.0f);
+            projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45f), 
+                ((float)GraphicsDevice.Viewport.Width / (float)GraphicsDevice.Viewport.Height), 0.1f, 100.0f);
             world = Matrix.Identity;
 
             base.Initialize();
@@ -82,6 +110,8 @@ namespace Karo.Gui
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            backgroundBatch = new SpriteBatch(GraphicsDevice);
+            background = Content.Load<Texture2D>("pdc08-1600x1200");
             tile = Content.Load<Model>("tile");
 
             // TODO: use this.Content to load your game content here
@@ -135,6 +165,37 @@ namespace Karo.Gui
                     _angleBefore = RotationAngle;
                 }
                 rPressed = false;
+            }
+
+            // enter or leave fullscreen
+            if (Keyboard.GetState().IsKeyDown(Keys.F1))
+                f1Pressed = true;
+
+            if (Keyboard.GetState().IsKeyUp(Keys.F1))
+            {
+                if (f1Pressed)
+                {
+                    if (graphics.IsFullScreen)
+                    {
+                        graphics.IsFullScreen = false; 
+                        graphics.PreferredBackBufferWidth = 1024;
+                        graphics.PreferredBackBufferHeight = 786;
+                    }
+                    else
+                    {
+                        graphics.IsFullScreen = true;
+                        graphics.PreferredBackBufferWidth = 1280;
+                        graphics.PreferredBackBufferHeight = 800;
+                    }
+                    
+                    // apply changes
+                    graphics.ApplyChanges();
+
+                    // reset projection
+                    projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45f),
+                        ((float)GraphicsDevice.Viewport.Width / (float)GraphicsDevice.Viewport.Height), 0.1f, 100.0f);
+                }
+                f1Pressed = false;
             }
 
             if (Mouse.GetState().MiddleButton == ButtonState.Pressed)
@@ -218,6 +279,11 @@ namespace Karo.Gui
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+            backgroundBatch.Begin(SpriteBlendMode.None);
+            DrawBackground(backgroundBatch);
+            backgroundBatch.End();
+
+            tpc.Print("FPS:" + fc.Framerate.ToString(), new Vector2(5, 5));
 
             foreach (ModelMesh m in tile.Meshes)
             {
@@ -243,5 +309,14 @@ namespace Karo.Gui
 
             base.Draw(gameTime);
         }
+
+        private void DrawBackground(SpriteBatch Batch)
+        {
+            // Center the sprite on the center of the screen.
+            Vector2 origin = new Vector2(GraphicsDevice.Viewport.Width / 2 - (GraphicsDevice.Viewport.Height / 2), 0);
+            Batch.Draw(background, Vector2.Zero, null,
+                Color.White, 0, origin, 1, SpriteEffects.None, 0.99999f);
+        }
+
     }
 }

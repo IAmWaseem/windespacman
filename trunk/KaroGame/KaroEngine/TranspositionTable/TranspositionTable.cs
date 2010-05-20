@@ -85,7 +85,7 @@ namespace Karo
         /// <param name="turnPlayerA"> bool - which player has it's turn </param>
         /// <param name="depth"> depth of search in algorithm </param>
         /// <returns> evaluation of given board </returns>
-        public int EvaluationByHashing(Board board, bool turnPlayerA, int depth)
+        public int EvaluationByHashing(Board board, bool isPlayerAMAX, bool turnPlayerA, int depth)
         {
             int hashKey = 0, position = 0;
 
@@ -107,13 +107,13 @@ namespace Karo
             position = hashKey % tableSize;
             if (transpostionTable[position] == null)
             {
-                transpostionTable[position] = new HashObject(depth, hashKey, board.Evaluation(turnPlayerA));
+                transpostionTable[position] = new HashObject(depth, hashKey, board.Evaluation(isPlayerAMAX, turnPlayerA));
             }
             else if (transpostionTable[position].hashKey == hashKey)
             {
                 if (transpostionTable[position].depth < depth)
                 {
-                    transpostionTable[position] = new HashObject(depth, hashKey, board.Evaluation(turnPlayerA));
+                    transpostionTable[position] = new HashObject(depth, hashKey, board.Evaluation(isPlayerAMAX, turnPlayerA));
                 }
             }
             else if (tableSize < maxTableSize)
@@ -123,7 +123,7 @@ namespace Karo
             }
             else
             {
-                transpostionTable[position] = new HashObject(depth, hashKey, board.Evaluation(turnPlayerA));
+                transpostionTable[position] = new HashObject(depth, hashKey, board.Evaluation(isPlayerAMAX, turnPlayerA));
             }
 
             return transpostionTable[position].value;
@@ -137,7 +137,7 @@ namespace Karo
         /// <param name="turnPlayerA"> bool - which player has it's turn </param>
         /// <param name="depth"> depth of search in algorithm </param>
         /// <returns> depth of evaluation value stored in transposition table </returns>
-        public int DepthByHashing(Board board, bool turnPlayerA, int depth)
+        public int DepthByHashing(Board board, bool isPlayerAMAX, bool turnPlayerA, int depth)
         {
             int hashKey = 0, position = 0;
 
@@ -161,13 +161,13 @@ namespace Karo
             position = hashKey % tableSize;
             if (transpostionTable[position] == null)
             {
-                transpostionTable[position] = new HashObject(depth, hashKey, board.Evaluation(turnPlayerA));
+                transpostionTable[position] = new HashObject(depth, hashKey, board.Evaluation(isPlayerAMAX, turnPlayerA));
             }
             else if (transpostionTable[position].hashKey == hashKey)
             {
                 if (transpostionTable[position].depth < depth)
                 {
-                    transpostionTable[position] = new HashObject(depth, hashKey, board.Evaluation(turnPlayerA));
+                    transpostionTable[position] = new HashObject(depth, hashKey, board.Evaluation(isPlayerAMAX, turnPlayerA));
                 }
             }
             else if (tableSize < maxTableSize)
@@ -177,7 +177,7 @@ namespace Karo
             }
             else
             {
-                transpostionTable[position] = new HashObject(depth, hashKey, board.Evaluation(turnPlayerA));
+                transpostionTable[position] = new HashObject(depth, hashKey, board.Evaluation(isPlayerAMAX, turnPlayerA));
             }
 
             return transpostionTable[position].depth;

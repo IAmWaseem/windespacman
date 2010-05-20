@@ -214,7 +214,7 @@ namespace Karo
                 board = b;
 
                 Logger.AddLine(GetCurrentPlayerNumber() + "-> Placed piece on: " + point.X + ", " + point.Y);
-                Logger.AddLine("Board -> Evaluationvalue: " + board.Evaluation(turnPlayerA));
+                Logger.AddLine("Board -> Evaluationvalue: " + board.Evaluation(turnPlayerA, turnPlayerA));
 
                 ChangePlayer();
             }

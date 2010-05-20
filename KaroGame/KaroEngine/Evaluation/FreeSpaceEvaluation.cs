@@ -31,7 +31,7 @@ namespace Karo
                     List<Board> nextMoves = board.GenerateMoves(isRed);
                     if (nextMoves.Count == 1)
                     {
-                        return nextMoves[0].Evaluation(isRed);
+                        return nextMoves[0].Evaluation(isRed, isRed);
                     }
                 }
 

@@ -16,7 +16,7 @@ namespace Karo
         /// <param name="board">Provided board</param>
         /// <param name="isRed">Is player red's turn</param>
         /// <returns></returns>
-        public static int Evaluate(Board board, bool isRed)
+        public static int Evaluate(Board board, bool isPlayerAMax, bool turnPlayerA )
         {
             // evaluation value
             int lEvaluationValue = 0;
@@ -26,23 +26,26 @@ namespace Karo
 
             // if won, we don't have to do things
             if (board.IsWon())
-                lEvaluationValue = 140;
+                if (isPlayerAMax == turnPlayerA)
+                    lEvaluationValue = -140;
+                else
+                    lEvaluationValue = 140;
             else
             {
-                //// check if tile moved, if so, return evaluation value of next board of tile moved
-                //if (board.IsTileMoved)
-                //{
-                //    List<Board> nextMoves = board.GenerateMoves(isRed);
-                //    if (nextMoves.Count == 1)
-                //    {
-                //        return nextMoves[0].Evaluation(isRed);
-                //    }
-                //}
-                //else
-                //{
+                // check if tile moved, if so, return evaluation value of next board of tile moved
+                if (board.IsTileMoved)
+                {
+                    List<Board> nextMoves = board.GenerateMoves(turnPlayerA);
+                    if (nextMoves.Count == 1)
+                    {
+                        return nextMoves[0].Evaluation(isPlayerAMax, !turnPlayerA);
+                    }
+                }
+                else
+                {
                     // tiles not moves, so we can continue here
-                    List<PieceSituation> goodSituations = FindSituations(board.BoardSituation, isRed);
-                    List<PieceSituation> badSituations = FindSituations(board.BoardSituation, !isRed);
+                    List<PieceSituation> goodSituations = FindSituations(board.BoardSituation, turnPlayerA);
+                    List<PieceSituation> badSituations = FindSituations(board.BoardSituation, !turnPlayerA);
                     
                     if (goodSituations.Count > 0)
                     {
@@ -64,13 +67,13 @@ namespace Karo
                         else if (orderedBad.First() == PieceSituation.ThreeHeadsBlocked)
                             lEvaluationValue = -20;
                     }
-                //}
+                }
             }
 
             // add amount of head times 5 to eval value
             int addToEval = 0;
 
-            if (isRed)
+            if (turnPlayerA)
                 addToEval += 5 * board.RedHeads;
             else
                 addToEval += 5 * board.WhiteHeads;

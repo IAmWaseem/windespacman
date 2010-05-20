@@ -387,8 +387,7 @@ namespace Karo
             else
                 generatedMoves.AddRange(ChangeBoardPosition(turnPlayerA));
 
-            foreach( Board b in generatedMoves)
-                b.EvaluationValue = b.Evaluation(turnPlayerA);
+            
 
             //Logger.AddLine("Generated moves: " + generatedMoves.Count);
             return generatedMoves;
@@ -407,13 +406,13 @@ namespace Karo
         /// 
         /// </summary>
         /// <returns></returns>
-        public int Evaluation(bool isRed)
+        public int Evaluation(bool isPlayerAMax, bool turnPlayerA)
         {
             // what evaluation function to use
             if (Game.Instance.GetCurrentPlayer().PlayerSettings.EvaluationFunction == EvaluationType.FreeSpace)
-                return FreeSpaceEvaluation.Evaluate(this, isRed);
+                return FreeSpaceEvaluation.Evaluate(this, isPlayerAMax);
             else
-                return BetterEvaluation.Evaluate(this, isRed);
+                return BetterEvaluation.Evaluate(this, isPlayerAMax, turnPlayerA);
         }
 
         /// <summary>

@@ -61,13 +61,25 @@ namespace Karo
 
             if (sameHighest.Count > 1 && sameHighest.Contains(evaluationBoard))
             {
+                int highest = Int32.MinValue;
+                List<Board> highestOfTheHighest = new List<Board>();
+                foreach (Board board in sameHighest)
+                {
+                    int eval = board.Evaluation(Game.Instance.GetTurn(), !Game.Instance.GetTurn());
+                    if (eval > highest)
+                    {
+                        highest = eval;
+                        highestOfTheHighest = new List<Board>();
+                        highestOfTheHighest.Add(board);
+                    }
+                    else if (eval == highest)
+                        highestOfTheHighest.Add(board);
+                }
                 System.Random random = new System.Random();
-                evaluationBoard = sameHighest[random.Next(0, sameHighest.Count - 1)];
-                while (evaluationBoard.IsTileMoved)
-                    evaluationBoard = sameHighest[random.Next(0, sameHighest.Count - 1)];
+                evaluationBoard = highestOfTheHighest[random.Next(0, highestOfTheHighest.Count - 1)];
             }
             Logger.AddLine("AB: boards with same value: " + sameHighest.Count + " of " + moves.Count + " moves");
-            Logger.AddLine("Board -> Evaluation value: " + evaluationBoard.Evaluation(Game.Instance.GetTurn()));
+            Logger.AddLine("Board -> Evaluation value: " + evaluationBoard.Evaluation(Game.Instance.GetTurn(), Game.Instance.GetTurn()));
             return evaluationBoard;
         }
 
@@ -77,14 +89,9 @@ namespace Karo
             if (depth <= 0 || node.IsWon())
             {
                 if (this.transtable)
-                    if (turnPlayerA == isPlayerAMax)
-                        return table.EvaluationByHashing(node, turnPlayerA, depth);
-                    else
-                        return -1 * table.EvaluationByHashing(node, turnPlayerA, depth);
-                else if (turnPlayerA == isPlayerAMax)
-                    return node.Evaluation(turnPlayerA);
+                    return table.EvaluationByHashing(node, isPlayerAMax, turnPlayerA, depth);
                 else
-                    return -1 * node.Evaluation(turnPlayerA);
+                    return node.Evaluation(isPlayerAMax, turnPlayerA);
             }
 
             List<Board> possibleMoves = node.GenerateMoves(turnPlayerA);
@@ -94,7 +101,7 @@ namespace Karo
                 possibleMoves = Order(possibleMoves, (turnPlayerA == isPlayerAMax ? true : false), turnPlayerA);
 
             if (this.transtable)
-                if (depth < table.DepthByHashing(node, turnPlayerA, depth))
+                if (depth < table.DepthByHashing(node, isPlayerAMax, turnPlayerA, depth))
                     return table.GetHashObject(node.BoardHashvalue % table.GetTableSize()).value;
 
             turnPlayerA = !turnPlayerA;
@@ -105,7 +112,7 @@ namespace Karo
                     turnPlayerB = !turnPlayerB;
 
                 if (this.transtable)
-                    table.DepthByHashing(node, turnPlayerA, depth - 1);
+                    table.DepthByHashing(node, isPlayerAMax,turnPlayerA, depth - 1);
 
                 alphaEval = Math.Max(alphaEval, -AlphaBetaFunction(board, depth - 1, isPlayerAMax, turnPlayerB, -betaEval, -alphaEval));
 
@@ -115,74 +122,6 @@ namespace Karo
 
 
             return alphaEval;
-        }
-
-        /// <summary>
-        /// Alpha Beta function
-        /// </summary>
-        /// <param name="node">'Current' board</param>
-        /// <param name="depth">Plie depth</param>
-        /// <param name="turnA">Which turn</param>
-        /// <param name="alphaEval">Alpha evalution value</param>
-        /// <param name="betaEval">Beta evalution value</param>
-        /// <returns>Best boardsituation</returns>
-        private Board DoAlphaBeta(Board node, int depth, bool turnA, int alphaEval, int betaEval)
-        {
-            // if depth has reached zero, quit
-            if (depth <= 0)
-            {
-                node.EvaluationValue = node.Evaluation(turnA);
-                return node;
-            }
-
-            // if won, we also can quit
-            if (node.IsWon())
-            {
-                node.EvaluationValue = node.Evaluation(turnA);
-                return node;
-            }
-
-            // set alpha
-            Board alpha = node;
-            alpha.EvaluationValue = alphaEval;
-
-            // generate moves
-            List<Board> possibleMoves = node.GenerateMoves(turnA);
-
-            if (moveOrdering)
-                possibleMoves = Order(possibleMoves, (Game.Instance.GetTurn() == turnA ? true : false), turnA);
-
-            // iterate trough moves
-            foreach (Board b in possibleMoves)
-            {
-                // switch turn if needed
-                bool nextTurn = true;
-                if (turnA)
-                    nextTurn = false;
-
-                // calculate beta & evalution
-                Board beta = DoAlphaBeta(b, depth - 1, nextTurn, -1 * alphaEval, -1 * b.Evaluation(nextTurn));
-                int betaEvaluation = -1 * beta.EvaluationValue;
-
-                // check if alpha is smaller then beta
-                if (alpha.EvaluationValue < betaEvaluation)
-                {
-                    // alpha = beta
-                    alpha.EvaluationValue = betaEvaluation;
-                    alpha = b;
-
-                    // show debug information
-                    if (Game.Instance.ShowDebug)
-                        Logger.AddLine(depth + " Alpha set: " + alpha.EvaluationValue);
-                }
-
-                // check if we can break
-                if (betaEval <= alpha.EvaluationValue)
-                    break;
-            }
-
-            // return best situation
-            return alpha;
         }
 
         /// <summary>

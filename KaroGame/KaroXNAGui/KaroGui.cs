@@ -56,6 +56,7 @@ namespace Karo.Gui
         /// <summary>
         /// Get's and sets the rotation angle
         /// </summary>
+        float _xAngle = 45f;
         public float RotationAngleX
         {
             get { return _xAngle; }

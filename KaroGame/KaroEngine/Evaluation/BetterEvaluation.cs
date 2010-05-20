@@ -6,8 +6,6 @@ using System.Text;
 
 namespace Karo
 {
-
-
     class BetterEvaluation
     {
         /// <summary>

@@ -29,17 +29,17 @@ namespace Karo
                 lEvaluationValue = 140;
             else
             {
-                // check if tile moved, if so, return evaluation value of next board of tile moved
-                if (board.IsTileMoved)
-                {
-                    List<Board> nextMoves = board.GenerateMoves(isRed);
-                    if (nextMoves.Count == 1)
-                    {
-                        return nextMoves[0].Evaluation(isRed);
-                    }
-                }
-                else
-                {
+                //// check if tile moved, if so, return evaluation value of next board of tile moved
+                //if (board.IsTileMoved)
+                //{
+                //    List<Board> nextMoves = board.GenerateMoves(isRed);
+                //    if (nextMoves.Count == 1)
+                //    {
+                //        return nextMoves[0].Evaluation(isRed);
+                //    }
+                //}
+                //else
+                //{
                     // tiles not moves, so we can continue here
                     List<PieceSituation> goodSituations = FindSituations(board.BoardSituation, isRed);
                     List<PieceSituation> badSituations = FindSituations(board.BoardSituation, !isRed);
@@ -64,7 +64,7 @@ namespace Karo
                         else if (orderedBad.First() == PieceSituation.ThreeHeadsBlocked)
                             lEvaluationValue = -20;
                     }
-                }
+                //}
             }
 
             // add amount of head times 5 to eval value

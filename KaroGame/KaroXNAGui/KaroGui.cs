@@ -160,6 +160,7 @@ namespace Karo.Gui
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 this.Exit();
 
+            // top view
             if (Keyboard.GetState().IsKeyDown(Keys.T))
                 tPressed = true;
 
@@ -175,6 +176,7 @@ namespace Karo.Gui
                 tPressed = false;
             }
 
+            // rotate
             if (Keyboard.GetState().IsKeyDown(Keys.R))
                 rPressed = true;
 
@@ -186,6 +188,18 @@ namespace Karo.Gui
                     _angleBefore = RotationAngleZ;
                 }
                 rPressed = false;
+            }
+
+            if (Mouse.GetState().MiddleButton == ButtonState.Pressed)
+                middleMousePressed = true;
+
+            if (Mouse.GetState().MiddleButton == ButtonState.Released)
+            {
+                if (middleMousePressed)
+                {
+                    rotate = true;
+                }
+                middleMousePressed = false;
             }
 
             // enter or leave fullscreen
@@ -218,18 +232,7 @@ namespace Karo.Gui
                 }
                 f1Pressed = false;
             }
-
-            if (Mouse.GetState().MiddleButton == ButtonState.Pressed)
-                middleMousePressed = true;
-
-            if (Mouse.GetState().MiddleButton == ButtonState.Released)
-            {
-                if (middleMousePressed)
-                {
-                    rotate = true;
-                }
-                middleMousePressed = false;
-            }
+                        
             #endregion
 
             #region rotate
@@ -269,7 +272,7 @@ namespace Karo.Gui
                 world *= Matrix.CreateRotationZ(MathHelper.ToRadians(rotateAngle));
             }
 
-            // rotate with keys
+            // rotate with left key
             if (Keyboard.GetState().IsKeyDown(Keys.Left))
             {
                 rotate = false;
@@ -278,7 +281,7 @@ namespace Karo.Gui
                 world *= Matrix.CreateRotationZ(MathHelper.ToRadians(rotateAngle));
             }
 
-            // rotate with keys
+            // rotate with right key
             if (Keyboard.GetState().IsKeyDown(Keys.Right))
             {
                 rotate = false;
@@ -288,7 +291,7 @@ namespace Karo.Gui
                 world *= Matrix.CreateRotationZ(MathHelper.ToRadians(rotateAngle));
             }
 
-            // rotate with keys
+            // rotate with  up key
             if (Keyboard.GetState().IsKeyDown(Keys.Up))
             {
                 RotationAngleX += rotateAngle;
@@ -297,7 +300,7 @@ namespace Karo.Gui
 
             }
 
-            // rotate with keys
+            // rotate with down key
             if (Keyboard.GetState().IsKeyDown(Keys.Down))
             {
 
@@ -308,6 +311,7 @@ namespace Karo.Gui
 
             }
 
+            // zoom out
             if (Keyboard.GetState().IsKeyDown(Keys.PageUp))
             {
                 if (zoom > 0.05f)
@@ -316,7 +320,7 @@ namespace Karo.Gui
                     world *= Matrix.CreateScale(1f - zoomFactor);
                 }
             }
-
+            // zoom in
             if (Keyboard.GetState().IsKeyDown(Keys.PageDown))
             {
                 if (zoom < 2.5f)
@@ -338,13 +342,18 @@ namespace Karo.Gui
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
+            // clear screen
             GraphicsDevice.Clear(Color.CornflowerBlue);
+
+            // background
             backgroundBatch.Begin(SpriteBlendMode.None);
             DrawBackground(backgroundBatch);
             backgroundBatch.End();
 
+            // fps
             tpc.Print("FPS:" + fc.Framerate.ToString(), new Vector2(5, 5));
 
+            // tiles
             foreach (ModelMesh m in tile.Meshes)
             {
                 for (int x = -2; x <= 2; x++)
@@ -364,8 +373,6 @@ namespace Karo.Gui
                     }
                 }
             }
-
-            // TODO: Add your drawing code here
 
             base.Draw(gameTime);
         }

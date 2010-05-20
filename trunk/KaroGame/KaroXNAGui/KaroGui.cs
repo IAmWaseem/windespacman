@@ -29,7 +29,7 @@ namespace Karo.Gui
         Texture2D background;
 
         // game models
-        Model tile, piece;
+        Model tile, pieceRed, pieceWhite;
         Matrix view, cameraView, topView, projection, world;
 
         // zoom members
@@ -119,6 +119,8 @@ namespace Karo.Gui
             backgroundBatch = new SpriteBatch(GraphicsDevice);
             background = Content.Load<Texture2D>("pdc08-1600x1200");
             tile = Content.Load<Model>("tile");
+            pieceRed = Content.Load<Model>("pawnred");
+            pieceWhite = Content.Load<Model>("pawnwhite");
 
             // TODO: use this.Content to load your game content here
         }
@@ -379,10 +381,10 @@ namespace Karo.Gui
                     }
                 }
             }
-
+            
             base.Draw(gameTime);
         }
-
+        
         private void DrawBackground(SpriteBatch Batch)
         {
             // Center the sprite on the center of the screen.

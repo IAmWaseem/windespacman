@@ -36,10 +36,12 @@ namespace Karo.Gui
         bool rotateUp = true;
 
         float _angle, _angleBefore;
+        float _xAngle, _xAngleBefore;
+
         /// <summary>
         /// Get's and sets the rotation angle
         /// </summary>
-        public float RotationAngle 
+        public float RotationAngleZ 
         {
             get { return _angle; }
             set
@@ -48,6 +50,21 @@ namespace Karo.Gui
                     value = 360 + value;
                 value = value % 360;
                 _angle = value;
+            }
+        }
+
+        /// <summary>
+        /// Get's and sets the rotation angle
+        /// </summary>
+        public float RotationAngleX
+        {
+            get { return _xAngle; }
+            set
+            {
+                if (value < 0)
+                    value = 360 + value;
+                value = value % 360;
+                _xAngle = value;
             }
         }
 
@@ -162,7 +179,7 @@ namespace Karo.Gui
                 if (rPressed)
                 {
                     rotate = true;
-                    _angleBefore = RotationAngle;
+                    _angleBefore = RotationAngleZ;
                 }
                 rPressed = false;
             }
@@ -214,6 +231,7 @@ namespace Karo.Gui
             #region rotate
             float percentage = ((float)gameTime.ElapsedGameTime.Milliseconds / 1000f);
             float rotateAngle = 60f * percentage;
+            float rotateAngleX = rotateAngle;
 
             if (!rotateUp)
                 rotateAngle *= -1;
@@ -221,19 +239,19 @@ namespace Karo.Gui
             // rotate with 'r'
             if (rotate)
             {
-                    RotationAngle += rotateAngle;
+                RotationAngleZ += rotateAngle;
 
-                if (RotationAngle  > 180 || RotationAngle < 0)
+                if (RotationAngleZ  > 180 || RotationAngleZ < 0)
                 {
                     if(rotateUp)
-                        rotateAngle = RotationAngle - 180;
+                        rotateAngle = RotationAngleZ - 180;
                     else
-                        rotateAngle = 360 - RotationAngle;
+                        rotateAngle = 360 - RotationAngleZ;
 
                     if (!rotateUp)
-                        RotationAngle = 0;
+                        RotationAngleZ = 0;
                     else
-                        RotationAngle = 180;
+                        RotationAngleZ = 180;
                     
                     // switch
                     rotate = false;
@@ -251,7 +269,7 @@ namespace Karo.Gui
             if (Keyboard.GetState().IsKeyDown(Keys.Left))
             {
                 rotate = false;
-                RotationAngle += rotateAngle;
+                RotationAngleZ += rotateAngle;
 
                 world *= Matrix.CreateRotationZ(MathHelper.ToRadians(rotateAngle));
             }
@@ -261,9 +279,36 @@ namespace Karo.Gui
             {
                 rotate = false;
                 rotateAngle *= -1;
-                RotationAngle += rotateAngle;
+                RotationAngleZ += rotateAngle;
 
                 world *= Matrix.CreateRotationZ(MathHelper.ToRadians(rotateAngle));
+            }
+
+            // rotate with keys
+            if (Keyboard.GetState().IsKeyDown(Keys.Up))
+            {
+                RotationAngleX += rotateAngle;
+
+                world *= Matrix.CreateRotationX(MathHelper.ToRadians(rotateAngleX));
+            }
+
+            // rotate with keys
+            if (Keyboard.GetState().IsKeyDown(Keys.Down))
+            {
+                rotateAngleX *= -1;
+                RotationAngleX += rotateAngle;
+
+                world *= Matrix.CreateRotationX(MathHelper.ToRadians(rotateAngleX));
+            }
+
+            if(Keyboard.GetState().IsKeyDown(Keys.PageUp))
+            {
+                world *= Matrix.CreateScale(0.99f);
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.PageDown))
+            {
+                world *= Matrix.CreateScale(1.01f);
             }
             #endregion
 

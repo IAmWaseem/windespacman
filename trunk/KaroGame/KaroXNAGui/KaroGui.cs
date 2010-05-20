@@ -30,7 +30,17 @@ namespace Karo.Gui
 
         // game models
         Model tile, pieceRed, pieceWhite;
-        Matrix view, cameraView, topView, projection, world;
+        Matrix view, cameraView, topView, projection, cameraWorld, topWorld;
+        Matrix world
+        {
+            get
+            {
+                if (view == topView)
+                    return topWorld;
+                else
+                    return cameraWorld;
+            }
+        }
 
         // zoom members
         float zoom = 1f;
@@ -41,10 +51,10 @@ namespace Karo.Gui
 
         float angle, totalAngle;
 
+        float _xAngle = 45f;
         /// <summary>
         /// Get's and sets the rotation angle
         /// </summary>
-        float _xAngle = 45f;
         public float RotationAngleX
         {
             get { return _xAngle; }
@@ -103,7 +113,9 @@ namespace Karo.Gui
 
             projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45f),
                 ((float)GraphicsDevice.Viewport.Width / (float)GraphicsDevice.Viewport.Height), 0.1f, 100.0f);
-            world = Matrix.Identity;
+
+            cameraWorld = Matrix.Identity;
+            topWorld = Matrix.Identity;
 
             base.Initialize();
         }
@@ -156,9 +168,13 @@ namespace Karo.Gui
                 if (tPressed)
                 {
                     if (view == topView)
+                    {
                         view = cameraView;
+                    }
                     else
+                    {
                         view = topView;
+                    }
                 }
                 tPressed = false;
             }
@@ -271,7 +287,7 @@ namespace Karo.Gui
 
                 }
 
-                world *= Matrix.CreateRotationZ(MathHelper.ToRadians(rotateAngle));
+                cameraWorld *= Matrix.CreateRotationZ(MathHelper.ToRadians(rotateAngle));
             }
 
             // rotate with left key
@@ -284,7 +300,7 @@ namespace Karo.Gui
                     angle = 360 - angle;
                 }
 
-                world *= Matrix.CreateRotationZ(MathHelper.ToRadians(rotateAngle));
+                cameraWorld *= Matrix.CreateRotationZ(MathHelper.ToRadians(rotateAngle));
             }
 
             // rotate with right key
@@ -296,7 +312,7 @@ namespace Karo.Gui
                 {
                     angle = 360 + angle;
                 }
-                world *= Matrix.CreateRotationZ(MathHelper.ToRadians(-1*rotateAngle));
+                cameraWorld *= Matrix.CreateRotationZ(MathHelper.ToRadians(-1*rotateAngle));
             }
 
             // rotate with  up key
@@ -304,7 +320,7 @@ namespace Karo.Gui
             {
                 RotationAngleX += rotateAngle;
 
-                world *= Matrix.CreateRotationX(MathHelper.ToRadians(rotateAngleX));
+                cameraWorld *= Matrix.CreateRotationX(MathHelper.ToRadians(rotateAngleX));
 
             }
 
@@ -315,7 +331,7 @@ namespace Karo.Gui
                 rotateAngleX *= -1;
                 RotationAngleX += rotateAngle;
 
-                world *= Matrix.CreateRotationX(MathHelper.ToRadians(rotateAngleX));
+                cameraWorld *= Matrix.CreateRotationX(MathHelper.ToRadians(rotateAngleX));
 
             }
 
@@ -325,7 +341,7 @@ namespace Karo.Gui
                 if (zoom > 0.05f)
                 {
                     zoom -= zoomFactor;
-                    world *= Matrix.CreateScale(1f - zoomFactor);
+                    cameraWorld *= Matrix.CreateScale(1f - zoomFactor);
                 }
             }
             // zoom in
@@ -334,7 +350,7 @@ namespace Karo.Gui
                 if (zoom < 2.5f)
                 {
                     zoom += zoomFactor;
-                    world *= Matrix.CreateScale(1f + zoomFactor);
+                    cameraWorld *= Matrix.CreateScale(1f + zoomFactor);
                 }
             }
             #endregion

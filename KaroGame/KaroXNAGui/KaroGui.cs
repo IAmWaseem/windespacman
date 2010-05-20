@@ -75,8 +75,8 @@ namespace Karo.Gui
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            graphics.PreferredBackBufferWidth = 1024;
-            graphics.PreferredBackBufferHeight = 786;
+            graphics.PreferredBackBufferWidth = 800;
+            graphics.PreferredBackBufferHeight = 600;
             graphics.ApplyChanges();
 
             // framerate
@@ -177,9 +177,9 @@ namespace Karo.Gui
                 {
                     if (graphics.IsFullScreen)
                     {
-                        graphics.IsFullScreen = false; 
-                        graphics.PreferredBackBufferWidth = 1024;
-                        graphics.PreferredBackBufferHeight = 786;
+                        graphics.IsFullScreen = false;
+                        graphics.PreferredBackBufferWidth = 800;
+                        graphics.PreferredBackBufferHeight = 600;
                     }
                     else
                     {

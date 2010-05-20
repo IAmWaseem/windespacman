@@ -37,25 +37,21 @@ namespace Karo.Gui
         float zoomFactor = 0.02f;
 
         //rotation members
-        bool rotateUp = true;
+        bool rotateUp = false;
 
-        float _angle, _angleBefore;
-        float _xAngle = 45f;
-
-        /// <summary>
-        /// Get's and sets the rotation angle
-        /// </summary>
-        public float RotationAngleZ
-        {
-            get { return _angle; }
-            set
-            {
-                if (value < 0)
-                    value = 360 + value;
-                value = value % 360;
-                _angle = value;
-            }
-        }
+        float angle, totalAngle;
+        //float _angle, _angleBefore;
+        //public float RotationAngle 
+        //{
+        //    get { return _angle; }
+        //    set
+        //    {
+        //        if (value < 0)
+        //            value = 360 + value;
+        //        value = value % 360;
+        //        _angle = value;
+        //    }
+        //}
 
         /// <summary>
         /// Get's and sets the rotation angle
@@ -185,7 +181,19 @@ namespace Karo.Gui
                 if (rPressed)
                 {
                     rotate = true;
-                    _angleBefore = RotationAngleZ;
+                    if (angle >= 180)
+                    {
+                        totalAngle = 360 - angle;
+                        rotateUp = true;
+                    }
+                    else
+                    {
+                        if (angle == 0)
+                            totalAngle = -180;
+                        else
+                            totalAngle = -1 * angle;
+                        rotateUp = false;
+                    }
                 }
                 rPressed = false;
             }
@@ -240,33 +248,36 @@ namespace Karo.Gui
             float rotateAngle = 60f * percentage;
             float rotateAngleX = rotateAngle;
 
-            if (!rotateUp)
-                rotateAngle *= -1;
-
             // rotate with 'r'
             if (rotate)
             {
-                RotationAngleZ += rotateAngle;
-
-                if (RotationAngleZ > 180 || RotationAngleZ < 0)
+                if (rotateUp)
                 {
-                    if (rotateUp)
-                        rotateAngle = RotationAngleZ - 180;
+                    if (totalAngle <= 0)
+                    {
+                        rotateAngle = 0 - totalAngle;
+                        rotate = false;
+                        angle = 0;
+                    }
                     else
-                        rotateAngle = 360 - RotationAngleZ;
-
-                    if (!rotateUp)
-                        RotationAngleZ = 0;
+                    {
+                        totalAngle -= rotateAngle;
+                    }
+                }
+                else
+                {
+                    rotateAngle *= -1;
+                    if (totalAngle >= 0)
+                    {
+                        rotateAngle = 0 - totalAngle;
+                        rotate = false;
+                        angle = 0;
+                    }
                     else
-                        RotationAngleZ = 180;
+                    {
+                        totalAngle -= rotateAngle;
+                    }
 
-                    // switch
-                    rotate = false;
-
-                    if (rotateUp)
-                        rotateUp = false;
-                    else
-                        rotateUp = true;
                 }
 
                 world *= Matrix.CreateRotationZ(MathHelper.ToRadians(rotateAngle));
@@ -276,7 +287,11 @@ namespace Karo.Gui
             if (Keyboard.GetState().IsKeyDown(Keys.Left))
             {
                 rotate = false;
-                RotationAngleZ += rotateAngle;
+                angle += rotateAngle;
+                if (angle > 360)
+                {
+                    angle = 360 - angle;
+                }
 
                 world *= Matrix.CreateRotationZ(MathHelper.ToRadians(rotateAngle));
             }
@@ -285,10 +300,12 @@ namespace Karo.Gui
             if (Keyboard.GetState().IsKeyDown(Keys.Right))
             {
                 rotate = false;
-                rotateAngle *= -1;
-                RotationAngleZ += rotateAngle;
-
-                world *= Matrix.CreateRotationZ(MathHelper.ToRadians(rotateAngle));
+                angle -= rotateAngle;
+                if (angle < 0)
+                {
+                    angle = 360 + angle;
+                }
+                world *= Matrix.CreateRotationZ(MathHelper.ToRadians(-1*rotateAngle));
             }
 
             // rotate with  up key

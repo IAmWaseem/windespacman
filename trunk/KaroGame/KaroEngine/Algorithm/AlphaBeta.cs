@@ -13,6 +13,7 @@ namespace Karo
         private int plieDepth;
         private bool moveOrdering;
         private bool transtable;
+        private TranspositionTable table;
 
         /// <summary>
         /// Constructor
@@ -25,6 +26,8 @@ namespace Karo
             this.plieDepth = plieDepth;
             this.moveOrdering = doMoveOrdering;
             this.transtable = doTranstable;
+            if (this.transtable)
+                table = new TranspositionTable(50000, 1600000);
         }
 
         /// <summary>
@@ -38,7 +41,7 @@ namespace Karo
             int valuelast = Int32.MinValue;
             List<Board> sameHighest = new List<Board>();
             int alpha = Int32.MinValue;
-            int beta = Int32.MaxValue; 
+            int beta = Int32.MaxValue;
             List<Board> moves = currentBoard.GenerateMoves(Game.Instance.GetTurn());
             foreach (Board board in moves)
             {
@@ -60,7 +63,7 @@ namespace Karo
             {
                 System.Random random = new System.Random();
                 evaluationBoard = sameHighest[random.Next(0, sameHighest.Count - 1)];
-                while(evaluationBoard.IsTileMoved)
+                while (evaluationBoard.IsTileMoved)
                     evaluationBoard = sameHighest[random.Next(0, sameHighest.Count - 1)];
             }
             Logger.AddLine("AB: boards with same value: " + sameHighest.Count + " of " + moves.Count + " moves");
@@ -73,7 +76,12 @@ namespace Karo
         {
             if (depth <= 0 || node.IsWon())
             {
-                if (turnPlayerA == isPlayerAMax)
+                if (this.transtable)
+                    if (turnPlayerA == isPlayerAMax)
+                        return table.EvaluationByHashing(node, turnPlayerA, depth);
+                    else
+                        return -1 * table.EvaluationByHashing(node, turnPlayerA, depth);
+                else if (turnPlayerA == isPlayerAMax)
                     return node.Evaluation(turnPlayerA);
                 else
                     return -1 * node.Evaluation(turnPlayerA);
@@ -85,6 +93,10 @@ namespace Karo
             if (moveOrdering)
                 possibleMoves = Order(possibleMoves, (turnPlayerA == isPlayerAMax ? true : false), turnPlayerA);
 
+            if (this.transtable)
+                if (depth < table.DepthByHashing(node, turnPlayerA, depth))
+                    return table.GetHashObject(node.BoardHashvalue % table.GetTableSize()).value;
+
             turnPlayerA = !turnPlayerA;
             foreach (Board board in possibleMoves)
             {
@@ -92,9 +104,12 @@ namespace Karo
                 if (!board.IsTileMoved)
                     turnPlayerB = !turnPlayerB;
 
+                if (this.transtable)
+                    table.DepthByHashing(node, turnPlayerA, depth - 1);
+
                 alphaEval = Math.Max(alphaEval, -AlphaBetaFunction(board, depth - 1, isPlayerAMax, turnPlayerB, -betaEval, -alphaEval));
 
-                if(betaEval <= alphaEval)
+                if (betaEval <= alphaEval)
                     return alphaEval;
             }
 
@@ -136,7 +151,7 @@ namespace Karo
 
             if (moveOrdering)
                 possibleMoves = Order(possibleMoves, (Game.Instance.GetTurn() == turnA ? true : false), turnA);
-            
+
             // iterate trough moves
             foreach (Board b in possibleMoves)
             {
@@ -146,7 +161,7 @@ namespace Karo
                     nextTurn = false;
 
                 // calculate beta & evalution
-                Board beta = DoAlphaBeta(b, depth-1, nextTurn, -1 * alphaEval, -1 * b.Evaluation(nextTurn));
+                Board beta = DoAlphaBeta(b, depth - 1, nextTurn, -1 * alphaEval, -1 * b.Evaluation(nextTurn));
                 int betaEvaluation = -1 * beta.EvaluationValue;
 
                 // check if alpha is smaller then beta
@@ -157,7 +172,7 @@ namespace Karo
                     alpha = b;
 
                     // show debug information
-                    if(Game.Instance.ShowDebug)
+                    if (Game.Instance.ShowDebug)
                         Logger.AddLine(depth + " Alpha set: " + alpha.EvaluationValue);
                 }
 
@@ -180,8 +195,8 @@ namespace Karo
         /// <returns></returns>
         private List<Board> Order(List<Board> moves, Boolean descending, Boolean isRed)
         {
-            if(descending)
-                return moves.OrderByDescending(t=>t.EvaluationValue).ToList();
+            if (descending)
+                return moves.OrderByDescending(t => t.EvaluationValue).ToList();
 
             return moves.OrderBy(t => t.EvaluationValue).ToList();
         }

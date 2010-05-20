@@ -21,6 +21,7 @@ namespace Karo
         private List<Point> piecesList;
         private bool isTileMoved = false;
         private Point movedTilePosition;
+        private int hashvalue; 
 
         /// <summary>
         /// Property for setting evaluation value of the board, used by algorthims.
@@ -35,6 +36,11 @@ namespace Karo
             get { return movablePoints; }
             private set { movablePoints = value; }
         }
+
+        /// <summary>
+        /// Property for setting hashvalue of the board
+        /// </summary>
+        public int BoardHashvalue { get; set; }
 
         /// <summary>
         /// Amount of red heads

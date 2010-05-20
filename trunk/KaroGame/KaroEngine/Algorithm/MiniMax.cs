@@ -12,6 +12,7 @@ namespace Karo
     {
         private int plieDepth;
         private bool transtable;
+        private TranspositionTable table;
 
         /// <summary>
         /// Constructor
@@ -22,6 +23,8 @@ namespace Karo
         {
             this.plieDepth = plieDepth;
             this.transtable = doTranstable;
+            if (this.transtable)
+                table = new TranspositionTable(50000, 1600000);
         }
 
         /// <summary>
@@ -38,7 +41,7 @@ namespace Karo
             foreach (Board board in moves)
             {
                 int value = MiniMaxFunction(board, plieDepth, Game.Instance.GetTurn(), !Game.Instance.GetTurn());
-                if(value>valuelast)
+                if (value > valuelast)
                 {
                     sameHighest = new List<Board>();
                     sameHighest.Add(board);
@@ -67,14 +70,23 @@ namespace Karo
         {
             if (depth <= 0 || node.IsWon())
             {
-                if (turnPlayerA == isPlayerAMax)
+                if (this.transtable)
+                    if (turnPlayerA == isPlayerAMax)
+                        return table.EvaluationByHashing(node, turnPlayerA, depth);
+                    else
+                        return -1 * table.EvaluationByHashing(node, turnPlayerA, depth);
+                else if (turnPlayerA == isPlayerAMax)
                     return node.Evaluation(turnPlayerA);
                 else
                     return -1 * node.Evaluation(turnPlayerA);
             }
-            
+
             int alpha = Int32.MinValue;
             List<Board> possibleMoves = node.GenerateMoves(turnPlayerA);
+
+            if (this.transtable)
+                if (depth < table.DepthByHashing(node, turnPlayerA, depth))
+                    return table.GetHashObject(node.BoardHashvalue % table.GetTableSize()).value;
 
             turnPlayerA = !turnPlayerA;
             foreach (Board board in possibleMoves)
@@ -83,10 +95,21 @@ namespace Karo
                 if (!board.IsTileMoved)
                     turnPlayerB = !turnPlayerB;
 
-                if(turnPlayerB == isPlayerAMax)
+                //if (this.transtable)
+                //    if ((depth - 1) > table.DepthByHashing(board, turnPlayerA, depth - 1))
+                //    {
+                if (turnPlayerB == isPlayerAMax)
                     alpha = Math.Max(alpha, MiniMaxFunction(board, depth - 1, isPlayerAMax, turnPlayerB));
                 else
                     alpha = Math.Max(alpha, -MiniMaxFunction(board, depth - 1, isPlayerAMax, turnPlayerB));
+                //    }
+                //    else
+                //    {
+                //        if (turnPlayerB == isPlayerAMax)
+                //            alpha = Math.Max(alpha, table.GetHashObject(board.BoardHashvalue%table.GetTableSize()).value);
+                //        else
+                //            alpha = Math.Max(alpha, -table.GetHashObject(board.BoardHashvalue % table.GetTableSize()).value);
+                //    }
             }
 
             return alpha;
@@ -128,7 +151,7 @@ namespace Karo
             {
                 // switch turn if needed
                 bool nextTurn = true;
-                if(turnA)
+                if (turnA)
                     nextTurn = false;
 
                 // calculate beta & evalution

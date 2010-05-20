@@ -47,15 +47,15 @@ namespace Karo
             Console.Out.WriteLine("Num moves: " + moves.Count);
             foreach (Board board in moves)
             {
-                int value = AlphaBetaFunction(board, plieDepth, Game.Instance.GetTurn(), !Game.Instance.GetTurn(), alpha, beta);
-                if (value > valuelast)
+                alpha = AlphaBetaFunction(board, plieDepth, Game.Instance.GetTurn(), !Game.Instance.GetTurn(), alpha, beta);
+                if (alpha > valuelast)
                 {
                     sameHighest = new List<Board>();
                     sameHighest.Add(board);
                     evaluationBoard = board;
-                    valuelast = value;
+                    valuelast = alpha;
                 }
-                else if (value == valuelast)
+                else if (alpha == valuelast)
                 {
                     sameHighest.Add(board);
                 }

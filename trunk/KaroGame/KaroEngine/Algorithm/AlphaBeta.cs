@@ -44,7 +44,6 @@ namespace Karo
             int alpha = Int32.MinValue + 10;
             int beta = Int32.MaxValue;
             List<Board> moves = currentBoard.GenerateMoves(Game.Instance.GetTurn());
-            Console.Out.WriteLine("Num moves: " + moves.Count);
             foreach (Board board in moves)
             {
                 alpha = AlphaBetaFunction(board, plieDepth, Game.Instance.GetTurn(), !Game.Instance.GetTurn(), alpha, beta);
@@ -88,64 +87,67 @@ namespace Karo
 
         private int AlphaBetaFunction(Board node, int depth, bool isPlayerAMax, bool turnPlayerA, int alphaEval, int betaEval)
         {
-            if (depth <= 0 || node.IsWon())
+            if (node.IsWon() || depth <= 0)
             {
-                if (this.transtable)
-                    return table.EvaluationByHashing(node, isPlayerAMax, turnPlayerA, depth);
-                else
-                    return node.Evaluation(isPlayerAMax, turnPlayerA);
+                return node.Evaluation(isPlayerAMax, turnPlayerA);
             }
 
+            int value = Int32.MinValue;
             List<Board> possibleMoves = node.GenerateMoves(turnPlayerA);
-
-
-            if (moveOrdering)
-                possibleMoves = Order(possibleMoves, (turnPlayerA == isPlayerAMax ? true : false), turnPlayerA);
-
-            if (this.transtable)
-                if (depth < table.DepthByHashing(node, isPlayerAMax, turnPlayerA, depth))
-                    return table.GetHashObject(node.BoardHashvalue % table.GetTableSize()).value;
+            if (isPlayerAMax == turnPlayerA)
+                possibleMoves = Order(possibleMoves, true, true);
+            else
+                possibleMoves = Order(possibleMoves, false, false);
 
             turnPlayerA = !turnPlayerA;
-
-            if (turnPlayerA != isPlayerAMax)
+            foreach (Board board in possibleMoves)
             {
-                foreach (Board board in possibleMoves)
+                bool turnPlayerB = turnPlayerA;
+                if (!board.IsTileMoved)
+                    turnPlayerB = !turnPlayerB;
+
+                if (turnPlayerB == isPlayerAMax)
                 {
-                    bool turnPlayerB = turnPlayerA;
-                    if (!board.IsTileMoved)
-                        turnPlayerB = !turnPlayerB;
-
                     if (this.transtable)
-                        table.DepthByHashing(node, isPlayerAMax, turnPlayerA, depth - 1);
-
-                    alphaEval = Math.Max(alphaEval, AlphaBetaFunction(board, depth - 1, isPlayerAMax, turnPlayerB, alphaEval, betaEval));
-
+                    {
+                        if (table.IsCalculatedBefore(board, depth, turnPlayerB))
+                            value = table.GetCalculatedValue(board, depth, turnPlayerB);
+                        else
+                        {
+                            value = Math.Max(value, AlphaBetaFunction(board, depth - 1, isPlayerAMax, turnPlayerB, alphaEval, betaEval));
+                            table.InsertCalculatedValue(board, depth, turnPlayerB, value);
+                        }
+                    }
+                    else
+                        value = Math.Max(value, AlphaBetaFunction(board, depth - 1, isPlayerAMax, turnPlayerB, alphaEval, betaEval));
+                    
+                    alphaEval = Math.Max(value, alphaEval);
                     if (betaEval <= alphaEval)
                         return alphaEval;
                 }
-
-                return alphaEval;
-            }
-            else
-            {
-                foreach (Board board in possibleMoves)
+                else
                 {
-                    bool turnPlayerB = turnPlayerA;
-                    if (!board.IsTileMoved)
-                        turnPlayerB = !turnPlayerB;
-
                     if (this.transtable)
-                        table.DepthByHashing(node, isPlayerAMax, turnPlayerA, depth - 1);
-
-                    betaEval = Math.Min(betaEval, AlphaBetaFunction(board, depth - 1, isPlayerAMax, turnPlayerB, alphaEval, betaEval));
-
+                    {
+                        if (table.IsCalculatedBefore(board, depth, turnPlayerB))
+                            value = table.GetCalculatedValue(board, depth, turnPlayerB);
+                        else
+                        {
+                            value = Math.Max(value, -AlphaBetaFunction(board, depth - 1, isPlayerAMax, turnPlayerB, alphaEval, betaEval));
+                            table.InsertCalculatedValue(board, depth, turnPlayerB, value);
+                        }
+                    }
+                    else
+                        value = Math.Max(value, -AlphaBetaFunction(board, depth - 1, isPlayerAMax, turnPlayerB, alphaEval, betaEval));
+                    
+                    betaEval = Math.Min(value, betaEval);
                     if (betaEval <= alphaEval)
                         return betaEval;
                 }
-
-                return betaEval;
             }
+
+            return value;
+
         }
 
         /// <summary>

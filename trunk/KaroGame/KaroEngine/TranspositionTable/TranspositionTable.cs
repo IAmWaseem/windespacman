@@ -185,7 +185,7 @@ namespace Karo
 
         private void tableResize()
         {
-            tableSize *= 2;
+            tableSize = NextPrime(tableSize) ;
             HashObject[] transTable = new HashObject[tableSize];
             foreach (HashObject obj in transpostionTable)
             {
@@ -194,5 +194,118 @@ namespace Karo
             }
             transpostionTable = transTable;
         }
+
+        private int NextPrime(int previousPrime)
+        {
+            while (!IsPrime(++previousPrime)) ;
+            return previousPrime;
+        }
+
+        private bool IsPrime(int possiblePrime)
+        {
+            int a = 1;
+            for (int m = 2; m <= Math.Sqrt(possiblePrime); m += a)
+            {
+                if (m == 3)
+                    a = 2;
+                if (possiblePrime % m == 0)
+                    return false;
+            }
+            return true;
+        }
+
+        public bool IsCalculatedBefore(Board board, int depth, bool turnPlayerA)
+        {
+            int hashKey = 0, position = 0;
+
+            for (int i = 0; i < 21; i++)
+            {
+                for (int j = 0; j < 20; j++)
+                {
+                    if ((int)board.BoardSituation[i, j] != 0)
+                        hashKey = hashKey ^ hashtable[i, j, (int)board.BoardSituation[i, j] - 1];
+                }
+            }
+
+            if (turnPlayerA)
+                hashKey = hashKey ^ playerA;
+            else
+                hashKey = hashKey ^ playerB;
+
+            int positionInArray = hashKey % tableSize;
+
+            HashObject boardInArray = transpostionTable[positionInArray];
+            if (boardInArray == null)
+                return false;
+            if (boardInArray.hashKey == hashKey && boardInArray.depth >= depth)
+                return true;
+            else
+                return false;
+        }
+
+        public int GetCalculatedValue(Board board, int depth, bool turnPlayerA)
+        {
+            int hashKey = 0, position = 0;
+
+            for (int i = 0; i < 21; i++)
+            {
+                for (int j = 0; j < 20; j++)
+                {
+                    if ((int)board.BoardSituation[i, j] != 0)
+                        hashKey = hashKey ^ hashtable[i, j, (int)board.BoardSituation[i, j] - 1];
+                }
+            }
+
+            if (turnPlayerA)
+                hashKey = hashKey ^ playerA;
+            else
+                hashKey = hashKey ^ playerB;
+
+            int positionInArray = hashKey % tableSize;
+
+            HashObject boardInArray = transpostionTable[positionInArray];
+            if (boardInArray != null)
+                return boardInArray.value;
+            else
+                return 0;
+        }
+
+        public void InsertCalculatedValue(Board board, int depth, bool turnPlayerA, int value)
+        {
+            int hashKey = 0, position = 0;
+
+            for (int i = 0; i < 21; i++)
+            {
+                for (int j = 0; j < 20; j++)
+                {
+                    if ((int)board.BoardSituation[i, j] != 0)
+                        hashKey = hashKey ^ hashtable[i, j, (int)board.BoardSituation[i, j] - 1];
+                }
+            }
+
+            if (turnPlayerA)
+                hashKey = hashKey ^ playerA;
+            else
+                hashKey = hashKey ^ playerB;
+
+            int positionInArray = hashKey % tableSize;
+
+            bool collision = true;
+            while (collision)
+            {
+                if (transpostionTable[positionInArray] != null)
+                    if (transpostionTable[positionInArray].hashKey != hashKey)
+                    {
+                        tableResize();
+                        positionInArray = hashKey % tableSize;
+                    }
+                    else
+                        collision = false;
+                else
+                    collision = false;
+            }
+            transpostionTable[positionInArray] = new HashObject(depth, hashKey, value);
+        }
+
     }
 }

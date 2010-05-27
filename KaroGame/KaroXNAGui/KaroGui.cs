@@ -131,9 +131,10 @@ namespace Karo.Gui
 
             Vector3 loc = new Vector3(0, -10, 10);
             Matrix trans = Matrix.Identity;
-            //trans *= Matrix.CreateRotationX(MathHelper.ToRadians(RotationAngleX));
-            //trans *= Matrix.CreateRotationZ(MathHelper.ToRadians(angle));
-            //trans *= Matrix.CreateScale(zoom);
+            RotationAngleX = 0;
+            trans *= Matrix.CreateRotationX(MathHelper.ToRadians(RotationAngleX));
+            trans *= Matrix.CreateRotationZ(MathHelper.ToRadians(angle));
+            trans *= Matrix.CreateScale(zoom);
             cameraLocation = Vector3.Transform(loc, trans);
             cameraView = Matrix.CreateLookAt(cameraLocation, new Vector3(0, 0, 0), Vector3.UnitZ);
 

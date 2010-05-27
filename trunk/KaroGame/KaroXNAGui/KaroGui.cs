@@ -257,16 +257,27 @@ namespace Karo.Gui
             if (Keyboard.GetState().IsKeyUp(Keys.R) && rPressed)
             {
                 rotate = true;
-
-                if (angle >= 180)
+                if (angle == 0.0f)
                 {
                     rotateUp = true;
                     totalAngle = 180;
                 }
-                else
+                else if (angle == 180.0f)
+                {
+                    rotateUp = false;
+                    totalAngle = 180;
+                }
+                else if (angle < 180)
+                {
+                    rotateUp = false;
+                    totalAngle = angle;
+                    if (totalAngle < 0.0f)
+                        totalAngle = 360 + angle;
+                }
+                else if (angle > 180)
                 {
                     rotateUp = true;
-                    totalAngle = 180;
+                    totalAngle = angle - 180;
                 }
 
                 rPressed = false;
@@ -277,13 +288,27 @@ namespace Karo.Gui
             {
                 if (rotateUp)
                 {
-                    rotate = false;
+                    rotateAngle *= -1;
+                    totalAngle += rotateAngle;
+                    angle += rotateAngle;
+
+                    if (angle < 0)
+                        angle = 360 + angle;
+
+                    if (totalAngle <= 0)
+                    {
+                        rotate = false;
+                        angle = 180;
+                    }
                 }
                 else
                 {
                     rotateAngle *= -1;
                     totalAngle += rotateAngle;
                     angle += rotateAngle;
+
+                    if (angle < 0)
+                        angle = 360 + angle;
 
                     if (totalAngle <= 0)
                     {
@@ -625,7 +650,7 @@ namespace Karo.Gui
                         mesh.Draw();
                     }
                 }
-                
+
             }
 
             //draw start white pieces

@@ -360,52 +360,55 @@ namespace Karo
         /// </summary>
         public void MakeAIMove()
         {
-            DateTime beforeFunction = DateTime.Now;
-            if ((NumMovesA >= MaxMoves && NumMovesB >= MaxMoves) && IsTwoAI())
+            if (!board.IsWon())
             {
-                // max moves reached
-
-            }
-            else
-            {
-                // Check if turn of player a and if so if he is AI driven, else check the same for b
-                if (turnPlayerA && playerA.PlayerSettings.IsAI)
+                DateTime beforeFunction = DateTime.Now;
+                if ((NumMovesA >= MaxMoves && NumMovesB >= MaxMoves) && IsTwoAI())
                 {
-                    // execute ai move
-                    playerA.Execute(board);
-                    if (board.IsTileMoved)
-                        playerA.Execute(board);
-                    // change player
-                    NumMovesA++;
+                    // max moves reached
 
-
-                    // Elapsed time
-                    DateTime afterFunction = DateTime.Now;
-                    TimeSpan elapsedTime = afterFunction - beforeFunction;
-                    
-                    int num = NumMovesA;
-                    Logger.AddLine(Game.Instance.GetCurrentPlayerNumber() + "-> AI calculated in: " + elapsedTime.TotalMilliseconds.ToString() + " ms (move: " + num + " / " + maxMoves + ")");
-
-                    ChangePlayer();
                 }
-                else if (!turnPlayerA && playerB.PlayerSettings.IsAI)
+                else
                 {
-                    // execute ai move
-                    playerB.Execute(board);
-                    if (board.IsTileMoved)
+                    // Check if turn of player a and if so if he is AI driven, else check the same for b
+                    if (turnPlayerA && playerA.PlayerSettings.IsAI)
+                    {
+                        // execute ai move
+                        playerA.Execute(board);
+                        if (board.IsTileMoved)
+                            playerA.Execute(board);
+                        // change player
+                        NumMovesA++;
+
+
+                        // Elapsed time
+                        DateTime afterFunction = DateTime.Now;
+                        TimeSpan elapsedTime = afterFunction - beforeFunction;
+
+                        int num = NumMovesA;
+                        Logger.AddLine(Game.Instance.GetCurrentPlayerNumber() + "-> AI calculated in: " + elapsedTime.TotalMilliseconds.ToString() + " ms (move: " + num + " / " + maxMoves + ")");
+
+                        ChangePlayer();
+                    }
+                    else if (!turnPlayerA && playerB.PlayerSettings.IsAI)
+                    {
+                        // execute ai move
                         playerB.Execute(board);
-                    // change player
-                    NumMovesB++;
+                        if (board.IsTileMoved)
+                            playerB.Execute(board);
+                        // change player
+                        NumMovesB++;
 
 
-                    // Elapsed time
-                    DateTime afterFunction = DateTime.Now;
-                    TimeSpan elapsedTime = afterFunction - beforeFunction;
+                        // Elapsed time
+                        DateTime afterFunction = DateTime.Now;
+                        TimeSpan elapsedTime = afterFunction - beforeFunction;
 
-                    int num = NumMovesB;
-                    Logger.AddLine(Game.Instance.GetCurrentPlayerNumber() + "-> AI calculated in: " + elapsedTime.TotalMilliseconds.ToString() + " ms (move: " + num + " / " + maxMoves + ")");
+                        int num = NumMovesB;
+                        Logger.AddLine(Game.Instance.GetCurrentPlayerNumber() + "-> AI calculated in: " + elapsedTime.TotalMilliseconds.ToString() + " ms (move: " + num + " / " + maxMoves + ")");
 
-                    ChangePlayer();
+                        ChangePlayer();
+                    }
                 }
             }
         }

@@ -96,7 +96,7 @@ namespace Karo.Gui
             current = UIConnector.Instance.GetBoard(); 
             UIConnector.Instance.MaxAIMoves(aiMoves);
             aiMoves++;
-            Thread.Sleep(1000);
+            Thread.Sleep(1500);
             updateBoard();
         }
 
@@ -105,7 +105,7 @@ namespace Karo.Gui
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
            
-            UIConnector.StartGame(new PlayerSettings() { IsAI = true, AlgorithmType = AlgorithmType.Random, DoMoveOrdering = false, DoTransTable = false, EvaluationFunction = EvaluationType.BetterOne, PlieDepth = 2 }, new PlayerSettings() { IsAI = true, AlgorithmType = AlgorithmType.AlphaBeta, PlieDepth = 2, EvaluationFunction = EvaluationType.BetterOne, DoTransTable = true, DoMoveOrdering = true });
+            UIConnector.StartGame(new PlayerSettings() { IsAI = true, AlgorithmType = AlgorithmType.MiniMax, DoMoveOrdering = false, DoTransTable = false, EvaluationFunction = EvaluationType.BetterOne, PlieDepth = 1 }, new PlayerSettings() { IsAI = true, AlgorithmType = AlgorithmType.AlphaBeta, PlieDepth = 3, EvaluationFunction = EvaluationType.BetterOne, DoTransTable = true, DoMoveOrdering = true });
             current = UIConnector.GetBoard();
             if(UIConnector.IsTwoAI())
                 thread.Start();
@@ -190,7 +190,6 @@ namespace Karo.Gui
         /// checking for collisions, gathering input, and playing audio.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        int maxMoves = 1;
         protected override void Update(GameTime gameTime)
         {
             if (UIConnector.IsWon())
@@ -399,17 +398,6 @@ namespace Karo.Gui
             cameraLocation = Vector3.Transform(loc, trans);
             cameraView = Matrix.CreateLookAt(cameraLocation, new Vector3(0, 0, 0), Vector3.UnitZ);
 
-            if (Keyboard.GetState().IsKeyDown(Keys.U))
-                uPressed = true;
-
-            if (Keyboard.GetState().IsKeyUp(Keys.U) && uPressed)
-            {
-                maxMoves++;
-                UIConnector.MaxAIMoves(maxMoves);
-                current = UIConnector.GetBoard();
-                uPressed = false;
-            }
-
             if (Keyboard.GetState().IsKeyDown(Keys.F12))
                 f12Pressed = true;
 
@@ -530,7 +518,7 @@ namespace Karo.Gui
                                 }
                                 m.Draw();
 
-                                if (current.BoardSituation[x, y] == BoardPosition.RedHead || UIConnector.GetBoard().BoardSituation[x, y] == BoardPosition.RedTail)
+                                if (current.BoardSituation[x, y] == BoardPosition.RedHead || current.BoardSituation[x, y] == BoardPosition.RedTail)
                                 {
                                     foreach (ModelMesh mesh in pieceRed.Meshes)
                                     {
@@ -578,7 +566,7 @@ namespace Karo.Gui
                                     }
                                 }
 
-                                if (current.BoardSituation[x, y] == BoardPosition.WhiteHead || UIConnector.GetBoard().BoardSituation[x, y] == BoardPosition.WhiteTail)
+                                if (current.BoardSituation[x, y] == BoardPosition.WhiteHead || current.BoardSituation[x, y] == BoardPosition.WhiteTail)
                                 {
                                     foreach (ModelMesh mesh in pieceWhite.Meshes)
                                     {

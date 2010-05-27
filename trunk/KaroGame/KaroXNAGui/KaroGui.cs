@@ -378,16 +378,22 @@ namespace Karo.Gui
             if (enableDebug)
             {
                 lc.Line("Debug information");
+                lc.Line();
+
                 lc.Line("FPS", fc.Framerate.ToString());
                 lc.Line();
-                lc.Line("z Rotation", angle.ToString());
-                lc.Line("x Rotation", RotationAngleX.ToString());
-                lc.Line("zoom", zoom.ToString());
+
+                lc.Line("X Rotation", RotationAngleX.ToString());
+                lc.Line("Z Rotation", angle.ToString());
                 lc.Line();
+                lc.Line("Zoom factor", zoom.ToString());
+                lc.Line();
+
                 lc.Line("Rotate", rotate.ToString());
                 lc.Line("Rotate up", rotateUp.ToString());
-                lc.Line("remaining", totalAngle.ToString());
+                lc.Line("Remaining", totalAngle.ToString());
                 lc.Line();
+
                 lc.Line("Camera location");
                 lc.Line("X", cameraLocation.X.ToString());
                 lc.Line("Y", cameraLocation.Y.ToString());

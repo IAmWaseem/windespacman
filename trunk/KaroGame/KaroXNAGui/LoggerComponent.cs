@@ -36,6 +36,7 @@ namespace Karo.Gui
             textList = new List<TextObject>();
             spriteBatch = new SpriteBatch(Game.GraphicsDevice);
             spriteFont = Game.Content.Load<SpriteFont>(@"FPSfont");
+            
         }
 
         /// <summary>
@@ -115,7 +116,8 @@ namespace Karo.Gui
                     spriteBatch.DrawString(spriteFont, t.text + " " + t.obj, new Vector2(5, loc), Color.White);
                     spriteBatch.End();
                 }
-                loc += 20;
+                int height = (int)spriteFont.MeasureString("TEST").Y;
+                loc += height;
             }
 
             base.Draw(gameTime);

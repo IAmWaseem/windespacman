@@ -19,6 +19,9 @@ namespace Karo.Gui
     /// </summary>
     public class KaroGui : Microsoft.Xna.Framework.Game
     {
+        bool uPressed = false;
+        bool lookAtTop = false;
+        Vector3 cameraLocation;
         //default members
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -32,17 +35,19 @@ namespace Karo.Gui
 
         // game models
         Model tile, pieceRed, pieceWhite;
-        Matrix view, cameraView, topView, projection, cameraWorld, topWorld;
-        Matrix world
+        Matrix cameraView, topView, projection, world;
+
+        Matrix view
         {
             get
             {
-                if (view == topView)
-                    return topWorld;
+                if (lookAtTop)
+                    return topView;
                 else
-                    return cameraWorld;
+                    return cameraView;
             }
         }
+
 
         // zoom members
         float zoom = 1f;
@@ -87,6 +92,9 @@ namespace Karo.Gui
             UIConnector.StartGame(new PlayerSettings() { IsAI = false }, new PlayerSettings() { IsAI = false });
             //UIConnector.StartGame(new PlayerSettings() {IsAI = true, AlgorithmType = AlgorithmType.Random, DoMoveOrdering = false, DoTransTable = false, EvaluationFunction = EvaluationType.BetterOne, PlieDepth = 2 }, new PlayerSettings() {IsAI = true, AlgorithmType = AlgorithmType.AlphaBeta, PlieDepth = 2, EvaluationFunction = EvaluationType.BetterOne, DoTransTable = true, DoMoveOrdering=true });
             //UIConnector.MaxAIMoves(100);
+            current = UIConnector.GetBoard();
+            current.BoardSituation[11, 10] = BoardPosition.Empty;
+            cameraLocation = new Vector3(0, -10, 10);
         }
 
         /// <summary>
@@ -115,15 +123,20 @@ namespace Karo.Gui
             middleMousePressed = false;
 
             // init views
-            view = Matrix.CreateLookAt(new Vector3(0, -10, 10), new Vector3(0, 0, 0), Vector3.Up);
             topView = Matrix.CreateLookAt(new Vector3(0, 0, 10), new Vector3(0, 0, 0), Vector3.Up);
-            cameraView = Matrix.CreateLookAt(new Vector3(0, -10, 10), new Vector3(0, 0, 0), Vector3.Up);
+
+            Vector3 loc = new Vector3(0, -10, 10);
+            Matrix trans = Matrix.Identity;
+            //trans *= Matrix.CreateRotationX(MathHelper.ToRadians(RotationAngleX));
+            //trans *= Matrix.CreateRotationZ(MathHelper.ToRadians(angle));
+            //trans *= Matrix.CreateScale(zoom);
+            cameraLocation = Vector3.Transform(loc, trans);
+            cameraView = Matrix.CreateLookAt(cameraLocation, new Vector3(0, 0, 0), Vector3.UnitZ);
 
             projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45f),
                 ((float)GraphicsDevice.Viewport.Width / (float)GraphicsDevice.Viewport.Height), 0.1f, 100.0f);
 
-            cameraWorld = Matrix.Identity;
-            topWorld = Matrix.Identity;
+            world = Matrix.Identity;
 
             base.Initialize();
         }
@@ -162,7 +175,6 @@ namespace Karo.Gui
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-
             #region keypresses
             // Allows the game to exit
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -176,42 +188,12 @@ namespace Karo.Gui
             {
                 if (tPressed)
                 {
-                    if (view == topView)
-                    {
-                        view = cameraView;
-                    }
+                    if (lookAtTop)
+                        lookAtTop = false;
                     else
-                    {
-                        view = topView;
-                    }
+                        lookAtTop = true;
                 }
                 tPressed = false;
-            }
-
-            // rotate
-            if (Keyboard.GetState().IsKeyDown(Keys.R))
-                rPressed = true;
-
-            if (Keyboard.GetState().IsKeyUp(Keys.R))
-            {
-                if (rPressed)
-                {
-                    rotate = true;
-                    if (angle >= 180)
-                    {
-                        totalAngle = 360 - angle;
-                        rotateUp = true;
-                    }
-                    else
-                    {
-                        if (angle == 0)
-                            totalAngle = -180;
-                        else
-                            totalAngle = -1 * angle;
-                        rotateUp = false;
-                    }
-                }
-                rPressed = false;
             }
 
             if (Mouse.GetState().MiddleButton == ButtonState.Pressed)
@@ -264,6 +246,32 @@ namespace Karo.Gui
             float rotateAngle = 60f * percentage;
             float rotateAngleX = rotateAngle;
 
+            // rotate
+            if (Keyboard.GetState().IsKeyDown(Keys.R))
+                rPressed = true;
+
+            if (Keyboard.GetState().IsKeyUp(Keys.R))
+            {
+                if (rPressed)
+                {
+                    rotate = true;
+                    if (angle >= 180)
+                    {
+                        totalAngle = 360 - angle;
+                        rotateUp = true;
+                    }
+                    else
+                    {
+                        if (angle == 0)
+                            totalAngle = -180;
+                        else
+                            totalAngle = -1 * angle;
+                        rotateUp = false;
+                    }
+                }
+                rPressed = false;
+            }
+
             // rotate with 'r'
             if (rotate)
             {
@@ -296,112 +304,88 @@ namespace Karo.Gui
 
                 }
 
-                cameraWorld *= Matrix.CreateRotationZ(MathHelper.ToRadians(rotateAngle));
+                cameraView *= Matrix.CreateRotationZ(MathHelper.ToRadians(rotateAngle));
             }
-
-            // rotate with left key
-            if (Keyboard.GetState().IsKeyDown(Keys.Left))
+            if (!lookAtTop)
             {
-                rotate = false;
-                angle += rotateAngle;
-                if (angle > 360)
+                // rotate with left key
+                if (Keyboard.GetState().IsKeyDown(Keys.Left))
                 {
-                    angle = 360 - angle;
+                    rotate = false;
+                    angle += rotateAngle;
+                    if (angle > 360)
+                        angle = 360 - angle;
                 }
 
-                cameraWorld *= Matrix.CreateRotationZ(MathHelper.ToRadians(rotateAngle));
-            }
-
-            // rotate with right key
-            if (Keyboard.GetState().IsKeyDown(Keys.Right))
-            {
-                rotate = false;
-                angle -= rotateAngle;
-                if (angle < 0)
+                // rotate with right key
+                if (Keyboard.GetState().IsKeyDown(Keys.Right))
                 {
-                    angle = 360 + angle;
+                    rotate = false;
+                    angle -= rotateAngle;
+                    if (angle < 0)
+                        angle = 360 + angle;
                 }
-                cameraWorld *= Matrix.CreateRotationZ(MathHelper.ToRadians(-1*rotateAngle));
-            }
 
-            // rotate with  up key
-            if (Keyboard.GetState().IsKeyDown(Keys.Up))
-            {
-                RotationAngleX += rotateAngle;
-
-                cameraWorld *= Matrix.CreateRotationX(MathHelper.ToRadians(rotateAngleX));
-
-            }
-
-            // rotate with down key
-            if (Keyboard.GetState().IsKeyDown(Keys.Down))
-            {
-
-                rotateAngleX *= -1;
-                RotationAngleX += rotateAngle;
-
-                cameraWorld *= Matrix.CreateRotationX(MathHelper.ToRadians(rotateAngleX));
-
-            }
-
-            // zoom out
-            if (Keyboard.GetState().IsKeyDown(Keys.PageUp))
-            {
-                if (zoom > 0.05f)
+                // rotate with  up key
+                if (Keyboard.GetState().IsKeyDown(Keys.Up))
                 {
-                    zoom -= zoomFactor;
-                    cameraWorld *= Matrix.CreateScale(1f - zoomFactor);
+                    RotationAngleX += rotateAngle;
                 }
-            }
-            // zoom in
-            if (Keyboard.GetState().IsKeyDown(Keys.PageDown))
-            {
-                if (zoom < 2.5f)
+
+                // rotate with down key
+                if (Keyboard.GetState().IsKeyDown(Keys.Down))
                 {
-                    zoom += zoomFactor;
-                    cameraWorld *= Matrix.CreateScale(1f + zoomFactor);
+                    rotateAngle = rotateAngle * -1;
+                    RotationAngleX += rotateAngle;
+                }
+
+                // zoom out
+                if (Keyboard.GetState().IsKeyDown(Keys.PageUp))
+                {
+                    if (zoom > 0.05f)
+                        zoom -= zoomFactor;
+                }
+                // zoom in
+                if (Keyboard.GetState().IsKeyDown(Keys.PageDown))
+                {
+                    if (zoom < 2.5f)
+                        zoom += zoomFactor;
                 }
             }
             #endregion
 
-            current = UIConnector.GetBoard();
-            int count = 0;
-            for (int x = 0; x <= 20; x++)
+            // set camera view
+            Vector3 loc = new Vector3(0, 10, 10);
+            Matrix trans = Matrix.Identity;
+            trans *= Matrix.CreateRotationX(MathHelper.ToRadians(RotationAngleX));
+            trans *= Matrix.CreateRotationZ(MathHelper.ToRadians(angle));
+            trans *= Matrix.CreateScale(zoom);
+            cameraLocation = Vector3.Transform(loc, trans);
+            cameraView = Matrix.CreateLookAt(cameraLocation, new Vector3(0, 0, 0), Vector3.UnitZ);
+            
+            if (Keyboard.GetState().IsKeyDown(Keys.U))
+                uPressed = true;
+
+            if (Keyboard.GetState().IsKeyUp(Keys.U) && uPressed)
             {
-                for (int y = 0; y < 19; y++)
-                {
-                    if (current.BoardSituation[x, y] != BoardPosition.Empty)
-                    {
-                        if (count == 0)
-                        {
-                            current.BoardSituation[x, y] = BoardPosition.RedHead;
-                            count++;
-                        }
-                        else if (count == 1)
-                        {
-                            current.BoardSituation[x, y] = BoardPosition.WhiteHead;
-                            count++;
-                        }
-                        else if (count == 2)
-                        {
-                            current.BoardSituation[x, y] = BoardPosition.RedTail;
-                            count++;
-                        }
-                        else if (count == 3)
-                        {
-                            current.BoardSituation[x, y] = BoardPosition.WhiteTail;
-                            count = 0;
-                        }
-                    }
-                }
+                current = UIConnector.GetBoard();
+                uPressed = false;
             }
+
+            
+            // logger
             lc.ClearLog();
             lc.Line("Debug information");
             lc.Line("FPS", fc.Framerate.ToString());
             lc.Line();
-            lc.Line("yRotation", angle.ToString());
-            lc.Line("xRotation", rotateAngleX.ToString());
+            lc.Line("z Rotation", angle.ToString());
+            lc.Line("x Rotation", RotationAngleX.ToString());
             lc.Line("zoom", zoom.ToString());
+            lc.Line();
+            lc.Line("Camera location");
+            lc.Line("X", cameraLocation.X.ToString());
+            lc.Line("Y", cameraLocation.Y.ToString());
+            lc.Line("Z", cameraLocation.Z.ToString());
 
             base.Update(gameTime);
         }
@@ -433,79 +417,81 @@ namespace Karo.Gui
             ResetGraphicsDeviceSettings();
 
             // tiles
-            foreach (ModelMesh m in tile.Meshes)
+            if (current != null)
             {
-                for (int x = 0; x <= 20; x++)
+                foreach (ModelMesh m in tile.Meshes)
                 {
-                    for (int y = 0; y < 19; y++)
+                    for (int x = 0; x <= 20; x++)
                     {
-                        if (current.BoardSituation[x, y] != BoardPosition.Empty)
+                        for (int y = 0; y < 19; y++)
                         {
-                            foreach (BasicEffect e in m.Effects)
+                            if (current.BoardSituation[x, y] != BoardPosition.Empty)
                             {
-                                e.EnableDefaultLighting();
-                                e.PreferPerPixelLighting = true;
-
-                                e.View = view;
-                                e.Projection = projection;
-                                e.World = Matrix.CreateTranslation(x-10, y-9, 0) * world;
-                            }
-                            m.Draw();
-
-                            if (current.BoardSituation[x, y] == BoardPosition.RedHead || UIConnector.GetBoard().BoardSituation[x, y] == BoardPosition.RedTail)
-                            {
-                                foreach (ModelMesh mesh in pieceRed.Meshes)
+                                foreach (BasicEffect e in m.Effects)
                                 {
-                                    foreach (BasicEffect effect in mesh.Effects)
-                                    {
-                                        effect.EnableDefaultLighting();
-                                        effect.PreferPerPixelLighting = true;
-                                        effect.View = view;
-                                        effect.Projection = projection;
-                                        if (current.BoardSituation[x, y] == BoardPosition.RedTail)
-                                        {
-                                            effect.World = Matrix.CreateTranslation(x - 10, y - 9, 0) * world;
-                                            effect.World = Matrix.CreateRotationX(MathHelper.ToRadians(180)) * effect.World;
-                                            effect.World = Matrix.CreateTranslation(0, 0, -0.65f) * effect.World;
-                                        }
-                                        else
-                                        {
-                                            effect.World = Matrix.CreateTranslation(x - 10, y - 9, 0.15f) * world;
-                                        }
-                                    }
-                                    mesh.Draw();
+                                    e.EnableDefaultLighting();
+                                    e.PreferPerPixelLighting = true;
+
+                                    e.View = view;
+                                    e.Projection = projection;
+                                    e.World = Matrix.CreateTranslation(x - 10, y - 9, 0) * world;
                                 }
-                            }
+                                m.Draw();
 
-                            if (current.BoardSituation[x, y] == BoardPosition.WhiteHead || UIConnector.GetBoard().BoardSituation[x, y] == BoardPosition.WhiteTail)
-                            {
-                                foreach (ModelMesh mesh in pieceWhite.Meshes)
+                                if (current.BoardSituation[x, y] == BoardPosition.RedHead || UIConnector.GetBoard().BoardSituation[x, y] == BoardPosition.RedTail)
                                 {
-                                    foreach (BasicEffect effect in mesh.Effects)
+                                    foreach (ModelMesh mesh in pieceRed.Meshes)
                                     {
-                                        effect.EnableDefaultLighting();
-                                        effect.PreferPerPixelLighting = true;
-                                        effect.View = view;
-                                        effect.Projection = projection;
-                                        if (current.BoardSituation[x, y] == BoardPosition.WhiteTail)
+                                        foreach (BasicEffect effect in mesh.Effects)
                                         {
-                                            effect.World = Matrix.CreateTranslation(x - 10, y - 9, 0) * world;
-                                            effect.World = Matrix.CreateRotationX(MathHelper.ToRadians(180)) * effect.World;
-                                            effect.World = Matrix.CreateTranslation(0, 0, -0.65f) * effect.World;
+                                            effect.EnableDefaultLighting();
+                                            effect.PreferPerPixelLighting = true;
+                                            effect.View = view;
+                                            effect.Projection = projection;
+                                            if (current.BoardSituation[x, y] == BoardPosition.RedTail)
+                                            {
+                                                effect.World = Matrix.CreateTranslation(x - 10, y - 9, 0) * world;
+                                                effect.World = Matrix.CreateRotationX(MathHelper.ToRadians(180)) * effect.World;
+                                                effect.World = Matrix.CreateTranslation(0, 0, -0.65f) * effect.World;
+                                            }
+                                            else
+                                            {
+                                                effect.World = Matrix.CreateTranslation(x - 10, y - 9, 0.15f) * world;
+                                            }
                                         }
-                                        else
-                                        {
-                                            effect.World = Matrix.CreateTranslation(x - 10, y - 9, 0.15f) * world;
-                                        }
+                                        mesh.Draw();
                                     }
-                                    mesh.Draw();
+                                }
+
+                                if (current.BoardSituation[x, y] == BoardPosition.WhiteHead || UIConnector.GetBoard().BoardSituation[x, y] == BoardPosition.WhiteTail)
+                                {
+                                    foreach (ModelMesh mesh in pieceWhite.Meshes)
+                                    {
+                                        foreach (BasicEffect effect in mesh.Effects)
+                                        {
+                                            effect.EnableDefaultLighting();
+                                            effect.PreferPerPixelLighting = true;
+                                            effect.View = view;
+                                            effect.Projection = projection;
+                                            if (current.BoardSituation[x, y] == BoardPosition.WhiteTail)
+                                            {
+                                                effect.World = Matrix.CreateTranslation(x - 10, y - 9, 0) * world;
+                                                effect.World = Matrix.CreateRotationX(MathHelper.ToRadians(180)) * effect.World;
+                                                effect.World = Matrix.CreateTranslation(0, 0, -0.65f) * effect.World;
+                                            }
+                                            else
+                                            {
+                                                effect.World = Matrix.CreateTranslation(x - 10, y - 9, 0.15f) * world;
+                                            }
+                                        }
+                                        mesh.Draw();
+                                    }
                                 }
                             }
                         }
                     }
                 }
             }
-            
             base.Draw(gameTime);
         }
         

@@ -97,7 +97,6 @@ namespace Karo.Gui
             UIConnector.StartGame(new PlayerSettings() { IsAI = false, AlgorithmType = AlgorithmType.Random, DoMoveOrdering = false, DoTransTable = false, EvaluationFunction = EvaluationType.BetterOne, PlieDepth = 2 }, new PlayerSettings() { IsAI = true, AlgorithmType = AlgorithmType.AlphaBeta, PlieDepth = 2, EvaluationFunction = EvaluationType.BetterOne, DoTransTable = true, DoMoveOrdering = true });
             UIConnector.MaxAIMoves(100);
             current = UIConnector.GetBoard();
-            current.BoardSituation[11, 10] = BoardPosition.Empty;
             cameraLocation = new Vector3(0, -10, 10);
         }
 

@@ -1,0 +1,12 @@
+
+* SpriteBatch 			-> finished
+* Look at select with ray	-> finished
+* Debug mode			-> finished
+* Rotatie 			-> finished
+* Thread			-> finished
+
+* Verschil tussen boards	-> to do
+* Select object in board	-> to do
+* Centreren van world (tiles)	-> to do
+
+* Architecture			-> to do

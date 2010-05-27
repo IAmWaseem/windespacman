@@ -20,13 +20,11 @@ namespace Karo.Gui
     /// </summary>
     public class KaroGui : Microsoft.Xna.Framework.Game
     {
-        bool uPressed = false;
-        bool lookAtTop = false;
         Vector3 cameraLocation;
         //default members
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        
+
         FramerateComponent fc;
         LoggerComponent lc;
 
@@ -56,6 +54,7 @@ namespace Karo.Gui
 
         //rotation members
         bool rotateUp = false;
+        bool enableDebug = true;
 
         float angle, totalAngle;
 
@@ -76,7 +75,10 @@ namespace Karo.Gui
         }
 
         // key pressed
-        bool tPressed, rPressed, rotate, middleMousePressed, f1Pressed, leftButtonPressed;
+        bool tPressed, rPressed, rotate, middleMousePressed, f1Pressed, f12Pressed;
+
+        bool uPressed = false;
+        bool lookAtTop = false;
 
         private Board current;
         private List<BoundingBox> BoundingBoxes = new List<BoundingBox>();
@@ -91,8 +93,8 @@ namespace Karo.Gui
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            
-            UIConnector.StartGame(new PlayerSettings() {IsAI = false, AlgorithmType = AlgorithmType.Random, DoMoveOrdering = false, DoTransTable = false, EvaluationFunction = EvaluationType.BetterOne, PlieDepth = 2 }, new PlayerSettings() {IsAI = true, AlgorithmType = AlgorithmType.AlphaBeta, PlieDepth = 2, EvaluationFunction = EvaluationType.BetterOne, DoTransTable = true, DoMoveOrdering=true });
+
+            UIConnector.StartGame(new PlayerSettings() { IsAI = false, AlgorithmType = AlgorithmType.Random, DoMoveOrdering = false, DoTransTable = false, EvaluationFunction = EvaluationType.BetterOne, PlieDepth = 2 }, new PlayerSettings() { IsAI = true, AlgorithmType = AlgorithmType.AlphaBeta, PlieDepth = 2, EvaluationFunction = EvaluationType.BetterOne, DoTransTable = true, DoMoveOrdering = true });
             UIConnector.MaxAIMoves(100);
             current = UIConnector.GetBoard();
             current.BoardSituation[11, 10] = BoardPosition.Empty;
@@ -240,7 +242,7 @@ namespace Karo.Gui
                 }
                 f1Pressed = false;
             }
-                        
+
             #endregion
 
             #region rotate
@@ -252,25 +254,21 @@ namespace Karo.Gui
             if (Keyboard.GetState().IsKeyDown(Keys.R))
                 rPressed = true;
 
-            if (Keyboard.GetState().IsKeyUp(Keys.R))
+            if (Keyboard.GetState().IsKeyUp(Keys.R) && rPressed)
             {
-                if (rPressed)
+                rotate = true;
+
+                if (angle >= 180)
                 {
-                    rotate = true;
-                    if (angle >= 180)
-                    {
-                        totalAngle = 360 - angle;
-                        rotateUp = true;
-                    }
-                    else
-                    {
-                        if (angle == 0)
-                            totalAngle = -180;
-                        else
-                            totalAngle = -1 * angle;
-                        rotateUp = false;
-                    }
+                    rotateUp = true;
+                    totalAngle = 180;
                 }
+                else
+                {
+                    rotateUp = true;
+                    totalAngle = 180;
+                }
+
                 rPressed = false;
             }
 
@@ -279,35 +277,22 @@ namespace Karo.Gui
             {
                 if (rotateUp)
                 {
-                    if (totalAngle <= 0)
-                    {
-                        rotateAngle = 0 - totalAngle;
-                        rotate = false;
-                        angle = 0;
-                    }
-                    else
-                    {
-                        totalAngle -= rotateAngle;
-                    }
+                    rotate = false;
                 }
                 else
                 {
                     rotateAngle *= -1;
-                    if (totalAngle >= 0)
+                    totalAngle += rotateAngle;
+                    angle += rotateAngle;
+
+                    if (totalAngle <= 0)
                     {
-                        rotateAngle = totalAngle;
                         rotate = false;
                         angle = 0;
                     }
-                    else
-                    {
-                        totalAngle -= rotateAngle;
-                    }
-
                 }
-
-                cameraView *= Matrix.CreateRotationZ(MathHelper.ToRadians(rotateAngle));
             }
+
             if (!lookAtTop)
             {
                 // rotate with left key
@@ -364,7 +349,7 @@ namespace Karo.Gui
             trans *= Matrix.CreateScale(zoom);
             cameraLocation = Vector3.Transform(loc, trans);
             cameraView = Matrix.CreateLookAt(cameraLocation, new Vector3(0, 0, 0), Vector3.UnitZ);
-            
+
             if (Keyboard.GetState().IsKeyDown(Keys.U))
                 uPressed = true;
 
@@ -374,20 +359,40 @@ namespace Karo.Gui
                 uPressed = false;
             }
 
-            
+            if (Keyboard.GetState().IsKeyDown(Keys.F12))
+                f12Pressed = true;
+
+            if (Keyboard.GetState().IsKeyUp(Keys.F12) && f12Pressed)
+            {
+                if (enableDebug)
+                    enableDebug = false;
+                else
+                    enableDebug = true;
+
+                f12Pressed = false;
+            }
+
             // logger
             lc.ClearLog();
-            lc.Line("Debug information");
-            lc.Line("FPS", fc.Framerate.ToString());
-            lc.Line();
-            lc.Line("z Rotation", angle.ToString());
-            lc.Line("x Rotation", RotationAngleX.ToString());
-            lc.Line("zoom", zoom.ToString());
-            lc.Line();
-            lc.Line("Camera location");
-            lc.Line("X", cameraLocation.X.ToString());
-            lc.Line("Y", cameraLocation.Y.ToString());
-            lc.Line("Z", cameraLocation.Z.ToString());
+
+            if (enableDebug)
+            {
+                lc.Line("Debug information");
+                lc.Line("FPS", fc.Framerate.ToString());
+                lc.Line();
+                lc.Line("z Rotation", angle.ToString());
+                lc.Line("x Rotation", RotationAngleX.ToString());
+                lc.Line("zoom", zoom.ToString());
+                lc.Line();
+                lc.Line("Rotate", rotate.ToString());
+                lc.Line("Rotate up", rotateUp.ToString());
+                lc.Line("remaining", totalAngle.ToString());
+                lc.Line();
+                lc.Line("Camera location");
+                lc.Line("X", cameraLocation.X.ToString());
+                lc.Line("Y", cameraLocation.Y.ToString());
+                lc.Line("Z", cameraLocation.Z.ToString());
+            }
 
             base.Update(gameTime);
         }
@@ -434,40 +439,40 @@ namespace Karo.Gui
                                     e.EnableDefaultLighting();
                                     e.PreferPerPixelLighting = true;
 
-                                e.View = view;
-                                e.Projection = projection;
-                                e.World = Matrix.CreateTranslation(x-10, y-9, 0) * world;
+                                    e.View = view;
+                                    e.Projection = projection;
+                                    e.World = Matrix.CreateTranslation(x - 10, y - 9, 0) * world;
 
-                                //make boundingboxes
-                                BoundingBox meshBox = BoundingBox.CreateFromSphere(m.BoundingSphere);
-                                meshBox.Max = Vector3.Transform(meshBox.Max, Matrix.CreateScale(0.5f) * e.World);
-                                meshBox.Min = Vector3.Transform(meshBox.Min, Matrix.CreateScale(0.5f) * e.World);
-                                meshBox.Max.Z /= 2;
-                                meshBox.Min.Z /= 2;
-                                if (BoundingBoxes.Count < 20)
-                                {
-                                    BoundingBoxes.Add(meshBox);
+                                    //make boundingboxes
+                                    BoundingBox meshBox = BoundingBox.CreateFromSphere(m.BoundingSphere);
+                                    meshBox.Max = Vector3.Transform(meshBox.Max, Matrix.CreateScale(0.5f) * e.World);
+                                    meshBox.Min = Vector3.Transform(meshBox.Min, Matrix.CreateScale(0.5f) * e.World);
+                                    meshBox.Max.Z /= 2;
+                                    meshBox.Min.Z /= 4;
+                                    if (BoundingBoxes.Count < 20)
+                                    {
+                                        BoundingBoxes.Add(meshBox);
+                                    }
+
+                                    Vector3 near = new Vector3(Mouse.GetState().X, Mouse.GetState().Y, 0);
+                                    Vector3 far = new Vector3(Mouse.GetState().X, Mouse.GetState().Y, 1);
+
+                                    near = GraphicsDevice.Viewport.Unproject(near, projection, view, Matrix.Identity);
+                                    far = GraphicsDevice.Viewport.Unproject(far, projection, view, Matrix.Identity);
+
+                                    Vector3 direction = Vector3.Subtract(far, near);
+                                    direction.Normalize();
+
+                                    Ray ray = new Ray(near, direction);
+                                    float? intersect = ray.Intersects(meshBox);
+                                    if (intersect != null)
+                                    {
+                                        e.DiffuseColor = Color.Red.ToVector3();
+                                    }
+                                    else
+                                        e.DiffuseColor = Color.White.ToVector3();
                                 }
-
-                                Vector3 near = new Vector3(Mouse.GetState().X, Mouse.GetState().Y, 0);
-                                Vector3 far = new Vector3(Mouse.GetState().X, Mouse.GetState().Y, 1);
-
-                                near = GraphicsDevice.Viewport.Unproject(near, projection, view, Matrix.Identity);
-                                far = GraphicsDevice.Viewport.Unproject(far, projection, view, Matrix.Identity);
-
-                                Vector3 direction = Vector3.Subtract(far, near);
-                                direction.Normalize();
-
-                                Ray ray = new Ray(near, direction);
-                                float? intersect = ray.Intersects(meshBox);
-                                if (intersect != null)
-                                {
-                                    e.DiffuseColor = Color.Red.ToVector3();
-                                }
-                                else
-                                    e.DiffuseColor = Color.White.ToVector3();
-                            }
-                            m.Draw();
+                                m.Draw();
 
                                 if (current.BoardSituation[x, y] == BoardPosition.RedHead || UIConnector.GetBoard().BoardSituation[x, y] == BoardPosition.RedTail)
                                 {
@@ -523,15 +528,17 @@ namespace Karo.Gui
                     }
                 }
             }
-
-            foreach (BoundingBox boundingBox in BoundingBoxes)
+            if (enableDebug)
             {
-                DrawBoundingBox.Draw(GraphicsDevice, boundingBox, view, projection);
+                foreach (BoundingBox boundingBox in BoundingBoxes)
+                {
+                    DrawBoundingBox.Draw(GraphicsDevice, boundingBox, view, projection);
+                }
             }
-            
+
             base.Draw(gameTime);
         }
-        
+
         private void DrawBackground(SpriteBatch Batch)
         {
             // Center the sprite on the center of the screen.

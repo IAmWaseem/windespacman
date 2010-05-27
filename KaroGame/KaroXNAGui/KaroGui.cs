@@ -105,7 +105,7 @@ namespace Karo.Gui
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
            
-            UIConnector.StartGame(new PlayerSettings() { IsAI = true, AlgorithmType = AlgorithmType.MiniMax, DoMoveOrdering = false, DoTransTable = false, EvaluationFunction = EvaluationType.BetterOne, PlieDepth = 1 }, new PlayerSettings() { IsAI = true, AlgorithmType = AlgorithmType.AlphaBeta, PlieDepth = 3, EvaluationFunction = EvaluationType.BetterOne, DoTransTable = true, DoMoveOrdering = true });
+            UIConnector.StartGame(new PlayerSettings() { IsAI = true, AlgorithmType = AlgorithmType.MiniMax, DoMoveOrdering = false, DoTransTable = false, EvaluationFunction = EvaluationType.BetterOne, PlieDepth = 1 }, new PlayerSettings() { IsAI = true, AlgorithmType = AlgorithmType.AlphaBeta, PlieDepth = 2, EvaluationFunction = EvaluationType.BetterOne, DoTransTable = true, DoMoveOrdering = true });
             current = UIConnector.GetBoard();
             if(UIConnector.IsTwoAI())
                 thread.Start();

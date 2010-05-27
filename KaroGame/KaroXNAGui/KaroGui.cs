@@ -99,7 +99,6 @@ namespace Karo.Gui
             // framerate
             fc = new FramerateComponent(this);
             lc = new LoggerComponent(this);
-            lc.AddLine("FPS", fc.Framerate.ToString());
 
             this.Components.Add(fc);
             this.Components.Add(lc);
@@ -359,6 +358,8 @@ namespace Karo.Gui
             #endregion
 
             // TODO: Add your update logic here
+            lc.ClearLog();
+            lc.Line("FPS", fc.Framerate.ToString());
 
             base.Update(gameTime);
         }

@@ -54,7 +54,7 @@ namespace Karo.Gui
             textList.Clear();
         }
 
-        public void AddLine(string text, string show)
+        public void Line(string text, string show)
         {
             TextObject t = new TextObject();
             t.text = text;

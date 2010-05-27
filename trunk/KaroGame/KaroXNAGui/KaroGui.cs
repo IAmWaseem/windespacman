@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
 using Karo;
+using System.Threading;
 
 namespace Karo.Gui
 {
@@ -75,9 +76,10 @@ namespace Karo.Gui
         }
 
         // key pressed
-        bool tPressed, rPressed, rotate, middleMousePressed, f1Pressed;
+        bool tPressed, rPressed, rotate, middleMousePressed, f1Pressed, leftButtonPressed;
 
         private Board current;
+        private List<BoundingBox> BoundingBoxes = new List<BoundingBox>();
 
         // Maybe other location for this?
         public UIConnector UIConnector
@@ -89,9 +91,9 @@ namespace Karo.Gui
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            UIConnector.StartGame(new PlayerSettings() { IsAI = false }, new PlayerSettings() { IsAI = false });
-            //UIConnector.StartGame(new PlayerSettings() {IsAI = true, AlgorithmType = AlgorithmType.Random, DoMoveOrdering = false, DoTransTable = false, EvaluationFunction = EvaluationType.BetterOne, PlieDepth = 2 }, new PlayerSettings() {IsAI = true, AlgorithmType = AlgorithmType.AlphaBeta, PlieDepth = 2, EvaluationFunction = EvaluationType.BetterOne, DoTransTable = true, DoMoveOrdering=true });
-            //UIConnector.MaxAIMoves(100);
+            
+            UIConnector.StartGame(new PlayerSettings() {IsAI = false, AlgorithmType = AlgorithmType.Random, DoMoveOrdering = false, DoTransTable = false, EvaluationFunction = EvaluationType.BetterOne, PlieDepth = 2 }, new PlayerSettings() {IsAI = true, AlgorithmType = AlgorithmType.AlphaBeta, PlieDepth = 2, EvaluationFunction = EvaluationType.BetterOne, DoTransTable = true, DoMoveOrdering=true });
+            UIConnector.MaxAIMoves(100);
             current = UIConnector.GetBoard();
             current.BoardSituation[11, 10] = BoardPosition.Empty;
             cameraLocation = new Vector3(0, -10, 10);
@@ -432,11 +434,40 @@ namespace Karo.Gui
                                     e.EnableDefaultLighting();
                                     e.PreferPerPixelLighting = true;
 
-                                    e.View = view;
-                                    e.Projection = projection;
-                                    e.World = Matrix.CreateTranslation(x - 10, y - 9, 0) * world;
+                                e.View = view;
+                                e.Projection = projection;
+                                e.World = Matrix.CreateTranslation(x-10, y-9, 0) * world;
+
+                                //make boundingboxes
+                                BoundingBox meshBox = BoundingBox.CreateFromSphere(m.BoundingSphere);
+                                meshBox.Max = Vector3.Transform(meshBox.Max, Matrix.CreateScale(0.5f) * e.World);
+                                meshBox.Min = Vector3.Transform(meshBox.Min, Matrix.CreateScale(0.5f) * e.World);
+                                meshBox.Max.Z /= 2;
+                                meshBox.Min.Z /= 2;
+                                if (BoundingBoxes.Count < 20)
+                                {
+                                    BoundingBoxes.Add(meshBox);
                                 }
-                                m.Draw();
+
+                                Vector3 near = new Vector3(Mouse.GetState().X, Mouse.GetState().Y, 0);
+                                Vector3 far = new Vector3(Mouse.GetState().X, Mouse.GetState().Y, 1);
+
+                                near = GraphicsDevice.Viewport.Unproject(near, projection, view, Matrix.Identity);
+                                far = GraphicsDevice.Viewport.Unproject(far, projection, view, Matrix.Identity);
+
+                                Vector3 direction = Vector3.Subtract(far, near);
+                                direction.Normalize();
+
+                                Ray ray = new Ray(near, direction);
+                                float? intersect = ray.Intersects(meshBox);
+                                if (intersect != null)
+                                {
+                                    e.DiffuseColor = Color.Red.ToVector3();
+                                }
+                                else
+                                    e.DiffuseColor = Color.White.ToVector3();
+                            }
+                            m.Draw();
 
                                 if (current.BoardSituation[x, y] == BoardPosition.RedHead || UIConnector.GetBoard().BoardSituation[x, y] == BoardPosition.RedTail)
                                 {
@@ -492,6 +523,12 @@ namespace Karo.Gui
                     }
                 }
             }
+
+            foreach (BoundingBox boundingBox in BoundingBoxes)
+            {
+                DrawBoundingBox.Draw(GraphicsDevice, boundingBox, view, projection);
+            }
+            
             base.Draw(gameTime);
         }
         

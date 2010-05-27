@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
+using Karo;
 
 namespace Karo.Gui
 {
@@ -71,6 +72,8 @@ namespace Karo.Gui
         // key pressed
         bool tPressed, rPressed, rotate, middleMousePressed, f1Pressed;
 
+        private Board current;
+
         // Maybe other location for this?
         public UIConnector UIConnector
         {
@@ -81,6 +84,9 @@ namespace Karo.Gui
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            UIConnector.StartGame(new PlayerSettings() { IsAI = false }, new PlayerSettings() { IsAI = false });
+            //UIConnector.StartGame(new PlayerSettings() {IsAI = true, AlgorithmType = AlgorithmType.Random, DoMoveOrdering = false, DoTransTable = false, EvaluationFunction = EvaluationType.BetterOne, PlieDepth = 2 }, new PlayerSettings() {IsAI = true, AlgorithmType = AlgorithmType.AlphaBeta, PlieDepth = 2, EvaluationFunction = EvaluationType.BetterOne, DoTransTable = true, DoMoveOrdering=true });
+            //UIConnector.MaxAIMoves(100);
         }
 
         /// <summary>
@@ -156,6 +162,7 @@ namespace Karo.Gui
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+
             #region keypresses
             // Allows the game to exit
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -357,7 +364,37 @@ namespace Karo.Gui
             }
             #endregion
 
-            // Debug log
+            current = UIConnector.GetBoard();
+            int count = 0;
+            for (int x = 0; x <= 20; x++)
+            {
+                for (int y = 0; y < 19; y++)
+                {
+                    if (current.BoardSituation[x, y] != BoardPosition.Empty)
+                    {
+                        if (count == 0)
+                        {
+                            current.BoardSituation[x, y] = BoardPosition.RedHead;
+                            count++;
+                        }
+                        else if (count == 1)
+                        {
+                            current.BoardSituation[x, y] = BoardPosition.WhiteHead;
+                            count++;
+                        }
+                        else if (count == 2)
+                        {
+                            current.BoardSituation[x, y] = BoardPosition.RedTail;
+                            count++;
+                        }
+                        else if (count == 3)
+                        {
+                            current.BoardSituation[x, y] = BoardPosition.WhiteTail;
+                            count = 0;
+                        }
+                    }
+                }
+            }
             lc.ClearLog();
             lc.Line("Debug information");
             lc.Line("FPS", fc.Framerate.ToString());
@@ -398,20 +435,73 @@ namespace Karo.Gui
             // tiles
             foreach (ModelMesh m in tile.Meshes)
             {
-                for (int x = -2; x <= 2; x++)
+                for (int x = 0; x <= 20; x++)
                 {
-                    for (int y = -2; y < 2; y++)
+                    for (int y = 0; y < 19; y++)
                     {
-                        foreach (BasicEffect e in m.Effects)
+                        if (current.BoardSituation[x, y] != BoardPosition.Empty)
                         {
-                            e.EnableDefaultLighting();
-                            e.PreferPerPixelLighting = true;
+                            foreach (BasicEffect e in m.Effects)
+                            {
+                                e.EnableDefaultLighting();
+                                e.PreferPerPixelLighting = true;
 
-                            e.View = view;
-                            e.Projection = projection;
-                            e.World = Matrix.CreateTranslation(x, y, 0) * world;
+                                e.View = view;
+                                e.Projection = projection;
+                                e.World = Matrix.CreateTranslation(x-10, y-9, 0) * world;
+                            }
+                            m.Draw();
+
+                            if (current.BoardSituation[x, y] == BoardPosition.RedHead || UIConnector.GetBoard().BoardSituation[x, y] == BoardPosition.RedTail)
+                            {
+                                foreach (ModelMesh mesh in pieceRed.Meshes)
+                                {
+                                    foreach (BasicEffect effect in mesh.Effects)
+                                    {
+                                        effect.EnableDefaultLighting();
+                                        effect.PreferPerPixelLighting = true;
+                                        effect.View = view;
+                                        effect.Projection = projection;
+                                        if (current.BoardSituation[x, y] == BoardPosition.RedTail)
+                                        {
+                                            effect.World = Matrix.CreateTranslation(x - 10, y - 9, 0) * world;
+                                            effect.World = Matrix.CreateRotationX(MathHelper.ToRadians(180)) * effect.World;
+                                            effect.World = Matrix.CreateTranslation(0, 0, -0.65f) * effect.World;
+                                        }
+                                        else
+                                        {
+                                            effect.World = Matrix.CreateTranslation(x - 10, y - 9, 0.15f) * world;
+                                        }
+                                    }
+                                    mesh.Draw();
+                                }
+                            }
+
+                            if (current.BoardSituation[x, y] == BoardPosition.WhiteHead || UIConnector.GetBoard().BoardSituation[x, y] == BoardPosition.WhiteTail)
+                            {
+                                foreach (ModelMesh mesh in pieceWhite.Meshes)
+                                {
+                                    foreach (BasicEffect effect in mesh.Effects)
+                                    {
+                                        effect.EnableDefaultLighting();
+                                        effect.PreferPerPixelLighting = true;
+                                        effect.View = view;
+                                        effect.Projection = projection;
+                                        if (current.BoardSituation[x, y] == BoardPosition.WhiteTail)
+                                        {
+                                            effect.World = Matrix.CreateTranslation(x - 10, y - 9, 0) * world;
+                                            effect.World = Matrix.CreateRotationX(MathHelper.ToRadians(180)) * effect.World;
+                                            effect.World = Matrix.CreateTranslation(0, 0, -0.65f) * effect.World;
+                                        }
+                                        else
+                                        {
+                                            effect.World = Matrix.CreateTranslation(x - 10, y - 9, 0.15f) * world;
+                                        }
+                                    }
+                                    mesh.Draw();
+                                }
+                            }
                         }
-                        m.Draw();
                     }
                 }
             }

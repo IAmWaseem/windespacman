@@ -50,7 +50,6 @@ namespace Karo
         {
             if (playerA.PlayerSettings.IsAI && playerB.PlayerSettings.IsAI)
             {
-
                 MakeAIMove();
             }
             return board;

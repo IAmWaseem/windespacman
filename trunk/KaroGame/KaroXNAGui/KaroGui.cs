@@ -594,7 +594,7 @@ namespace Karo.Gui
                             effect.View = view;
                             effect.Projection = projection;
 
-                            effect.World = Matrix.CreateTranslation(-2.5f + i, 3, 0) * world;
+                            effect.World = Matrix.CreateTranslation(-2.5f + i, -2, 0) * world;
                             effect.World = Matrix.CreateRotationX(MathHelper.ToRadians(180)) * effect.World;
                             effect.World = Matrix.CreateTranslation(0, 0, -0.65f) * effect.World;
 
@@ -642,7 +642,7 @@ namespace Karo.Gui
                             effect.View = view;
                             effect.Projection = projection;
 
-                            effect.World = Matrix.CreateTranslation(-2.5f + i, -2, 0) * world;
+                            effect.World = Matrix.CreateTranslation(-2.5f + i, 3, 0) * world;
                             effect.World = Matrix.CreateRotationX(MathHelper.ToRadians(180)) * effect.World;
                             effect.World = Matrix.CreateTranslation(0, 0, -0.65f) * effect.World;
 

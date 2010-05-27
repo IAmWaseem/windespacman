@@ -421,6 +421,7 @@ namespace Karo.Gui
         {
             // clear screen
             GraphicsDevice.Clear(Color.CornflowerBlue);
+            BoundingBoxes = new List<BoundingBox>();
 
             // background
             backgroundBatch.Begin(SpriteBlendMode.None);
@@ -455,10 +456,8 @@ namespace Karo.Gui
                                     meshBox.Min = Vector3.Transform(meshBox.Min, Matrix.CreateScale(0.5f) * e.World);
                                     meshBox.Max.Z /= 2;
                                     meshBox.Min.Z /= 4;
-                                    if (BoundingBoxes.Count < 20)
-                                    {
-                                        BoundingBoxes.Add(meshBox);
-                                    }
+
+                                    BoundingBoxes.Add(meshBox);
 
                                     Vector3 near = new Vector3(Mouse.GetState().X, Mouse.GetState().Y, 0);
                                     Vector3 far = new Vector3(Mouse.GetState().X, Mouse.GetState().Y, 1);
@@ -500,6 +499,29 @@ namespace Karo.Gui
                                             {
                                                 effect.World = Matrix.CreateTranslation(x - 10, y - 9, 0.15f) * world;
                                             }
+                                            BoundingBox meshBox = BoundingBox.CreateFromSphere(mesh.BoundingSphere);
+                                            meshBox.Max = Vector3.Transform(meshBox.Max, Matrix.CreateScale(0.7f) * effect.World);
+                                            meshBox.Min = Vector3.Transform(meshBox.Min, Matrix.CreateScale(0.7f) * effect.World);
+
+                                            BoundingBoxes.Add(meshBox);
+
+                                            Vector3 near = new Vector3(Mouse.GetState().X, Mouse.GetState().Y, 0);
+                                            Vector3 far = new Vector3(Mouse.GetState().X, Mouse.GetState().Y, 1);
+
+                                            near = GraphicsDevice.Viewport.Unproject(near, projection, view, Matrix.Identity);
+                                            far = GraphicsDevice.Viewport.Unproject(far, projection, view, Matrix.Identity);
+
+                                            Vector3 direction = Vector3.Subtract(far, near);
+                                            direction.Normalize();
+
+                                            Ray ray = new Ray(near, direction);
+                                            float? intersect = ray.Intersects(meshBox);
+                                            if (intersect != null)
+                                            {
+                                                effect.DiffuseColor = Color.White.ToVector3();
+                                            }
+                                            else
+                                                effect.DiffuseColor = Color.Orange.ToVector3();
                                         }
                                         mesh.Draw();
                                     }
@@ -525,6 +547,29 @@ namespace Karo.Gui
                                             {
                                                 effect.World = Matrix.CreateTranslation(x - 10, y - 9, 0.15f) * world;
                                             }
+                                            BoundingBox meshBox = BoundingBox.CreateFromSphere(mesh.BoundingSphere);
+                                            meshBox.Max = Vector3.Transform(meshBox.Max, Matrix.CreateScale(0.7f) * effect.World);
+                                            meshBox.Min = Vector3.Transform(meshBox.Min, Matrix.CreateScale(0.7f) * effect.World);
+
+                                            BoundingBoxes.Add(meshBox);
+
+                                            Vector3 near = new Vector3(Mouse.GetState().X, Mouse.GetState().Y, 0);
+                                            Vector3 far = new Vector3(Mouse.GetState().X, Mouse.GetState().Y, 1);
+
+                                            near = GraphicsDevice.Viewport.Unproject(near, projection, view, Matrix.Identity);
+                                            far = GraphicsDevice.Viewport.Unproject(far, projection, view, Matrix.Identity);
+
+                                            Vector3 direction = Vector3.Subtract(far, near);
+                                            direction.Normalize();
+
+                                            Ray ray = new Ray(near, direction);
+                                            float? intersect = ray.Intersects(meshBox);
+                                            if (intersect != null)
+                                            {
+                                                effect.DiffuseColor = Color.Orange.ToVector3();
+                                            }
+                                            else
+                                                effect.DiffuseColor = Color.White.ToVector3();
                                         }
                                         mesh.Draw();
                                     }
@@ -534,6 +579,102 @@ namespace Karo.Gui
                     }
                 }
             }
+
+            //draw start red pieces
+            if (current.RedItems < 6)
+            {
+                foreach (ModelMesh mesh in pieceRed.Meshes)
+                {
+                    for (int i = 0; i < 6 - current.RedItems; i++)
+                    {
+                        foreach (BasicEffect effect in mesh.Effects)
+                        {
+                            effect.EnableDefaultLighting();
+                            effect.PreferPerPixelLighting = true;
+                            effect.View = view;
+                            effect.Projection = projection;
+
+                            effect.World = Matrix.CreateTranslation(-2.5f + i, 3, 0) * world;
+                            effect.World = Matrix.CreateRotationX(MathHelper.ToRadians(180)) * effect.World;
+                            effect.World = Matrix.CreateTranslation(0, 0, -0.65f) * effect.World;
+
+                            BoundingBox meshBox = BoundingBox.CreateFromSphere(mesh.BoundingSphere);
+                            meshBox.Max = Vector3.Transform(meshBox.Max, Matrix.CreateScale(0.7f) * effect.World);
+                            meshBox.Min = Vector3.Transform(meshBox.Min, Matrix.CreateScale(0.7f) * effect.World);
+
+                            BoundingBoxes.Add(meshBox);
+
+                            Vector3 near = new Vector3(Mouse.GetState().X, Mouse.GetState().Y, 0);
+                            Vector3 far = new Vector3(Mouse.GetState().X, Mouse.GetState().Y, 1);
+
+                            near = GraphicsDevice.Viewport.Unproject(near, projection, view, Matrix.Identity);
+                            far = GraphicsDevice.Viewport.Unproject(far, projection, view, Matrix.Identity);
+
+                            Vector3 direction = Vector3.Subtract(far, near);
+                            direction.Normalize();
+
+                            Ray ray = new Ray(near, direction);
+                            float? intersect = ray.Intersects(meshBox);
+                            if (intersect != null)
+                            {
+                                effect.DiffuseColor = Color.Orange.ToVector3();
+                            }
+                            else
+                                effect.DiffuseColor = Color.Red.ToVector3();
+                        }
+                        mesh.Draw();
+                    }
+                }
+                
+            }
+
+            //draw start white pieces
+            if (current.WhiteItems < 6)
+            {
+                foreach (ModelMesh mesh in pieceWhite.Meshes)
+                {
+                    for (int i = 0; i < 6 - current.WhiteItems; i++)
+                    {
+                        foreach (BasicEffect effect in mesh.Effects)
+                        {
+                            effect.EnableDefaultLighting();
+                            effect.PreferPerPixelLighting = true;
+                            effect.View = view;
+                            effect.Projection = projection;
+
+                            effect.World = Matrix.CreateTranslation(-2.5f + i, -2, 0) * world;
+                            effect.World = Matrix.CreateRotationX(MathHelper.ToRadians(180)) * effect.World;
+                            effect.World = Matrix.CreateTranslation(0, 0, -0.65f) * effect.World;
+
+                            BoundingBox meshBox = BoundingBox.CreateFromSphere(mesh.BoundingSphere);
+                            meshBox.Max = Vector3.Transform(meshBox.Max, Matrix.CreateScale(0.7f) * effect.World);
+                            meshBox.Min = Vector3.Transform(meshBox.Min, Matrix.CreateScale(0.7f) * effect.World);
+
+                            BoundingBoxes.Add(meshBox);
+
+                            Vector3 near = new Vector3(Mouse.GetState().X, Mouse.GetState().Y, 0);
+                            Vector3 far = new Vector3(Mouse.GetState().X, Mouse.GetState().Y, 1);
+
+                            near = GraphicsDevice.Viewport.Unproject(near, projection, view, Matrix.Identity);
+                            far = GraphicsDevice.Viewport.Unproject(far, projection, view, Matrix.Identity);
+
+                            Vector3 direction = Vector3.Subtract(far, near);
+                            direction.Normalize();
+
+                            Ray ray = new Ray(near, direction);
+                            float? intersect = ray.Intersects(meshBox);
+                            if (intersect != null)
+                            {
+                                effect.DiffuseColor = Color.Orange.ToVector3();
+                            }
+                            else
+                                effect.DiffuseColor = Color.White.ToVector3();
+                        }
+                        mesh.Draw();
+                    }
+                }
+            }
+
             if (enableDebug)
             {
                 foreach (BoundingBox boundingBox in BoundingBoxes)

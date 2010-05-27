@@ -49,19 +49,45 @@ namespace Karo.Gui
             base.Initialize();
         }
 
+        /// <summary>
+        /// Clear lines
+        /// </summary>
         public void ClearLog()
         {
             textList.Clear();
         }
 
-        public void Line(string text, string show)
+        /// <summary>
+        /// Add empty line
+        /// </summary>
+        public void Line()
         {
             TextObject t = new TextObject();
-            t.text = text;
-            t.obj = show;
+            t.text = "";
+            t.obj = "";
 
             textList.Add(t);
         }
+
+        // Add line with text
+        public void Line(string text)
+        {
+            TextObject t = new TextObject();
+            t.text = text;
+            t.obj = "";
+
+            textList.Add(t);
+        }
+
+        // Add line with value
+        public void Line(string text, string show)
+        {
+            TextObject t = new TextObject();
+            t.text = text + ":";
+            t.obj = show;
+
+            textList.Add(t);
+        }      
 
         /// <summary>
         /// Allows the game component to update itself.
@@ -86,7 +112,7 @@ namespace Karo.Gui
                 if (t.text.Length > 0)
                 {
                     spriteBatch.Begin();
-                    spriteBatch.DrawString(spriteFont, t.text + ": " + t.obj, new Vector2(5, loc), Color.White);
+                    spriteBatch.DrawString(spriteFont, t.text + " " + t.obj, new Vector2(5, loc), Color.White);
                     spriteBatch.End();
                 }
                 loc += 20;

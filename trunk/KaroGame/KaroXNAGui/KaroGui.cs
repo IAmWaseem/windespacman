@@ -357,9 +357,14 @@ namespace Karo.Gui
             }
             #endregion
 
-            // TODO: Add your update logic here
+            // Debug log
             lc.ClearLog();
+            lc.Line("Debug information");
             lc.Line("FPS", fc.Framerate.ToString());
+            lc.Line();
+            lc.Line("yRotation", angle.ToString());
+            lc.Line("xRotation", rotateAngleX.ToString());
+            lc.Line("zoom", zoom.ToString());
 
             base.Update(gameTime);
         }

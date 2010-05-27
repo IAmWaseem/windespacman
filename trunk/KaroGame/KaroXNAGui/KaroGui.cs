@@ -79,7 +79,7 @@ namespace Karo.Gui
         bool uPressed = false;
         bool lookAtTop = false;
 
-        public static Board current { get; set; } 
+        public static Board current { get; set; }
         private List<BoundingBox> BoundingBoxes = new List<BoundingBox>();
 
         // Maybe other location for this?
@@ -88,15 +88,26 @@ namespace Karo.Gui
             get { return UIConnector.Instance; }
         }
 
+
         Thread thread = new Thread(new ThreadStart(updateBoard));
         static int aiMoves = 1;
-
+        static bool calculating = false;
+        static Board newBoard;
         public static void updateBoard()
         {
-            current = UIConnector.Instance.GetBoard(); 
+            // set calculation to true
+            calculating = true;
+            Thread.Sleep(50);
+
+            newBoard = UIConnector.Instance.GetBoard();
             UIConnector.Instance.MaxAIMoves(aiMoves);
             aiMoves++;
-            Thread.Sleep(1500);
+            current = newBoard;
+
+            // set calculation to false;
+            calculating = false;
+
+            Thread.Sleep(1450);
             updateBoard();
         }
 
@@ -104,10 +115,29 @@ namespace Karo.Gui
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-           
-            UIConnector.StartGame(new PlayerSettings() { IsAI = true, AlgorithmType = AlgorithmType.MiniMax, DoMoveOrdering = false, DoTransTable = false, EvaluationFunction = EvaluationType.BetterOne, PlieDepth = 1 }, new PlayerSettings() { IsAI = true, AlgorithmType = AlgorithmType.AlphaBeta, PlieDepth = 2, EvaluationFunction = EvaluationType.BetterOne, DoTransTable = true, DoMoveOrdering = true });
+
+            UIConnector.StartGame(
+                new PlayerSettings()
+                {
+                    IsAI = true,
+                    AlgorithmType = AlgorithmType.MiniMax,
+                    PlieDepth = 1,
+                    DoTransTable = false,
+                    DoMoveOrdering = false,
+                    EvaluationFunction = EvaluationType.BetterOne
+                },
+                new PlayerSettings()
+                {
+                    IsAI = true,
+                    AlgorithmType = AlgorithmType.AlphaBeta,
+                    PlieDepth = 3,
+                    DoTransTable = true,
+                    DoMoveOrdering = true,
+                    EvaluationFunction = EvaluationType.BetterOne
+                });
+
             current = UIConnector.GetBoard();
-            if(UIConnector.IsTwoAI())
+            if (UIConnector.IsTwoAI())
                 thread.Start();
 
             cameraLocation = new Vector3(0, -10, 10);
@@ -420,6 +450,7 @@ namespace Karo.Gui
                 lc.Line();
 
                 lc.Line("FPS", fc.Framerate.ToString());
+                lc.Line("AI Calculates", calculating.ToString());
                 lc.Line();
 
                 lc.Line("X Rotation", RotationAngleX.ToString());

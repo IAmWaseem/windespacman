@@ -195,15 +195,19 @@ namespace Karo.Gui
         {
             if (UIConnector.IsWon())
             {
-                thread.Suspend();
+                thread.Abort();
                 current = UIConnector.GetBoard();
             }
 
             #region keypresses
             // Allows the game to exit
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
-                this.Exit();
+            {
+                if (thread.IsAlive)
+                    thread.Abort();
 
+                this.Exit();
+            }
             // top view
             if (Keyboard.GetState().IsKeyDown(Keys.T))
                 tPressed = true;

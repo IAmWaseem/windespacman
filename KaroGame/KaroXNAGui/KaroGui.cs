@@ -21,8 +21,9 @@ namespace Karo.Gui
         //default members
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        
         FramerateComponent fc;
-        TextPrinterComponent tpc;
+        LoggerComponent lc;
 
         //background
         SpriteBatch backgroundBatch;
@@ -97,9 +98,11 @@ namespace Karo.Gui
 
             // framerate
             fc = new FramerateComponent(this);
-            tpc = new TextPrinterComponent(this, Color.White);
+            lc = new LoggerComponent(this);
+            lc.AddLine("FPS", fc.Framerate.ToString());
+
             this.Components.Add(fc);
-            this.Components.Add(tpc);
+            this.Components.Add(lc);
 
             IsMouseVisible = true;
             tPressed = false;
@@ -360,6 +363,16 @@ namespace Karo.Gui
             base.Update(gameTime);
         }
 
+        private void ResetGraphicsDeviceSettings()
+        {
+            GraphicsDevice.RenderState.DepthBufferEnable = true;
+            GraphicsDevice.RenderState.AlphaBlendEnable = false;
+            GraphicsDevice.RenderState.AlphaTestEnable = false;
+
+            GraphicsDevice.SamplerStates[0].AddressU = TextureAddressMode.Wrap;
+            GraphicsDevice.SamplerStates[0].AddressV = TextureAddressMode.Wrap;
+        }
+
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>
@@ -374,8 +387,7 @@ namespace Karo.Gui
             DrawBackground(backgroundBatch);
             backgroundBatch.End();
 
-            // fps
-            tpc.Print("FPS:" + fc.Framerate.ToString(), new Vector2(5, 5));
+            ResetGraphicsDeviceSettings();
 
             // tiles
             foreach (ModelMesh m in tile.Meshes)

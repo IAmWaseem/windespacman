@@ -18,7 +18,7 @@ namespace Karo.Gui
     /// </summary>
     public class FramerateComponent : DrawableGameComponent
     {
-        int frameRate = 0;
+        public int frameRate = 0;
         int frameCounter = 0;
         TimeSpan elapsedTime = TimeSpan.Zero;
 

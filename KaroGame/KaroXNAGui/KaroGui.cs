@@ -47,7 +47,6 @@ namespace Karo.Gui
             }
         }
 
-
         // zoom members
         float zoom = 1f;
         float zoomFactor = 0.02f;
@@ -80,7 +79,7 @@ namespace Karo.Gui
         bool uPressed = false;
         bool lookAtTop = false;
 
-        private Board current;
+        public static Board current { get; set; } 
         private List<BoundingBox> BoundingBoxes = new List<BoundingBox>();
 
         // Maybe other location for this?
@@ -89,14 +88,28 @@ namespace Karo.Gui
             get { return UIConnector.Instance; }
         }
 
+        Thread thread = new Thread(new ThreadStart(updateBoard));
+        static int aiMoves = 1;
+
+        public static void updateBoard()
+        {
+            current = UIConnector.Instance.GetBoard(); 
+            UIConnector.Instance.MaxAIMoves(aiMoves);
+            aiMoves++;
+            Thread.Sleep(1000);
+            updateBoard();
+        }
+
         public KaroGui()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-
-            UIConnector.StartGame(new PlayerSettings() { IsAI = false, AlgorithmType = AlgorithmType.Random, DoMoveOrdering = false, DoTransTable = false, EvaluationFunction = EvaluationType.BetterOne, PlieDepth = 2 }, new PlayerSettings() { IsAI = true, AlgorithmType = AlgorithmType.AlphaBeta, PlieDepth = 2, EvaluationFunction = EvaluationType.BetterOne, DoTransTable = true, DoMoveOrdering = true });
-            UIConnector.MaxAIMoves(100);
+           
+            UIConnector.StartGame(new PlayerSettings() { IsAI = true, AlgorithmType = AlgorithmType.Random, DoMoveOrdering = false, DoTransTable = false, EvaluationFunction = EvaluationType.BetterOne, PlieDepth = 2 }, new PlayerSettings() { IsAI = true, AlgorithmType = AlgorithmType.AlphaBeta, PlieDepth = 2, EvaluationFunction = EvaluationType.BetterOne, DoTransTable = true, DoMoveOrdering = true });
             current = UIConnector.GetBoard();
+            if(UIConnector.IsTwoAI())
+                thread.Start();
+
             cameraLocation = new Vector3(0, -10, 10);
         }
 
@@ -177,8 +190,15 @@ namespace Karo.Gui
         /// checking for collisions, gathering input, and playing audio.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
+        int maxMoves = 1;
         protected override void Update(GameTime gameTime)
         {
+            if (UIConnector.IsWon())
+            {
+                thread.Suspend();
+                current = UIConnector.GetBoard();
+            }
+
             #region keypresses
             // Allows the game to exit
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -380,6 +400,8 @@ namespace Karo.Gui
 
             if (Keyboard.GetState().IsKeyUp(Keys.U) && uPressed)
             {
+                maxMoves++;
+                UIConnector.MaxAIMoves(maxMoves);
                 current = UIConnector.GetBoard();
                 uPressed = false;
             }
@@ -543,10 +565,10 @@ namespace Karo.Gui
                                             float? intersect = ray.Intersects(meshBox);
                                             if (intersect != null)
                                             {
-                                                effect.DiffuseColor = Color.White.ToVector3();
+                                                effect.DiffuseColor = Color.Orange.ToVector3();
                                             }
                                             else
-                                                effect.DiffuseColor = Color.Orange.ToVector3();
+                                                effect.DiffuseColor = Color.Red.ToVector3();
                                         }
                                         mesh.Draw();
                                     }

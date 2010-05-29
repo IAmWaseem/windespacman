@@ -120,7 +120,7 @@ namespace Karo.Gui
                 new PlayerSettings()
                 {
                     IsAI = true,
-                    AlgorithmType = AlgorithmType.MiniMax,
+                    AlgorithmType = AlgorithmType.Random,
                     PlieDepth = 1,
                     DoTransTable = false,
                     DoMoveOrdering = false,
@@ -130,7 +130,7 @@ namespace Karo.Gui
                 {
                     IsAI = true,
                     AlgorithmType = AlgorithmType.AlphaBeta,
-                    PlieDepth = 3,
+                    PlieDepth = 2,
                     DoTransTable = true,
                     DoMoveOrdering = true,
                     EvaluationFunction = EvaluationType.BetterOne

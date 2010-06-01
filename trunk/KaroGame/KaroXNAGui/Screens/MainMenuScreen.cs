@@ -73,7 +73,7 @@ namespace GameStateManagement
         /// </summary>
         protected override void OnCancel(PlayerIndex playerIndex)
         {
-            const string message = "Are you sure you want to exit this sample?";
+            const string message = "Are you sure you want to exit Karo?";
 
             MessageBoxScreen confirmExitMessageBox = new MessageBoxScreen(message);
 

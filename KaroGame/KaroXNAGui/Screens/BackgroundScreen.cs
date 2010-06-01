@@ -55,7 +55,7 @@ namespace GameStateManagement
             if (content == null)
                 content = new ContentManager(ScreenManager.Game.Services, "Content");
 
-            backgroundTexture = content.Load<Texture2D>("pdc08-1600x1200");
+            backgroundTexture = content.Load<Texture2D>("GameMenuBackground");
         }
 
 

@@ -228,7 +228,7 @@ namespace GameStateManagement
             gameFont = content.Load<SpriteFont>("FPSFont");
             spriteBatch = new SpriteBatch(ScreenManager.Game.GraphicsDevice);
             backgroundBatch = new SpriteBatch(ScreenManager.Game.GraphicsDevice);
-            background = ScreenManager.Game.Content.Load<Texture2D>("pdc08-1600x1200");
+            background = ScreenManager.Game.Content.Load<Texture2D>("GameBackground");
             tile = ScreenManager.Game.Content.Load<Model>("tile");
             pieceRed = ScreenManager.Game.Content.Load<Model>("pawnred");
             pieceWhite = ScreenManager.Game.Content.Load<Model>("pawnwhite");

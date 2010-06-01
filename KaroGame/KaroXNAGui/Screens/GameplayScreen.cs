@@ -264,6 +264,7 @@ namespace GameStateManagement
         {
             base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
 
+            lc.ClearLog();
             if (IsActive)
             {
                 if (UIConnector.IsWon())
@@ -486,8 +487,6 @@ namespace GameStateManagement
                 }
 
                 // logger
-                lc.ClearLog();
-
                 if (enableDebug)
                 {
                     lc.Line("Debug information");

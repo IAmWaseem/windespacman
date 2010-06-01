@@ -29,6 +29,7 @@ namespace Karo.Gui
             this.boardX = boardX;
             this.boardY = boardY;
             this.game = game;
+            this.world = Matrix.Identity;
             CreateBoundingBox();
         }
 
@@ -46,7 +47,7 @@ namespace Karo.Gui
                 foreach (BasicEffect effect in mesh.Effects)
                 {
                     effect.EnableDefaultLighting();
-                    effect.World = world * game.World;
+                    effect.World = world*game.World;
                     effect.View = game.View;
                     effect.Projection = game.Projection;
                     if(IsSelected)

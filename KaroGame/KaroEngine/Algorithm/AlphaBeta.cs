@@ -46,7 +46,19 @@ namespace Karo
             List<Board> moves = currentBoard.GenerateMoves(Game.Instance.GetTurn());
             foreach (Board board in moves)
             {
-                alpha = AlphaBetaFunction(board, plieDepth, Game.Instance.GetTurn(), !Game.Instance.GetTurn(), alpha, beta);
+                if (this.transtable)
+                {
+                    if (table.IsCalculatedBefore(board, plieDepth + 1, Game.Instance.GetTurn()))
+                        alpha = table.GetCalculatedValue(board, plieDepth + 1, Game.Instance.GetTurn());
+                    else
+                    {
+                        alpha = AlphaBetaFunction(board, plieDepth, Game.Instance.GetTurn(), !Game.Instance.GetTurn(), alpha, beta);
+                        table.InsertCalculatedValue(board, plieDepth + 1, Game.Instance.GetTurn(), alpha);
+                    }
+                }
+                else
+                    alpha = AlphaBetaFunction(board, plieDepth, Game.Instance.GetTurn(), !Game.Instance.GetTurn(), alpha, beta);
+
                 if (alpha > valuelast)
                 {
                     sameHighest = new List<Board>();

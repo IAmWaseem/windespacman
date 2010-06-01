@@ -79,7 +79,7 @@ namespace GameStateManagement
         {
             ContentManager content = ScreenManager.Game.Content;
 
-            gradientTexture = content.Load<Texture2D>("pdc08-1600x1200");
+            gradientTexture = content.Load<Texture2D>("MenuBackground");
         }
 
 

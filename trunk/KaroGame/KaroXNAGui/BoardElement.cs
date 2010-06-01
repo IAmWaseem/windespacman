@@ -40,14 +40,24 @@ namespace Karo.Gui
 
         public override void Draw(GameTime gameTime)
         {
+            foreach (ModelMesh mesh in model.Meshes)
+            {
+                foreach (BasicEffect effect in mesh.Effects)
+                {
+                    effect.EnableDefaultLighting();
+                    effect.World = world * game.World;
+                    effect.View = game.View;
+                    effect.Projection = game.Projection;
+                }
+            }
             base.Draw(gameTime);
         }
 
         public abstract void Move(int i, int y);
 
-        public float Intersect(Ray ray)
+        public float? Intersect(Ray ray)
         {
-            return 0.0f;
+            return ray.Intersects(boundingBox);
         }
 
         public int BoardX

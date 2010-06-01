@@ -27,14 +27,15 @@ namespace GameStateManagement
         MenuEntry frobnicateMenuEntry;
         MenuEntry elfMenuEntry;
 
-        enum Ungulate
+        enum computerLevel
         {
-            BactrianCamel,
-            Dromedary,
-            Llama,
+            Easy,
+            Medium,
+            Hard,
+            Custom
         }
 
-        static Ungulate currentUngulate = Ungulate.Dromedary;
+        static computerLevel currentUngulate = computerLevel.Medium;
 
         static string[] computerAI = { "Random", "Mini Max", "Alpha Beta" };
         static int currentLanguage = 0;
@@ -85,8 +86,8 @@ namespace GameStateManagement
         /// </summary>
         void SetMenuEntryText()
         {
-            ungulateMenuEntry.Text = "Preferred ungulate: " + currentUngulate;
-            languageMenuEntry.Text = "Computer algorithm: " + computerAI[currentLanguage];
+            ungulateMenuEntry.Text = "Difficulty: " + currentUngulate;
+            languageMenuEntry.Text = "Custom algorithm: " + computerAI[currentLanguage];
             frobnicateMenuEntry.Text = "Frobnicate: " + (frobnicate ? "on" : "off");
             elfMenuEntry.Text = "elf: " + elf;
         }
@@ -104,7 +105,7 @@ namespace GameStateManagement
         {
             currentUngulate++;
 
-            if (currentUngulate > Ungulate.Llama)
+            if (currentUngulate > computerLevel.Custom)
                 currentUngulate = 0;
 
             SetMenuEntryText();

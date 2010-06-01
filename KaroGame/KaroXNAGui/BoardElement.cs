@@ -28,7 +28,10 @@ namespace Karo.Gui
             this.boardX = boardX;
             this.boardY = boardY;
             this.game = game;
+            CreateBoundingBox();
         }
+
+        protected abstract void CreateBoundingBox();
 
         public override void Update(GameTime gameTime)
         {

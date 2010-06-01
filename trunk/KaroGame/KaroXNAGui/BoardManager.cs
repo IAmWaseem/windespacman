@@ -12,14 +12,15 @@ namespace Karo.Gui
         private Karo.BoardPosition[,] currentBoard;
         private BoardElement selectedElement;
         private KaroGui game;
+        private UIConnector uiConnector;
 
         public void StartGame(Difficulty difficulty)
         {
-            
         }
 
         public BoardManager(KaroGui game) : base(game)
         {
+            this.uiConnector = UIConnector.Instance;
             this.game = game;
         }
 
@@ -30,7 +31,6 @@ namespace Karo.Gui
 
         public void DoMove()
         {
-            
         }
     }
 }

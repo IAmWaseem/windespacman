@@ -86,9 +86,22 @@ namespace GameStateManagement
         /// <summary>
         /// Constructs a new screen manager component.
         /// </summary>
-        public ScreenManager(Game game)
+        public ScreenManager(Karo.Gui.KaroGui game)
             : base(game)
         {
+            Graphics = game.graphics;
+        }
+        GraphicsDeviceManager _graphics;
+        public GraphicsDeviceManager Graphics 
+        { 
+            get
+            {
+                return _graphics;
+            }
+           set
+           { 
+               _graphics = value;
+           }
         }
 
 

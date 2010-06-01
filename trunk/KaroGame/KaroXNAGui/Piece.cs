@@ -11,7 +11,7 @@ namespace Karo.Gui
         {
         }
 
-        public override void  Update(Microsoft.Xna.Framework.GameTime gameTime)
+        public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
  	         base.Update(gameTime);
         }

@@ -48,8 +48,15 @@ namespace Karo.Gui
                     effect.World = world * game.World;
                     effect.View = game.View;
                     effect.Projection = game.Projection;
+                    if(IsSelected)
+                        effect.DiffuseColor = Color.ToVector3();   
+                    if (IsMouseOver)
+                        effect.DiffuseColor = MouseOverColor.ToVector3();
+
                 }
+                mesh.Draw();
             }
+            DrawBoundingBox.Draw(game.GraphicsDevice, this.boundingBox, game.View, game.Projection);
             base.Draw(gameTime);
         }
 

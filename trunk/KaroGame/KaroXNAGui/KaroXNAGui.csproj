@@ -19,10 +19,7 @@
     <ManifestKeyFile>KaroXNAGui_TemporaryKey.pfx</ManifestKeyFile>
     <GenerateManifests>true</GenerateManifests>
     <SignManifests>true</SignManifests>
-    <SuiteName>Karo</SuiteName>
-    <CreateDesktopShortcut>true</CreateDesktopShortcut>
-    <PublishWizardCompleted>true</PublishWizardCompleted>
-    <PublishUrl>C:\KaroPub\</PublishUrl>
+    <PublishUrl>C:\Karo Publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -34,9 +31,12 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ProductName>Karo</ProductName>
     <PublisherName>Group 3</PublisherName>
-    <ApplicationRevision>3</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <SuiteName>Karo</SuiteName>
+    <ApplicationRevision>5</ApplicationRevision>
+    <ApplicationVersion>0.1.2.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -93,13 +93,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BoardElement.cs" />
-    <Compile Include="BoardManager.cs" />
-    <Compile Include="Difficulty.cs" />
-    <Compile Include="DrawBoundingBox.cs" />
-    <Compile Include="FramerateComponent.cs" />
-    <Compile Include="LoggerComponent.cs" />
-    <Compile Include="Piece.cs" />
+    <Compile Include="Board\BoardElement.cs" />
+    <Compile Include="Board\BoardManager.cs" />
+    <Compile Include="Settings\Difficulty.cs" />
+    <Compile Include="Utility\DrawBoundingBox.cs" />
+    <Compile Include="Components\FramerateComponent.cs" />
+    <Compile Include="Components\LoggerComponent.cs" />
+    <Compile Include="Board\Piece.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="KaroGui.cs" />
@@ -116,8 +116,8 @@
     <Compile Include="Screens\OptionsMenuScreen.cs" />
     <Compile Include="Screens\PauseMenuScreen.cs" />
     <Compile Include="Screens\PlayerIndexEventArgs.cs" />
-    <Compile Include="Settings.cs" />
-    <Compile Include="Tile.cs" />
+    <Compile Include="Settings\Settings.cs" />
+    <Compile Include="Board\Tile.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
@@ -130,6 +130,11 @@
     </NestedContentProject>
   </ItemGroup>
   <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
       <Visible>False</Visible>
       <ProductName>.NET Framework 2.0 %28x86%29</ProductName>

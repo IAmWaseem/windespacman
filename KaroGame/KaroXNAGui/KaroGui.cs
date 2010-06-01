@@ -39,7 +39,7 @@ namespace Karo.Gui
         Model tile, pieceRed, pieceWhite;
         Matrix cameraView, topView, projection, world;
 
-        Matrix view
+        public Matrix View
         {
             get
             {
@@ -47,6 +47,14 @@ namespace Karo.Gui
                     return topView;
                 else
                     return cameraView;
+            }
+        }
+
+        public Matrix Projection
+        {
+            get
+            {
+                return projection;
             }
         }
 
@@ -84,6 +92,8 @@ namespace Karo.Gui
 
         public static Board current { get; set; }
         private List<BoundingBox> BoundingBoxes = new List<BoundingBox>();
+
+        public Matrix World { get { return world; } }
 
         // Maybe other location for this?
         public UIConnector UIConnector
@@ -249,7 +259,7 @@ namespace Karo.Gui
 
                 this.Exit();
             }
-            // top view
+            // top View
             if (Keyboard.GetState().IsKeyDown(Keys.T))
                 tPressed = true;
 
@@ -431,7 +441,7 @@ namespace Karo.Gui
             }
             #endregion
 
-            // set camera view
+            // set camera View
             Vector3 loc = new Vector3(0, 10, 10);
             Matrix trans = Matrix.Identity;
             trans *= Matrix.CreateRotationX(MathHelper.ToRadians(RotationAngleX));
@@ -528,7 +538,7 @@ namespace Karo.Gui
                                     e.EnableDefaultLighting();
                                     e.PreferPerPixelLighting = true;
 
-                                    e.View = view;
+                                    e.View = View;
                                     e.Projection = projection;
                                     e.World = Matrix.CreateTranslation(x - 10, y - 9, 0) * world;
 
@@ -544,8 +554,8 @@ namespace Karo.Gui
                                     Vector3 near = new Vector3(Mouse.GetState().X, Mouse.GetState().Y, 0);
                                     Vector3 far = new Vector3(Mouse.GetState().X, Mouse.GetState().Y, 1);
 
-                                    near = GraphicsDevice.Viewport.Unproject(near, projection, view, Matrix.Identity);
-                                    far = GraphicsDevice.Viewport.Unproject(far, projection, view, Matrix.Identity);
+                                    near = GraphicsDevice.Viewport.Unproject(near, projection, View, Matrix.Identity);
+                                    far = GraphicsDevice.Viewport.Unproject(far, projection, View, Matrix.Identity);
 
                                     Vector3 direction = Vector3.Subtract(far, near);
                                     direction.Normalize();
@@ -569,7 +579,7 @@ namespace Karo.Gui
                                         {
                                             effect.EnableDefaultLighting();
                                             effect.PreferPerPixelLighting = true;
-                                            effect.View = view;
+                                            effect.View = View;
                                             effect.Projection = projection;
                                             if (current.BoardSituation[x, y] == BoardPosition.RedTail)
                                             {
@@ -590,8 +600,8 @@ namespace Karo.Gui
                                             Vector3 near = new Vector3(Mouse.GetState().X, Mouse.GetState().Y, 0);
                                             Vector3 far = new Vector3(Mouse.GetState().X, Mouse.GetState().Y, 1);
 
-                                            near = GraphicsDevice.Viewport.Unproject(near, projection, view, Matrix.Identity);
-                                            far = GraphicsDevice.Viewport.Unproject(far, projection, view, Matrix.Identity);
+                                            near = GraphicsDevice.Viewport.Unproject(near, projection, View, Matrix.Identity);
+                                            far = GraphicsDevice.Viewport.Unproject(far, projection, View, Matrix.Identity);
 
                                             Vector3 direction = Vector3.Subtract(far, near);
                                             direction.Normalize();
@@ -617,7 +627,7 @@ namespace Karo.Gui
                                         {
                                             effect.EnableDefaultLighting();
                                             effect.PreferPerPixelLighting = true;
-                                            effect.View = view;
+                                            effect.View = View;
                                             effect.Projection = projection;
                                             if (current.BoardSituation[x, y] == BoardPosition.WhiteTail)
                                             {
@@ -638,8 +648,8 @@ namespace Karo.Gui
                                             Vector3 near = new Vector3(Mouse.GetState().X, Mouse.GetState().Y, 0);
                                             Vector3 far = new Vector3(Mouse.GetState().X, Mouse.GetState().Y, 1);
 
-                                            near = GraphicsDevice.Viewport.Unproject(near, projection, view, Matrix.Identity);
-                                            far = GraphicsDevice.Viewport.Unproject(far, projection, view, Matrix.Identity);
+                                            near = GraphicsDevice.Viewport.Unproject(near, projection, View, Matrix.Identity);
+                                            far = GraphicsDevice.Viewport.Unproject(far, projection, View, Matrix.Identity);
 
                                             Vector3 direction = Vector3.Subtract(far, near);
                                             direction.Normalize();
@@ -673,7 +683,7 @@ namespace Karo.Gui
                         {
                             effect.EnableDefaultLighting();
                             effect.PreferPerPixelLighting = true;
-                            effect.View = view;
+                            effect.View = View;
                             effect.Projection = projection;
 
                             effect.World = Matrix.CreateTranslation(-2.5f + i, -2, 0) * world;
@@ -689,8 +699,8 @@ namespace Karo.Gui
                             Vector3 near = new Vector3(Mouse.GetState().X, Mouse.GetState().Y, 0);
                             Vector3 far = new Vector3(Mouse.GetState().X, Mouse.GetState().Y, 1);
 
-                            near = GraphicsDevice.Viewport.Unproject(near, projection, view, Matrix.Identity);
-                            far = GraphicsDevice.Viewport.Unproject(far, projection, view, Matrix.Identity);
+                            near = GraphicsDevice.Viewport.Unproject(near, projection, View, Matrix.Identity);
+                            far = GraphicsDevice.Viewport.Unproject(far, projection, View, Matrix.Identity);
 
                             Vector3 direction = Vector3.Subtract(far, near);
                             direction.Normalize();
@@ -721,7 +731,7 @@ namespace Karo.Gui
                         {
                             effect.EnableDefaultLighting();
                             effect.PreferPerPixelLighting = true;
-                            effect.View = view;
+                            effect.View = View;
                             effect.Projection = projection;
 
                             effect.World = Matrix.CreateTranslation(-2.5f + i, 3, 0) * world;
@@ -737,8 +747,8 @@ namespace Karo.Gui
                             Vector3 near = new Vector3(Mouse.GetState().X, Mouse.GetState().Y, 0);
                             Vector3 far = new Vector3(Mouse.GetState().X, Mouse.GetState().Y, 1);
 
-                            near = GraphicsDevice.Viewport.Unproject(near, projection, view, Matrix.Identity);
-                            far = GraphicsDevice.Viewport.Unproject(far, projection, view, Matrix.Identity);
+                            near = GraphicsDevice.Viewport.Unproject(near, projection, View, Matrix.Identity);
+                            far = GraphicsDevice.Viewport.Unproject(far, projection, View, Matrix.Identity);
 
                             Vector3 direction = Vector3.Subtract(far, near);
                             direction.Normalize();
@@ -761,7 +771,7 @@ namespace Karo.Gui
             {
                 foreach (BoundingBox boundingBox in BoundingBoxes)
                 {
-                    DrawBoundingBox.Draw(GraphicsDevice, boundingBox, view, projection);
+                    DrawBoundingBox.Draw(GraphicsDevice, boundingBox, View, projection);
                 }
             }
 

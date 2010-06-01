@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Karo.Gui
@@ -20,7 +21,9 @@ namespace Karo.Gui
 
         protected override void CreateBoundingBox()
         {
-            throw new NotImplementedException();
+            boundingBox = BoundingBox.CreateFromSphere(model.Meshes[0].BoundingSphere);
+            boundingBox.Max = Vector3.Transform(boundingBox.Max, Matrix.CreateScale(0.7f));
+            boundingBox.Min = Vector3.Transform(boundingBox.Min, Matrix.CreateScale(0.7f));
         }
 
         public override void Move(int i, int y)

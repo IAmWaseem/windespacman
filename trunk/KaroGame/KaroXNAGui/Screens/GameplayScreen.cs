@@ -268,7 +268,9 @@ namespace GameStateManagement
             if (!IsActive)
             {
                 if (thread.IsAlive)
+                {
                     thread.Suspend();
+                }
             }
             if (IsActive)
             {

@@ -70,7 +70,7 @@ namespace Karo.Gui
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             backgroundBatch = new SpriteBatch(GraphicsDevice);
-            background = Content.Load<Texture2D>("pdc08-1600x1200");
+            background = Content.Load<Texture2D>("GameMenuBackground");
 
             // TODO: use this.Content to load your game content here
         }

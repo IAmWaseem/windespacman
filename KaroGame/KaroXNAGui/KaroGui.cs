@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
 using Karo;
+using GameStateManagement;
 using System.Threading;
 
 namespace Karo.Gui
@@ -20,11 +21,13 @@ namespace Karo.Gui
     /// </summary>
     public class KaroGui : Microsoft.Xna.Framework.Game
     {
-        Vector3 cameraLocation;
-        //default members
+        // default members
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        ScreenManager screenManager;
 
+        // non-default
+        Vector3 cameraLocation;
         FramerateComponent fc;
         LoggerComponent lc;
 
@@ -155,6 +158,15 @@ namespace Karo.Gui
             graphics.PreferredBackBufferWidth = 800;
             graphics.PreferredBackBufferHeight = 600;
             graphics.ApplyChanges();
+
+            // screenmanager
+            screenManager = new ScreenManager(this);
+
+            Components.Add(screenManager);
+
+            // Activate the first screens.
+            screenManager.AddScreen(new BackgroundScreen(), null);
+            screenManager.AddScreen(new MainMenuScreen(), null);
 
             // framerate
             fc = new FramerateComponent(this);

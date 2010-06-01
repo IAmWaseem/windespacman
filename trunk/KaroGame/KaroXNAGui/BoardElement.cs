@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using GameStateManagement;
 
 namespace Karo.Gui
 {
     abstract class BoardElement : DrawableGameComponent 
     {
-        protected KaroGui game;
+        protected GameplayScreen game;
         protected Model model;
         protected BoundingBox boundingBox;
         protected int boardX;
@@ -22,7 +23,7 @@ namespace Karo.Gui
         protected bool animatedStarted;
         protected bool animatedEnded;
 
-        protected BoardElement(KaroGui game, Model model, int boardY, int boardX) : base(game)
+        protected BoardElement(GameplayScreen game, Model model, int boardY, int boardX) : base(game.ScreenManager.Game)
         {
             this.model = model;
             this.boardX = boardX;
@@ -56,7 +57,7 @@ namespace Karo.Gui
                 }
                 mesh.Draw();
             }
-            DrawBoundingBox.Draw(game.GraphicsDevice, this.boundingBox, game.View, game.Projection);
+            DrawBoundingBox.Draw(game.ScreenManager.GraphicsDevice, this.boundingBox, game.View, game.Projection);
             base.Draw(gameTime);
         }
 
@@ -121,7 +122,7 @@ namespace Karo.Gui
             set { boardY = value; }
         }
 
-        public KaroGui Game
+        public GameplayScreen Game
         {
             get { return game; }
             set { game = value; }

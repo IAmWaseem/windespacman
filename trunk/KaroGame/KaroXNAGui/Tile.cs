@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using GameStateManagement;
 
 namespace Karo.Gui
 {
     class Tile : BoardElement
     {
-        public Tile(KaroGui game, Model model, int boardY, int boardX)
+        public Tile(GameplayScreen game, Model model, int boardY, int boardX)
             : base(game, model, boardY, boardX)
         {
         }

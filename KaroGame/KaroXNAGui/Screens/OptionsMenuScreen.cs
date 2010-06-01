@@ -22,10 +22,10 @@ namespace GameStateManagement
     {
         #region Fields
 
-        MenuEntry ungulateMenuEntry;
-        MenuEntry languageMenuEntry;
-        MenuEntry frobnicateMenuEntry;
-        MenuEntry elfMenuEntry;
+        MenuEntry computerLevelMenuEntry;
+        MenuEntry algorithmMenuEntry;
+        MenuEntry transtableMenuEntry;
+        MenuEntry plyDepthMenuEntry;
 
         enum computerLevel
         {
@@ -35,14 +35,12 @@ namespace GameStateManagement
             Custom
         }
 
-        static computerLevel currentUngulate = computerLevel.Medium;
+        static computerLevel currentLevel = computerLevel.Medium;
 
         static string[] computerAI = { "Random", "Mini Max", "Alpha Beta" };
-        static int currentLanguage = 0;
-
-        static bool frobnicate = true;
-
-        static int elf = 23;
+        static int currentAI = 0;
+        static bool useTransTable = true;
+        static int plyDepth = 2;
 
         #endregion
 
@@ -56,27 +54,27 @@ namespace GameStateManagement
             : base("Options")
         {
             // Create our menu entries.
-            ungulateMenuEntry = new MenuEntry(string.Empty);
-            languageMenuEntry = new MenuEntry(string.Empty);
-            frobnicateMenuEntry = new MenuEntry(string.Empty);
-            elfMenuEntry = new MenuEntry(string.Empty);
+            computerLevelMenuEntry = new MenuEntry(string.Empty);
+            algorithmMenuEntry = new MenuEntry(string.Empty);
+            transtableMenuEntry = new MenuEntry(string.Empty);
+            plyDepthMenuEntry = new MenuEntry(string.Empty);
 
             SetMenuEntryText();
 
             MenuEntry backMenuEntry = new MenuEntry("Back");
 
             // Hook up menu event handlers.
-            ungulateMenuEntry.Selected += UngulateMenuEntrySelected;
-            languageMenuEntry.Selected += LanguageMenuEntrySelected;
-            frobnicateMenuEntry.Selected += FrobnicateMenuEntrySelected;
-            elfMenuEntry.Selected += ElfMenuEntrySelected;
+            computerLevelMenuEntry.Selected += computerlevelMenuEntrySelected;
+            algorithmMenuEntry.Selected += algorithmMenuEntrySelected;
+            transtableMenuEntry.Selected += transtableMenuEntrySelected;
+            plyDepthMenuEntry.Selected += plydepthMenuEntrySelected;
             backMenuEntry.Selected += OnCancel;
-            
+
             // Add entries to the menu.
-            MenuEntries.Add(ungulateMenuEntry);
-            MenuEntries.Add(languageMenuEntry);
-            MenuEntries.Add(frobnicateMenuEntry);
-            MenuEntries.Add(elfMenuEntry);
+            MenuEntries.Add(computerLevelMenuEntry);
+            MenuEntries.Add(algorithmMenuEntry);
+            MenuEntries.Add(transtableMenuEntry);
+            MenuEntries.Add(plyDepthMenuEntry);
             MenuEntries.Add(backMenuEntry);
         }
 
@@ -86,10 +84,10 @@ namespace GameStateManagement
         /// </summary>
         void SetMenuEntryText()
         {
-            ungulateMenuEntry.Text = "Difficulty: " + currentUngulate;
-            languageMenuEntry.Text = "Custom algorithm: " + computerAI[currentLanguage];
-            frobnicateMenuEntry.Text = "Frobnicate: " + (frobnicate ? "on" : "off");
-            elfMenuEntry.Text = "elf: " + elf;
+            computerLevelMenuEntry.Text = "Difficulty: " + currentLevel;
+            algorithmMenuEntry.Text = "Custom algorithm: " + computerAI[currentAI];
+            transtableMenuEntry.Text = "Use transposition table: " + (useTransTable ? "on" : "off");
+            plyDepthMenuEntry.Text = "Ply depth: " + plyDepth;
         }
 
 
@@ -101,12 +99,12 @@ namespace GameStateManagement
         /// <summary>
         /// Event handler for when the Ungulate menu entry is selected.
         /// </summary>
-        void UngulateMenuEntrySelected(object sender, PlayerIndexEventArgs e)
+        void computerlevelMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
-            currentUngulate++;
+            currentLevel++;
 
-            if (currentUngulate > computerLevel.Custom)
-                currentUngulate = 0;
+            if (currentLevel > computerLevel.Custom)
+                currentLevel = 0;
 
             SetMenuEntryText();
         }
@@ -115,9 +113,9 @@ namespace GameStateManagement
         /// <summary>
         /// Event handler for when the Language menu entry is selected.
         /// </summary>
-        void LanguageMenuEntrySelected(object sender, PlayerIndexEventArgs e)
+        void algorithmMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
-            currentLanguage = (currentLanguage + 1) % computerAI.Length;
+            currentAI = (currentAI + 1) % computerAI.Length;
 
             SetMenuEntryText();
         }
@@ -126,9 +124,9 @@ namespace GameStateManagement
         /// <summary>
         /// Event handler for when the Frobnicate menu entry is selected.
         /// </summary>
-        void FrobnicateMenuEntrySelected(object sender, PlayerIndexEventArgs e)
+        void transtableMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
-            frobnicate = !frobnicate;
+            useTransTable = !useTransTable;
 
             SetMenuEntryText();
         }
@@ -137,9 +135,11 @@ namespace GameStateManagement
         /// <summary>
         /// Event handler for when the Elf menu entry is selected.
         /// </summary>
-        void ElfMenuEntrySelected(object sender, PlayerIndexEventArgs e)
+        void plydepthMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
-            elf++;
+            plyDepth++;
+            if (plyDepth > 6)
+                plyDepth = 1;
 
             SetMenuEntryText();
         }

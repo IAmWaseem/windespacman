@@ -13,6 +13,11 @@ namespace Karo.Gui
         private BoardElement selectedElement;
         private KaroGui game;
 
+        public void StartGame(Difficulty difficulty)
+        {
+            
+        }
+
         public BoardManager(KaroGui game) : base(game)
         {
             this.game = game;

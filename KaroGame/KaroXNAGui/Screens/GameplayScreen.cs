@@ -265,6 +265,11 @@ namespace GameStateManagement
             base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
 
             lc.ClearLog();
+            if (!IsActive)
+            {
+                if (thread.IsAlive)
+                    thread.Suspend();
+            }
             if (IsActive)
             {
                 if (UIConnector.IsWon())
@@ -275,12 +280,9 @@ namespace GameStateManagement
 
                 #region keypresses
                 // Allows the game to exit
-                if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+                if (thread.ThreadState == ThreadState.Suspended)
                 {
-                    if (thread.IsAlive)
-                        thread.Abort();
-
-                    // return to main menu
+                    thread.Resume();
                 }
                 // top view
                 if (Keyboard.GetState().IsKeyDown(Keys.T))

@@ -36,7 +36,7 @@ namespace GameStateManagement
 
         static Ungulate currentUngulate = Ungulate.Dromedary;
 
-        static string[] languages = { "C#", "French", "Deoxyribonucleic acid" };
+        static string[] computerAI = { "Random", "Mini Max", "Alpha Beta" };
         static int currentLanguage = 0;
 
         static bool frobnicate = true;
@@ -86,7 +86,7 @@ namespace GameStateManagement
         void SetMenuEntryText()
         {
             ungulateMenuEntry.Text = "Preferred ungulate: " + currentUngulate;
-            languageMenuEntry.Text = "Language: " + languages[currentLanguage];
+            languageMenuEntry.Text = "Computer algorithm: " + computerAI[currentLanguage];
             frobnicateMenuEntry.Text = "Frobnicate: " + (frobnicate ? "on" : "off");
             elfMenuEntry.Text = "elf: " + elf;
         }
@@ -116,7 +116,7 @@ namespace GameStateManagement
         /// </summary>
         void LanguageMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
-            currentLanguage = (currentLanguage + 1) % languages.Length;
+            currentLanguage = (currentLanguage + 1) % computerAI.Length;
 
             SetMenuEntryText();
         }

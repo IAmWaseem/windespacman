@@ -191,7 +191,6 @@ namespace GameStateManagement
             ScreenManager.Game.Components.Add(fc);
             ScreenManager.Game.Components.Add(lc);
 
-            ScreenManager.Game.IsMouseVisible = true;
             tPressed = false;
             rotate = false;
             middleMousePressed = false;
@@ -263,7 +262,7 @@ namespace GameStateManagement
                                                        bool coveredByOtherScreen)
         {
             base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
-
+            ScreenManager.Game.IsMouseVisible = false;
             lc.ClearLog();
             if (!IsActive)
             {
@@ -274,6 +273,7 @@ namespace GameStateManagement
             }
             if (IsActive)
             {
+                ScreenManager.Game.IsMouseVisible = true;
                 if (UIConnector.IsWon())
                 {
                     thread.Abort();

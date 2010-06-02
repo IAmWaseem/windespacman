@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using GameStateManagement;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Karo.Gui
 {
@@ -11,7 +13,7 @@ namespace Karo.Gui
         private List<BoardElement> boardElements;
         private Karo.BoardPosition[,] currentBoard;
         private BoardElement selectedElement;
-        private KaroGui game;
+        private GameplayScreen game;
         private UIConnector uiConnector;
 
         public void StartGame(Difficulty difficulty)
@@ -33,12 +35,15 @@ namespace Karo.Gui
                     break;
             }
             uiConnector.StartGame(playerA, playerB);
+            SetupBoard();
         }
 
-        public BoardManager(KaroGui game) : base(game)
+        public BoardManager(GameplayScreen game)
+            : base(game.ScreenManager.Game)
         {
             this.uiConnector = UIConnector.Instance;
             this.game = game;
+            boardElements = new List<BoardElement>();
         }
 
         public override void Update(GameTime gameTime)
@@ -53,11 +58,37 @@ namespace Karo.Gui
         private void SetupBoard()
         {
             currentBoard = uiConnector.GetBoard().BoardSituation;
+
+            foreach (BoardElement boardElement in boardElements)
+            {
+                boardElement.Dispose();
+            }
+            
+            boardElements.Clear();
+
             for (int x = 0; x < 21; x++)
             {
                 for (int y = 0; y < 20; y++)
                 {
-
+                    BoardPosition boardPosition = currentBoard[x, y];
+                    if(boardPosition==BoardPosition.Tile)
+                    {
+                        Tile boardElement = new Tile(game, game.ScreenManager.Game.Content.Load<Model>("tile"), y, x);
+                        boardElements.Add(boardElement);
+                        game.ScreenManager.Game.Components.Add(boardElement);
+                    }
+                    if(boardPosition==BoardPosition.WhiteHead || boardPosition==BoardPosition.WhiteTail)
+                    {
+                        Piece boardElement = new Piece(game, game.ScreenManager.Game.Content.Load<Model>("tile"), y, x);
+                        boardElements.Add(boardElement);
+                        game.ScreenManager.Game.Components.Add(boardElement);
+                    }
+                    if (boardPosition == BoardPosition.RedHead || boardPosition == BoardPosition.RedTail)
+                    {
+                        Piece boardElement = new Piece(game, game.ScreenManager.Game.Content.Load<Model>("tile"), y, x);
+                        boardElements.Add(boardElement);
+                        game.ScreenManager.Game.Components.Add(boardElement);
+                    }
                 }
             }
         }

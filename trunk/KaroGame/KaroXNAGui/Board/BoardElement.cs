@@ -48,8 +48,8 @@ namespace Karo.Gui
                 {
                     effect.EnableDefaultLighting();
                     effect.World = world*game.World;
-                    effect.View = game.View;
-                    effect.Projection = game.Projection;
+                    effect.View = Matrix.CreateLookAt(new Vector3(3,3,3), new Vector3(0,0,0), Vector3.Up);
+                    effect.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 1.3f, 0.1f, 100f);
                     if(IsSelected)
                         effect.DiffuseColor = Color.ToVector3();   
                     if (IsMouseOver)
@@ -58,7 +58,7 @@ namespace Karo.Gui
                 }
                 mesh.Draw();
             }
-            DrawBoundingBox.Draw(game.ScreenManager.GraphicsDevice, this.boundingBox, game.View, game.Projection);
+         //   DrawBoundingBox.Draw(game.ScreenManager.GraphicsDevice, this.boundingBox, game.View, game.Projection);
             base.Draw(gameTime);
         }
 

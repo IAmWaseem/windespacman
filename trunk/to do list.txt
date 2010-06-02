@@ -9,4 +9,4 @@
 * Select object in board	-> to do
 * Centreren van world (tiles)	-> to do
 
-* Architecture			-> to do
+* Architecture			-> finished

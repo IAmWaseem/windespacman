@@ -548,22 +548,7 @@ namespace GameStateManagement
             }
         }
 
-        private void ResetGraphicsDeviceSettings()
-        {
-            ScreenManager.Game.GraphicsDevice.PresentationParameters.MultiSampleType = MultiSampleType.FourSamples;
-            ScreenManager.Game.GraphicsDevice.RenderState.MultiSampleAntiAlias = true;
-
-            ScreenManager.Game.GraphicsDevice.RenderState.DepthBufferEnable = true;
-            ScreenManager.Game.GraphicsDevice.RenderState.AlphaBlendEnable = false;
-            ScreenManager.Game.GraphicsDevice.RenderState.AlphaTestEnable = false;
-
-            ScreenManager.Game.GraphicsDevice.PresentationParameters.MultiSampleType = MultiSampleType.FourSamples;
-            ScreenManager.Game.GraphicsDevice.RenderState.MultiSampleAntiAlias = true;
-
-            ScreenManager.Game.GraphicsDevice.SamplerStates[0].AddressU = TextureAddressMode.Wrap;
-            ScreenManager.Game.GraphicsDevice.SamplerStates[0].AddressV = TextureAddressMode.Wrap;
-            
-        }
+        
 
         /// <summary>
         /// Draws the gameplay screen.
@@ -582,9 +567,6 @@ namespace GameStateManagement
             DrawBackground(backgroundBatch);
             backgroundBatch.End();
 
-            ResetGraphicsDeviceSettings();
-
-
             if (enableDebug)
             {
                 foreach (BoundingBox boundingBox in BoundingBoxes)
@@ -592,6 +574,8 @@ namespace GameStateManagement
                     DrawBoundingBox.Draw(ScreenManager.Game.GraphicsDevice, boundingBox, View, projection);
                 }
             }
+
+            ScreenManager.ResetGraphicsDeviceSettings();
 
             // If the game is transitioning on or off, fade it out to black.
             if (TransitionPosition > 0)

@@ -47,6 +47,8 @@ namespace Karo.Gui
             // TODO: Add your initialization logic here
             graphics.PreferredBackBufferWidth = 800;
             graphics.PreferredBackBufferHeight = 600;
+            graphics.PreferMultiSampling = true;
+            graphics.PreparingDeviceSettings += new EventHandler<PreparingDeviceSettingsEventArgs>(graphics_PreparingDeviceSettings);
             graphics.ApplyChanges();
 
             // screenmanager
@@ -59,6 +61,53 @@ namespace Karo.Gui
             screenManager.AddScreen(new MainMenuScreen(), null);
 
             base.Initialize();
+        }
+
+        void graphics_PreparingDeviceSettings(object sender, PreparingDeviceSettingsEventArgs e)
+        {
+            PresentationParameters pp =
+               e.GraphicsDeviceInformation.PresentationParameters;
+
+            int quality = 0;
+            GraphicsAdapter adapter = e.GraphicsDeviceInformation.Adapter;
+            SurfaceFormat format = adapter.CurrentDisplayMode.Format;
+            // Check for 8xAA
+            if (adapter.CheckDeviceMultiSampleType(DeviceType.Hardware, format,
+                false, MultiSampleType.EightSamples, out quality))
+            {
+                // even if a greater quality is returned, we only want quality 0
+                pp.MultiSampleQuality = 0;
+                pp.MultiSampleType =
+                    MultiSampleType.EightSamples;
+            }
+            // Check for 6xAA
+            else if (adapter.CheckDeviceMultiSampleType(DeviceType.Hardware, format,
+                false, MultiSampleType.SixSamples, out quality))
+            {
+                // even if a greater quality is returned, we only want quality 0
+                pp.MultiSampleQuality = 0;
+                pp.MultiSampleType =
+                    MultiSampleType.SixSamples;
+            }
+            // Check for 4xAA
+            else if (adapter.CheckDeviceMultiSampleType(DeviceType.Hardware,
+                format, false, MultiSampleType.FourSamples, out quality))
+            {
+                // even if a greater quality is returned, we only want quality 0
+                pp.MultiSampleQuality = 0;
+                pp.MultiSampleType =
+                    MultiSampleType.FourSamples;
+            }
+            // Check for 2xAA
+            else if (adapter.CheckDeviceMultiSampleType(DeviceType.Hardware,
+                format, false, MultiSampleType.TwoSamples, out quality))
+            {
+                // even if a greater quality is returned, we only want quality 0
+                pp.MultiSampleQuality = 0;
+                pp.MultiSampleType =
+                    MultiSampleType.TwoSamples;
+            }
+            return;
         }
 
         /// <summary>

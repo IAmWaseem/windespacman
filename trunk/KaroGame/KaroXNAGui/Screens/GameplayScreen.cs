@@ -498,6 +498,7 @@ namespace GameStateManagement
 
                     lc.Line("FPS", fc.Framerate.ToString());
                     lc.Line("AI Calculates", calculating.ToString());
+                    lc.Line("Multisample type", ScreenManager.GraphicsDevice.PresentationParameters.MultiSampleType.ToString());
                     lc.Line();
 
                     lc.Line("X Rotation", RotationAngleX.ToString());
@@ -542,9 +543,15 @@ namespace GameStateManagement
 
         private void ResetGraphicsDeviceSettings()
         {
+            ScreenManager.Game.GraphicsDevice.PresentationParameters.MultiSampleType = MultiSampleType.FourSamples;
+            ScreenManager.Game.GraphicsDevice.RenderState.MultiSampleAntiAlias = true;
+
             ScreenManager.Game.GraphicsDevice.RenderState.DepthBufferEnable = true;
             ScreenManager.Game.GraphicsDevice.RenderState.AlphaBlendEnable = false;
             ScreenManager.Game.GraphicsDevice.RenderState.AlphaTestEnable = false;
+
+            ScreenManager.Game.GraphicsDevice.PresentationParameters.MultiSampleType = MultiSampleType.FourSamples;
+            ScreenManager.Game.GraphicsDevice.RenderState.MultiSampleAntiAlias = true;
 
             ScreenManager.Game.GraphicsDevice.SamplerStates[0].AddressU = TextureAddressMode.Wrap;
             ScreenManager.Game.GraphicsDevice.SamplerStates[0].AddressV = TextureAddressMode.Wrap;

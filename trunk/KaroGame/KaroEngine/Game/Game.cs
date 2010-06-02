@@ -363,10 +363,11 @@ namespace Karo
             if (!board.IsWon())
             {
                 DateTime beforeFunction = DateTime.Now;
+
                 if ((NumMovesA >= MaxMoves && NumMovesB >= MaxMoves) && IsTwoAI())
                 {
                     // max moves reached
-
+                    
                 }
                 else
                 {
@@ -379,6 +380,7 @@ namespace Karo
                             playerA.Execute(board);
                         // change player
                         NumMovesA++;
+                        NumMovesB++;
 
 
                         // Elapsed time
@@ -397,6 +399,7 @@ namespace Karo
                         if (board.IsTileMoved)
                             playerB.Execute(board);
                         // change player
+                        NumMovesA++;
                         NumMovesB++;
 
 

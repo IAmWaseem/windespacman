@@ -308,7 +308,20 @@ namespace GameStateManagement
             spriteBatch.End();
         }
 
+        public void ResetGraphicsDeviceSettings()
+        {
+            Game.GraphicsDevice.RenderState.DepthBufferEnable = true;
+            Game.GraphicsDevice.RenderState.AlphaBlendEnable = false;
+            Game.GraphicsDevice.RenderState.AlphaTestEnable = false;
 
+            Game.GraphicsDevice.PresentationParameters.MultiSampleType = MultiSampleType.FourSamples;
+            Game.GraphicsDevice.RenderState.MultiSampleAntiAlias = true;
+
+            Game.GraphicsDevice.SamplerStates[0].AddressU = TextureAddressMode.Wrap;
+            Game.GraphicsDevice.SamplerStates[0].AddressV = TextureAddressMode.Wrap;
+
+        }
+        
         #endregion
     }
 }

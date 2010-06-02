@@ -42,6 +42,8 @@ namespace Karo.Gui
 
         public override void Draw(GameTime gameTime)
         {
+            game.ScreenManager.ResetGraphicsDeviceSettings();
+
             foreach (ModelMesh mesh in model.Meshes)
             {
                 foreach (BasicEffect effect in mesh.Effects)

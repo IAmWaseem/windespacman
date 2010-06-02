@@ -43,22 +43,24 @@ namespace Karo.Gui
         public override void Draw(GameTime gameTime)
         {
             game.ScreenManager.ResetGraphicsDeviceSettings();
-
-            foreach (ModelMesh mesh in model.Meshes)
+            if (game.IsActive)
             {
-                foreach (BasicEffect effect in mesh.Effects)
+                foreach (ModelMesh mesh in model.Meshes)
                 {
-                    effect.EnableDefaultLighting();
-                    effect.World = world*game.World*Matrix.CreateTranslation(-8, 0, -8);
-                    effect.View = game.View;
-                    effect.Projection = game.Projection;
-                    if(IsSelected)
-                        effect.DiffuseColor = Color.ToVector3();   
-                    if (IsMouseOver)
-                        effect.DiffuseColor = MouseOverColor.ToVector3();
+                    foreach (BasicEffect effect in mesh.Effects)
+                    {
+                        effect.EnableDefaultLighting();
+                        effect.World = world * game.World * Matrix.CreateTranslation(-8, 0, -8);
+                        effect.View = game.View;
+                        effect.Projection = game.Projection;
+                        if (IsSelected)
+                            effect.DiffuseColor = Color.ToVector3();
+                        if (IsMouseOver)
+                            effect.DiffuseColor = MouseOverColor.ToVector3();
 
+                    }
+                    mesh.Draw();
                 }
-                mesh.Draw();
             }
          //   DrawBoundingBox.Draw(game.ScreenManager.GraphicsDevice, this.boundingBox, game.View, game.Projection);
             base.Draw(gameTime);

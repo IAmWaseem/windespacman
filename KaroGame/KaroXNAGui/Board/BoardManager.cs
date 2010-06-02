@@ -18,7 +18,7 @@ namespace Karo.Gui
 
         public void StartGame(Difficulty difficulty)
         {
-            PlayerSettings playerA = new PlayerSettings(false, AlgorithmType.AlphaBeta, 0, false, false, EvaluationType.BetterOne);
+            PlayerSettings playerA = new PlayerSettings(true, AlgorithmType.AlphaBeta, 0, false, false, EvaluationType.BetterOne);
             PlayerSettings playerB = null;
             switch (difficulty)
             {
@@ -81,6 +81,8 @@ namespace Karo.Gui
                     if (boardPosition == BoardPosition.WhiteHead || boardPosition == BoardPosition.WhiteTail)
                     {
                         Piece boardElement = new Piece(game, game.PieceWhite, y, x);
+                        if (boardPosition == BoardPosition.WhiteHead)
+                            boardElement.HeadUp = true;
                         Tile boardElementTile = new Tile(game, game.Tile, y, x);
                         boardElements.Add(boardElement);
                         boardElements.Add(boardElementTile);
@@ -90,6 +92,8 @@ namespace Karo.Gui
                     if (boardPosition == BoardPosition.RedHead || boardPosition == BoardPosition.RedTail)
                     {
                         Piece boardElement = new Piece(game, game.PieceRed, y, x);
+                        if (boardPosition == BoardPosition.RedHead)
+                            boardElement.HeadUp = true;
                         Tile boardElementTile = new Tile(game, game.Tile, y, x);
                         boardElements.Add(boardElement);
                         boardElements.Add(boardElementTile);

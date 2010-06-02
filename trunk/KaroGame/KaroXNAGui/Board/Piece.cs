@@ -32,7 +32,7 @@ namespace Karo.Gui
             {
                 world = Matrix.CreateTranslation(-10 + BoardX, -9.5f + BoardY, 0.15f);
             }
-
+            CreateBoundingBox();
  	         base.Update(gameTime);
         }
 
@@ -43,9 +43,10 @@ namespace Karo.Gui
             boundingBox.Min = Vector3.Transform(boundingBox.Min, Matrix.CreateScale(0.6f, 0.6f, 0.7f) * Matrix.CreateTranslation(-0.02f, -0.04f, 0.1f) * world);
         }
 
-        public override void Move(int i, int y)
+        public override void Move(int x, int y)
         {
-            throw new NotImplementedException();
+            BoardX += x;
+            BoardY += y;
         }
     }
 }

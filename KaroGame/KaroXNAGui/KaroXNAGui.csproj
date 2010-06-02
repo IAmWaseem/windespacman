@@ -19,6 +19,7 @@
     <ManifestKeyFile>KaroXNAGui_TemporaryKey.pfx</ManifestKeyFile>
     <GenerateManifests>true</GenerateManifests>
     <SignManifests>true</SignManifests>
+    <StartupObject>Karo.Gui.Program</StartupObject>
     <PublishUrl>C:\Karo Publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -32,7 +33,7 @@
     <ProductName>Karo</ProductName>
     <PublisherName>Group 3</PublisherName>
     <SuiteName>Karo</SuiteName>
-    <ApplicationRevision>5</ApplicationRevision>
+    <ApplicationRevision>6</ApplicationRevision>
     <ApplicationVersion>0.1.2.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>

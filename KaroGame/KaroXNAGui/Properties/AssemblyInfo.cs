@@ -5,10 +5,10 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("KaroXNAGui")]
-[assembly: AssemblyProduct("KaroXNAGui")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyTitle("Karo")]
+[assembly: AssemblyProduct("Karo")]
+[assembly: AssemblyDescription("A Karo game")]
+[assembly: AssemblyCompany("Group 3")]
 
 [assembly: AssemblyCopyright("Copyright ©  2010")]
 [assembly: AssemblyTrademark("")]

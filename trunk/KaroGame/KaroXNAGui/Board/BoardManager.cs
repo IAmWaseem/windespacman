@@ -34,7 +34,6 @@ namespace Karo.Gui
                     playerB = new PlayerSettings(true, AlgorithmType.AlphaBeta, 4, true, true, EvaluationType.BetterOne);
                     break;
             }
-            this.boardElements = new List<BoardElement>();
             uiConnector.StartGame(playerA, playerB);
             SetupBoard();
         }
@@ -44,6 +43,7 @@ namespace Karo.Gui
         {
             this.uiConnector = UIConnector.Instance;
             this.game = game;
+            this.boardElements = new List<BoardElement>();
         }
 
         public override void Update(GameTime gameTime)
@@ -57,7 +57,23 @@ namespace Karo.Gui
 
         private void SetupBoard()
         {
+            List<GameComponent> newGameComponents = new List<GameComponent>();
             currentBoard = uiConnector.GetBoard().BoardSituation;
+
+            foreach (GameComponent component in game.ScreenManager.Game.Components)
+            {
+                if(!(component is BoardElement))
+                    newGameComponents.Add(component);
+                    
+            }
+
+            game.ScreenManager.Game.Components.Clear();
+            foreach(GameComponent newComponent in newGameComponents)
+            {
+                game.ScreenManager.Game.Components.Add(newComponent);
+            }
+
+            
 
             foreach (BoardElement boardElement in boardElements)
             {

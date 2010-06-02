@@ -210,7 +210,7 @@ namespace GameStateManagement
             projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45f),
                 ((float)ScreenManager.Game.GraphicsDevice.Viewport.Width / (float)ScreenManager.Game.GraphicsDevice.Viewport.Height), 0.1f, 100.0f);
 
-            world = Matrix.CreateTranslation((-20f/2f),(-19f /2f),0);
+            world = Matrix.Identity;
         }
 
 

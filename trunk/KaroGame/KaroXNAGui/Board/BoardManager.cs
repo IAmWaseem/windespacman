@@ -63,7 +63,7 @@ namespace Karo.Gui
             {
                 boardElement.Dispose();
             }
-            
+
             boardElements.Clear();
 
             for (int x = 0; x < 21; x++)
@@ -71,7 +71,7 @@ namespace Karo.Gui
                 for (int y = 0; y < 20; y++)
                 {
                     BoardPosition boardPosition = currentBoard[x, y];
-                    if(boardPosition==BoardPosition.Tile)
+                    if (boardPosition == BoardPosition.Tile)
                     {
                         Tile boardElement = new Tile(game, game.Tile, y, x);
                         Piece boardElementTile = new Piece(game, game.PieceWhite, y, x);
@@ -80,7 +80,7 @@ namespace Karo.Gui
                         boardElements.Add(boardElementTile);
                         game.ScreenManager.Game.Components.Add(boardElementTile);
                     }
-                    if(boardPosition==BoardPosition.WhiteHead || boardPosition==BoardPosition.WhiteTail)
+                    if (boardPosition == BoardPosition.WhiteHead || boardPosition == BoardPosition.WhiteTail)
                     {
                         Piece boardElement = new Piece(game, game.PieceWhite, y, x);
                         Tile boardElementTile = new Tile(game, game.Tile, y, x);

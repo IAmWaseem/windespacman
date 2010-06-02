@@ -50,8 +50,8 @@ namespace Karo.Gui
                     foreach (BasicEffect effect in mesh.Effects)
                     {
                         effect.EnableDefaultLighting();
-                        effect.World = game.World;
-                        effect.World *= World;
+                        effect.World = World;
+                        effect.World *= game.World;
                         effect.View = game.View;
                         effect.Projection = game.Projection;
                         if (IsSelected)

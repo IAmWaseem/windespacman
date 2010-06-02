@@ -34,6 +34,7 @@ namespace Karo.Gui
                     playerB = new PlayerSettings(true, AlgorithmType.AlphaBeta, 4, true, true, EvaluationType.BetterOne);
                     break;
             }
+            this.boardElements = new List<BoardElement>();
             uiConnector.StartGame(playerA, playerB);
             SetupBoard();
         }
@@ -43,7 +44,6 @@ namespace Karo.Gui
         {
             this.uiConnector = UIConnector.Instance;
             this.game = game;
-            boardElements = new List<BoardElement>();
         }
 
         public override void Update(GameTime gameTime)
@@ -73,21 +73,27 @@ namespace Karo.Gui
                     BoardPosition boardPosition = currentBoard[x, y];
                     if(boardPosition==BoardPosition.Tile)
                     {
-                        Tile boardElement = new Tile(game, game.ScreenManager.Game.Content.Load<Model>("tile"), y, x);
+                        Tile boardElement = new Tile(game, game.Tile, y, x);
                         boardElements.Add(boardElement);
                         game.ScreenManager.Game.Components.Add(boardElement);
                     }
                     if(boardPosition==BoardPosition.WhiteHead || boardPosition==BoardPosition.WhiteTail)
                     {
-                        Piece boardElement = new Piece(game, game.ScreenManager.Game.Content.Load<Model>("tile"), y, x);
+                        Piece boardElement = new Piece(game, game.PieceWhite, y, x);
+                        Tile boardElementTile = new Tile(game, game.Tile, y, x);
                         boardElements.Add(boardElement);
+                        boardElements.Add(boardElementTile);
                         game.ScreenManager.Game.Components.Add(boardElement);
+                        game.ScreenManager.Game.Components.Add(boardElementTile);
                     }
                     if (boardPosition == BoardPosition.RedHead || boardPosition == BoardPosition.RedTail)
                     {
-                        Piece boardElement = new Piece(game, game.ScreenManager.Game.Content.Load<Model>("tile"), y, x);
+                        Piece boardElement = new Piece(game, game.PieceRed, y, x);
+                        Tile boardElementTile = new Tile(game, game.Tile, y, x);
                         boardElements.Add(boardElement);
+                        boardElements.Add(boardElementTile);
                         game.ScreenManager.Game.Components.Add(boardElement);
+                        game.ScreenManager.Game.Components.Add(boardElementTile);
                     }
                 }
             }

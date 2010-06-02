@@ -571,13 +571,13 @@ namespace GameStateManagement
             DrawBackground(backgroundBatch);
             backgroundBatch.End();
 
-            if (EnableDebug)
-            {
-                foreach (BoundingBox boundingBox in BoundingBoxes)
-                {
-                    DrawBoundingBox.Draw(ScreenManager.Game.GraphicsDevice, boundingBox, View, projection);
-                }
-            }
+            //if (EnableDebug)
+            //{
+            //    foreach (BoundingBox boundingBox in BoundingBoxes)
+            //    {
+            //        DrawBoundingBox.Draw(ScreenManager.Game.GraphicsDevice, boundingBox, View, projection);
+            //    }
+            //}
 
             ScreenManager.ResetGraphicsDeviceSettings();
 

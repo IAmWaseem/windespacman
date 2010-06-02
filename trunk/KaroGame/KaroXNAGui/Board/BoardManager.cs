@@ -55,9 +55,10 @@ namespace Karo.Gui
         {
         }
 
-        private void SetupBoard()
+        public void SetupBoard()
         {
-            currentBoard = uiConnector.GetBoard().BoardSituation;
+            if(!uiConnector.IsTwoAI()||currentBoard == null)
+                currentBoard = uiConnector.GetBoard().BoardSituation;
 
             foreach (BoardElement boardElement in boardElements)
             {

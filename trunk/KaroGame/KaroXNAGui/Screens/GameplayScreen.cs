@@ -137,6 +137,7 @@ namespace GameStateManagement
             UIConnector.Instance.MaxAIMoves(aiMoves);
             aiMoves++;
             manager.currentBoard = newBoard.BoardSituation;
+            manager.SetupBoard();
             //current = newBoard;
 
             // set calculation to false;

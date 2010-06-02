@@ -11,7 +11,7 @@ namespace Karo.Gui
     class BoardManager : GameComponent
     {
         private List<BoardElement> boardElements;
-        private Karo.BoardPosition[,] currentBoard;
+        public Karo.BoardPosition[,] currentBoard { get; set; }
         private BoardElement selectedElement;
         private GameplayScreen game;
         private UIConnector uiConnector;

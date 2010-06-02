@@ -47,9 +47,9 @@ namespace Karo.Gui
                 foreach (BasicEffect effect in mesh.Effects)
                 {
                     effect.EnableDefaultLighting();
-                    effect.World = world*game.World;
-                    effect.View = Matrix.CreateLookAt(new Vector3(3,3,3), new Vector3(0,0,0), Vector3.Up);
-                    effect.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 1.3f, 0.1f, 100f);
+                    effect.World = world*game.World*Matrix.CreateTranslation(-8, 0, -8);
+                    effect.View = game.View;
+                    effect.Projection = game.Projection;
                     if(IsSelected)
                         effect.DiffuseColor = Color.ToVector3();   
                     if (IsMouseOver)

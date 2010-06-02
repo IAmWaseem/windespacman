@@ -51,7 +51,7 @@ namespace Karo.Gui
                     {
                         effect.EnableDefaultLighting();
                         effect.World = game.World;
-                        effect.World *= Matrix.CreateTranslation(BoardX, BoardY, this.boundingBox.Min.Y);
+                        effect.World *= World;
                         effect.View = game.View;
                         effect.Projection = game.Projection;
                         if (IsSelected)

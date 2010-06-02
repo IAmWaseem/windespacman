@@ -90,8 +90,11 @@ namespace Karo.Gui
                     if(boardPosition==BoardPosition.Tile)
                     {
                         Tile boardElement = new Tile(game, game.Tile, y, x);
+                        Piece boardElementTile = new Piece(game, game.PieceWhite, y, x);
                         boardElements.Add(boardElement);
                         game.ScreenManager.Game.Components.Add(boardElement);
+                        boardElements.Add(boardElementTile);
+                        game.ScreenManager.Game.Components.Add(boardElementTile);
                     }
                     if(boardPosition==BoardPosition.WhiteHead || boardPosition==BoardPosition.WhiteTail)
                     {

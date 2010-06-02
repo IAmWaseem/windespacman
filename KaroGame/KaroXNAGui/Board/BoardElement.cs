@@ -50,7 +50,8 @@ namespace Karo.Gui
                     foreach (BasicEffect effect in mesh.Effects)
                     {
                         effect.EnableDefaultLighting();
-                        effect.World = world * game.World * Matrix.CreateTranslation(-8, 0, -8);
+                        effect.World = game.World;
+                        effect.World *= Matrix.CreateTranslation(-10 + BoardX, -10 + BoardY, 0);
                         effect.View = game.View;
                         effect.Projection = game.Projection;
                         if (IsSelected)
@@ -62,7 +63,7 @@ namespace Karo.Gui
                     mesh.Draw();
                 }
             }
-         //   DrawBoundingBox.Draw(game.ScreenManager.GraphicsDevice, this.boundingBox, game.View, game.Projection);
+            DrawBoundingBox.Draw(game.ScreenManager.GraphicsDevice, this.boundingBox, game.View, game.Projection);
             base.Draw(gameTime);
         }
 

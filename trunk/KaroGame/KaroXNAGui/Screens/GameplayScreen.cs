@@ -84,7 +84,7 @@ namespace GameStateManagement
 
         //rotation members
         bool rotateUp = false;
-        bool enableDebug = true;
+        public bool EnableDebug { get; set; }
 
         float angle, totalAngle;
 
@@ -132,7 +132,6 @@ namespace GameStateManagement
             // set calculation to true
             calculating = true;
             Thread.Sleep(50);
-            
 
             newBoard = UIConnector.Instance.GetBoard();
             UIConnector.Instance.MaxAIMoves(aiMoves);
@@ -151,6 +150,7 @@ namespace GameStateManagement
         /// </summary>
         public GameplayScreen()
         {
+            EnableDebug = true;
             //TransitionOnTime = TimeSpan.FromSeconds(1.5);
             //TransitionOffTime = TimeSpan.FromSeconds(0.5);
 
@@ -489,16 +489,16 @@ namespace GameStateManagement
 
                 if (Keyboard.GetState().IsKeyUp(Keys.F12) && f12Pressed)
                 {
-                    if (enableDebug)
-                        enableDebug = false;
+                    if (EnableDebug)
+                        EnableDebug = false;
                     else
-                        enableDebug = true;
+                        EnableDebug = true;
 
                     f12Pressed = false;
                 }
 
                 // logger
-                if (enableDebug)
+                if (EnableDebug)
                 {
                     lc.Line("Debug information");
                     lc.Line();
@@ -567,7 +567,7 @@ namespace GameStateManagement
             DrawBackground(backgroundBatch);
             backgroundBatch.End();
 
-            if (enableDebug)
+            if (EnableDebug)
             {
                 foreach (BoundingBox boundingBox in BoundingBoxes)
                 {

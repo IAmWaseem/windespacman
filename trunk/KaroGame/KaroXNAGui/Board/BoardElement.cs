@@ -62,8 +62,10 @@ namespace Karo.Gui
                     }
                     mesh.Draw();
                 }
+                if(game.EnableDebug)
+                    DrawBoundingBox.Draw(game.ScreenManager.GraphicsDevice, this.boundingBox, game.View, game.Projection);
             }
-            DrawBoundingBox.Draw(game.ScreenManager.GraphicsDevice, this.boundingBox, game.View, game.Projection);
+            
             base.Draw(gameTime);
         }
 

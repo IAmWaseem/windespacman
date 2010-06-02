@@ -52,7 +52,7 @@ namespace Karo.Gui
 
         private void SetupBoard()
         {
-            currentBoard = uiConnector.GetBoard();
+            currentBoard = uiConnector.GetBoard().BoardSituation;
             for (int x = 0; x < 21; x++)
             {
                 for (int y = 0; y < 20; y++)

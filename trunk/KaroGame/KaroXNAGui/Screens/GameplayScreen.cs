@@ -552,8 +552,6 @@ namespace GameStateManagement
             }
         }
 
-        
-
         /// <summary>
         /// Draws the gameplay screen.
         /// </summary>

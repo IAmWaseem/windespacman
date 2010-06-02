@@ -28,6 +28,7 @@ namespace Karo.Gui
         List<TextObject> textList;
         private SpriteBatch spriteBatch;
         protected SpriteFont spriteFont;
+        private int height;
 
         public LoggerComponent(Microsoft.Xna.Framework.Game game)
             : base(game)
@@ -36,7 +37,7 @@ namespace Karo.Gui
             textList = new List<TextObject>();
             spriteBatch = new SpriteBatch(Game.GraphicsDevice);
             spriteFont = Game.Content.Load<SpriteFont>(@"FPSfont");
-            
+            height = (int)spriteFont.MeasureString("TEST").Y;
         }
 
         /// <summary>
@@ -116,7 +117,6 @@ namespace Karo.Gui
                     spriteBatch.DrawString(spriteFont, t.text + " " + t.obj, new Vector2(5, loc), Color.White);
                     spriteBatch.End();
                 }
-                int height = (int)spriteFont.MeasureString("TEST").Y;
                 loc += height;
             }
 

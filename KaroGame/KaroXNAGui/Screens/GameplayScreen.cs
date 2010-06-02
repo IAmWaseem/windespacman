@@ -151,33 +151,33 @@ namespace GameStateManagement
         /// </summary>
         public GameplayScreen()
         {
-            TransitionOnTime = TimeSpan.FromSeconds(1.5);
-            TransitionOffTime = TimeSpan.FromSeconds(0.5);
+            //TransitionOnTime = TimeSpan.FromSeconds(1.5);
+            //TransitionOffTime = TimeSpan.FromSeconds(0.5);
 
 
-            UIConnector.StartGame(
-                new PlayerSettings()
-                {
-                    IsAI = true,
-                    AlgorithmType = AlgorithmType.Random,
-                    PlieDepth = 1,
-                    DoTransTable = false,
-                    DoMoveOrdering = false,
-                    EvaluationFunction = EvaluationType.BetterOne
-                },
-                new PlayerSettings()
-                {
-                    IsAI = true,
-                    AlgorithmType = AlgorithmType.AlphaBeta,
-                    PlieDepth = 2,
-                    DoTransTable = true,
-                    DoMoveOrdering = true,
-                    EvaluationFunction = EvaluationType.BetterOne
-                });
+            //UIConnector.StartGame(
+            //    new PlayerSettings()
+            //    {
+            //        IsAI = true,
+            //        AlgorithmType = AlgorithmType.Random,
+            //        PlieDepth = 1,
+            //        DoTransTable = false,
+            //        DoMoveOrdering = false,
+            //        EvaluationFunction = EvaluationType.BetterOne
+            //    },
+            //    new PlayerSettings()
+            //    {
+            //        IsAI = true,
+            //        AlgorithmType = AlgorithmType.AlphaBeta,
+            //        PlieDepth = 2,
+            //        DoTransTable = true,
+            //        DoMoveOrdering = true,
+            //        EvaluationFunction = EvaluationType.BetterOne
+            //    });
 
-            current = UIConnector.GetBoard();
-            if (UIConnector.IsTwoAI())
-                thread.Start();
+            //current = UIConnector.GetBoard();
+            //if (UIConnector.IsTwoAI())
+            //    thread.Start();
         }
 
         public void Initialize()
@@ -232,12 +232,19 @@ namespace GameStateManagement
             pieceRed = ScreenManager.Game.Content.Load<Model>("pawnred");
             pieceWhite = ScreenManager.Game.Content.Load<Model>("pawnwhite");
 
+
+            BoardManager manager = new BoardManager(this);
+            manager.StartGame(Difficulty.Hard);
+
             // once the load has finished, we use ResetElapsedTime to tell the game's
             // timing mechanism that we have just finished a very long frame, and that
             // it should not try to catch up.
             ScreenManager.Game.ResetElapsedTime();
         }
 
+        public Model Tile { get { return tile; } }
+        public Model PieceRed { get { return pieceRed; } }
+        public Model PieceWhite { get { return pieceWhite; } }
 
         /// <summary>
         /// Unload graphics content used by the game.
@@ -577,250 +584,6 @@ namespace GameStateManagement
 
             ResetGraphicsDeviceSettings();
 
-            // tiles
-            if (current != null)
-            {
-                foreach (ModelMesh m in tile.Meshes)
-                {
-                    for (int x = 0; x <= 20; x++)
-                    {
-                        for (int y = 0; y < 19; y++)
-                        {
-                            if (current.BoardSituation[x, y] != BoardPosition.Empty)
-                            {
-                                foreach (BasicEffect e in m.Effects)
-                                {
-                                    e.EnableDefaultLighting();
-                                    e.PreferPerPixelLighting = true;
-
-                                    e.View = View;
-                                    e.Projection = projection;
-                                    e.World = Matrix.CreateTranslation(x - 10, y - 9, 0) * world;
-
-                                    //make boundingboxes
-                                    BoundingBox meshBox = BoundingBox.CreateFromSphere(m.BoundingSphere);
-                                    meshBox.Max = Vector3.Transform(meshBox.Max, Matrix.CreateScale(0.5f) * e.World);
-                                    meshBox.Min = Vector3.Transform(meshBox.Min, Matrix.CreateScale(0.5f) * e.World);
-                                    meshBox.Max.Z /= 2;
-                                    meshBox.Min.Z /= 4;
-
-                                    BoundingBoxes.Add(meshBox);
-
-                                    Vector3 near = new Vector3(Mouse.GetState().X, Mouse.GetState().Y, 0);
-                                    Vector3 far = new Vector3(Mouse.GetState().X, Mouse.GetState().Y, 1);
-
-                                    near = ScreenManager.Game.GraphicsDevice.Viewport.Unproject(near, projection, View, Matrix.Identity);
-                                    far = ScreenManager.Game.GraphicsDevice.Viewport.Unproject(far, projection, View, Matrix.Identity);
-
-                                    Vector3 direction = Vector3.Subtract(far, near);
-                                    direction.Normalize();
-
-                                    Ray ray = new Ray(near, direction);
-                                    float? intersect = ray.Intersects(meshBox);
-                                    if (intersect != null)
-                                    {
-                                        e.DiffuseColor = Color.Red.ToVector3();
-                                    }
-                                    else
-                                        e.DiffuseColor = Color.White.ToVector3();
-                                }
-                                m.Draw();
-
-                                if (current.BoardSituation[x, y] == BoardPosition.RedHead || current.BoardSituation[x, y] == BoardPosition.RedTail)
-                                {
-                                    foreach (ModelMesh mesh in pieceRed.Meshes)
-                                    {
-                                        foreach (BasicEffect effect in mesh.Effects)
-                                        {
-                                            effect.EnableDefaultLighting();
-                                            effect.PreferPerPixelLighting = true;
-                                            effect.View = View;
-                                            effect.Projection = projection;
-                                            if (current.BoardSituation[x, y] == BoardPosition.RedTail)
-                                            {
-                                                effect.World = Matrix.CreateTranslation(x - 10, y - 9, 0) * world;
-                                                effect.World = Matrix.CreateRotationX(MathHelper.ToRadians(180)) * effect.World;
-                                                effect.World = Matrix.CreateTranslation(0, 0, -0.65f) * effect.World;
-                                            }
-                                            else
-                                            {
-                                                effect.World = Matrix.CreateTranslation(x - 10, y - 9, 0.15f) * world;
-                                            }
-                                            BoundingBox meshBox = BoundingBox.CreateFromSphere(mesh.BoundingSphere);
-                                            meshBox.Max = Vector3.Transform(meshBox.Max, Matrix.CreateScale(0.7f) * effect.World);
-                                            meshBox.Min = Vector3.Transform(meshBox.Min, Matrix.CreateScale(0.7f) * effect.World);
-
-                                            BoundingBoxes.Add(meshBox);
-
-                                            Vector3 near = new Vector3(Mouse.GetState().X, Mouse.GetState().Y, 0);
-                                            Vector3 far = new Vector3(Mouse.GetState().X, Mouse.GetState().Y, 1);
-
-                                            near = ScreenManager.Game.GraphicsDevice.Viewport.Unproject(near, projection, View, Matrix.Identity);
-                                            far = ScreenManager.Game.GraphicsDevice.Viewport.Unproject(far, projection, View, Matrix.Identity);
-
-                                            Vector3 direction = Vector3.Subtract(far, near);
-                                            direction.Normalize();
-
-                                            Ray ray = new Ray(near, direction);
-                                            float? intersect = ray.Intersects(meshBox);
-                                            if (intersect != null)
-                                            {
-                                                effect.DiffuseColor = Color.Orange.ToVector3();
-                                            }
-                                            else
-                                                effect.DiffuseColor = Color.Red.ToVector3();
-                                        }
-                                        mesh.Draw();
-                                    }
-                                }
-
-                                if (current.BoardSituation[x, y] == BoardPosition.WhiteHead || current.BoardSituation[x, y] == BoardPosition.WhiteTail)
-                                {
-                                    foreach (ModelMesh mesh in pieceWhite.Meshes)
-                                    {
-                                        foreach (BasicEffect effect in mesh.Effects)
-                                        {
-                                            effect.EnableDefaultLighting();
-                                            effect.PreferPerPixelLighting = true;
-                                            effect.View = View;
-                                            effect.Projection = projection;
-                                            if (current.BoardSituation[x, y] == BoardPosition.WhiteTail)
-                                            {
-                                                effect.World = Matrix.CreateTranslation(x - 10, y - 9, 0) * world;
-                                                effect.World = Matrix.CreateRotationX(MathHelper.ToRadians(180)) * effect.World;
-                                                effect.World = Matrix.CreateTranslation(0, 0, -0.65f) * effect.World;
-                                            }
-                                            else
-                                            {
-                                                effect.World = Matrix.CreateTranslation(x - 10, y - 9, 0.15f) * world;
-                                            }
-                                            BoundingBox meshBox = BoundingBox.CreateFromSphere(mesh.BoundingSphere);
-                                            meshBox.Max = Vector3.Transform(meshBox.Max, Matrix.CreateScale(0.7f) * effect.World);
-                                            meshBox.Min = Vector3.Transform(meshBox.Min, Matrix.CreateScale(0.7f) * effect.World);
-
-                                            BoundingBoxes.Add(meshBox);
-
-                                            Vector3 near = new Vector3(Mouse.GetState().X, Mouse.GetState().Y, 0);
-                                            Vector3 far = new Vector3(Mouse.GetState().X, Mouse.GetState().Y, 1);
-
-                                            near = ScreenManager.Game.GraphicsDevice.Viewport.Unproject(near, projection, View, Matrix.Identity);
-                                            far = ScreenManager.Game.GraphicsDevice.Viewport.Unproject(far, projection, View, Matrix.Identity);
-
-                                            Vector3 direction = Vector3.Subtract(far, near);
-                                            direction.Normalize();
-
-                                            Ray ray = new Ray(near, direction);
-                                            float? intersect = ray.Intersects(meshBox);
-                                            if (intersect != null)
-                                            {
-                                                effect.DiffuseColor = Color.Orange.ToVector3();
-                                            }
-                                            else
-                                                effect.DiffuseColor = Color.White.ToVector3();
-                                        }
-                                        mesh.Draw();
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            //draw start red pieces
-            if (current.RedItems < 6)
-            {
-                foreach (ModelMesh mesh in pieceRed.Meshes)
-                {
-                    for (int i = 0; i < 6 - current.RedItems; i++)
-                    {
-                        foreach (BasicEffect effect in mesh.Effects)
-                        {
-                            effect.EnableDefaultLighting();
-                            effect.PreferPerPixelLighting = true;
-                            effect.View = View;
-                            effect.Projection = projection;
-
-                            effect.World = Matrix.CreateTranslation(-2.5f + i, -2, 0) * world;
-                            effect.World = Matrix.CreateRotationX(MathHelper.ToRadians(180)) * effect.World;
-                            effect.World = Matrix.CreateTranslation(0, 0, -0.65f) * effect.World;
-
-                            BoundingBox meshBox = BoundingBox.CreateFromSphere(mesh.BoundingSphere);
-                            meshBox.Max = Vector3.Transform(meshBox.Max, Matrix.CreateScale(0.7f) * effect.World);
-                            meshBox.Min = Vector3.Transform(meshBox.Min, Matrix.CreateScale(0.7f) * effect.World);
-
-                            BoundingBoxes.Add(meshBox);
-
-                            Vector3 near = new Vector3(Mouse.GetState().X, Mouse.GetState().Y, 0);
-                            Vector3 far = new Vector3(Mouse.GetState().X, Mouse.GetState().Y, 1);
-
-                            near = ScreenManager.Game.GraphicsDevice.Viewport.Unproject(near, projection, View, Matrix.Identity);
-                            far = ScreenManager.Game.GraphicsDevice.Viewport.Unproject(far, projection, View, Matrix.Identity);
-
-                            Vector3 direction = Vector3.Subtract(far, near);
-                            direction.Normalize();
-
-                            Ray ray = new Ray(near, direction);
-                            float? intersect = ray.Intersects(meshBox);
-                            if (intersect != null)
-                            {
-                                effect.DiffuseColor = Color.Orange.ToVector3();
-                            }
-                            else
-                                effect.DiffuseColor = Color.Red.ToVector3();
-                        }
-                        mesh.Draw();
-                    }
-                }
-
-            }
-
-            //draw start white pieces
-            if (current.WhiteItems < 6)
-            {
-                foreach (ModelMesh mesh in pieceWhite.Meshes)
-                {
-                    for (int i = 0; i < 6 - current.WhiteItems; i++)
-                    {
-                        foreach (BasicEffect effect in mesh.Effects)
-                        {
-                            effect.EnableDefaultLighting();
-                            effect.PreferPerPixelLighting = true;
-                            effect.View = View;
-                            effect.Projection = projection;
-
-                            effect.World = Matrix.CreateTranslation(-2.5f + i, 3, 0) * world;
-                            effect.World = Matrix.CreateRotationX(MathHelper.ToRadians(180)) * effect.World;
-                            effect.World = Matrix.CreateTranslation(0, 0, -0.65f) * effect.World;
-
-                            BoundingBox meshBox = BoundingBox.CreateFromSphere(mesh.BoundingSphere);
-                            meshBox.Max = Vector3.Transform(meshBox.Max, Matrix.CreateScale(0.7f) * effect.World);
-                            meshBox.Min = Vector3.Transform(meshBox.Min, Matrix.CreateScale(0.7f) * effect.World);
-
-                            BoundingBoxes.Add(meshBox);
-
-                            Vector3 near = new Vector3(Mouse.GetState().X, Mouse.GetState().Y, 0);
-                            Vector3 far = new Vector3(Mouse.GetState().X, Mouse.GetState().Y, 1);
-
-                            near = ScreenManager.Game.GraphicsDevice.Viewport.Unproject(near, projection, View, Matrix.Identity);
-                            far = ScreenManager.Game.GraphicsDevice.Viewport.Unproject(far, projection, View, Matrix.Identity);
-
-                            Vector3 direction = Vector3.Subtract(far, near);
-                            direction.Normalize();
-
-                            Ray ray = new Ray(near, direction);
-                            float? intersect = ray.Intersects(meshBox);
-                            if (intersect != null)
-                            {
-                                effect.DiffuseColor = Color.Orange.ToVector3();
-                            }
-                            else
-                                effect.DiffuseColor = Color.White.ToVector3();
-                        }
-                        mesh.Draw();
-                    }
-                }
-            }
 
             if (enableDebug)
             {

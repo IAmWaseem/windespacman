@@ -118,32 +118,33 @@ namespace GameStateManagement
         {
             get { return UIConnector.Instance; }
         }
-
+        private static BoardManager manager;
         #endregion
 
         #region Initialization
 
-        //Thread thread = new Thread(new ThreadStart(updateBoard));
-        //static int aiMoves = 1;
-        //static bool calculating = false;
-        //static Board newBoard;
-        //public static void updateBoard()
-        //{
-        //    // set calculation to true
-        //    calculating = true;
-        //    Thread.Sleep(50);
+        Thread thread = new Thread(new ThreadStart(updateBoard));
+        static int aiMoves = 1;
+        static bool calculating = false;
+        static Board newBoard;
+        public static void updateBoard()
+        {
+            // set calculation to true
+            calculating = true;
+            Thread.Sleep(50);
 
-        //    newBoard = UIConnector.Instance.GetBoard();
-        //    UIConnector.Instance.MaxAIMoves(aiMoves);
-        //    aiMoves++;
-        //    current = newBoard;
+            newBoard = UIConnector.Instance.GetBoard();
+            UIConnector.Instance.MaxAIMoves(aiMoves);
+            aiMoves++;
+            manager.currentBoard = newBoard.BoardSituation;
+            //current = newBoard;
 
-        //    // set calculation to false;
-        //    calculating = false;
+            // set calculation to false;
+            calculating = false;
 
-        //    Thread.Sleep(1450);
-        //    updateBoard();
-        //}
+            Thread.Sleep(1450);
+            updateBoard();
+        }
 
         /// <summary>
         /// Constructor.
@@ -233,8 +234,10 @@ namespace GameStateManagement
             pieceWhite = ScreenManager.Game.Content.Load<Model>("pawnwhite");
 
 
-            BoardManager manager = new BoardManager(this);
-            manager.StartGame(Difficulty.Hard);
+            manager = new BoardManager(this);
+            manager.StartGame(Difficulty.Medium);
+            if (UIConnector.IsTwoAI())
+                thread.Start();
 
             // once the load has finished, we use ResetElapsedTime to tell the game's
             // timing mechanism that we have just finished a very long frame, and that
@@ -271,28 +274,28 @@ namespace GameStateManagement
             base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
             ScreenManager.Game.IsMouseVisible = false;
             lc.ClearLog();
-            //if (!IsActive)
-            //{
-            //    if (thread.IsAlive)
-            //    {
-            //        thread.Suspend();
-            //    }
-            //}
+            if (!IsActive)
+            {
+                if (thread.IsAlive)
+                {
+                    thread.Suspend();
+                }
+            }
             if (IsActive)
             {
                 ScreenManager.Game.IsMouseVisible = true;
-                //if (UIConnector.IsWon())
-                //{
-                //    thread.Abort();
-                //    current = UIConnector.GetBoard();
-                //}
+                if (UIConnector.IsWon())
+                {
+                    thread.Abort();
+                    current = UIConnector.GetBoard();
+                }
 
                 #region keypresses
                 // Allows the game to exit
-                //if (thread.ThreadState == ThreadState.Suspended)
-                //{
-                //    thread.Resume();
-                //}
+                if (thread.ThreadState == ThreadState.Suspended)
+                {
+                    thread.Resume();
+                }
                 // top view
                 if (Keyboard.GetState().IsKeyDown(Keys.T))
                     tPressed = true;
@@ -504,7 +507,7 @@ namespace GameStateManagement
                     lc.Line();
 
                     lc.Line("FPS", fc.Framerate.ToString());
-                    //lc.Line("AI Calculates", calculating.ToString());
+                    lc.Line("AI Calculates", calculating.ToString());
                     lc.Line("Multisample type", ScreenManager.GraphicsDevice.PresentationParameters.MultiSampleType.ToString());
                     lc.Line();
 

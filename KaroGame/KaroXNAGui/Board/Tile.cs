@@ -10,6 +10,8 @@ namespace Karo.Gui
 {
     class Tile : BoardElement
     {
+        private bool isVisible;
+
         public Tile(GameplayScreen game, Model model, int boardY, int boardX)
             : base(game, model, boardY, boardX)
         {

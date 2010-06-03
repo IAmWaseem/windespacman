@@ -55,6 +55,7 @@ namespace GameStateManagement
         Matrix cameraView, topView, projection;
         private Matrix world, newworld;
         private float moveTime;
+        private const float animationTime = 3.0f;
 
         public Matrix World
         {
@@ -127,7 +128,11 @@ namespace GameStateManagement
 
         // key pressed
         bool tPressed, rPressed, rotate, middleMousePressed, f1Pressed, f12Pressed;
-        private static bool animating = false;
+
+        private static bool boardAnimating = false;
+        private static bool pieceAnimating = false;
+        private static bool tileAnimating = false;
+
         bool uPressed = false;
         bool lookAtTop = false;
 
@@ -153,7 +158,7 @@ namespace GameStateManagement
             // set calculation to true
             calculating = true;
             Thread.Sleep(50);
-            while (animating)
+            while (boardAnimating || tileAnimating || pieceAnimating)
             {
                 Thread.Sleep(50);
             }
@@ -262,7 +267,7 @@ namespace GameStateManagement
 
 
             manager = new BoardManager(this);
-            manager.StartGame(Difficulty.Medium);
+            manager.StartGame(Difficulty.Easy);
             ScreenManager.Game.Components.Add(manager);
             if (UIConnector.IsTwoAI())
                 thread.Start();
@@ -568,26 +573,30 @@ namespace GameStateManagement
                 float middleY = ((float)manager.MaxY + (float)manager.MinY) / 2f;
                 newworld = Matrix.CreateTranslation(-1 * middleX, -1 * middleY, 0);
 
-                if (newworld != world && moveTime <= 0)
+                if (newworld != world && boardAnimating == false)
                 {
-                    animating = true;
-                    moveTime = 2;
+                    boardAnimating = true;
+                    moveTime = animationTime;
                 }
 
-                if (animating)
+                if (boardAnimating)
                 {
+                    bool wanttomove = true;
                     float xMove = newworld.M41 - world.M41;
                     float yMove = newworld.M42 - world.M42;
-                    float time = (float)gameTime.ElapsedRealTime.Milliseconds / 1000f;
+                    float time = (float)gameTime.ElapsedGameTime.Milliseconds / 1000f;
+
                     moveTime -= time;
+                    
+                    float xMovement = (time / moveTime) * xMove * animationTime;
+                    float yMovement = (time / moveTime) * yMove * animationTime;
 
+                    world *= Matrix.CreateTranslation(xMovement, yMovement, 0);
 
-                    world *= Matrix.CreateTranslation(xMove / 20f, yMove / 20f, 0);
-
-                    if (newworld == world || moveTime <= 0)
+                    if (newworld == world || moveTime <= -0.5f || !wanttomove)
                     {
                         world = newworld;
-                        animating = false;
+                        boardAnimating = false;
                     }
                 }
 
@@ -602,6 +611,12 @@ namespace GameStateManagement
                     lc.Line("AI Calculates", calculating.ToString());
                     lc.Line("Multisample type", ScreenManager.GraphicsDevice.PresentationParameters.MultiSampleType.ToString());
                     lc.Line();
+
+                    lc.Line("Animating");
+                    lc.Line("Board", boardAnimating.ToString());
+                    lc.Line("Piece", pieceAnimating.ToString());
+                    lc.Line("Tile", tileAnimating.ToString());
+                    lc.Line(); lc.Line();
 
                     lc.Line("X Rotation", RotationAngleX.ToString());
                     lc.Line("Z Rotation", angle.ToString());

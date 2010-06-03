@@ -521,7 +521,10 @@ namespace GameStateManagement
                     f12Pressed = false;
                 }
 
-                
+                manager.UpdateMinMax();
+                float middleX = ((float)manager.MaxX + (float)manager.MinX) / 2f;
+                float middleY = ((float)manager.MaxY + (float)manager.MinY) / 2f;
+                world = Matrix.CreateTranslation(-1 * middleX, -1 * middleY, 0);
 
                 // logger
                 if (EnableDebug)

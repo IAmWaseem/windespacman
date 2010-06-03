@@ -10,11 +10,15 @@ namespace Karo.Gui
 {
     class BoardManager : GameComponent
     {
-        private List<BoardElement> boardElements;
+        public List<BoardElement> BoardElements { get; set; }
         public Karo.BoardPosition[,] currentBoard { get; set; }
         private BoardElement selectedElement;
         private GameplayScreen game;
         private UIConnector uiConnector;
+        public int MaxX { get; set; }
+        public int MaxY { get; set; }
+        public int MinX { get; set; }
+        public int MinY { get; set; }
 
         public void StartGame(Difficulty difficulty)
         {
@@ -34,7 +38,7 @@ namespace Karo.Gui
                     playerB = new PlayerSettings(true, AlgorithmType.AlphaBeta, 4, true, true, EvaluationType.BetterOne);
                     break;
             }
-            this.boardElements = new List<BoardElement>();
+            this.BoardElements = new List<BoardElement>();
             uiConnector.StartGame(playerA, playerB);
             SetupBoard();
         }
@@ -46,8 +50,26 @@ namespace Karo.Gui
             this.game = game;
         }
 
+        public void UpdateMinMax()
+        {
+            MinX = Int32.MaxValue;
+            MinY = Int32.MaxValue;
+            MaxX = Int32.MinValue;
+            MaxY = Int32.MinValue;
+
+            foreach (BoardElement be in BoardElements)
+            {
+                MinX = Math.Min(be.BoardX, MinX);
+                MinY = Math.Min(be.BoardY, MinY);
+                MaxX = Math.Max(be.BoardX, MaxX);
+                MaxY = Math.Max(be.BoardY, MaxY);
+            }
+        }
+
         public override void Update(GameTime gameTime)
         {
+             
+
             base.Update(gameTime);
         }
 
@@ -60,12 +82,12 @@ namespace Karo.Gui
             if(!uiConnector.IsTwoAI()||currentBoard == null)
                 currentBoard = uiConnector.GetBoard().BoardSituation;
 
-            foreach (BoardElement boardElement in boardElements)
+            foreach (BoardElement boardElement in BoardElements)
             {
                 boardElement.Dispose();
             }
 
-            boardElements.Clear();
+            BoardElements.Clear();
 
             for (int x = 0; x < 21; x++)
             {
@@ -75,7 +97,7 @@ namespace Karo.Gui
                     if (boardPosition == BoardPosition.Tile)
                     {
                         Tile boardElement = new Tile(game, game.Tile, y, x);
-                        boardElements.Add(boardElement);
+                        BoardElements.Add(boardElement);
                         game.ScreenManager.Game.Components.Add(boardElement);
                     }
                     if (boardPosition == BoardPosition.WhiteHead || boardPosition == BoardPosition.WhiteTail)
@@ -84,8 +106,8 @@ namespace Karo.Gui
                         if (boardPosition == BoardPosition.WhiteHead)
                             boardElement.HeadUp = true;
                         Tile boardElementTile = new Tile(game, game.Tile, y, x);
-                        boardElements.Add(boardElement);
-                        boardElements.Add(boardElementTile);
+                        BoardElements.Add(boardElement);
+                        BoardElements.Add(boardElementTile);
                         game.ScreenManager.Game.Components.Add(boardElement);
                         game.ScreenManager.Game.Components.Add(boardElementTile);
                     }
@@ -95,8 +117,8 @@ namespace Karo.Gui
                         if (boardPosition == BoardPosition.RedHead)
                             boardElement.HeadUp = true;
                         Tile boardElementTile = new Tile(game, game.Tile, y, x);
-                        boardElements.Add(boardElement);
-                        boardElements.Add(boardElementTile);
+                        BoardElements.Add(boardElement);
+                        BoardElements.Add(boardElementTile);
                         game.ScreenManager.Game.Components.Add(boardElement);
                         game.ScreenManager.Game.Components.Add(boardElementTile);
                     }

@@ -16,8 +16,8 @@ namespace Karo.Gui
             : base(game, model, boardY, boardX)
         {
             HeadUp = false;
-            CreateBoundingBox();
             world = Matrix.CreateTranslation(BoardX, BoardY, 0);
+            CreateBoundingBox();
         }
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
@@ -31,7 +31,7 @@ namespace Karo.Gui
             else
             {
                 world = Matrix.CreateTranslation(BoardX, BoardY, 0) ;
-                world *= Matrix.CreateTranslation(0, 0, 0.05f);
+                world *= Matrix.CreateTranslation(0, 0, 0.55f);
             }
             CreateBoundingBox();
             base.Update(gameTime);

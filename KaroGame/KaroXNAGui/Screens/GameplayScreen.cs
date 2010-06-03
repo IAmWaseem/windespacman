@@ -52,7 +52,8 @@ namespace GameStateManagement
 
         // game models
         Model tile, pieceRed, pieceWhite;
-        Matrix cameraView, topView, projection, world;
+        Matrix cameraView, topView, projection;
+        private Matrix world;
 
         public Matrix World
         {
@@ -100,6 +101,25 @@ namespace GameStateManagement
                 if (value < 0)
                     value = 360 + value;
                 value = value % 360;
+
+                if (value > 315)
+                {
+                    // ok
+                }
+                else if (value < 44.9f)
+                {
+                    // ok
+                }
+                else if( value < 315f && value > 60f)
+                {
+                    value = 315f;
+                }
+                else if (value > 44.9f)
+                {
+                    value = 44.9f;
+                }
+
+
                 _xAngle = value;
             }
         }
@@ -212,7 +232,7 @@ namespace GameStateManagement
             projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45f),
                 ((float)ScreenManager.Game.GraphicsDevice.Viewport.Width / (float)ScreenManager.Game.GraphicsDevice.Viewport.Height), 0.1f, 100.0f);
 
-            world = Matrix.Identity;
+            world = Matrix.CreateTranslation(-10, -9.5f, 0.15f);
         }
 
 

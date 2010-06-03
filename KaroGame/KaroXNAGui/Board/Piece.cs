@@ -15,9 +15,9 @@ namespace Karo.Gui
         public Piece(GameplayScreen game, Model model, int boardY, int boardX)
             : base(game, model, boardY, boardX)
         {
-            world = Matrix.CreateTranslation(-10 + BoardX, -9.5f + BoardY, 0.15f);
             HeadUp = false;
             CreateBoundingBox();
+            world = Matrix.CreateTranslation(BoardX, BoardY, 0);
         }
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
@@ -25,12 +25,12 @@ namespace Karo.Gui
             if (!HeadUp)
             {
                 world = Matrix.CreateRotationX(MathHelper.ToRadians(180f));
-                world *= Matrix.CreateTranslation(-10 + BoardX, -9.5f + BoardY, 0.15f);
+                world *= Matrix.CreateTranslation(BoardX, BoardY, 0);
                 world *= Matrix.CreateTranslation(0, 0, 0.5f);
             }
             else
             {
-                world = Matrix.CreateTranslation(-10 + BoardX, -9.5f + BoardY, 0.15f);
+                world = Matrix.CreateTranslation(BoardX, BoardY, 0) ;
             }
             CreateBoundingBox();
             base.Update(gameTime);

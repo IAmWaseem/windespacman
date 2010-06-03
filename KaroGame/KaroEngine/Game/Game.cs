@@ -130,6 +130,27 @@ namespace Karo
             }
         }
 
+        public bool ValidateMoveTile(Point a, Point b)
+        {
+            Board cloneBoard = (Board)board.Clone();
+
+            cloneBoard.BoardSituation[b.X, b.Y] = BoardPosition.Tile;
+            cloneBoard.BoardSituation[a.X, a.Y] = BoardPosition.Empty;
+            cloneBoard.IsTileMoved = true;
+            cloneBoard.MovedTilePosition = new Point(b.X, b.Y);
+            cloneBoard.CalculateMovableTiles();
+
+            List<Board> possibleMoves = board.GenerateMoves(turnPlayerA);
+            bool isInList = false;
+
+            foreach (Board pm in possibleMoves)
+            {
+                if (pm.CompareTo(cloneBoard) == 0)
+                    isInList = true;
+            }
+            return isInList;
+        }
+
         /// <summary>
         /// move piece to a new point and switches the turn
         /// </summary>
@@ -184,6 +205,45 @@ namespace Karo
             }
         }
 
+        public bool ValidateMovePiece(Point a, Point b)
+        {
+            Board cloneBoard = (Board)board.Clone();
+
+            BoardPosition old = cloneBoard.BoardSituation[a.X, a.Y];
+            cloneBoard.IsTileMoved = false;
+            if (Math.Abs(a.X - b.X) == 2 || Math.Abs(a.Y - b.Y) == 2)
+            {
+                switch (old)
+                {
+                    case BoardPosition.RedTail:
+                        old = BoardPosition.RedHead;
+                        break;
+                    case BoardPosition.RedHead:
+                        old = BoardPosition.RedTail;
+                        break;
+                    case BoardPosition.WhiteTail:
+                        old = BoardPosition.WhiteHead;
+                        break;
+                    case BoardPosition.WhiteHead:
+                        old = BoardPosition.WhiteTail;
+                        break;
+                }
+            }
+
+            cloneBoard.BoardSituation[b.X, b.Y] = old;
+            cloneBoard.BoardSituation[a.X, a.Y] = BoardPosition.Tile;
+            cloneBoard.CalculateMovableTiles();
+            List<Board> possibleMoves = board.GenerateMoves(turnPlayerA);
+            bool isInList = false;
+
+            foreach (Board pm in possibleMoves)
+            {
+                if (pm.CompareTo(cloneBoard) == 0)
+                    isInList = true;
+            }
+            return isInList;
+        }
+
         /// <summary>
         /// place pace to a point and switches the turn
         /// </summary>
@@ -222,6 +282,28 @@ namespace Karo
                 Logger.AddLine(GetCurrentPlayerNumber() + "-> Placing piece on: " + point.X + ", " + point.Y + " is not a valid move");
             }
 
+        }
+
+        public bool ValidatePlacePiece(Point point)
+        {
+            Board b = (Board)board.Clone();
+            b.BoardSituation[point.X, point.Y] = (turnPlayerA ? BoardPosition.RedTail : BoardPosition.WhiteTail);
+
+            if (turnPlayerA)
+                b.RedItems++;
+            else
+                b.WhiteItems++;
+
+            bool isInList = false;
+            b.CalculateMovableTiles();
+            List<Board> possibleMoves = board.GenerateMoves(turnPlayerA);
+
+            foreach (Board pm in possibleMoves)
+            {
+                if (pm.CompareTo(b) == 0)
+                    isInList = true;
+            }
+            return isInList;
         }
 
         /// <summary>

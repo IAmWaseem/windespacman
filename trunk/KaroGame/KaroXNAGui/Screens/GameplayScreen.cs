@@ -104,11 +104,11 @@ namespace GameStateManagement
                     value = 360 + value;
                 value = value % 360;
 
-                if (value > 315)
+                if (value >= 315)
                 {
                     // ok
                 }
-                else if (value < 44.9f)
+                else if (value <= 44.9f)
                 {
                     // ok
                 }

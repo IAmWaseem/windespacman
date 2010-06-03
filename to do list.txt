@@ -1,12 +1,24 @@
-
 * SpriteBatch 			-> finished
 * Look at select with ray	-> finished
 * Debug mode			-> finished
 * Rotatie 			-> finished
 * Thread			-> finished
-
-* Verschil tussen boards	-> to do
-* Select object in board	-> to do
-* Centreren van world (tiles)	-> to do
-
 * Architecture			-> finished
+* rotation not so far		-> finished
+* board always in the middle	-> finished
+* pionnen for startposition	-> finished
+
+* invisible tiles		-> to do
+* human moves			-> to do
+* numbers and letters 		-> to do
+* topview: show whole board 	-> to do
+* undo move			-> to do
+* diference between boards	-> to do
+* Select object in board	-> to do
+* board always in the middle	-> to do
+
+* animation			-> to do
+* move suggestion		-> to do
+
+
+

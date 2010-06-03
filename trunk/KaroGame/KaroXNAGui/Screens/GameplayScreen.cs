@@ -308,9 +308,12 @@ namespace GameStateManagement
                 ScreenManager.Game.IsMouseVisible = true;
                 if (UIConnector.IsWon())
                 {
-                    thread.Abort();
-                    manager.currentBoard = UIConnector.GetBoard().BoardSituation;
-                    manager.SetupBoard();
+                    if (thread.ThreadState == ThreadState.Running)
+                    {
+                        thread.Abort();
+                        manager.currentBoard = UIConnector.GetBoard().BoardSituation;
+                        manager.SetupBoard();
+                    }
                 }
 
                 #region keypresses

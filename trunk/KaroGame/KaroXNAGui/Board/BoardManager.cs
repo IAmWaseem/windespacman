@@ -80,8 +80,6 @@ namespace Karo.Gui
 
         public override void Update(GameTime gameTime)
         {
-             
-
             base.Update(gameTime);
         }
 

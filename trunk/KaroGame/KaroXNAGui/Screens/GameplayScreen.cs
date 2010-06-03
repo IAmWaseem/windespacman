@@ -186,31 +186,6 @@ namespace GameStateManagement
             EnableDebug = true;
             TransitionOnTime = TimeSpan.FromSeconds(1.5);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
-
-
-            //UIConnector.StartGame(
-            //    new PlayerSettings()
-            //    {
-            //        IsAI = true,
-            //        AlgorithmType = AlgorithmType.Random,
-            //        PlieDepth = 1,
-            //        DoTransTable = false,
-            //        DoMoveOrdering = false,
-            //        EvaluationFunction = EvaluationType.BetterOne
-            //    },
-            //    new PlayerSettings()
-            //    {
-            //        IsAI = true,
-            //        AlgorithmType = AlgorithmType.AlphaBeta,
-            //        PlieDepth = 2,
-            //        DoTransTable = true,
-            //        DoMoveOrdering = true,
-            //        EvaluationFunction = EvaluationType.BetterOne
-            //    });
-
-            //current = UIConnector.GetBoard();
-            //if (UIConnector.IsTwoAI())
-            //    thread.Start();
         }
 
         public void Initialize()

@@ -61,10 +61,20 @@ namespace Karo.Gui
 
             foreach (BoardElement be in BoardElements)
             {
-                MinX = Math.Min((float)be.BoardX, (float)MinX);
-                MinY = Math.Min(be.BoardY, MinY);
-                MaxX = Math.Max(be.BoardX, MaxX);
-                MaxY = Math.Max(be.BoardY, MaxY);
+                if (redItems == 6 && whiteItems == 6)
+                {
+                    MinX = Math.Min((int)be.BoardX, MinX);
+                    MinY = Math.Min((int)be.BoardY, MinY);
+                    MaxX = Math.Max((int)be.BoardX, MaxX);
+                    MaxY = Math.Max((int)be.BoardY, MaxY);
+                }
+                else
+                {
+                    MinX = 8;
+                    MinY = 8;
+                    MaxX = 12;
+                    MaxY = 11;
+                }
             }
         }
 
@@ -103,7 +113,7 @@ namespace Karo.Gui
                 for (int i = redItems; i < 6; i++)
                 {
                     Piece boardElement = new Piece(game, game.PieceRed, y, x);
-                    boardElements.Add(boardElement);
+                    BoardElements.Add(boardElement);
                     game.ScreenManager.Game.Components.Add(boardElement);
                     x += 1;
                 }
@@ -115,7 +125,7 @@ namespace Karo.Gui
                 for (int i = whiteItems; i < 6; i++)
                 {
                     Piece boardElement = new Piece(game, game.PieceWhite, y, x);
-                    boardElements.Add(boardElement);
+                    BoardElements.Add(boardElement);
                     game.ScreenManager.Game.Components.Add(boardElement);
                     x += 1;
                 }

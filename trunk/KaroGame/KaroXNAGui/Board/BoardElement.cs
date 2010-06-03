@@ -18,10 +18,11 @@ namespace Karo.Gui
         protected Matrix world;
         protected bool isSelected;
         protected bool isMouseOver;
-        protected Color color;
+        protected Color selectedColor;
         protected Color mouseOverColor;
         protected bool animatedStarted;
         protected bool animatedEnded;
+        private Vector3 defaultColor;
 
         protected BoardElement(GameplayScreen game, Model model, float boardY, float boardX) : base(game.ScreenManager.Game)
         {
@@ -30,6 +31,11 @@ namespace Karo.Gui
             this.boardY = boardY;
             this.game = game;
             this.world = Matrix.Identity;
+            this.selectedColor = Color.Yellow;
+            this.mouseOverColor = Color.Magenta;
+
+            BasicEffect basicEffect = (BasicEffect)model.Meshes[0].Effects[0];
+            defaultColor = basicEffect.DiffuseColor;
             CreateBoundingBox();
         }
 
@@ -49,15 +55,18 @@ namespace Karo.Gui
                 {
                     foreach (BasicEffect effect in mesh.Effects)
                     {
-                        effect.EnableDefaultLighting();
                         effect.World = World;
                         effect.World *= game.World;
                         effect.View = game.View;
                         effect.Projection = game.Projection;
-                        if (IsSelected)
-                            effect.DiffuseColor = Color.ToVector3();
-                        if (IsMouseOver)
-                            effect.DiffuseColor = MouseOverColor.ToVector3();
+                        if (this.IsSelected)
+                            effect.DiffuseColor = selectedColor.ToVector3();
+                        else if (this.IsMouseOver)
+                            effect.DiffuseColor = mouseOverColor.ToVector3();
+                        else
+                            effect.DiffuseColor = defaultColor;
+
+                        effect.EnableDefaultLighting();
 
                     }
                     mesh.Draw();
@@ -100,10 +109,10 @@ namespace Karo.Gui
             set { mouseOverColor = value; }
         }
 
-        public Color Color
+        public Color SelectedColor
         {
-            get { return color; }
-            set { color = value; }
+            get { return selectedColor; }
+            set { selectedColor = value; }
         }
 
         public bool IsMouseOver

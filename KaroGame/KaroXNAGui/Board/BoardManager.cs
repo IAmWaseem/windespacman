@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using GameStateManagement;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace Karo.Gui
 {
@@ -14,17 +15,20 @@ namespace Karo.Gui
         public Karo.BoardPosition[,] currentBoard { get; set; }
         public int redItems { get; set; }
         public int whiteItems { get; set; }
-        private BoardElement selectedElement;
+        private BoardElement selectedElementFrom;
+        private BoardElement selectedElementTo;
         private GameplayScreen game;
         private UIConnector uiConnector;
         public int MaxX { get; set; }
         public int MaxY { get; set; }
         public int MinX { get; set; }
         public int MinY { get; set; }
+        private bool leftMouseButtonPressed;
+        private bool isSelected;
 
         public void StartGame(Difficulty difficulty)
         {
-            PlayerSettings playerA = new PlayerSettings(true, AlgorithmType.AlphaBeta, 0, false, false, EvaluationType.BetterOne);
+            PlayerSettings playerA = new PlayerSettings(false, AlgorithmType.AlphaBeta, 0, false, false, EvaluationType.BetterOne);
             PlayerSettings playerB = null;
             switch (difficulty)
             {
@@ -42,6 +46,9 @@ namespace Karo.Gui
             }
             this.BoardElements = new List<BoardElement>();
             uiConnector.StartGame(playerA, playerB);
+            leftMouseButtonPressed = false;
+            selectedElementFrom = null;
+            selectedElementTo = null;
             SetupBoard();
         }
 
@@ -80,6 +87,68 @@ namespace Karo.Gui
 
         public override void Update(GameTime gameTime)
         {
+            isSelected = false;
+
+            if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+                leftMouseButtonPressed = true;
+
+            if (leftMouseButtonPressed && Mouse.GetState().LeftButton == ButtonState.Released)
+            {
+                isSelected = true;
+                leftMouseButtonPressed = false;
+            }
+
+            Point pMouse = new Point(Mouse.GetState().X, Mouse.GetState().Y);
+
+            Vector3 nearUnproject = game.ScreenManager.GraphicsDevice.Viewport.Unproject(new Vector3(pMouse.X, pMouse.Y, 0), game.Projection, game.View, Matrix.Identity);
+            Vector3 farUnproject = game.ScreenManager.GraphicsDevice.Viewport.Unproject(new Vector3(pMouse.X, pMouse.Y, 1), game.Projection, game.View, Matrix.Identity);
+
+            Vector3 direction = Vector3.Subtract(farUnproject, nearUnproject);
+
+            direction.Normalize();
+
+            Ray ray = new Ray(nearUnproject, direction);
+
+            BoardElement selected = null;
+            float? smallestIntersect = float.MaxValue;
+
+            foreach (BoardElement boardElement in BoardElements)
+            {
+                float? intersect = boardElement.Intersect(ray);
+                if (intersect != null)
+                {
+                    if (smallestIntersect > intersect)
+                    {
+                        selected = boardElement;
+                        smallestIntersect = intersect;
+                    }
+                }
+
+                if (selectedElementFrom != boardElement && boardElement != selectedElementTo)
+                {
+                    boardElement.IsSelected = false;
+                    boardElement.IsMouseOver = false;
+                }
+            }
+
+            if (selected != null)
+            {
+                if (isSelected)
+                {
+                    selected.IsSelected = true;
+                    if (selectedElementFrom == null)
+                        selectedElementFrom = selected;
+                    else if (selectedElementFrom == selected)
+                        selectedElementFrom = null;
+                    else
+                        selectedElementTo = selected;
+                }
+                else
+                    selected.IsMouseOver = true;
+            }
+
+            if (selectedElementFrom != null && selectedElementTo != null)
+                DoMove();
             base.Update(gameTime);
         }
 

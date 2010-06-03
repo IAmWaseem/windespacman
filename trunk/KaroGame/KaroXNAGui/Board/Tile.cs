@@ -13,7 +13,7 @@ namespace Karo.Gui
         public Tile(GameplayScreen game, Model model, int boardY, int boardX)
             : base(game, model, boardY, boardX)
         {
-            world = Matrix.CreateTranslation(-10 + BoardX, -9.5f + BoardY, 0);
+            world = Matrix.CreateTranslation(BoardX, BoardY, 0);
             CreateBoundingBox();
         }
 

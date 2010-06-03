@@ -49,7 +49,7 @@ namespace Karo.Gui
             }
 
             this.BoardElements = new List<BoardElement>();
-            uiConnector.StartGame(playerA, playerB);
+            uiConnector.StartGame(playerB, playerA);
             leftMouseButtonPressed = false;
             selectedElementFrom = null;
             selectedElementTo = null;

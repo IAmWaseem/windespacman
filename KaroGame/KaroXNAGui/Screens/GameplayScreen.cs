@@ -521,6 +521,8 @@ namespace GameStateManagement
                     f12Pressed = false;
                 }
 
+                
+
                 // logger
                 if (EnableDebug)
                 {

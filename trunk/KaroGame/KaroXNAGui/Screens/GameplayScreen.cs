@@ -53,7 +53,8 @@ namespace GameStateManagement
         // game models
         Model tile, pieceRed, pieceWhite;
         Matrix cameraView, topView, projection;
-        private Matrix world;
+        private Matrix world, newworld;
+        private float moveTime;
 
         public Matrix World
         {
@@ -126,7 +127,7 @@ namespace GameStateManagement
 
         // key pressed
         bool tPressed, rPressed, rotate, middleMousePressed, f1Pressed, f12Pressed;
-
+        private static bool animating = false;
         bool uPressed = false;
         bool lookAtTop = false;
 
@@ -152,6 +153,10 @@ namespace GameStateManagement
             // set calculation to true
             calculating = true;
             Thread.Sleep(50);
+            while (animating)
+            {
+                Thread.Sleep(50);
+            }
 
             newBoard = UIConnector.Instance.GetBoard();
             UIConnector.Instance.MaxAIMoves(aiMoves);
@@ -233,7 +238,7 @@ namespace GameStateManagement
             projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45f),
                 ((float)ScreenManager.Game.GraphicsDevice.Viewport.Width / (float)ScreenManager.Game.GraphicsDevice.Viewport.Height), 0.1f, 100.0f);
 
-            world = Matrix.CreateTranslation(-10, -9.5f, 0.15f);
+            world = Matrix.CreateTranslation(-10, -9.5f, 0f);
         }
 
 
@@ -529,7 +534,31 @@ namespace GameStateManagement
                 manager.UpdateMinMax();
                 float middleX = ((float)manager.MaxX + (float)manager.MinX) / 2f;
                 float middleY = ((float)manager.MaxY + (float)manager.MinY) / 2f;
-                world = Matrix.CreateTranslation(-1 * middleX, -1 * middleY, 0);
+                newworld = Matrix.CreateTranslation(-1 * middleX, -1 * middleY, 0);
+
+                if (newworld != world && moveTime <= 0)
+                {
+                    animating = true;
+                    moveTime = 2;
+                }
+
+                if (animating)
+                {
+                    float xMove = newworld.M41 - world.M41;
+                    float yMove = newworld.M42 - world.M42;
+                    float time = (float)gameTime.ElapsedRealTime.Milliseconds / 1000f;
+                    moveTime -= time;
+
+
+                    world *= Matrix.CreateTranslation(xMove / 20f, yMove / 20f, 0);
+
+                    if (newworld == world || moveTime <= 0)
+                    {
+                        world = newworld;
+                        animating = false;
+                    }
+                }
+
 
                 // logger
                 if (EnableDebug)

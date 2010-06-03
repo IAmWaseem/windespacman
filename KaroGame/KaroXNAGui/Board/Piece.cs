@@ -33,7 +33,7 @@ namespace Karo.Gui
                 world = Matrix.CreateTranslation(-10 + BoardX, -9.5f + BoardY, 0.15f);
             }
             CreateBoundingBox();
- 	         base.Update(gameTime);
+            base.Update(gameTime);
         }
 
         protected override void CreateBoundingBox()

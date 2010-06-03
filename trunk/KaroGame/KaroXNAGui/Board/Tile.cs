@@ -25,8 +25,8 @@ namespace Karo.Gui
         protected override void CreateBoundingBox()
         {
             boundingBox = BoundingBox.CreateFromSphere(model.Meshes[0].BoundingSphere);
-            boundingBox.Max = Vector3.Transform(boundingBox.Max, Matrix.CreateScale(0.55f, 0.10f, 0.55f) * Matrix.CreateRotationX(MathHelper.ToRadians(90)) * Matrix.CreateTranslation(0.095f, 0.0f, 0.1f) * world);
-            boundingBox.Min = Vector3.Transform(boundingBox.Min, Matrix.CreateScale(0.55f, 0.10f, 0.55f) * Matrix.CreateRotationX(MathHelper.ToRadians(90)) * Matrix.CreateTranslation(0.095f, 0.0f, 0.1f) * world);
+            boundingBox.Max = Vector3.Transform(boundingBox.Max, Matrix.CreateScale(0.55f, 0.10f, 0.55f) * Matrix.CreateRotationX(MathHelper.ToRadians(90)) * Matrix.CreateTranslation(0.095f, 0.0f, 0.1f) * world * game.World);
+            boundingBox.Min = Vector3.Transform(boundingBox.Min, Matrix.CreateScale(0.55f, 0.10f, 0.55f) * Matrix.CreateRotationX(MathHelper.ToRadians(90)) * Matrix.CreateTranslation(0.095f, 0.0f, 0.1f) * world * game.World);
         }
 
         public override void Move(int i, int y)

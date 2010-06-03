@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using GameStateManagement;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Drawing;
 
 namespace Karo.Gui
 {
@@ -98,7 +99,7 @@ namespace Karo.Gui
                 leftMouseButtonPressed = false;
             }
 
-            Point pMouse = new Point(Mouse.GetState().X, Mouse.GetState().Y);
+            Microsoft.Xna.Framework.Point pMouse = new Microsoft.Xna.Framework.Point(Mouse.GetState().X, Mouse.GetState().Y);
 
             Vector3 nearUnproject = game.ScreenManager.GraphicsDevice.Viewport.Unproject(new Vector3(pMouse.X, pMouse.Y, 0), game.Projection, game.View, Matrix.Identity);
             Vector3 farUnproject = game.ScreenManager.GraphicsDevice.Viewport.Unproject(new Vector3(pMouse.X, pMouse.Y, 1), game.Projection, game.View, Matrix.Identity);
@@ -154,6 +155,9 @@ namespace Karo.Gui
 
         public void DoMove()
         {
+            int numItems = uiConnector.CurrentPlayerNumPieces();
+            if(numItems < 6)
+                uiConnector.PlacePiece(new System.Drawing.Point((int)selectedElementTo.BoardX, (int)selectedElementTo.BoardY));
         }
 
         public void SetupBoard()

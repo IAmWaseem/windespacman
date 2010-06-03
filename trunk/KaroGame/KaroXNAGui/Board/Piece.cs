@@ -24,9 +24,9 @@ namespace Karo.Gui
         {
             if (!HeadUp)
             {
-                world = Matrix.CreateTranslation(-10 + BoardX, -9.5f + BoardY, 0.15f);
-                world *= Matrix.CreateRotationX(MathHelper.ToRadians(180f));
-                world *= Matrix.CreateTranslation(0, 0, 0.79f);
+                world = Matrix.CreateRotationX(MathHelper.ToRadians(180f));
+                world *= Matrix.CreateTranslation(-10 + BoardX, -9.5f + BoardY, 0.15f);
+                world *= Matrix.CreateTranslation(0, 0, 0.5f);
             }
             else
             {

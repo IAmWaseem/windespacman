@@ -394,6 +394,37 @@ namespace GameStateManagement
                 float rotateAngleX = rotateAngle;
 
                 // rotate
+                if (Mouse.GetState().MiddleButton == ButtonState.Pressed)
+                {
+                    middleMousePressed = true;
+                }
+                if (Mouse.GetState().MiddleButton == ButtonState.Released && middleMousePressed)
+                {
+                    rotate = true;
+                    if (angle == 0.0f)
+                    {
+                        rotateUp = true;
+                        totalAngle = 180;
+                    }
+                    else if (angle == 180.0f)
+                    {
+                        rotateUp = false;
+                        totalAngle = 180;
+                    }
+                    else if (angle < 180)
+                    {
+                        rotateUp = false;
+                        totalAngle = angle;
+                        if (totalAngle < 0.0f)
+                            totalAngle = 360 + angle;
+                    }
+                    else if (angle > 180)
+                    {
+                        rotateUp = true;
+                        totalAngle = angle - 180;
+                    }
+                    middleMousePressed = false;
+                }
                 if (Keyboard.GetState().IsKeyDown(Keys.R))
                     rPressed = true;
 

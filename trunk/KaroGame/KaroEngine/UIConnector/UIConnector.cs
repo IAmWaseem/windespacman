@@ -229,5 +229,20 @@ namespace Karo
         {
             return Game.Instance.CurrentPlayerNumPieces();
         }
+
+        public  bool ValidateMovePiece(Point a, Point b)
+        {
+            return Game.Instance.ValidateMovePiece(a, b);
+        }
+
+        public bool ValidatePlacePiece(Point a)
+        {
+            return Game.Instance.ValidatePlacePiece(a);
+        }
+
+        public bool ValidateMoveTile(Point a, Point b)
+        {
+            return Game.Instance.ValidateMoveTile(a, b);
+        }
     }
 }

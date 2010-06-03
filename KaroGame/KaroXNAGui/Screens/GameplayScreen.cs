@@ -204,7 +204,7 @@ namespace GameStateManagement
             middleMousePressed = false;
 
             // init views
-            topView = Matrix.CreateLookAt(new Vector3(0, 0, 10), new Vector3(0, 0, 0), Vector3.Up);
+            topView = Matrix.CreateLookAt(new Vector3(0, 0, 10), new Vector3(0, 0, 0), Vector3.Down);
 
             Vector3 loc = new Vector3(0, -10, 10);
             Matrix trans = Matrix.Identity;
@@ -575,7 +575,15 @@ namespace GameStateManagement
                     }
                 }
 
+                int width = manager.MaxX - manager.MinX + 1;
+                int height = manager.MaxY - manager.MinY + 1;
+                int max = Math.Max(width, height);
 
+                float autozoom =(float)max / 6f;
+                Vector3 loca = new Vector3(0, 0, 10);
+                loca = Vector3.Transform(loca, Matrix.CreateScale(autozoom));
+                topView = Matrix.CreateLookAt(loca, new Vector3(0, 0, 0), Vector3.Down);
+                
                 // logger
                 if (EnableDebug)
                 {
@@ -591,16 +599,15 @@ namespace GameStateManagement
                     lc.Line("Board", boardAnimating.ToString());
                     lc.Line("Piece", pieceAnimating.ToString());
                     lc.Line("Tile", tileAnimating.ToString());
-                    lc.Line(); lc.Line();
+                    lc.Line();
 
+                    lc.Line("Rotation and zoom");
                     lc.Line("X Rotation", RotationAngleX.ToString());
                     lc.Line("Z Rotation", angle.ToString());
-                    lc.Line();
                     lc.Line("Zoom factor", zoom.ToString());
                     lc.Line();
 
-                    lc.Line("Rotate", rotate.ToString());
-                    lc.Line("Rotate up", rotateUp.ToString());
+                    lc.Line("Auto rotate", rotate.ToString());
                     lc.Line("Remaining", totalAngle.ToString());
                     lc.Line();
 
@@ -608,6 +615,16 @@ namespace GameStateManagement
                     lc.Line("X", cameraLocation.X.ToString());
                     lc.Line("Y", cameraLocation.Y.ToString());
                     lc.Line("Z", cameraLocation.Z.ToString());
+                    lc.Line();
+
+                    lc.Line("Tile");
+                    lc.Line("Min X", manager.MinX.ToString("0"));
+                    lc.Line("Max X", manager.MaxX.ToString("0"));
+                    lc.Line("Min Y", manager.MinY.ToString("0"));
+                    lc.Line("Max Y", manager.MaxY.ToString("0"));
+                    lc.Line("Width", width.ToString());
+                    lc.Line("Height", height.ToString());
+                    lc.Line("Zoom factor", autozoom.ToString("0.00"));
                 }
 
             }

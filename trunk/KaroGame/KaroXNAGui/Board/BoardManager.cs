@@ -31,6 +31,7 @@ namespace Karo.Gui
         {
             PlayerSettings playerA = new PlayerSettings(false, AlgorithmType.AlphaBeta, 0, false, false, EvaluationType.BetterOne);
             PlayerSettings playerB = null;
+
             switch (difficulty)
             {
                 case Difficulty.Easy:
@@ -45,6 +46,7 @@ namespace Karo.Gui
                     playerB = new PlayerSettings(true, AlgorithmType.AlphaBeta, 4, true, true, EvaluationType.BetterOne);
                     break;
             }
+
             this.BoardElements = new List<BoardElement>();
             uiConnector.StartGame(playerA, playerB);
             leftMouseButtonPressed = false;

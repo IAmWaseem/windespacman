@@ -12,7 +12,7 @@ namespace Karo.Gui
     {
         public bool HeadUp { get; set; }
         
-        public Piece(GameplayScreen game, Model model, int boardY, int boardX)
+        public Piece(GameplayScreen game, Model model, float boardY, float boardX)
             : base(game, model, boardY, boardX)
         {
             HeadUp = false;

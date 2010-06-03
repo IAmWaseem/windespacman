@@ -157,8 +157,9 @@ namespace GameStateManagement
             UIConnector.Instance.MaxAIMoves(aiMoves);
             aiMoves++;
             manager.currentBoard = newBoard.BoardSituation;
+            manager.redItems = newBoard.RedItems;
+            manager.whiteItems = newBoard.WhiteItems;
             manager.SetupBoard();
-            //current = newBoard;
 
             // set calculation to false;
             calculating = false;
@@ -173,33 +174,6 @@ namespace GameStateManagement
         public GameplayScreen()
         {
             EnableDebug = true;
-            //TransitionOnTime = TimeSpan.FromSeconds(1.5);
-            //TransitionOffTime = TimeSpan.FromSeconds(0.5);
-
-
-            //UIConnector.StartGame(
-            //    new PlayerSettings()
-            //    {
-            //        IsAI = true,
-            //        AlgorithmType = AlgorithmType.Random,
-            //        PlieDepth = 1,
-            //        DoTransTable = false,
-            //        DoMoveOrdering = false,
-            //        EvaluationFunction = EvaluationType.BetterOne
-            //    },
-            //    new PlayerSettings()
-            //    {
-            //        IsAI = true,
-            //        AlgorithmType = AlgorithmType.AlphaBeta,
-            //        PlieDepth = 2,
-            //        DoTransTable = true,
-            //        DoMoveOrdering = true,
-            //        EvaluationFunction = EvaluationType.BetterOne
-            //    });
-
-            //current = UIConnector.GetBoard();
-            //if (UIConnector.IsTwoAI())
-            //    thread.Start();
         }
 
         public void Initialize()
@@ -308,7 +282,8 @@ namespace GameStateManagement
                 if (UIConnector.IsWon())
                 {
                     thread.Abort();
-                    current = UIConnector.GetBoard();
+                    manager.currentBoard = UIConnector.GetBoard().BoardSituation;
+                    manager.SetupBoard();
                 }
 
                 #region keypresses
@@ -593,14 +568,6 @@ namespace GameStateManagement
             backgroundBatch.Begin(SpriteBlendMode.None);
             DrawBackground(backgroundBatch);
             backgroundBatch.End();
-
-            //if (EnableDebug)
-            //{
-            //    foreach (BoundingBox boundingBox in BoundingBoxes)
-            //    {
-            //        DrawBoundingBox.Draw(ScreenManager.Game.GraphicsDevice, boundingBox, View, projection);
-            //    }
-            //}
 
             ScreenManager.ResetGraphicsDeviceSettings();
 

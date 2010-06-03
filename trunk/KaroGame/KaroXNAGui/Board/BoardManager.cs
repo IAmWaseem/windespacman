@@ -12,6 +12,8 @@ namespace Karo.Gui
     {
         public List<BoardElement> BoardElements { get; set; }
         public Karo.BoardPosition[,] currentBoard { get; set; }
+        public int redItems { get; set; }
+        public int whiteItems { get; set; }
         private BoardElement selectedElement;
         private GameplayScreen game;
         private UIConnector uiConnector;
@@ -59,7 +61,7 @@ namespace Karo.Gui
 
             foreach (BoardElement be in BoardElements)
             {
-                MinX = Math.Min(be.BoardX, MinX);
+                MinX = Math.Min((float)be.BoardX, (float)MinX);
                 MinY = Math.Min(be.BoardY, MinY);
                 MaxX = Math.Max(be.BoardX, MaxX);
                 MaxY = Math.Max(be.BoardY, MaxY);
@@ -79,8 +81,13 @@ namespace Karo.Gui
 
         public void SetupBoard()
         {
-            if(!uiConnector.IsTwoAI()||currentBoard == null)
-                currentBoard = uiConnector.GetBoard().BoardSituation;
+            if (!uiConnector.IsTwoAI() || currentBoard == null)
+            {
+                Board tempBoard = uiConnector.GetBoard();
+                currentBoard = tempBoard.BoardSituation;
+                whiteItems = tempBoard.WhiteItems;
+                redItems = tempBoard.RedItems;
+            }
 
             foreach (BoardElement boardElement in BoardElements)
             {
@@ -88,6 +95,32 @@ namespace Karo.Gui
             }
 
             BoardElements.Clear();
+            
+            if (redItems<6)
+            {
+                float y = 6.5f;
+                float x = 7.5f;
+                for (int i = redItems; i < 6; i++)
+                {
+                    Piece boardElement = new Piece(game, game.PieceRed, y, x);
+                    boardElements.Add(boardElement);
+                    game.ScreenManager.Game.Components.Add(boardElement);
+                    x += 1;
+                }
+            }
+            if (whiteItems < 6)
+            {
+                float y = 12.5f;
+                float x = 7.5f;
+                for (int i = whiteItems; i < 6; i++)
+                {
+                    Piece boardElement = new Piece(game, game.PieceWhite, y, x);
+                    boardElements.Add(boardElement);
+                    game.ScreenManager.Game.Components.Add(boardElement);
+                    x += 1;
+                }
+            }
+            
 
             for (int x = 0; x < 21; x++)
             {

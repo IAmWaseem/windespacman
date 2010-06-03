@@ -13,8 +13,8 @@ namespace Karo.Gui
         protected GameplayScreen game;
         protected Model model;
         protected BoundingBox boundingBox;
-        protected int boardX;
-        protected int boardY;
+        protected float boardX;
+        protected float boardY;
         protected Matrix world;
         protected bool isSelected;
         protected bool isMouseOver;
@@ -23,7 +23,7 @@ namespace Karo.Gui
         protected bool animatedStarted;
         protected bool animatedEnded;
 
-        protected BoardElement(GameplayScreen game, Model model, int boardY, int boardX) : base(game.ScreenManager.Game)
+        protected BoardElement(GameplayScreen game, Model model, float boardY, float boardX) : base(game.ScreenManager.Game)
         {
             this.model = model;
             this.boardX = boardX;
@@ -76,7 +76,7 @@ namespace Karo.Gui
             return ray.Intersects(boundingBox);
         }
 
-        public int BoardX
+        public float BoardX
         {
             get { return boardX; }
             set { boardX = value; }
@@ -124,7 +124,7 @@ namespace Karo.Gui
             set { world = value; }
         }
 
-        public int BoardY
+        public float BoardY
         {
             get { return boardY; }
             set { boardY = value; }

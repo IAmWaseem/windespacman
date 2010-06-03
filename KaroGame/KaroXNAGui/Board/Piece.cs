@@ -31,7 +31,7 @@ namespace Karo.Gui
             else
             {
                 world = Matrix.CreateTranslation(BoardX, BoardY, 0) ;
-                world *= Matrix.CreateTranslation(0, 0, 0.55f);
+                world *= Matrix.CreateTranslation(0, 0, 0.05f);
             }
             CreateBoundingBox();
             base.Update(gameTime);

@@ -7,6 +7,7 @@ using GameStateManagement;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Drawing;
+using Point=Microsoft.Xna.Framework.Point;
 
 namespace Karo.Gui
 {
@@ -158,8 +159,57 @@ namespace Karo.Gui
         public void DoMove()
         {
             int numItems = uiConnector.CurrentPlayerNumPieces();
-            if(numItems < 6)
-                uiConnector.PlacePiece(new System.Drawing.Point((int)selectedElementTo.BoardX, (int)selectedElementTo.BoardY));
+            if (numItems < 6)
+            {
+                System.Drawing.Point placePoint = new System.Drawing.Point((int) selectedElementTo.BoardX,
+                                                                           (int) selectedElementTo.BoardY);
+                if (uiConnector.ValidatePlacePiece(placePoint))
+                {
+                    selectedElementFrom.Move((int) selectedElementTo.BoardX, (int) selectedElementTo.BoardY);
+                    uiConnector.PlacePiece(placePoint);
+                    currentBoard = uiConnector.GetBoard().BoardSituation;
+                    uiConnector.DoAiMove(1);
+                    BoardPosition[,] newBoardSituation = uiConnector.GetBoard().BoardSituation;
+
+                    int? fromX = null;
+                    int? fromY = null;
+                    int? toX = null;
+                    int? toY = null;
+
+                    for (int x = 0; x < 21; x++)
+                    {
+                        for (int y = 0; y < 20; y++)
+                        {
+                            if(this.currentBoard[x,y] != newBoardSituation[x,y])
+                            {
+                                if(currentBoard[x,y] != BoardPosition.Empty && currentBoard[x,y] != BoardPosition.Tile)
+                                {
+                                    fromX = x;
+                                    fromY = y;
+                                }
+                                if(currentBoard[x,y] == BoardPosition.Empty || currentBoard[x,y] == BoardPosition.Tile)
+                                {
+                                    toX = x;
+                                    toY = y;
+                                }
+                            }
+                        }
+
+                        if(fromX == null && fromY == null && toX != null && toY != null)
+                        {
+                            foreach (BoardElement boardElement in BoardElements)
+                            {
+                                if(boardElement.BoardY == 12.5f)
+                                    boardElement.Move((int)toX, (int)toY);
+                            }
+                        }
+
+
+                    }
+                }
+            }
+            selectedElementFrom = null;
+            selectedElementTo = null;
         }
 
         public void SetupBoard()

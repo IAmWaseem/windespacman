@@ -35,7 +35,10 @@ namespace Karo.Gui
             this.mouseOverColor = Color.Magenta;
 
             BasicEffect basicEffect = (BasicEffect)model.Meshes[0].Effects[0];
-            defaultColor = basicEffect.DiffuseColor;
+            if(basicEffect != null)
+                if(basicEffect.DiffuseColor != null)
+                    defaultColor = basicEffect.DiffuseColor;
+
             CreateBoundingBox();
         }
 

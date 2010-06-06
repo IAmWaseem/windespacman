@@ -161,15 +161,16 @@ namespace Karo.Gui
             int numItems = uiConnector.CurrentPlayerNumPieces();
             if (numItems < 6)
             {
-                System.Drawing.Point placePoint = new System.Drawing.Point((int) selectedElementTo.BoardX,
-                                                                           (int) selectedElementTo.BoardY);
+                System.Drawing.Point placePoint = new System.Drawing.Point((int)selectedElementTo.BoardX,
+                                                                           (int)selectedElementTo.BoardY);
                 if (uiConnector.ValidatePlacePiece(placePoint))
                 {
-                    selectedElementFrom.Move((int) selectedElementTo.BoardX, (int) selectedElementTo.BoardY);
+                    selectedElementFrom.Move((int)selectedElementTo.BoardX, (int)selectedElementTo.BoardY);
+                    while (selectedElementFrom.AnimatedStarted) ;
+                    currentBoard = (BoardPosition[,])uiConnector.GetBoard().BoardSituation.Clone();
+                    currentBoard[(int)selectedElementTo.BoardX, (int)selectedElementTo.BoardY] = BoardPosition.WhiteTail;
                     uiConnector.PlacePiece(placePoint);
-                    currentBoard = uiConnector.GetBoard().BoardSituation;
-                    uiConnector.DoAiMove(1);
-                    BoardPosition[,] newBoardSituation = uiConnector.GetBoard().BoardSituation;
+                    BoardPosition[,] newBoardSituation = (BoardPosition[,])uiConnector.GetBoard().BoardSituation.Clone();
 
                     int? fromX = null;
                     int? fromY = null;
@@ -180,37 +181,147 @@ namespace Karo.Gui
                     {
                         for (int y = 0; y < 20; y++)
                         {
-                            if(this.currentBoard[x,y] != newBoardSituation[x,y])
+                            if (currentBoard[x, y] != newBoardSituation[x, y])
                             {
-                                if(currentBoard[x,y] != BoardPosition.Empty && currentBoard[x,y] != BoardPosition.Tile)
+                                if (currentBoard[x, y] != BoardPosition.Empty && currentBoard[x, y] != BoardPosition.Tile)
                                 {
                                     fromX = x;
                                     fromY = y;
                                 }
-                                if(currentBoard[x,y] == BoardPosition.Empty || currentBoard[x,y] == BoardPosition.Tile)
+                                if (currentBoard[x, y] == BoardPosition.Empty || currentBoard[x, y] == BoardPosition.Tile)
                                 {
                                     toX = x;
                                     toY = y;
                                 }
                             }
                         }
-
-                        if(fromX == null && fromY == null && toX != null && toY != null)
+                    }
+                    bool found = false;
+                    Piece enemyBoardElement = null;
+                    if (fromX == null && fromY == null && toX != null && toY != null)
+                    {
+                        foreach (BoardElement boardElement in BoardElements)
                         {
-                            foreach (BoardElement boardElement in BoardElements)
+                            if (boardElement.BoardY == 6.5f && !found)
                             {
-                                if(boardElement.BoardY == 12.5f)
-                                    boardElement.Move((int)toX, (int)toY);
+                                enemyBoardElement = (Piece)boardElement;
+                                enemyBoardElement.Move((int)toX, (int)toY);
+                                found = true;
                             }
                         }
-
-
                     }
+                    if (fromX != null && fromY != null && toX != null && toY != null)
+                    {
+                        foreach (BoardElement boardElement in BoardElements)
+                        {
+                            if (boardElement.BoardY == fromY && boardElement.BoardX == fromX && !found)
+                            {
+                                enemyBoardElement = (Piece)boardElement;
+                                if (newBoardSituation[(int)toX, (int)toY] == BoardPosition.RedTail)
+                                    enemyBoardElement.HeadUp = false;
+                                else
+                                    enemyBoardElement.HeadUp = true;
+                                enemyBoardElement.Move((int)toX, (int)toY);
+                                found = true;
+                            }
+                        }
+                    }
+                    while (enemyBoardElement.AnimatedStarted) ;
+                }
+            }
+            else
+            {
+                System.Drawing.Point fromPoint = new System.Drawing.Point((int)selectedElementFrom.BoardX,
+                                                                           (int)selectedElementFrom.BoardY);
+                System.Drawing.Point toPoint = new System.Drawing.Point((int)selectedElementTo.BoardX,
+                                                                           (int)selectedElementTo.BoardY);
+
+                if (uiConnector.ValidateMovePiece(fromPoint, toPoint) && selectedElementFrom is Piece)
+                {
+                    Piece piece = (Piece)selectedElementFrom;
+                    int moveDistance = 0;
+                    currentBoard = (BoardPosition[,])uiConnector.GetBoard().BoardSituation.Clone();
+                    BoardPosition changeTo = BoardPosition.Empty;
+                    if (Math.Abs(fromPoint.X - toPoint.X) == 1 || Math.Abs(fromPoint.Y - toPoint.Y) == 1)
+                        moveDistance = 1;
+                    if (Math.Abs(fromPoint.X - toPoint.X) == 2 || Math.Abs(fromPoint.Y - toPoint.Y) == 2)
+                        moveDistance = 2;
+
+                    if (moveDistance == 1)
+                        changeTo = currentBoard[fromPoint.X, fromPoint.Y];
+                    else
+                    {
+                        piece.HeadUp = false;
+                        changeTo = BoardPosition.WhiteTail;
+                        if (currentBoard[fromPoint.X, fromPoint.Y] == BoardPosition.WhiteTail)
+                        {
+                            changeTo = BoardPosition.WhiteHead;
+                            piece.HeadUp = true;
+                        }
+                    }
+                    currentBoard[fromPoint.X, fromPoint.Y] = BoardPosition.Tile;
+                    currentBoard[toPoint.X, toPoint.Y] = changeTo;
+                    
+                    selectedElementFrom.Move((int)selectedElementTo.BoardX, (int)selectedElementTo.BoardY);
+                    while (selectedElementFrom.AnimatedStarted) ;
+
+                    uiConnector.MovePiece(fromPoint, toPoint);
+                    BoardPosition[,] newBoardSituation = (BoardPosition[,])uiConnector.GetBoard().BoardSituation.Clone();
+
+                    int? fromX = null;
+                    int? fromY = null;
+                    int? toX = null;
+                    int? toY = null;
+
+                    for (int x = 0; x < 21; x++)
+                    {
+                        for (int y = 0; y < 20; y++)
+                        {
+                            if (currentBoard[x, y] != newBoardSituation[x, y])
+                            {
+                                if (currentBoard[x, y] != BoardPosition.Empty && currentBoard[x, y] != BoardPosition.Tile)
+                                {
+                                    fromX = x;
+                                    fromY = y;
+                                }
+                                if (currentBoard[x, y] == BoardPosition.Empty || currentBoard[x, y] == BoardPosition.Tile)
+                                {
+                                    toX = x;
+                                    toY = y;
+                                }
+                            }
+                        }
+                    }
+                    bool found = false;
+                    Piece enemyBoardElement = null;
+                    if (fromX != null && fromY != null && toX != null && toY != null)
+                    {
+                        foreach (BoardElement boardElement in BoardElements)
+                        {
+                            if (boardElement.BoardY == fromY && boardElement.BoardX == fromX && !found)
+                            {
+                                enemyBoardElement = (Piece)boardElement;
+                                if (newBoardSituation[(int)toX, (int)toY] == BoardPosition.RedTail)
+                                    enemyBoardElement.HeadUp = false;
+                                else
+                                    enemyBoardElement.HeadUp = true;
+                                enemyBoardElement.Move((int)toX, (int)toY);
+                                found = true;
+                            }
+                        }
+                    }
+                    while (enemyBoardElement.AnimatedStarted) ;
+
+                }
+                else if (uiConnector.ValidateMoveTile(fromPoint, toPoint))
+                {
+
                 }
             }
             selectedElementFrom = null;
             selectedElementTo = null;
         }
+
 
         public void SetupBoard()
         {

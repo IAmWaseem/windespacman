@@ -12,8 +12,8 @@ namespace Karo
     /// </summary>
     public class Game
     {
-        private AIPlayer playerA;
-        private AIPlayer playerB;
+        public AIPlayer playerA;
+        public AIPlayer playerB;
         private Boolean turnPlayerA;
         private Board board;
         private static Game instance;

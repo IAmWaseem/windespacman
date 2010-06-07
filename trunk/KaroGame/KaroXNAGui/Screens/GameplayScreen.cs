@@ -56,6 +56,7 @@ namespace GameStateManagement
         private Matrix world, newworld;
         private float moveTime;
         private const float animationTime = 3.0f;
+        public bool ShowTargetPlaces { get; set; }
 
         public Matrix World
         {
@@ -281,6 +282,11 @@ namespace GameStateManagement
         {
             base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
             ScreenManager.Game.IsMouseVisible = false;
+            if (manager.FromTileSelected)
+                ShowTargetPlaces = true;
+            else
+                ShowTargetPlaces = false;
+
             lc.ClearLog();
             if (!IsActive)
             {

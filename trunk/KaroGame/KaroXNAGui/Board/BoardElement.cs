@@ -23,12 +23,12 @@ namespace Karo.Gui
         protected bool animatedStarted;
         protected bool animatedEnded;
         protected Vector3 defaultColor;
-        protected bool asWire;
+        protected bool isPossiblePlace;
 
         protected BoardElement(GameplayScreen game, Model model, float boardY, float boardX)
             : base(game.ScreenManager.Game)
         {
-            this.AsWire = false;
+            this.IsPossiblePlace = false;
             this.model = model;
             this.boardX = boardX;
             this.boardY = boardY;
@@ -60,7 +60,7 @@ namespace Karo.Gui
             game.ScreenManager.ResetGraphicsDeviceSettings();
             if (game.IsActive)
             {
-                if (AsWire && !this.IsMouseOver)
+                if (IsPossiblePlace && !this.IsMouseOver)
                     game.ScreenManager.GraphicsDevice.RenderState.FillMode = FillMode.WireFrame;
 
                 foreach (ModelMesh mesh in model.Meshes)
@@ -86,7 +86,7 @@ namespace Karo.Gui
                 }
 
                 // reset to solid, only if drawn as wire
-                if(AsWire)
+                if(IsPossiblePlace)
                     game.ScreenManager.GraphicsDevice.RenderState.FillMode = FillMode.Solid;
 
                 if (game.EnableDebug)
@@ -175,10 +175,10 @@ namespace Karo.Gui
             set { model = value; }
         }
 
-        public bool AsWire
+        public bool IsPossiblePlace
         {
-            get { return asWire; }
-            set { asWire = value; }
+            get { return isPossiblePlace; }
+            set { isPossiblePlace = value; }
         }
 
     }

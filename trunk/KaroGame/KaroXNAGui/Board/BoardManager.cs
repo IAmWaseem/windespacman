@@ -172,10 +172,15 @@ namespace Karo.Gui
                     uiConnector.PlacePiece(placePoint);
                     BoardPosition[,] newBoardSituation = (BoardPosition[,])uiConnector.GetBoard().BoardSituation.Clone();
 
-                    int? fromX = null;
-                    int? fromY = null;
-                    int? toX = null;
-                    int? toY = null;
+                    int? fromXPiece = null;
+                    int? fromYPiece = null;
+                    int? toXPiece = null;
+                    int? toYPiece = null;
+
+                    int? fromXTile = null;
+                    int? fromYTile = null;
+                    int? toXTile = null;
+                    int? toYTile = null;
 
                     for (int x = 0; x < 21; x++)
                     {
@@ -183,50 +188,94 @@ namespace Karo.Gui
                         {
                             if (currentBoard[x, y] != newBoardSituation[x, y])
                             {
+                                if (currentBoard[x, y] == BoardPosition.Tile && newBoardSituation[x, y] == BoardPosition.Empty)
+                                {
+                                    fromXTile = x;
+                                    fromYTile = y;
+                                }
                                 if (currentBoard[x, y] != BoardPosition.Empty && currentBoard[x, y] != BoardPosition.Tile)
                                 {
-                                    fromX = x;
-                                    fromY = y;
+                                    fromXPiece = x;
+                                    fromYPiece = y;
                                 }
-                                if (currentBoard[x, y] == BoardPosition.Empty || currentBoard[x, y] == BoardPosition.Tile)
+                                if (currentBoard[x, y] == BoardPosition.Tile)
                                 {
-                                    toX = x;
-                                    toY = y;
+                                    toXPiece = x;
+                                    toYPiece = y;
+                                }
+                                if (currentBoard[x, y] == BoardPosition.Empty)
+                                {
+                                    toXPiece = x;
+                                    toYPiece = y;
+                                    toXTile = x;
+                                    toYTile = y;
                                 }
                             }
                         }
                     }
                     bool found = false;
-                    Piece enemyBoardElement = null;
-                    if (fromX == null && fromY == null && toX != null && toY != null)
+                    if (fromXPiece == null && fromYPiece == null && toXPiece != null && toYPiece != null)
                     {
+                        Piece movedPiece = null;
                         foreach (BoardElement boardElement in BoardElements)
                         {
-                            if (boardElement.BoardY == 6.5f && !found)
+                            if (boardElement is Piece)
                             {
-                                enemyBoardElement = (Piece)boardElement;
-                                enemyBoardElement.Move((int)toX, (int)toY);
-                                found = true;
+                                if (boardElement.BoardY == 6.5f && !found)
+                                {
+                                    movedPiece = (Piece)boardElement;
+                                    found = true;
+                                }
                             }
                         }
-                    }
-                    if (fromX != null && fromY != null && toX != null && toY != null)
-                    {
-                        foreach (BoardElement boardElement in BoardElements)
+                        if (movedPiece != null)
                         {
-                            if (boardElement.BoardY == fromY && boardElement.BoardX == fromX && !found)
-                            {
-                                enemyBoardElement = (Piece)boardElement;
-                                if (newBoardSituation[(int)toX, (int)toY] == BoardPosition.RedTail)
-                                    enemyBoardElement.HeadUp = false;
-                                else
-                                    enemyBoardElement.HeadUp = true;
-                                enemyBoardElement.Move((int)toX, (int)toY);
-                                found = true;
-                            }
+                            movedPiece.Move((int)toXPiece, (int)toYPiece);
+                            while (movedPiece.AnimatedStarted) ;
                         }
                     }
-                    while (enemyBoardElement.AnimatedStarted) ;
+
+                    if (fromXTile != null && fromYTile != null && toXTile != null && toYTile != null)
+                    {
+                        Tile movedTile = null;
+                        foreach (BoardElement tempBoardElement in BoardElements)
+                        {
+                            if (tempBoardElement is Tile)
+                            {
+                                Tile tempTile = (Tile)tempBoardElement;
+                                if (tempTile.BoardX == fromXTile && tempTile.BoardY == fromYTile)
+                                    movedTile = tempTile;
+                            }
+                        }
+                        if (movedTile != null)
+                        {
+                            movedTile.Move((int)toXTile, (int)toYTile);
+                            while (movedTile.AnimatedStarted) ;
+                        }
+                    }
+
+                    if (fromXPiece != null && fromYPiece != null && toXPiece != null && toYPiece != null)
+                    {
+                        Piece movedPiece = null;
+                        foreach (BoardElement tempBoardElement in BoardElements)
+                        {
+                            if (tempBoardElement is Piece)
+                            {
+                                Piece tempPiece = (Piece)tempBoardElement;
+                                if (tempPiece.BoardX == (float)fromXPiece && tempPiece.BoardY == (float)fromYPiece)
+                                    movedPiece = tempPiece;
+                            }
+                        }
+                        if (movedPiece != null)
+                        {
+                            if (newBoardSituation[(int)toXPiece, (int)toYPiece] == BoardPosition.RedTail)
+                                movedPiece.HeadUp = false;
+                            else
+                                movedPiece.HeadUp = true;
+                            movedPiece.Move((int)toXPiece, (int)toYPiece);
+                            while (movedPiece.AnimatedStarted) ;
+                        }
+                    }
                 }
             }
             else
@@ -268,10 +317,15 @@ namespace Karo.Gui
                     uiConnector.MovePiece(fromPoint, toPoint);
                     BoardPosition[,] newBoardSituation = (BoardPosition[,])uiConnector.GetBoard().BoardSituation.Clone();
 
-                    int? fromX = null;
-                    int? fromY = null;
-                    int? toX = null;
-                    int? toY = null;
+                    int? fromXPiece = null;
+                    int? fromYPiece = null;
+                    int? toXPiece = null;
+                    int? toYPiece = null;
+
+                    int? fromXTile = null;
+                    int? fromYTile = null;
+                    int? toXTile = null;
+                    int? toYTile = null;
 
                     for (int x = 0; x < 21; x++)
                     {
@@ -279,39 +333,94 @@ namespace Karo.Gui
                         {
                             if (currentBoard[x, y] != newBoardSituation[x, y])
                             {
+                                if (currentBoard[x, y] == BoardPosition.Tile && newBoardSituation[x, y] == BoardPosition.Empty)
+                                {
+                                    fromXTile = x;
+                                    fromYTile = y;
+                                }
                                 if (currentBoard[x, y] != BoardPosition.Empty && currentBoard[x, y] != BoardPosition.Tile)
                                 {
-                                    fromX = x;
-                                    fromY = y;
+                                    fromXPiece = x;
+                                    fromYPiece = y;
                                 }
-                                if (currentBoard[x, y] == BoardPosition.Empty || currentBoard[x, y] == BoardPosition.Tile)
+                                if (currentBoard[x, y] == BoardPosition.Tile)
                                 {
-                                    toX = x;
-                                    toY = y;
+                                    toXPiece = x;
+                                    toYPiece = y;
+                                }
+                                if (currentBoard[x, y] == BoardPosition.Empty)
+                                {
+                                    toXPiece = x;
+                                    toYPiece = y;
+                                    toXTile = x;
+                                    toYTile = y;
                                 }
                             }
                         }
                     }
                     bool found = false;
-                    Piece enemyBoardElement = null;
-                    if (fromX != null && fromY != null && toX != null && toY != null)
+                    if (fromXPiece == null && fromYPiece == null && toXPiece != null && toYPiece != null)
                     {
+                        Piece movedPiece = null;
                         foreach (BoardElement boardElement in BoardElements)
                         {
-                            if (boardElement.BoardY == fromY && boardElement.BoardX == fromX && !found)
+                            if (boardElement is Piece)
                             {
-                                enemyBoardElement = (Piece)boardElement;
-                                if (newBoardSituation[(int)toX, (int)toY] == BoardPosition.RedTail)
-                                    enemyBoardElement.HeadUp = false;
-                                else
-                                    enemyBoardElement.HeadUp = true;
-                                enemyBoardElement.Move((int)toX, (int)toY);
-                                found = true;
+                                if (boardElement.BoardY == 6.5f && !found)
+                                {
+                                    movedPiece = (Piece)boardElement;
+                                    found = true;
+                                }
                             }
                         }
+                        if (movedPiece != null)
+                        {
+                            movedPiece.Move((int)toXPiece, (int)toYPiece);
+                            while (movedPiece.AnimatedStarted) ;
+                        }
                     }
-                    while (enemyBoardElement.AnimatedStarted) ;
 
+                    if (fromXTile != null && fromYTile != null && toXTile != null && toYTile != null)
+                    {
+                        Tile movedTile = null;
+                        foreach (BoardElement tempBoardElement in BoardElements)
+                        {
+                            if (tempBoardElement is Tile)
+                            {
+                                Tile tempTile = (Tile)tempBoardElement;
+                                if (tempTile.BoardX == fromXTile && tempTile.BoardY == fromYTile)
+                                    movedTile = tempTile;
+                            }
+                        }
+                        if (movedTile != null)
+                        {
+                            movedTile.Move((int)toXTile, (int)toYTile);
+                            while (movedTile.AnimatedStarted) ;
+                        }
+                    }
+
+                    if (fromXPiece != null && fromYPiece != null && toXPiece != null && toYPiece != null)
+                    {
+                        Piece movedPiece = null;
+                        foreach (BoardElement tempBoardElement in BoardElements)
+                        {
+                            if (tempBoardElement is Piece)
+                            {
+                                Piece tempPiece = (Piece)tempBoardElement;
+                                if (tempPiece.BoardX == (float)fromXPiece && tempPiece.BoardY == (float)fromYPiece)
+                                    movedPiece = tempPiece;
+                            }
+                        }
+                        if (movedPiece != null)
+                        {
+                            if (newBoardSituation[(int)toXPiece, (int)toYPiece] == BoardPosition.RedTail)
+                                movedPiece.HeadUp = false;
+                            else
+                                movedPiece.HeadUp = true;
+                            movedPiece.Move((int)toXPiece, (int)toYPiece);
+                            while (movedPiece.AnimatedStarted) ;
+                        }
+                    }
                 }
                 else if (uiConnector.ValidateMoveTile(fromPoint, toPoint))
                 {

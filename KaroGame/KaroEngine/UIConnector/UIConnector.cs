@@ -105,6 +105,14 @@ namespace Karo
         {
             return Game.Instance.IsTwoAI();
         }
+
+        public PlayerSettings GetCurrentPlayerSettings()
+        {
+            if(Game.Instance.GetCurrentPlayerNumber() == 1)
+                return Game.Instance.playerA.PlayerSettings;
+
+            return Game.Instance.playerB.PlayerSettings;
+        }
         
         /// <summary>
         /// starts a new game

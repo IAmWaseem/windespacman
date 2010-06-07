@@ -305,6 +305,7 @@ namespace Karo.Gui
                 {
                     selectedElementFrom.Move((int)selectedElementTo.BoardX, (int)selectedElementTo.BoardY);
                     while (selectedElementFrom.AnimatedStarted) ;
+
                     currentBoard = (BoardPosition[,])uiConnector.GetBoard().BoardSituation.Clone();
                     currentBoard[(int)selectedElementTo.BoardX, (int)selectedElementTo.BoardY] = BoardPosition.WhiteTail;
                     uiConnector.PlacePiece(placePoint);
@@ -357,7 +358,7 @@ namespace Karo.Gui
                         Piece movedPiece = null;
                         foreach (BoardElement boardElement in BoardElements)
                         {
-                            if (boardElement is Piece)
+                            if (boardElement.GetType() == typeof(Piece))
                             {
                                 if (boardElement.BoardY == 6.5f && !found)
                                 {
@@ -366,6 +367,7 @@ namespace Karo.Gui
                                 }
                             }
                         }
+
                         if (movedPiece != null)
                         {
                             movedPiece.Move((int)toXPiece, (int)toYPiece);

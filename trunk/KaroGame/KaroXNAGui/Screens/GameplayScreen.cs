@@ -623,9 +623,9 @@ namespace GameStateManagement
                     lc.Line("Max Y", manager.MaxY.ToString("0"));
                     lc.Line("Width", width.ToString());
                     lc.Line("Height", height.ToString());
-                    lc.Line("Zoom factor", autozoom.ToString("0.00"));
+                    lc.Line("Autozoom factor", autozoom.ToString("0.00"));
+                    lc.Line("BoardElements count", manager.BoardElements.Count.ToString("0.00"));
                 }
-
             }
         }
 

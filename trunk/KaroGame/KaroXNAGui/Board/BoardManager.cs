@@ -95,7 +95,7 @@ namespace Karo.Gui
         {
             foreach (BoardElement b in BoardElements)
             {
-                if (b.BoardX == x && b.BoardY == y)
+                if (b.BoardX == x && b.BoardY == y && b.AsWire == false)
                     return b;
             }
 
@@ -104,50 +104,49 @@ namespace Karo.Gui
 
         public void GenerateTargetTiles()
         {
-            
-
             List<PointF> possiblePositions = new List<PointF>();
-
             List<Tile> allTiles = BoardElements.OfType<Tile>().ToList();
-            allTiles = (from t in allTiles where t.DefaultColor != PossibleColor.ToVector3() select t).ToList();
 
             foreach (Tile t in allTiles)
             {
-                if (Get(t.BoardX - 1, t.BoardY) == null)
+                if (t.AsWire == false)
                 {
-                    PointF left = new PointF(t.BoardX - 1, t.BoardY);
-                    if (!possiblePositions.Contains(left))
-                        possiblePositions.Add(left);
-                }
+                    if (Get(t.BoardX - 1, t.BoardY) == null)
+                    {
+                        PointF left = new PointF(t.BoardX - 1, t.BoardY);
+                        if (!possiblePositions.Contains(left))
+                            possiblePositions.Add(left);
+                    }
 
-                if (Get(t.BoardX + 1, t.BoardY) == null)
-                {
-                    PointF right = new PointF(t.BoardX + 1, t.BoardY);
-                    if (!possiblePositions.Contains(right))
-                        possiblePositions.Add(right);
-                }
+                    if (Get(t.BoardX + 1, t.BoardY) == null)
+                    {
+                        PointF right = new PointF(t.BoardX + 1, t.BoardY);
+                        if (!possiblePositions.Contains(right))
+                            possiblePositions.Add(right);
+                    }
 
-                if (Get(t.BoardX, t.BoardY + 1) == null)
-                {
-                    PointF up = new PointF(t.BoardX, t.BoardY + 1);
-                    if (!possiblePositions.Contains(up))
-                        possiblePositions.Add(up);
-                }
+                    if (Get(t.BoardX, t.BoardY + 1) == null)
+                    {
+                        PointF up = new PointF(t.BoardX, t.BoardY + 1);
+                        if (!possiblePositions.Contains(up))
+                            possiblePositions.Add(up);
+                    }
 
-                if (Get(t.BoardX, t.BoardY - 1) == null)
-                {
-                    PointF down = new PointF(t.BoardX, t.BoardY - 1);
-                    if (!possiblePositions.Contains(down))
-                        possiblePositions.Add(down);
+                    if (Get(t.BoardX, t.BoardY - 1) == null)
+                    {
+                        PointF down = new PointF(t.BoardX, t.BoardY - 1);
+                        if (!possiblePositions.Contains(down))
+                            possiblePositions.Add(down);
+                    }
                 }
             }
 
             List<Tile> targetList = new List<Tile>();
-
             List<Tile> oldTiles = game.ScreenManager.Game.Components.OfType<Tile>().ToList();
+
             foreach (Tile t in oldTiles)
             {
-                if (t.DefaultColor == PossibleColor.ToVector3())
+                if (t.AsWire)
                 {
                     game.ScreenManager.Game.Components.Remove(t);
                 }
@@ -157,13 +156,13 @@ namespace Karo.Gui
             {
                 Tile t = new Tile(game, game.Tile, (int)target.Y, (int)target.X);
                 t.DefaultColor = PossibleColor.ToVector3();
-
+                t.AsWire = true;
                 game.ScreenManager.Game.Components.Add(t);
+
                 targetList.Add(t);
             }
 
             PossiblePlaces = targetList;
-
         }
 
         public override void Update(GameTime gameTime)
@@ -193,7 +192,17 @@ namespace Karo.Gui
             BoardElement selected = null;
             float? smallestIntersect = float.MaxValue;
 
-            foreach (BoardElement boardElement in BoardElements)
+            List<BoardElement> intersectList = BoardElements.ToList();
+
+            if (PossiblePlaces != null)
+            {
+                foreach (BoardElement b in PossiblePlaces)
+                {
+                    intersectList.Add(b);
+                }
+            }
+
+            foreach (BoardElement boardElement in intersectList)
             {
                 float? intersect = boardElement.Intersect(ray);
                 if (intersect != null)
@@ -231,7 +240,6 @@ namespace Karo.Gui
             if (selectedElementFrom != null && selectedElementTo != null)
                 DoMove();
 
-            GenerateTargetTiles();
             UpdateMinMax();
             base.Update(gameTime);
         }
@@ -542,6 +550,7 @@ namespace Karo.Gui
             }
             selectedElementFrom = null;
             selectedElementTo = null;
+            GenerateTargetTiles();
         }
 
 
@@ -586,8 +595,7 @@ namespace Karo.Gui
                     x += 1;
                 }
             }
-
-
+            
             for (int x = 0; x < 21; x++)
             {
                 for (int y = 0; y < 20; y++)
@@ -623,6 +631,8 @@ namespace Karo.Gui
                     }
                 }
             }
+            
+            GenerateTargetTiles();
         }
     }
 }

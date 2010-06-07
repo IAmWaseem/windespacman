@@ -234,10 +234,10 @@ namespace Karo.Gui
                             while (movedPiece.AnimatedStarted) ;
                         }
                     }
-
-                    if (fromXTile != null && fromYTile != null && toXTile != null && toYTile != null)
+                    else if (fromXTile != null && fromYTile != null && toXTile != null && toYTile != null && fromXPiece != null && fromYPiece != null)
                     {
                         Tile movedTile = null;
+                        Piece movedPiece = null;
                         foreach (BoardElement tempBoardElement in BoardElements)
                         {
                             if (tempBoardElement is Tile)
@@ -246,15 +246,29 @@ namespace Karo.Gui
                                 if (tempTile.BoardX == fromXTile && tempTile.BoardY == fromYTile)
                                     movedTile = tempTile;
                             }
+                            if (tempBoardElement is Piece)
+                            {
+                                Piece tempPiece = (Piece)tempBoardElement;
+                                if (tempPiece.BoardX == (float)fromXPiece && tempPiece.BoardY == (float)fromYPiece)
+                                    movedPiece = tempPiece;
+                            }
                         }
                         if (movedTile != null)
                         {
                             movedTile.Move((int)toXTile, (int)toYTile);
                             while (movedTile.AnimatedStarted) ;
                         }
+                        if (movedPiece != null)
+                        {
+                            if (newBoardSituation[(int)toXPiece, (int)toYPiece] == BoardPosition.RedTail)
+                                movedPiece.HeadUp = false;
+                            else
+                                movedPiece.HeadUp = true;
+                            movedPiece.Move((int)toXTile, (int)toYTile);
+                            while (movedPiece.AnimatedStarted) ;
+                        }
                     }
-
-                    if (fromXPiece != null && fromYPiece != null && toXPiece != null && toYPiece != null)
+                    else
                     {
                         Piece movedPiece = null;
                         foreach (BoardElement tempBoardElement in BoardElements)
@@ -316,6 +330,10 @@ namespace Karo.Gui
 
                     uiConnector.MovePiece(fromPoint, toPoint);
                     BoardPosition[,] newBoardSituation = (BoardPosition[,])uiConnector.GetBoard().BoardSituation.Clone();
+                    if (uiConnector.IsWon())
+                    {
+                        return;
+                    }
 
                     int? fromXPiece = null;
                     int? fromYPiece = null;

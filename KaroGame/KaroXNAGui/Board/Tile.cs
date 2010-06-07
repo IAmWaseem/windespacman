@@ -33,7 +33,10 @@ namespace Karo.Gui
 
         public override void Move(int i, int y)
         {
-            throw new NotImplementedException();
+            boardX = i;
+            boardY = y;
+            world = Matrix.CreateTranslation(BoardX, BoardY, 0);
+            CreateBoundingBox();
         }
     }
 }

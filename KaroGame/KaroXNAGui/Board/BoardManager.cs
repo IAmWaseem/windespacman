@@ -95,7 +95,7 @@ namespace Karo.Gui
         {
             foreach (BoardElement b in BoardElements)
             {
-                if (b.BoardX == x && b.BoardY == y && b.AsWire == false)
+                if (b.BoardX == x && b.BoardY == y && b.IsPossiblePlace == false)
                     return b;
             }
 
@@ -109,7 +109,7 @@ namespace Karo.Gui
 
             foreach (Tile t in allTiles)
             {
-                if (t.AsWire == false)
+                if (t.IsPossiblePlace == false)
                 {
                     if (Get(t.BoardX - 1, t.BoardY) == null)
                     {
@@ -146,7 +146,7 @@ namespace Karo.Gui
 
             foreach (Tile t in oldTiles)
             {
-                if (t.AsWire)
+                if (t.IsPossiblePlace)
                 {
                     game.ScreenManager.Game.Components.Remove(t);
                 }
@@ -156,7 +156,7 @@ namespace Karo.Gui
             {
                 Tile t = new Tile(game, game.Tile, (int)target.Y, (int)target.X);
                 t.DefaultColor = PossibleColor.ToVector3();
-                t.AsWire = true;
+                t.IsPossiblePlace = true;
                 game.ScreenManager.Game.Components.Add(t);
 
                 targetList.Add(t);

@@ -23,10 +23,12 @@ namespace Karo.Gui
         protected bool animatedStarted;
         protected bool animatedEnded;
         protected Vector3 defaultColor;
+        protected bool asWire;
 
         protected BoardElement(GameplayScreen game, Model model, float boardY, float boardX)
             : base(game.ScreenManager.Game)
         {
+            this.AsWire = false;
             this.model = model;
             this.boardX = boardX;
             this.boardY = boardY;
@@ -58,8 +60,7 @@ namespace Karo.Gui
             game.ScreenManager.ResetGraphicsDeviceSettings();
             if (game.IsActive)
             {
-                // if color = green, then wireframe
-                if (defaultColor == Color.Green.ToVector3())
+                if (AsWire && !this.IsMouseOver)
                     game.ScreenManager.GraphicsDevice.RenderState.FillMode = FillMode.WireFrame;
 
                 foreach (ModelMesh mesh in model.Meshes)
@@ -70,6 +71,7 @@ namespace Karo.Gui
                         effect.World *= game.World;
                         effect.View = game.View;
                         effect.Projection = game.Projection;
+
                         if (this.IsSelected)
                             effect.DiffuseColor = selectedColor.ToVector3();
                         else if (this.IsMouseOver)
@@ -83,8 +85,9 @@ namespace Karo.Gui
                     mesh.Draw();
                 }
 
-                // reset to solid
-                game.ScreenManager.GraphicsDevice.RenderState.FillMode = FillMode.Solid;
+                // reset to solid, only if drawn as wire
+                if(AsWire)
+                    game.ScreenManager.GraphicsDevice.RenderState.FillMode = FillMode.Solid;
 
                 if (game.EnableDebug)
                     DrawBoundingBox.Draw(game.ScreenManager.GraphicsDevice, this.boundingBox, game.View, game.Projection);
@@ -170,6 +173,12 @@ namespace Karo.Gui
         {
             get { return model; }
             set { model = value; }
+        }
+
+        public bool AsWire
+        {
+            get { return asWire; }
+            set { asWire = value; }
         }
 
     }

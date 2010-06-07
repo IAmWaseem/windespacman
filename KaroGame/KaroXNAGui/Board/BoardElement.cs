@@ -63,26 +63,29 @@ namespace Karo.Gui
                 if (IsPossiblePlace && !this.IsMouseOver)
                     game.ScreenManager.GraphicsDevice.RenderState.FillMode = FillMode.WireFrame;
 
-                foreach (ModelMesh mesh in model.Meshes)
+                if (!isPossiblePlace || isPossiblePlace && game.ShowTargetPlaces)
                 {
-                    foreach (BasicEffect effect in mesh.Effects)
+                    foreach (ModelMesh mesh in model.Meshes)
                     {
-                        effect.World = World;
-                        effect.World *= game.World;
-                        effect.View = game.View;
-                        effect.Projection = game.Projection;
+                        foreach (BasicEffect effect in mesh.Effects)
+                        {
+                            effect.World = World;
+                            effect.World *= game.World;
+                            effect.View = game.View;
+                            effect.Projection = game.Projection;
 
-                        if (this.IsSelected)
-                            effect.DiffuseColor = selectedColor.ToVector3();
-                        else if (this.IsMouseOver)
-                            effect.DiffuseColor = mouseOverColor.ToVector3();
-                        else
-                            effect.DiffuseColor = defaultColor;
+                            if (this.IsSelected)
+                                effect.DiffuseColor = selectedColor.ToVector3();
+                            else if (this.IsMouseOver)
+                                effect.DiffuseColor = mouseOverColor.ToVector3();
+                            else
+                                effect.DiffuseColor = defaultColor;
 
-                        effect.EnableDefaultLighting();
+                            effect.EnableDefaultLighting();
 
+                        }
+                        mesh.Draw();
                     }
-                    mesh.Draw();
                 }
 
                 // reset to solid, only if drawn as wire

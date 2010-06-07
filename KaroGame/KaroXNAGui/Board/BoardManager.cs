@@ -30,6 +30,25 @@ namespace Karo.Gui
         private bool leftMouseButtonPressed;
         private bool isSelected;
 
+        public bool FromTileSelected
+        {
+            get
+            {
+                if (selectedElementFrom != null)
+                {
+                    if (selectedElementFrom.IsPossiblePlace == false)
+                    {
+                        if (selectedElementFrom.GetType() == typeof(Tile))
+                        {
+                            return true;
+                        }
+                    }
+                }
+                GenerateTargetTiles(false);
+                return false;
+            }
+        }
+
         public void StartGame(Difficulty difficulty)
         {
             PlayerSettings playerA = new PlayerSettings(false, AlgorithmType.AlphaBeta, 2, true, true, EvaluationType.BetterOne);
@@ -104,44 +123,58 @@ namespace Karo.Gui
 
         public void GenerateTargetTiles()
         {
+            GenerateTargetTiles(true);
+        }
+
+        public void GenerateTargetTiles(bool generate)
+        {
+            // new list of possible pos
             List<PointF> possiblePositions = new List<PointF>();
-            List<Tile> allTiles = BoardElements.OfType<Tile>().ToList();
 
-            foreach (Tile t in allTiles)
+
+
+            if (generate)
             {
-                if (t.IsPossiblePlace == false)
+                // get all tiles (also real tiles
+                List<Tile> allTiles = BoardElements.OfType<Tile>().ToList();
+
+                foreach (Tile t in allTiles)
                 {
-                    if (Get(t.BoardX - 1, t.BoardY) == null)
+                    if (t.IsPossiblePlace == false && !t.IsSelected)
                     {
-                        PointF left = new PointF(t.BoardX - 1, t.BoardY);
-                        if (!possiblePositions.Contains(left))
-                            possiblePositions.Add(left);
-                    }
 
-                    if (Get(t.BoardX + 1, t.BoardY) == null)
-                    {
-                        PointF right = new PointF(t.BoardX + 1, t.BoardY);
-                        if (!possiblePositions.Contains(right))
-                            possiblePositions.Add(right);
-                    }
+                        if (Get(t.BoardX - 1, t.BoardY) == null)
+                        {
+                            PointF left = new PointF(t.BoardX - 1, t.BoardY);
+                            if (!possiblePositions.Contains(left))
+                                possiblePositions.Add(left);
+                        }
 
-                    if (Get(t.BoardX, t.BoardY + 1) == null)
-                    {
-                        PointF up = new PointF(t.BoardX, t.BoardY + 1);
-                        if (!possiblePositions.Contains(up))
-                            possiblePositions.Add(up);
-                    }
+                        if (Get(t.BoardX + 1, t.BoardY) == null)
+                        {
+                            PointF right = new PointF(t.BoardX + 1, t.BoardY);
+                            if (!possiblePositions.Contains(right))
+                                possiblePositions.Add(right);
+                        }
 
-                    if (Get(t.BoardX, t.BoardY - 1) == null)
-                    {
-                        PointF down = new PointF(t.BoardX, t.BoardY - 1);
-                        if (!possiblePositions.Contains(down))
-                            possiblePositions.Add(down);
+                        if (Get(t.BoardX, t.BoardY + 1) == null)
+                        {
+                            PointF up = new PointF(t.BoardX, t.BoardY + 1);
+                            if (!possiblePositions.Contains(up))
+                                possiblePositions.Add(up);
+                        }
+
+                        if (Get(t.BoardX, t.BoardY - 1) == null)
+                        {
+                            PointF down = new PointF(t.BoardX, t.BoardY - 1);
+                            if (!possiblePositions.Contains(down))
+                                possiblePositions.Add(down);
+                        }
                     }
                 }
             }
 
-            List<Tile> targetList = new List<Tile>();
+            // clear all components
             List<Tile> oldTiles = game.ScreenManager.Game.Components.OfType<Tile>().ToList();
 
             foreach (Tile t in oldTiles)
@@ -152,17 +185,22 @@ namespace Karo.Gui
                 }
             }
 
-            foreach (PointF target in possiblePositions)
+            // only add
+            if (generate)
             {
-                Tile t = new Tile(game, game.Tile, (int)target.Y, (int)target.X);
-                t.DefaultColor = PossibleColor.ToVector3();
-                t.IsPossiblePlace = true;
-                game.ScreenManager.Game.Components.Add(t);
+                List<Tile> targetList = new List<Tile>();
+                foreach (PointF target in possiblePositions)
+                {
+                    Tile t = new Tile(game, game.Tile, (int)target.Y, (int)target.X);
+                    t.DefaultColor = PossibleColor.ToVector3();
+                    t.IsPossiblePlace = true;
+                    game.ScreenManager.Game.Components.Add(t);
 
-                targetList.Add(t);
+                    targetList.Add(t);
+                }
+
+                PossiblePlaces = targetList;
             }
-
-            PossiblePlaces = targetList;
         }
 
         public override void Update(GameTime gameTime)
@@ -232,9 +270,21 @@ namespace Karo.Gui
                         selectedElementFrom = null;
                     else
                         selectedElementTo = selected;
+
+                    if (FromTileSelected)
+                    {
+                        if (uiConnector.IsMovable((int)selectedElementFrom.BoardX, (int)selectedElementFrom.BoardY))
+                            GenerateTargetTiles();
+                    }
+                    else
+                    {
+                        GenerateTargetTiles(false);
+                    }
                 }
                 else
+                {
                     selected.IsMouseOver = true;
+                }
             }
 
             if (selectedElementFrom != null && selectedElementTo != null)
@@ -541,7 +591,7 @@ namespace Karo.Gui
                             while (movedPiece.AnimatedStarted) ;
                         }
                     }
-                    
+
                 }
                 else if (uiConnector.ValidateMoveTile(fromPoint, toPoint))
                 {
@@ -550,7 +600,6 @@ namespace Karo.Gui
             }
             selectedElementFrom = null;
             selectedElementTo = null;
-            GenerateTargetTiles();
         }
 
 
@@ -595,7 +644,7 @@ namespace Karo.Gui
                     x += 1;
                 }
             }
-            
+
             for (int x = 0; x < 21; x++)
             {
                 for (int y = 0; y < 20; y++)
@@ -631,8 +680,6 @@ namespace Karo.Gui
                     }
                 }
             }
-            
-            GenerateTargetTiles();
         }
     }
 }

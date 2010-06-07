@@ -7,13 +7,15 @@ using GameStateManagement;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Drawing;
-using Point=Microsoft.Xna.Framework.Point;
+using Point = Microsoft.Xna.Framework.Point;
 
 namespace Karo.Gui
 {
     class BoardManager : GameComponent
     {
         public List<BoardElement> BoardElements { get; set; }
+        public List<Tile> PossiblePlaces { get; set; }
+        public readonly Microsoft.Xna.Framework.Graphics.Color PossibleColor = Microsoft.Xna.Framework.Graphics.Color.Green;
         public Karo.BoardPosition[,] currentBoard { get; set; }
         public int redItems { get; set; }
         public int whiteItems { get; set; }
@@ -89,6 +91,81 @@ namespace Karo.Gui
             }
         }
 
+        public BoardElement Get(float x, float y)
+        {
+            foreach (BoardElement b in BoardElements)
+            {
+                if (b.BoardX == x && b.BoardY == y)
+                    return b;
+            }
+
+            return null;
+        }
+
+        public void GenerateTargetTiles()
+        {
+            
+
+            List<PointF> possiblePositions = new List<PointF>();
+
+            List<Tile> allTiles = BoardElements.OfType<Tile>().ToList();
+            allTiles = (from t in allTiles where t.DefaultColor != PossibleColor.ToVector3() select t).ToList();
+
+            foreach (Tile t in allTiles)
+            {
+                if (Get(t.BoardX - 1, t.BoardY) == null)
+                {
+                    PointF left = new PointF(t.BoardX - 1, t.BoardY);
+                    if (!possiblePositions.Contains(left))
+                        possiblePositions.Add(left);
+                }
+
+                if (Get(t.BoardX + 1, t.BoardY) == null)
+                {
+                    PointF right = new PointF(t.BoardX + 1, t.BoardY);
+                    if (!possiblePositions.Contains(right))
+                        possiblePositions.Add(right);
+                }
+
+                if (Get(t.BoardX, t.BoardY + 1) == null)
+                {
+                    PointF up = new PointF(t.BoardX, t.BoardY + 1);
+                    if (!possiblePositions.Contains(up))
+                        possiblePositions.Add(up);
+                }
+
+                if (Get(t.BoardX, t.BoardY - 1) == null)
+                {
+                    PointF down = new PointF(t.BoardX, t.BoardY - 1);
+                    if (!possiblePositions.Contains(down))
+                        possiblePositions.Add(down);
+                }
+            }
+
+            List<Tile> targetList = new List<Tile>();
+
+            List<Tile> oldTiles = game.ScreenManager.Game.Components.OfType<Tile>().ToList();
+            foreach (Tile t in oldTiles)
+            {
+                if (t.DefaultColor == PossibleColor.ToVector3())
+                {
+                    game.ScreenManager.Game.Components.Remove(t);
+                }
+            }
+
+            foreach (PointF target in possiblePositions)
+            {
+                Tile t = new Tile(game, game.Tile, (int)target.Y, (int)target.X);
+                t.DefaultColor = PossibleColor.ToVector3();
+
+                game.ScreenManager.Game.Components.Add(t);
+                targetList.Add(t);
+            }
+
+            PossiblePlaces = targetList;
+
+        }
+
         public override void Update(GameTime gameTime)
         {
             isSelected = false;
@@ -153,6 +230,9 @@ namespace Karo.Gui
 
             if (selectedElementFrom != null && selectedElementTo != null)
                 DoMove();
+
+            GenerateTargetTiles();
+            UpdateMinMax();
             base.Update(gameTime);
         }
 
@@ -324,7 +404,7 @@ namespace Karo.Gui
                     }
                     currentBoard[fromPoint.X, fromPoint.Y] = BoardPosition.Tile;
                     currentBoard[toPoint.X, toPoint.Y] = changeTo;
-                    
+
                     selectedElementFrom.Move((int)selectedElementTo.BoardX, (int)selectedElementTo.BoardY);
                     while (selectedElementFrom.AnimatedStarted) ;
 
@@ -481,8 +561,8 @@ namespace Karo.Gui
             }
 
             BoardElements.Clear();
-            
-            if (redItems<6)
+
+            if (redItems < 6)
             {
                 float y = 6.5f;
                 float x = 7.5f;
@@ -506,7 +586,7 @@ namespace Karo.Gui
                     x += 1;
                 }
             }
-            
+
 
             for (int x = 0; x < 21; x++)
             {

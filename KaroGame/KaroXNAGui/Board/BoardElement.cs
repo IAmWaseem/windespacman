@@ -8,7 +8,7 @@ using GameStateManagement;
 
 namespace Karo.Gui
 {
-    abstract class BoardElement : DrawableGameComponent 
+    abstract class BoardElement : DrawableGameComponent
     {
         protected GameplayScreen game;
         protected Model model;
@@ -22,9 +22,10 @@ namespace Karo.Gui
         protected Color mouseOverColor;
         protected bool animatedStarted;
         protected bool animatedEnded;
-        private Vector3 defaultColor;
+        protected Vector3 defaultColor;
 
-        protected BoardElement(GameplayScreen game, Model model, float boardY, float boardX) : base(game.ScreenManager.Game)
+        protected BoardElement(GameplayScreen game, Model model, float boardY, float boardX)
+            : base(game.ScreenManager.Game)
         {
             this.model = model;
             this.boardX = boardX;
@@ -38,8 +39,8 @@ namespace Karo.Gui
 
             defaultColor = Color.White.ToVector3();
 
-            if(basicEffect != null)
-                if(basicEffect.DiffuseColor != null)
+            if (basicEffect != null)
+                if (basicEffect.DiffuseColor != null)
                     defaultColor = basicEffect.DiffuseColor;
 
             CreateBoundingBox();
@@ -57,6 +58,10 @@ namespace Karo.Gui
             game.ScreenManager.ResetGraphicsDeviceSettings();
             if (game.IsActive)
             {
+                // if color = green, then wireframe
+                if (defaultColor == Color.Green.ToVector3())
+                    game.ScreenManager.GraphicsDevice.RenderState.FillMode = FillMode.WireFrame;
+
                 foreach (ModelMesh mesh in model.Meshes)
                 {
                     foreach (BasicEffect effect in mesh.Effects)
@@ -77,10 +82,14 @@ namespace Karo.Gui
                     }
                     mesh.Draw();
                 }
-                if(game.EnableDebug)
+
+                // reset to solid
+                game.ScreenManager.GraphicsDevice.RenderState.FillMode = FillMode.Solid;
+
+                if (game.EnableDebug)
                     DrawBoundingBox.Draw(game.ScreenManager.GraphicsDevice, this.boundingBox, game.View, game.Projection);
             }
-            
+
             base.Draw(gameTime);
         }
 
@@ -119,6 +128,12 @@ namespace Karo.Gui
         {
             get { return selectedColor; }
             set { selectedColor = value; }
+        }
+
+        public Vector3 DefaultColor
+        {
+            get { return defaultColor; }
+            set { defaultColor = value; }
         }
 
         public bool IsMouseOver

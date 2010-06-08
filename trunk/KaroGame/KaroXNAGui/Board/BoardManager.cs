@@ -7,6 +7,7 @@ using GameStateManagement;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Drawing;
+using Color=Microsoft.Xna.Framework.Graphics.Color;
 using Point = Microsoft.Xna.Framework.Point;
 using FormPoint = System.Drawing.Point;
 using System.Threading;
@@ -25,6 +26,7 @@ namespace Karo.Gui
         private BoardElement selectedElementTo;
         private GameplayScreen game;
         private UIConnector uiConnector;
+        private Difficulty difficulty;
 
         public int MaxX { get; set; }
         public int MaxY { get; set; }
@@ -36,6 +38,7 @@ namespace Karo.Gui
         private bool leftMouseButtonPressed;
         private bool isSelected;
         private TimeSpan timeSpan;
+        private SpriteBatch spriteBatch;
         private bool isGameEnded = false;
         private bool isBusy = false;
 
@@ -62,7 +65,7 @@ namespace Karo.Gui
         {
             PlayerSettings playerA = new PlayerSettings(false, AlgorithmType.AlphaBeta, 2, true, true, EvaluationType.BetterOne);
             PlayerSettings playerB = null;
-
+            this.difficulty = difficulty;
             switch (difficulty)
             {
                 case Difficulty.Easy:
@@ -86,11 +89,32 @@ namespace Karo.Gui
             SetupBoard();
         }
 
+        private void ClearScreen()
+        {
+            List<GameComponent> clearList = new List<GameComponent>();
+
+            foreach (GameComponent gameComponent in game.ScreenManager.Game.Components)
+            {
+                if(!(gameComponent is BoardElement))
+                {
+                    clearList.Add(gameComponent);
+                }
+            }
+
+            game.ScreenManager.Game.Components.Clear();
+
+            foreach (GameComponent gameComponent in clearList)
+            {
+                game.ScreenManager.Game.Components.Add(gameComponent);
+            }
+        }
+
         public BoardManager(GameplayScreen game)
             : base(game.ScreenManager.Game)
         {
             this.uiConnector = UIConnector.Instance;
             this.game = game;
+            spriteBatch = new SpriteBatch(game.ScreenManager.Game.GraphicsDevice);
         }
 
         public void UpdateMinMax()
@@ -301,18 +325,51 @@ namespace Karo.Gui
                 thread.Start();
             }
 
-            if (isGameEnded)
-            {
-                TimeSpan s = (TimeSpan)timeSpan;
-                if (s.Seconds < 0)
-                {
-
-                }
-            }
+            
 
             UpdateMinMax();
 
             base.Update(gameTime);
+        }
+
+        public override void Draw(GameTime gameTime)
+        {
+            if (isGameEnded)
+            {
+                timeSpan = timeSpan.Subtract(new TimeSpan(0, 0, 0, 0, gameTime.ElapsedGameTime.Milliseconds));
+                if (timeSpan.TotalMilliseconds > 0)
+                {
+                    spriteBatch.Begin();
+                    SpriteFont sf = game.ScreenManager.Game.Content.Load<SpriteFont>("MenuFont");
+
+                    string winning = "";
+
+                    if(uiConnector.GetCurrentPlayer().Equals("Player A (red)"))
+                        winning = "You've won the game! :-)";
+                    else 
+                        winning = "You've lost the game! :-(";
+
+
+                    Vector2 sizeText = sf.MeasureString(winning);
+
+                    int widthScreen = game.ScreenManager.Game.Window.ClientBounds.Width;
+                    int heightScreen = game.ScreenManager.Game.Window.ClientBounds.Height;
+
+                    float positionCenterX = (widthScreen/2) - (sizeText.X/2);
+                    float positionCenterY = (heightScreen / 2) - (sizeText.Y / 2);
+
+                    spriteBatch.DrawString(sf, winning, new Vector2(positionCenterX, positionCenterY), Color.Red);
+                    spriteBatch.End();
+                }
+                else
+                {
+                    isGameEnded = false;
+                    timeSpan = new TimeSpan(0, 0, 0, 0);
+                    ClearScreen();
+                    this.StartGame(difficulty);
+                }
+            }
+            base.Draw(gameTime);
         }
 
         private void DoAIMove(BoardPosition[,] currentBoard, BoardPosition[,] newBoardSituation)
@@ -541,7 +598,7 @@ namespace Karo.Gui
 
         private void PlayWinningAnimation(string currentPlayer)
         {
-            timeSpan = new TimeSpan(0, 0, 0, 30);
+            timeSpan = new TimeSpan(0, 0, 0, 0, 10000);
             isGameEnded = true;
         }
 

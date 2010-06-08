@@ -42,6 +42,9 @@ namespace Karo.Gui
         private bool isGameEnded = false;
         private bool isBusy = false;
 
+        public float XRotation { get; set; }
+        public float ZRotation { get; set; }
+
         public bool FromTileSelected
         {
             get

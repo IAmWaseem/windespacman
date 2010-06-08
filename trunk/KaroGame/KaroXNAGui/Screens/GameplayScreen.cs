@@ -589,6 +589,8 @@ namespace GameStateManagement
                 Vector3 loca = new Vector3(0, 0, 10);
                 loca = Vector3.Transform(loca, Matrix.CreateScale(autozoom));
                 topView = Matrix.CreateLookAt(loca, new Vector3(0, 0, 0), Vector3.Down);
+                manager.ZRotation = angle;
+                manager.XRotation = RotationAngleX;
                 
                 // logger
                 if (EnableDebug)

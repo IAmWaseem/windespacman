@@ -141,10 +141,11 @@ namespace Karo.Gui
                         {
                             Matrix trans = Matrix.Identity;
                             trans *= Matrix.CreateScale(0.03f);
-                            trans *= Matrix.CreateRotationX(MathHelper.ToRadians(180));
-                            trans *= Matrix.CreateRotationZ(MathHelper.ToRadians(180));
+                            trans *= Matrix.CreateRotationX(MathHelper.ToRadians(180 -manager.XRotation));
+                            trans *= Matrix.CreateRotationZ(MathHelper.ToRadians(180 + manager.ZRotation));
                             trans *= Matrix.CreateTranslation(i, min - 3, 0);
-                            trans *= game.World;
+                            trans *= game.World;                          
+
 
                             effect.World = trans;
                             effect.View = game.View;

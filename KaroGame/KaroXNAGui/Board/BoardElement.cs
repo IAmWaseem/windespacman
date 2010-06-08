@@ -80,7 +80,6 @@ namespace Karo.Gui
                                 effect.DiffuseColor = mouseOverColor.ToVector3();
                             else
                                 effect.DiffuseColor = defaultColor;
-
                             effect.EnableDefaultLighting();
 
                         }
@@ -95,7 +94,6 @@ namespace Karo.Gui
                 if (game.EnableDebug)
                     DrawBoundingBox.Draw(game.ScreenManager.GraphicsDevice, this.boundingBox, game.View, game.Projection);
             }
-
             base.Draw(gameTime);
         }
 

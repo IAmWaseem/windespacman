@@ -29,7 +29,7 @@ namespace Karo.Gui
         public int MaxX { get; set; }
         public int MaxY { get; set; }
         public int MinX { get; set; }
-        public int MinY { get; set; }        
+        public int MinY { get; set; }
         public int BoardWidth { get; private set; }
         public int BoardHeight { get; private set; }
 
@@ -100,22 +100,14 @@ namespace Karo.Gui
             MaxX = Int32.MinValue;
             MaxY = Int32.MinValue;
 
-            foreach (BoardElement be in BoardElements)
+            List<Tile> tiles = BoardElements.OfType<Tile>().ToList();
+
+            foreach (Tile be in tiles)
             {
-                if (redItems == 6 && whiteItems == 6)
-                {
-                    MinX = Math.Min((int)be.BoardX, MinX);
-                    MinY = Math.Min((int)be.BoardY, MinY);
-                    MaxX = Math.Max((int)be.BoardX, MaxX);
-                    MaxY = Math.Max((int)be.BoardY, MaxY);
-                }
-                else
-                {
-                    MinX = 8;
-                    MinY = 8;
-                    MaxX = 12;
-                    MaxY = 11;
-                }
+                MinX = Math.Min((int)be.BoardX, MinX);
+                MinY = Math.Min((int)be.BoardY, MinY);
+                MaxX = Math.Max((int)be.BoardX, MaxX);
+                MaxY = Math.Max((int)be.BoardY, MaxY);
             }
 
             BoardWidth = MaxX - MinX + 1;
@@ -252,7 +244,7 @@ namespace Karo.Gui
             float? smallestIntersect = float.MaxValue;
 
             List<BoardElement> intersectList = BoardElements.ToList();
-            if(PossiblePlaces != null)
+            if (PossiblePlaces != null)
                 foreach (BoardElement b in PossiblePlaces)
                     intersectList.Add(b);
 

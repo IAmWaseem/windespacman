@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Input;
 using System.Drawing;
 using Point = Microsoft.Xna.Framework.Point;
 using FormPoint = System.Drawing.Point;
+using System.Threading;
 
 namespace Karo.Gui
 {
@@ -36,6 +37,7 @@ namespace Karo.Gui
         private bool isSelected;
         private TimeSpan timeSpan;
         private bool isGameEnded = false;
+        private bool isBusy = false;
 
         public bool FromTileSelected
         {
@@ -216,6 +218,9 @@ namespace Karo.Gui
 
         public override void Update(GameTime gameTime)
         {
+            if (isBusy)
+                return;
+
             isSelected = false;
             if (isGameEnded)
             {
@@ -299,7 +304,10 @@ namespace Karo.Gui
             }
 
             if (selectedElementFrom != null && selectedElementTo != null)
-                DoMove();
+            {
+                Thread thread = new Thread(new ThreadStart(this.DoMove));
+                thread.Start();
+            }
 
             if (isGameEnded)
             {
@@ -444,8 +452,19 @@ namespace Karo.Gui
 
         public void DoMove()
         {
+            isBusy = true;
+
+            if (selectedElementFrom is Tile)
+            {
+                foreach (BoardElement element in BoardElements)
+                {
+                    if (element is Piece && element.BoardX == selectedElementFrom.BoardX && element.BoardY == selectedElementFrom.BoardX)
+                        selectedElementFrom = element;
+                }
+            }
+
             int numItems = uiConnector.CurrentPlayerNumPieces();
-            if (numItems < 6)
+            if (numItems < 6 && selectedElementFrom.BoardY == 12.5f)
             {
                 FormPoint placePoint = new FormPoint((int)selectedElementTo.BoardX,
                                                                            (int)selectedElementTo.BoardY);
@@ -524,6 +543,7 @@ namespace Karo.Gui
             selectedElementFrom = null;
             selectedElementTo = null;
             this.UpdateMinMax();
+            isBusy = false;
         }
 
 

@@ -97,6 +97,7 @@
   <ItemGroup>
     <Compile Include="Board\BoardElement.cs" />
     <Compile Include="Board\BoardManager.cs" />
+    <Compile Include="Board\Letters.cs" />
     <Compile Include="Settings\Difficulty.cs" />
     <Compile Include="Utility\DrawBoundingBox.cs" />
     <Compile Include="Components\FramerateComponent.cs" />

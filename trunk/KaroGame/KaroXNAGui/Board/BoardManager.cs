@@ -54,7 +54,7 @@ namespace Karo.Gui
 
         public void StartGame(Difficulty difficulty)
         {
-            PlayerSettings playerA = new PlayerSettings(false, AlgorithmType.AlphaBeta, 2, true, true, EvaluationType.BetterOne);
+            PlayerSettings playerA = new PlayerSettings(true, AlgorithmType.AlphaBeta, 2, true, true, EvaluationType.BetterOne);
             PlayerSettings playerB = null;
 
             switch (difficulty)

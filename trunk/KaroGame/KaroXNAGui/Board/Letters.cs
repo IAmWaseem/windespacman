@@ -191,9 +191,11 @@ namespace Karo.Gui
                                 //trans *= Matrix.CreateRotationY(MathHelper.ToRadians(0));
                                 //trans *= Matrix.CreateRotationZ(MathHelper.ToRadians(-1 * (180 - manager.ZRotation)));
 
-                                trans *= Matrix.CreateRotationZ(MathHelper.ToRadians(180));
+
+                                trans *= Matrix.CreateRotationX(MathHelper.ToRadians((manager.XRotation - 315)));
                                 trans *= Matrix.CreateRotationY(MathHelper.ToRadians(180));
-                                trans *= Matrix.CreateTranslation(manager.MaxX - (manager.BoardWidth + 1) + (j * (notI? -0.5f :-0.35f)), manager.MinY + i * 1, 0);
+                                trans *= Matrix.CreateRotationZ(MathHelper.ToRadians(180 + manager.ZRotation));
+                                trans *= Matrix.CreateTranslation(manager.MaxX - (manager.BoardWidth + 1) + (j * (notI ? -0.5f : -0.35f)), manager.MinY + i * 1, 0);
                                 trans *= game.World;
 
                                 effect.World = trans;

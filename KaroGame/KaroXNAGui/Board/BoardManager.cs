@@ -341,7 +341,7 @@ namespace Karo.Gui
                 if (timeSpan.TotalMilliseconds > 0)
                 {
                     spriteBatch.Begin();
-                    SpriteFont sf = game.ScreenManager.Game.Content.Load<SpriteFont>("MenuFont");
+                    SpriteFont sf = game.ScreenManager.Game.Content.Load<SpriteFont>("GameEndFont");
 
                     string winning = "";
 
@@ -359,7 +359,7 @@ namespace Karo.Gui
                     float positionCenterX = (widthScreen/2) - (sizeText.X/2);
                     float positionCenterY = (heightScreen / 2) - (sizeText.Y / 2);
 
-                    spriteBatch.DrawString(sf, winning, new Vector2(positionCenterX, positionCenterY), Color.Red);
+                    spriteBatch.DrawString(sf, winning, new Vector2(positionCenterX, positionCenterY), Color.White);
                     spriteBatch.End();
                 }
                 else

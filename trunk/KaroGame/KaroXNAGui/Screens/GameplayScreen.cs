@@ -58,8 +58,7 @@ namespace GameStateManagement
         private const float animationTime = 3.0f;
         public bool ShowTargetPlaces { get; set; }
 
-        public int BoardWidth { get; private set; }
-        public int BoardHeight { get; private set; }
+
 
         public Matrix World
         {
@@ -583,9 +582,8 @@ namespace GameStateManagement
                     }
                 }
 
-                BoardWidth = manager.MaxX - manager.MinX + 1;
-                BoardHeight = manager.MaxY - manager.MinY + 1;
-                int max = Math.Max(BoardWidth, BoardHeight);
+
+                int max = Math.Max(manager.BoardWidth, manager.BoardHeight);
 
                 float autozoom =(float)max / 6f;
                 Vector3 loca = new Vector3(0, 0, 10);
@@ -630,8 +628,8 @@ namespace GameStateManagement
                     lc.Line("Max X", manager.MaxX.ToString("0"));
                     lc.Line("Min Y", manager.MinY.ToString("0"));
                     lc.Line("Max Y", manager.MaxY.ToString("0"));
-                    lc.Line("Width", BoardWidth.ToString());
-                    lc.Line("Height", BoardHeight.ToString());
+                    lc.Line("Width", manager.BoardWidth.ToString());
+                    lc.Line("Height", manager.BoardHeight.ToString());
                     lc.Line("Autozoom factor", autozoom.ToString("0.00"));
                     lc.Line("BoardElements count", manager.BoardElements.Count.ToString("0.00"));
                 }

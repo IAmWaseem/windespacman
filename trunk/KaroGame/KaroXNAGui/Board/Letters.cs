@@ -42,6 +42,7 @@ namespace Karo.Gui
     class Letters : DrawableGameComponent
     {
         List<Model> letters;
+        List<Model> cijfers;
         GameplayScreen game;
         BoardManager manager;
 
@@ -55,6 +56,7 @@ namespace Karo.Gui
         public override void Initialize()
         {
             letters = new List<Model>();
+            cijfers = new List<Model>();
             base.Initialize();
         }
 
@@ -86,6 +88,27 @@ namespace Karo.Gui
             letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/X"));
             letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/Y"));
             letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/Z"));
+
+            cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/1"));
+            cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/2"));
+            cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/3"));
+            cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/4"));
+            cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/5"));
+            cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/6"));
+            cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/7"));
+            cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/8"));
+            cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/9"));
+            cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/10"));
+            cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/11"));
+            cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/12"));
+            cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/13"));
+            cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/14"));
+            cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/15"));
+            cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/16"));
+            cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/17"));
+            cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/18"));
+            cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/19"));
+            cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/20"));
         }
 
         public override void Update(GameTime gameTime)
@@ -119,12 +142,36 @@ namespace Karo.Gui
                 letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/Y"));
                 letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/Z"));
             }
+
+            if (cijfers.Count == 0)
+            {
+                cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/1"));
+                cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/2"));
+                cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/3"));
+                cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/4"));
+                cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/5"));
+                cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/6"));
+                cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/7"));
+                cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/8"));
+                cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/9"));
+                cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/10"));
+                cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/11"));
+                cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/12"));
+                cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/13"));
+                cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/14"));
+                cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/15"));
+                cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/16"));
+                cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/17"));
+                cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/18"));
+                cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/19"));
+                cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/20"));
+            }
             base.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime)
         {
-            if (game.IsActive)
+            if (game.IsActive && manager.MinY>0 && manager.MinX>0)
             {
                 game.ScreenManager.ResetGraphicsDeviceSettings();
 
@@ -145,7 +192,7 @@ namespace Karo.Gui
                             trans *= Matrix.CreateRotationY(MathHelper.ToRadians(0));
                             trans *= Matrix.CreateRotationZ(MathHelper.ToRadians(-1 * (180 - manager.ZRotation)));
                             trans *= Matrix.CreateTranslation(i, manager.MinY - 2, 0);
-                            trans *= game.World;                          
+                            trans *= game.World;
 
                             effect.World = trans;
                             effect.View = game.View;
@@ -157,55 +204,33 @@ namespace Karo.Gui
                     }
                 }
                 //numbers
-                for (int i = 0; i < manager.BoardHeight; i++)
+                min = manager.MinY -1;
+                max = manager.MaxY-1;
+                for (int i = min; i <= max; i++)
                 {
-                    RomanNumbers current = (RomanNumbers)manager.MinY + i;
-                    int j = 1;
-                    bool notI = false;
-                    foreach (char c in current.ToString())
+                    Matrix[] transforms = new Matrix[cijfers[i].Bones.Count];
+                    cijfers[i].CopyAbsoluteBoneTransformsTo(transforms);
+
+                    foreach (ModelMesh mesh in cijfers[i].Meshes)
                     {
-                        int number = 0;
-
-                        if (c == 'I')
+                        foreach (BasicEffect effect in mesh.Effects)
                         {
-                            number = 8;
-                            notI = false;
-                        }
-                        else if (c == 'V')
-                        {
-                            number = 21;
-                            notI = true;
-                        }
-                        else if (c == 'X')
-                        {
-                            number = 23;
-                            notI = true;
-                        }
-                        foreach (ModelMesh mesh in letters[number].Meshes)
-                        {
-                            foreach (BasicEffect effect in mesh.Effects)
-                            {
-                                Matrix trans = Matrix.Identity;
-                                trans *= Matrix.CreateScale(0.03f);
-                                //trans *= Matrix.CreateRotationX(MathHelper.ToRadians(-1 * (180 + (manager.XRotation - 315))));
-                                //trans *= Matrix.CreateRotationY(MathHelper.ToRadians(0));
-                                //trans *= Matrix.CreateRotationZ(MathHelper.ToRadians(-1 * (180 - manager.ZRotation)));
+                            Matrix trans = Matrix.Identity;
+                            //trans *= Matrix.CreateScale(0.03f);
+                            trans *= Matrix.CreateRotationX(MathHelper.ToRadians(((manager.XRotation - 315))));
+                            trans *= Matrix.CreateRotationY(MathHelper.ToRadians(180));
+                            trans *= Matrix.CreateRotationZ(MathHelper.ToRadians(-1 * (180 - manager.ZRotation)));
+                            trans *= Matrix.CreateTranslation(manager.MaxX - (manager.BoardWidth + 1), manager.MinY + i-min, 0);
+                            //trans *= Matrix.CreateTranslation(manager.MaxX - (manager.BoardWidth + 1), manager.MinY + i * 1, 0);
+                            //trans *= Matrix.CreateTranslation(i, manager.MinY - 2, 0);
+                            trans *= transforms[mesh.ParentBone.Index] * game.World;
 
-
-                                trans *= Matrix.CreateRotationX(MathHelper.ToRadians((manager.XRotation - 315)));
-                                trans *= Matrix.CreateRotationY(MathHelper.ToRadians(180));
-                                trans *= Matrix.CreateRotationZ(MathHelper.ToRadians(180 + manager.ZRotation));
-                                trans *= Matrix.CreateTranslation(manager.MaxX - (manager.BoardWidth + 1) + (j * (notI ? -0.5f : -0.35f)), manager.MinY + i * 1, 0);
-                                trans *= game.World;
-
-                                effect.World = trans;
-                                effect.View = game.View;
-                                effect.Projection = game.Projection;
-                                effect.EnableDefaultLighting();
-                            }
-                            mesh.Draw();
+                            effect.World = trans;
+                            effect.View = game.View;
+                            effect.Projection = game.Projection;
+                            effect.EnableDefaultLighting();
                         }
-                        j++;
+                        mesh.Draw();
                     }
                 }
             }

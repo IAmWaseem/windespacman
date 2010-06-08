@@ -11,6 +11,11 @@ namespace Karo.Gui
     class Piece : BoardElement
     {
         public bool HeadUp { get; set; }
+        private float moveToY;
+        private float moveToX;
+        private float toMoveY;
+        private float toMoveX;
+        private float speed = 0.001f;
         
         public Piece(GameplayScreen game, Model model, float boardY, float boardX)
             : base(game, model, boardY, boardX)
@@ -22,6 +27,26 @@ namespace Karo.Gui
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
+            if (animatedStarted)
+            {
+                float distanceTraveledX = Math.Abs(gameTime.ElapsedGameTime.Milliseconds * speed * toMoveX);
+                float distanceTraveledY = Math.Abs(gameTime.ElapsedGameTime.Milliseconds * speed * toMoveY);
+                if(boardX > moveToX)
+                    boardX -= distanceTraveledX;
+                else
+                    boardX += distanceTraveledX;
+                if (boardY > moveToY)
+                    boardY -= distanceTraveledY;
+                else
+                    boardY += distanceTraveledY;
+                if (Math.Abs(boardX - moveToX) < 0.2f && Math.Abs(boardY - moveToY) < 0.2f)
+                {
+                    animatedStarted = false;
+                    animatedEnded = true;
+                    boardX = moveToX;
+                    boardY = moveToY;
+                }
+            }
             if (!HeadUp)
             {
                 world = Matrix.CreateRotationX(MathHelper.ToRadians(180f));
@@ -46,8 +71,11 @@ namespace Karo.Gui
 
         public override void Move(int x, int y)
         {
-            BoardX = x;
-            BoardY = y;
+            moveToX = x;
+            moveToY = y;
+            toMoveX = boardX - x;
+            toMoveY = boardY - y;
+            AnimatedStarted = true;
         }
     }
 }

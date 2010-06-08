@@ -126,25 +126,37 @@ namespace Karo.Gui
         {
             game.ScreenManager.ResetGraphicsDeviceSettings();
 
+            int min = manager.MinX;
+            int max = manager.MaxX;
+
             //letters
-            for (int i = manager.MinX; i <= manager.MaxX; i++)
+            for (int i = min; i <= max; i++)
             {
-                foreach (ModelMesh mesh in letters[i].Meshes)
+                int selected = 21 - i;
+                foreach (ModelMesh mesh in letters[selected].Meshes)
                 {
+                    Matrix trans = Matrix.Identity;
+                    trans *= Matrix.CreateScale(0.03f);
+                    trans *= Matrix.CreateRotationX(MathHelper.ToRadians(180));
+                    trans *= Matrix.CreateRotationZ(MathHelper.ToRadians(180));
+                    trans *= Matrix.CreateTranslation(i, min - 3, 0);
+                    trans *= game.World;
+
+                    BoundingBox b = BoundingBox.CreateFromSphere(mesh.BoundingSphere);
+                    b.Min = Vector3.Transform(b.Min, trans);
+                    b.Max = Vector3.Transform(b.Max, trans);
+
                     foreach (BasicEffect effect in mesh.Effects)
                     {
-                        Matrix trans = Matrix.Identity;
-                        trans *= Matrix.CreateScale(0.03f);
-                        trans *= Matrix.CreateRotationX(MathHelper.ToRadians(180));
-                        trans *= Matrix.CreateRotationZ(MathHelper.ToRadians(180));
-                        trans *= Matrix.CreateTranslation(i, manager.MinY - 3, 0);
-                        trans *= game.World;
-
                         effect.World = trans;
                         effect.View = game.View;
                         effect.Projection = game.Projection;
                         effect.EnableDefaultLighting();
                     }
+
+                    if(game.EnableDebug)
+                        DrawBoundingBox.Draw(GraphicsDevice, b, game.View, game.Projection);
+
                     mesh.Draw();
                 }
             }

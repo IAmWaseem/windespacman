@@ -514,11 +514,19 @@ namespace Karo.Gui
                 }
                 else if (uiConnector.ValidateMoveTile(fromPoint, toPoint))
                 {
-
+                    currentBoard = (BoardPosition[,])uiConnector.GetBoard().BoardSituation.Clone();
+                    currentBoard[fromPoint.X, fromPoint.Y] = BoardPosition.Empty;
+                    currentBoard[toPoint.X, toPoint.Y] = BoardPosition.Tile;
+                    Tile tile = (Tile)selectedElementFrom;
+                    tile.Move(toPoint.X, toPoint.Y);
+                    while (tile.AnimatedStarted) ;
+                    uiConnector.MoveTile(fromPoint, toPoint);
+                    BoardPosition[,] newBoardSituation = (BoardPosition[,])uiConnector.GetBoard().BoardSituation.Clone();
                 }
             }
             selectedElementFrom = null;
             selectedElementTo = null;
+            this.UpdateMinMax();
         }
 
 

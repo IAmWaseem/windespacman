@@ -352,6 +352,8 @@ namespace Karo.Gui
                         winning = "You've won the game! :-)";
                     else 
                         winning = "You've lost the game! :-(";
+
+
                     
                     Vector2 sizeText = sf.MeasureString(winning);
 

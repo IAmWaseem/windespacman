@@ -21,6 +21,10 @@ namespace Karo.Gui
         private bool goingUp = false;
         private float halfwayX;
         private float halfwayY;
+        private float rotationValue = 180f;
+        private float distanceToMoveX;
+        private float distanceMovedX;
+        private float directionDegrees;
         
         public Piece(GameplayScreen game, Model model, float boardY, float boardX)
             : base(game, model, boardY, boardX)
@@ -37,7 +41,12 @@ namespace Karo.Gui
                 float distanceTraveledX = Math.Abs(gameTime.ElapsedGameTime.Milliseconds * speed * toMoveX);
                 float distanceTraveledY = Math.Abs(gameTime.ElapsedGameTime.Milliseconds * speed * toMoveY);
                 float distanceTraveledHeight = arcSpeed * gameTime.ElapsedGameTime.Milliseconds;
-
+                distanceMovedX += distanceTraveledX;
+                if (HeadUp)
+                {
+                    float percentageMoved = (distanceToMoveX / distanceMovedX) / 100f;
+                    rotationValue = percentageMoved * 180f;
+                }
                 if (Math.Abs(boardX - halfwayX) < 0.1f && Math.Abs(boardY - halfwayY) < 0.1f)
                     goingUp = false;
 
@@ -63,7 +72,15 @@ namespace Karo.Gui
                     height = 0;
                 }
             }
-            if (!HeadUp)
+            if (animatedStarted)
+            {
+                world = Matrix.CreateRotationZ(MathHelper.ToRadians(this.directionDegrees));
+                world *= Matrix.CreateRotationX(MathHelper.ToRadians(rotationValue));
+                world *= Matrix.CreateTranslation(BoardX, BoardY, height);
+                world *= Matrix.CreateTranslation(0, 0, 0.05f + (0.0027f * Math.Abs(rotationValue)));
+                world *= Matrix.CreateTranslation(0, 0, 0.55f);
+            }
+            else if (!HeadUp)
             {
                 world = Matrix.CreateRotationX(MathHelper.ToRadians(180f));
                 world *= Matrix.CreateTranslation(BoardX, BoardY, height);
@@ -88,10 +105,14 @@ namespace Karo.Gui
 
         public override void Move(int x, int y)
         {
+
+            directionDegrees = MathHelper.ToDegrees((float)Math.Atan2(boardX - x, boardY - y));
             moveToX = x;
             moveToY = y;
             halfwayX = (boardX + (float)x) / 2f;
             halfwayY = (boardY + (float)y) / 2f;
+            distanceToMoveX = Math.Abs(boardX - x);
+            distanceMovedX = 0;
             toMoveX = boardX - x;
             toMoveY = boardY - y;
             AnimatedStarted = true;

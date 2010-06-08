@@ -90,6 +90,35 @@ namespace Karo.Gui
 
         public override void Update(GameTime gameTime)
         {
+            if (letters.Count == 0)
+            {
+                letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/A"));
+                letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/B"));
+                letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/C"));
+                letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/D"));
+                letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/E"));
+                letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/F"));
+                letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/G"));
+                letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/H"));
+                letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/I"));
+                letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/J"));
+                letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/K"));
+                letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/L"));
+                letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/M"));
+                letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/N"));
+                letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/O"));
+                letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/P"));
+                letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/Q"));
+                letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/R"));
+                letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/S"));
+                letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/T"));
+                letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/U"));
+                letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/V"));
+                letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/W"));
+                letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/X"));
+                letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/Y"));
+                letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/Z"));
+            }
             base.Update(gameTime);
         }
 
@@ -103,7 +132,7 @@ namespace Karo.Gui
                 {
                     foreach (BasicEffect effect in mesh.Effects)
                     {
-                        effect.World = game.World * Matrix.CreateScale(0.03f) * Matrix.CreateRotationX(MathHelper.ToRadians(180))*Matrix.CreateRotationZ(MathHelper.ToRadians(180)) * Matrix.CreateTranslation(2+(i*-1),-3.5f,0);
+                        effect.World = Matrix.CreateScale(0.03f) * Matrix.CreateRotationX(MathHelper.ToRadians(180))*Matrix.CreateRotationZ(MathHelper.ToRadians(180)) * Matrix.CreateTranslation(12.5f+(i*-1.1f),5f,0) * game.World;
                         effect.View = game.View;
                         effect.Projection = game.Projection;
                         effect.EnableDefaultLighting();
@@ -135,7 +164,7 @@ namespace Karo.Gui
                     {
                         foreach (BasicEffect effect in mesh.Effects)
                         {
-                            effect.World = game.World * Matrix.CreateScale(0.03f) * Matrix.CreateRotationX(MathHelper.ToRadians(180)) * Matrix.CreateRotationZ(MathHelper.ToRadians(180)) * Matrix.CreateTranslation(2 - manager.BoardWidth + (j * -0.3f), -1.5f + ((i-1) * 1), 0);
+                            effect.World = Matrix.CreateScale(0.03f) * Matrix.CreateRotationX(MathHelper.ToRadians(180)) * Matrix.CreateRotationZ(MathHelper.ToRadians(180)) * Matrix.CreateTranslation(12 - manager.BoardWidth + (j * -0.3f), 8f + ((i-1) * 1), 0) * game.World;
                             effect.View = game.View;
                             effect.Projection = game.Projection;
                             effect.EnableDefaultLighting();

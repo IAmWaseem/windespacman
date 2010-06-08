@@ -144,7 +144,7 @@ namespace Karo.Gui
                             trans *= Matrix.CreateRotationX(MathHelper.ToRadians(-1 * (180 + (manager.XRotation - 315))));
                             trans *= Matrix.CreateRotationY(MathHelper.ToRadians(0));
                             trans *= Matrix.CreateRotationZ(MathHelper.ToRadians(-1 * (180 - manager.ZRotation)));
-                            trans *= Matrix.CreateTranslation(i, min - 3, 0);
+                            trans *= Matrix.CreateTranslation(i, manager.MinY - 2, 0);
                             trans *= game.World;                          
 
                             effect.World = trans;

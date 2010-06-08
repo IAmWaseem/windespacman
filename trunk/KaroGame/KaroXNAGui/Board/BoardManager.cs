@@ -503,95 +503,97 @@ namespace Karo.Gui
         public void DoMove()
         {
             isBusy = true;
-
-            if (selectedElementFrom is Tile)
+            if (selectedElementFrom != null)
             {
-                foreach (BoardElement element in BoardElements)
+                if (selectedElementFrom is Tile)
                 {
-                    if (element is Piece && element.BoardX == selectedElementFrom.BoardX && element.BoardY == selectedElementFrom.BoardX)
-                        selectedElementFrom = element;
-                }
-            }
-
-            int numItems = uiConnector.CurrentPlayerNumPieces();
-            if (numItems < 6 && selectedElementFrom.BoardY == 12.5f)
-            {
-                FormPoint placePoint = new FormPoint((int)selectedElementTo.BoardX,
-                                                                           (int)selectedElementTo.BoardY);
-                if (uiConnector.ValidatePlacePiece(placePoint))
-                {
-                    Piece piece = (Piece)selectedElementFrom;
-                    piece.Move((int)selectedElementTo.BoardX, (int)selectedElementTo.BoardY);
-                    while (piece.AnimatedStarted) ;
-
-                    currentBoard = (BoardPosition[,])uiConnector.GetBoard().BoardSituation.Clone();
-                    currentBoard[(int)selectedElementTo.BoardX, (int)selectedElementTo.BoardY] = BoardPosition.WhiteTail;
-                    uiConnector.PlacePiece(placePoint);
-                    BoardPosition[,] newBoardSituation = (BoardPosition[,])uiConnector.GetBoard().BoardSituation.Clone();
-
-                    DoAIMove(currentBoard, newBoardSituation);
-                }
-            }
-            else
-            {
-                FormPoint fromPoint = new FormPoint((int)selectedElementFrom.BoardX,
-                                                                           (int)selectedElementFrom.BoardY);
-                FormPoint toPoint = new FormPoint((int)selectedElementTo.BoardX,
-                                                                           (int)selectedElementTo.BoardY);
-
-                if (uiConnector.ValidateMovePiece(fromPoint, toPoint) && selectedElementFrom is Piece)
-                {
-                    Piece piece = (Piece)selectedElementFrom;
-                    int moveDistance = 0;
-                    currentBoard = (BoardPosition[,])uiConnector.GetBoard().BoardSituation.Clone();
-                    BoardPosition changeTo = BoardPosition.Empty;
-                    if (Math.Abs(fromPoint.X - toPoint.X) == 1 || Math.Abs(fromPoint.Y - toPoint.Y) == 1)
-                        moveDistance = 1;
-                    if (Math.Abs(fromPoint.X - toPoint.X) == 2 || Math.Abs(fromPoint.Y - toPoint.Y) == 2)
-                        moveDistance = 2;
-
-                    if (moveDistance == 1)
-                        changeTo = currentBoard[fromPoint.X, fromPoint.Y];
-                    else
+                    foreach (BoardElement element in BoardElements)
                     {
-                        piece.HeadUp = false;
-                        changeTo = BoardPosition.WhiteTail;
-                        if (currentBoard[fromPoint.X, fromPoint.Y] == BoardPosition.WhiteTail)
+                        if (element is Piece && element.BoardX == selectedElementFrom.BoardX && element.BoardY == selectedElementFrom.BoardX)
+                            selectedElementFrom = element;
+                    }
+                }
+
+                int numItems = uiConnector.CurrentPlayerNumPieces();
+                if (numItems < 6 && selectedElementFrom.BoardY == 12.5f)
+                {
+                    FormPoint placePoint = new FormPoint((int)selectedElementTo.BoardX,
+                                                                               (int)selectedElementTo.BoardY);
+                    if (uiConnector.ValidatePlacePiece(placePoint))
+                    {
+                        Piece piece = (Piece)selectedElementFrom;
+                        piece.Move((int)selectedElementTo.BoardX, (int)selectedElementTo.BoardY);
+                        while (piece.AnimatedStarted) ;
+
+                        currentBoard = (BoardPosition[,])uiConnector.GetBoard().BoardSituation.Clone();
+                        currentBoard[(int)selectedElementTo.BoardX, (int)selectedElementTo.BoardY] = BoardPosition.WhiteTail;
+                        uiConnector.PlacePiece(placePoint);
+                        BoardPosition[,] newBoardSituation = (BoardPosition[,])uiConnector.GetBoard().BoardSituation.Clone();
+
+                        DoAIMove(currentBoard, newBoardSituation);
+                    }
+                }
+                else
+                {
+                    FormPoint fromPoint = new FormPoint((int)selectedElementFrom.BoardX,
+                                                                               (int)selectedElementFrom.BoardY);
+                    FormPoint toPoint = new FormPoint((int)selectedElementTo.BoardX,
+                                                                               (int)selectedElementTo.BoardY);
+
+                    if (uiConnector.ValidateMovePiece(fromPoint, toPoint) && selectedElementFrom is Piece)
+                    {
+                        Piece piece = (Piece)selectedElementFrom;
+                        int moveDistance = 0;
+                        currentBoard = (BoardPosition[,])uiConnector.GetBoard().BoardSituation.Clone();
+                        BoardPosition changeTo = BoardPosition.Empty;
+                        if (Math.Abs(fromPoint.X - toPoint.X) == 1 || Math.Abs(fromPoint.Y - toPoint.Y) == 1)
+                            moveDistance = 1;
+                        if (Math.Abs(fromPoint.X - toPoint.X) == 2 || Math.Abs(fromPoint.Y - toPoint.Y) == 2)
+                            moveDistance = 2;
+
+                        if (moveDistance == 1)
+                            changeTo = currentBoard[fromPoint.X, fromPoint.Y];
+                        else
                         {
-                            changeTo = BoardPosition.WhiteHead;
-                            piece.HeadUp = true;
+                            piece.HeadUp = false;
+                            changeTo = BoardPosition.WhiteTail;
+                            if (currentBoard[fromPoint.X, fromPoint.Y] == BoardPosition.WhiteTail)
+                            {
+                                changeTo = BoardPosition.WhiteHead;
+                                piece.HeadUp = true;
+                            }
                         }
+                        currentBoard[fromPoint.X, fromPoint.Y] = BoardPosition.Tile;
+                        currentBoard[toPoint.X, toPoint.Y] = changeTo;
+
+                        selectedElementFrom.Move((int)selectedElementTo.BoardX, (int)selectedElementTo.BoardY);
+                        while (selectedElementFrom.AnimatedStarted) ;
+
+                        uiConnector.MovePiece(fromPoint, toPoint);
+                        BoardPosition[,] newBoardSituation = (BoardPosition[,])uiConnector.GetBoard().BoardSituation.Clone();
+                        if (uiConnector.IsWon())
+                        {
+                            selectedElementFrom = null;
+                            selectedElementTo = null;
+                            isBusy = false;
+                            PlayWinningAnimation(uiConnector.GetCurrentPlayer());
+                            return;
+                        }
+
+                        DoAIMove(currentBoard, newBoardSituation);
+
                     }
-                    currentBoard[fromPoint.X, fromPoint.Y] = BoardPosition.Tile;
-                    currentBoard[toPoint.X, toPoint.Y] = changeTo;
-
-                    selectedElementFrom.Move((int)selectedElementTo.BoardX, (int)selectedElementTo.BoardY);
-                    while (selectedElementFrom.AnimatedStarted) ;
-
-                    uiConnector.MovePiece(fromPoint, toPoint);
-                    BoardPosition[,] newBoardSituation = (BoardPosition[,])uiConnector.GetBoard().BoardSituation.Clone();
-                    if (uiConnector.IsWon())
+                    else if (uiConnector.ValidateMoveTile(fromPoint, toPoint))
                     {
-                        selectedElementFrom = null;
-                        selectedElementTo = null;
-                        isBusy = false;
-                        PlayWinningAnimation(uiConnector.GetCurrentPlayer());
-                        return;
+                        currentBoard = (BoardPosition[,])uiConnector.GetBoard().BoardSituation.Clone();
+                        currentBoard[fromPoint.X, fromPoint.Y] = BoardPosition.Empty;
+                        currentBoard[toPoint.X, toPoint.Y] = BoardPosition.Tile;
+                        Tile tile = (Tile)selectedElementFrom;
+                        tile.Move(toPoint.X, toPoint.Y);
+                        while (tile.AnimatedStarted) ;
+                        uiConnector.MoveTile(fromPoint, toPoint);
+                        BoardPosition[,] newBoardSituation = (BoardPosition[,])uiConnector.GetBoard().BoardSituation.Clone();
                     }
-
-                    DoAIMove(currentBoard, newBoardSituation);
-
-                }
-                else if (uiConnector.ValidateMoveTile(fromPoint, toPoint))
-                {
-                    currentBoard = (BoardPosition[,])uiConnector.GetBoard().BoardSituation.Clone();
-                    currentBoard[fromPoint.X, fromPoint.Y] = BoardPosition.Empty;
-                    currentBoard[toPoint.X, toPoint.Y] = BoardPosition.Tile;
-                    Tile tile = (Tile)selectedElementFrom;
-                    tile.Move(toPoint.X, toPoint.Y);
-                    while (tile.AnimatedStarted) ;
-                    uiConnector.MoveTile(fromPoint, toPoint);
-                    BoardPosition[,] newBoardSituation = (BoardPosition[,])uiConnector.GetBoard().BoardSituation.Clone();
                 }
             }
             selectedElementFrom = null;

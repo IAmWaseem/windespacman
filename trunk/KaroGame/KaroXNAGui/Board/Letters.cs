@@ -159,6 +159,7 @@ namespace Karo.Gui
                 {
                     RomanNumbers current = (RomanNumbers)manager.MinY + i;
                     int j = 1;
+                    bool notI = false;
                     foreach (char c in current.ToString())
                     {
                         int number = 0;
@@ -166,14 +167,17 @@ namespace Karo.Gui
                         if (c == 'I')
                         {
                             number = 8;
+                            notI = false;
                         }
                         else if (c == 'V')
                         {
                             number = 21;
+                            notI = true;
                         }
                         else if (c == 'X')
                         {
                             number = 23;
+                            notI = true;
                         }
                         foreach (ModelMesh mesh in letters[number].Meshes)
                         {
@@ -183,7 +187,7 @@ namespace Karo.Gui
                                 trans *= Matrix.CreateScale(0.03f);
                                 trans *= Matrix.CreateRotationZ(MathHelper.ToRadians(180));
                                 trans *= Matrix.CreateRotationY(MathHelper.ToRadians(180));
-                                trans *= Matrix.CreateTranslation(manager.MaxX - (manager.BoardWidth + 1) + (j * -0.3f), manager.MinY + i * 1, 0);
+                                trans *= Matrix.CreateTranslation(manager.MaxX - (manager.BoardWidth + 1) + (j * (notI? -0.5f :-0.35f)), manager.MinY + i * 1, 0);
                                 trans *= game.World;
 
                                 effect.World = trans;

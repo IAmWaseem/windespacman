@@ -16,6 +16,11 @@ namespace Karo.Gui
         private float toMoveY;
         private float toMoveX;
         private float speed = 0.001f;
+        private float height = 0f;
+        private float arcSpeed = 0.003f;
+        private bool goingUp = false;
+        private float halfwayX;
+        private float halfwayY;
         
         public Piece(GameplayScreen game, Model model, float boardY, float boardX)
             : base(game, model, boardY, boardX)
@@ -31,6 +36,16 @@ namespace Karo.Gui
             {
                 float distanceTraveledX = Math.Abs(gameTime.ElapsedGameTime.Milliseconds * speed * toMoveX);
                 float distanceTraveledY = Math.Abs(gameTime.ElapsedGameTime.Milliseconds * speed * toMoveY);
+                float distanceTraveledHeight = arcSpeed * gameTime.ElapsedGameTime.Milliseconds;
+
+                if (Math.Abs(boardX - halfwayX) < 0.1f && Math.Abs(boardY - halfwayY) < 0.1f)
+                    goingUp = false;
+
+                if (goingUp)
+                    height += distanceTraveledHeight;
+                else
+                    height -= distanceTraveledHeight;
+
                 if(boardX > moveToX)
                     boardX -= distanceTraveledX;
                 else
@@ -45,17 +60,18 @@ namespace Karo.Gui
                     animatedEnded = true;
                     boardX = moveToX;
                     boardY = moveToY;
+                    height = 0;
                 }
             }
             if (!HeadUp)
             {
                 world = Matrix.CreateRotationX(MathHelper.ToRadians(180f));
-                world *= Matrix.CreateTranslation(BoardX, BoardY, 0);
+                world *= Matrix.CreateTranslation(BoardX, BoardY, height);
                 world *= Matrix.CreateTranslation(0, 0, 0.55f);
             }
             else
             {
-                world = Matrix.CreateTranslation(BoardX, BoardY, 0) ;
+                world = Matrix.CreateTranslation(BoardX, BoardY, height);
                 world *= Matrix.CreateTranslation(0, 0, 0.05f);
             }
             if(animatedEnded)
@@ -74,10 +90,13 @@ namespace Karo.Gui
         {
             moveToX = x;
             moveToY = y;
+            halfwayX = (boardX + (float)x) / 2f;
+            halfwayY = (boardY + (float)y) / 2f;
             toMoveX = boardX - x;
             toMoveY = boardY - y;
             AnimatedStarted = true;
             animatedEnded = false;
+            goingUp = true;
         }
     }
 }

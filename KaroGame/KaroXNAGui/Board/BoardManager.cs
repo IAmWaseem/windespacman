@@ -24,10 +24,14 @@ namespace Karo.Gui
         private BoardElement selectedElementTo;
         private GameplayScreen game;
         private UIConnector uiConnector;
+
         public int MaxX { get; set; }
         public int MaxY { get; set; }
         public int MinX { get; set; }
-        public int MinY { get; set; }
+        public int MinY { get; set; }        
+        public int BoardWidth { get; private set; }
+        public int BoardHeight { get; private set; }
+
         private bool leftMouseButtonPressed;
         private bool isSelected;
         private TimeSpan timeSpan;
@@ -111,6 +115,9 @@ namespace Karo.Gui
                     MaxY = 11;
                 }
             }
+
+            BoardWidth = MaxX - MinX + 1;
+            BoardHeight = MaxY - MinY + 1;
         }
 
         public BoardElement Get(float x, float y)

@@ -41,9 +41,14 @@ namespace Karo.Gui
 
             defaultColor = Color.White.ToVector3();
 
-            if (basicEffect != null)
-                if (basicEffect.DiffuseColor != null)
-                    defaultColor = basicEffect.DiffuseColor;
+            try
+            {
+                defaultColor = basicEffect.DiffuseColor;
+            }
+            catch (AccessViolationException ave)
+            {
+
+            }
 
             CreateBoundingBox();
         }
@@ -80,6 +85,7 @@ namespace Karo.Gui
                                 effect.DiffuseColor = mouseOverColor.ToVector3();
                             else
                                 effect.DiffuseColor = defaultColor;
+
                             effect.EnableDefaultLighting();
 
                         }
@@ -88,7 +94,7 @@ namespace Karo.Gui
                 }
 
                 // reset to solid, only if drawn as wire
-                if(IsPossiblePlace)
+                if (IsPossiblePlace)
                     game.ScreenManager.GraphicsDevice.RenderState.FillMode = FillMode.Solid;
 
                 if (game.EnableDebug)

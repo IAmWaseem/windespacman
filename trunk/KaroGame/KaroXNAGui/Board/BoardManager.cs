@@ -54,7 +54,7 @@ namespace Karo.Gui
 
         public void StartGame(Difficulty difficulty)
         {
-            PlayerSettings playerA = new PlayerSettings(true, AlgorithmType.AlphaBeta, 2, true, true, EvaluationType.BetterOne);
+            PlayerSettings playerA = new PlayerSettings(false, AlgorithmType.AlphaBeta, 2, true, true, EvaluationType.BetterOne);
             PlayerSettings playerB = null;
 
             switch (difficulty)
@@ -134,57 +134,58 @@ namespace Karo.Gui
             // new list of possible pos
             List<PointF> possiblePositions = new List<PointF>();
 
-
-
-            if (generate)
+            if (!uiConnector.IsTwoAI())
             {
-                // get all tiles (also real tiles
-                List<Tile> allTiles = BoardElements.OfType<Tile>().ToList();
-
-                foreach (Tile t in allTiles)
+                if (generate)
                 {
-                    if (t.IsPossiblePlace == false && !t.IsSelected)
+                    // get all tiles (also real tiles
+                    List<Tile> allTiles = BoardElements.OfType<Tile>().ToList();
+
+                    foreach (Tile t in allTiles)
                     {
-
-                        if (Get(t.BoardX - 1, t.BoardY) == null)
+                        if (t.IsPossiblePlace == false && !t.IsSelected)
                         {
-                            PointF left = new PointF(t.BoardX - 1, t.BoardY);
-                            if (!possiblePositions.Contains(left))
-                                possiblePositions.Add(left);
-                        }
 
-                        if (Get(t.BoardX + 1, t.BoardY) == null)
-                        {
-                            PointF right = new PointF(t.BoardX + 1, t.BoardY);
-                            if (!possiblePositions.Contains(right))
-                                possiblePositions.Add(right);
-                        }
+                            if (Get(t.BoardX - 1, t.BoardY) == null)
+                            {
+                                PointF left = new PointF(t.BoardX - 1, t.BoardY);
+                                if (!possiblePositions.Contains(left))
+                                    possiblePositions.Add(left);
+                            }
 
-                        if (Get(t.BoardX, t.BoardY + 1) == null)
-                        {
-                            PointF up = new PointF(t.BoardX, t.BoardY + 1);
-                            if (!possiblePositions.Contains(up))
-                                possiblePositions.Add(up);
-                        }
+                            if (Get(t.BoardX + 1, t.BoardY) == null)
+                            {
+                                PointF right = new PointF(t.BoardX + 1, t.BoardY);
+                                if (!possiblePositions.Contains(right))
+                                    possiblePositions.Add(right);
+                            }
 
-                        if (Get(t.BoardX, t.BoardY - 1) == null)
-                        {
-                            PointF down = new PointF(t.BoardX, t.BoardY - 1);
-                            if (!possiblePositions.Contains(down))
-                                possiblePositions.Add(down);
+                            if (Get(t.BoardX, t.BoardY + 1) == null)
+                            {
+                                PointF up = new PointF(t.BoardX, t.BoardY + 1);
+                                if (!possiblePositions.Contains(up))
+                                    possiblePositions.Add(up);
+                            }
+
+                            if (Get(t.BoardX, t.BoardY - 1) == null)
+                            {
+                                PointF down = new PointF(t.BoardX, t.BoardY - 1);
+                                if (!possiblePositions.Contains(down))
+                                    possiblePositions.Add(down);
+                            }
                         }
                     }
                 }
-            }
 
-            // clear all components
-            List<Tile> oldTiles = game.ScreenManager.Game.Components.OfType<Tile>().ToList();
+                // clear all components
+                List<Tile> oldTiles = game.ScreenManager.Game.Components.OfType<Tile>().ToList();
 
-            foreach (Tile t in oldTiles)
-            {
-                if (t.IsPossiblePlace)
+                foreach (Tile t in oldTiles)
                 {
-                    game.ScreenManager.Game.Components.Remove(t);
+                    if (t.IsPossiblePlace)
+                    {
+                        game.ScreenManager.Game.Components.Remove(t);
+                    }
                 }
             }
 
@@ -201,15 +202,15 @@ namespace Karo.Gui
 
                     targetList.Add(t);
                 }
-
                 PossiblePlaces = targetList;
             }
+
         }
 
         public override void Update(GameTime gameTime)
         {
             isSelected = false;
-            if(isGameEnded)
+            if (isGameEnded)
             {
                 TimeSpan timeSpanCurrent = new TimeSpan(0, 0, 0, gameTime.ElapsedGameTime.Seconds);
                 timeSpan.Subtract(timeSpanCurrent);
@@ -239,6 +240,10 @@ namespace Karo.Gui
             float? smallestIntersect = float.MaxValue;
 
             List<BoardElement> intersectList = BoardElements.ToList();
+
+            if(PossiblePlaces != null)
+                foreach (BoardElement b in PossiblePlaces)
+                    intersectList.Add(b);
 
             foreach (BoardElement boardElement in intersectList)
             {

@@ -39,7 +39,7 @@ namespace Karo.Gui
                     boardY -= distanceTraveledY;
                 else
                     boardY += distanceTraveledY;
-                if (Math.Abs(boardX - moveToX) < 0.2f && Math.Abs(boardY - moveToY) < 0.2f)
+                if (Math.Abs(boardX - moveToX) < 0.1f && Math.Abs(boardY - moveToY) < 0.1f)
                 {
                     animatedStarted = false;
                     animatedEnded = true;
@@ -58,7 +58,8 @@ namespace Karo.Gui
                 world = Matrix.CreateTranslation(BoardX, BoardY, 0) ;
                 world *= Matrix.CreateTranslation(0, 0, 0.05f);
             }
-            CreateBoundingBox();
+            if(animatedEnded)
+                CreateBoundingBox();
             base.Update(gameTime);
         }
 
@@ -76,6 +77,7 @@ namespace Karo.Gui
             toMoveX = boardX - x;
             toMoveY = boardY - y;
             AnimatedStarted = true;
+            animatedEnded = false;
         }
     }
 }

@@ -124,65 +124,18 @@ namespace Karo.Gui
 
         public override void Draw(GameTime gameTime)
         {
-            game.ScreenManager.ResetGraphicsDeviceSettings();
-
-            int min = manager.MinX;
-            int max = manager.MaxX;
-
-            //letters
-            for (int i = min; i <= max; i++)
+            if (game.IsActive)
             {
-                int selected = 21 - i;
-                foreach (ModelMesh mesh in letters[selected].Meshes)
+                game.ScreenManager.ResetGraphicsDeviceSettings();
+
+                int min = manager.MinX;
+                int max = manager.MaxX;
+
+                //letters
+                for (int i = min; i <= max; i++)
                 {
-                    Matrix trans = Matrix.Identity;
-                    trans *= Matrix.CreateScale(0.03f);
-                    trans *= Matrix.CreateRotationX(MathHelper.ToRadians(180));
-                    trans *= Matrix.CreateRotationZ(MathHelper.ToRadians(180));
-                    trans *= Matrix.CreateTranslation(i, min - 3, 0);
-                    trans *= game.World;
-
-                    BoundingBox b = BoundingBox.CreateFromSphere(mesh.BoundingSphere);
-                    b.Min = Vector3.Transform(b.Min, trans);
-                    b.Max = Vector3.Transform(b.Max, trans);
-
-                    foreach (BasicEffect effect in mesh.Effects)
-                    {
-                        effect.World = trans;
-                        effect.View = game.View;
-                        effect.Projection = game.Projection;
-                        effect.EnableDefaultLighting();
-                    }
-
-                    if(game.EnableDebug)
-                        DrawBoundingBox.Draw(GraphicsDevice, b, game.View, game.Projection);
-
-                    mesh.Draw();
-                }
-            }
-            //numbers
-            for (int i = 0; i < manager.BoardHeight; i++)
-            {
-                RomanNumbers current = (RomanNumbers)manager.MinY + i;
-                int j = 1;
-                bool previousNotIsI = false;
-                foreach (char c in current.ToString())
-                {
-                    int number = 0;
-                    
-                    if (c == 'I')
-                    {
-                        number = 8;
-                    }
-                    else if (c == 'V')
-                    {
-                        number = 21;
-                    }
-                    else if (c == 'X')
-                    {
-                        number = 23;
-                    }
-                    foreach (ModelMesh mesh in letters[number].Meshes)
+                    int selected = 21 - i;
+                    foreach (ModelMesh mesh in letters[selected].Meshes)
                     {
                         foreach (BasicEffect effect in mesh.Effects)
                         {
@@ -190,7 +143,7 @@ namespace Karo.Gui
                             trans *= Matrix.CreateScale(0.03f);
                             trans *= Matrix.CreateRotationX(MathHelper.ToRadians(180));
                             trans *= Matrix.CreateRotationZ(MathHelper.ToRadians(180));
-                            trans *= Matrix.CreateTranslation(manager.MaxX - manager.BoardWidth + (j * (previousNotIsI ? -0.7f : -0.3f)), (manager.MinY + 1) + ((i - 1) * 1), 0);
+                            trans *= Matrix.CreateTranslation(i, min - 3, 0);
                             trans *= game.World;
 
                             effect.World = trans;
@@ -198,13 +151,56 @@ namespace Karo.Gui
                             effect.Projection = game.Projection;
                             effect.EnableDefaultLighting();
                         }
+
                         mesh.Draw();
                     }
-                    j++;
-                    if (c != 'I')
-                        previousNotIsI = true;
-                    else
-                        previousNotIsI = false;
+                }
+                //numbers
+                for (int i = 0; i < manager.BoardHeight; i++)
+                {
+                    RomanNumbers current = (RomanNumbers)manager.MinY + i;
+                    int j = 1;
+                    bool previousNotIsI = false;
+                    foreach (char c in current.ToString())
+                    {
+                        int number = 0;
+
+                        if (c == 'I')
+                        {
+                            number = 8;
+                        }
+                        else if (c == 'V')
+                        {
+                            number = 21;
+                        }
+                        else if (c == 'X')
+                        {
+                            number = 23;
+                        }
+                        foreach (ModelMesh mesh in letters[number].Meshes)
+                        {
+                            foreach (BasicEffect effect in mesh.Effects)
+                            {
+                                Matrix trans = Matrix.Identity;
+                                trans *= Matrix.CreateScale(0.03f);
+                                trans *= Matrix.CreateRotationX(MathHelper.ToRadians(180));
+                                trans *= Matrix.CreateRotationZ(MathHelper.ToRadians(180));
+                                trans *= Matrix.CreateTranslation(manager.MaxX - manager.BoardWidth + (j * (previousNotIsI ? -0.7f : -0.3f)), (manager.MinY + 1) + ((i - 1) * 1), 0);
+                                trans *= game.World;
+
+                                effect.World = trans;
+                                effect.View = game.View;
+                                effect.Projection = game.Projection;
+                                effect.EnableDefaultLighting();
+                            }
+                            mesh.Draw();
+                        }
+                        j++;
+                        if (c != 'I')
+                            previousNotIsI = true;
+                        else
+                            previousNotIsI = false;
+                    }
                 }
             }
             base.Draw(gameTime);

@@ -36,6 +36,8 @@ namespace Karo.Gui
             this.world = Matrix.Identity;
             this.selectedColor = Color.Yellow;
             this.mouseOverColor = Color.Magenta;
+            this.animatedStarted = false;
+            this.animatedEnded = true;
 
             BasicEffect basicEffect = (BasicEffect)model.Meshes[0].Effects[0];
 

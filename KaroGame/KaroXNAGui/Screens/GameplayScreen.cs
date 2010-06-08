@@ -115,7 +115,7 @@ namespace GameStateManagement
                 {
                     // ok
                 }
-                else if( value < 315f && value > 60f)
+                else if (value < 315f && value > 60f)
                 {
                     value = 315f;
                 }
@@ -569,7 +569,7 @@ namespace GameStateManagement
                     float time = (float)gameTime.ElapsedGameTime.Milliseconds / 1000f;
 
                     moveTime -= time;
-                    
+
                     float xMovement = (time / moveTime) * xMove * animationTime;
                     float yMovement = (time / moveTime) * yMove * animationTime;
 
@@ -583,15 +583,16 @@ namespace GameStateManagement
                 }
 
 
-                int max = Math.Max(manager.BoardWidth, manager.BoardHeight);
+                int max = Math.Max(manager.BoardWidth + 3, manager.BoardHeight + 3);
 
-                float autozoom =(float)max / 6f;
+                float autozoom = (float)max / 6.5f;
+
                 Vector3 loca = new Vector3(0, 0, 10);
                 loca = Vector3.Transform(loca, Matrix.CreateScale(autozoom));
                 topView = Matrix.CreateLookAt(loca, new Vector3(0, 0, 0), Vector3.Down);
                 manager.ZRotation = angle;
                 manager.XRotation = RotationAngleX;
-                
+
                 // logger
                 if (EnableDebug)
                 {
@@ -654,7 +655,7 @@ namespace GameStateManagement
             }
             else
             {
-                                
+
             }
         }
 

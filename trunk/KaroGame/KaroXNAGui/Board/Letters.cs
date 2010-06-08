@@ -141,11 +141,9 @@ namespace Karo.Gui
                         {
                             Matrix trans = Matrix.Identity;
                             trans *= Matrix.CreateScale(0.03f);
-                            trans *= Matrix.CreateRotationX(MathHelper.ToRadians(180 -manager.XRotation));
-                            trans *= Matrix.CreateRotationZ(MathHelper.ToRadians(180 + manager.ZRotation));
+                            trans *= Matrix.CreateRotationY(MathHelper.ToRadians(180));
                             trans *= Matrix.CreateTranslation(i, min - 3, 0);
                             trans *= game.World;                          
-
 
                             effect.World = trans;
                             effect.View = game.View;
@@ -161,7 +159,6 @@ namespace Karo.Gui
                 {
                     RomanNumbers current = (RomanNumbers)manager.MinY + i;
                     int j = 1;
-                    bool previousNotIsI = false;
                     foreach (char c in current.ToString())
                     {
                         int number = 0;
@@ -184,9 +181,9 @@ namespace Karo.Gui
                             {
                                 Matrix trans = Matrix.Identity;
                                 trans *= Matrix.CreateScale(0.03f);
-                                trans *= Matrix.CreateRotationX(MathHelper.ToRadians(180));
                                 trans *= Matrix.CreateRotationZ(MathHelper.ToRadians(180));
-                                trans *= Matrix.CreateTranslation(manager.MaxX - manager.BoardWidth + (j * (previousNotIsI ? -0.7f : -0.3f)), (manager.MinY + 1) + ((i - 1) * 1), 0);
+                                trans *= Matrix.CreateRotationY(MathHelper.ToRadians(180));
+                                trans *= Matrix.CreateTranslation(manager.MaxX - (manager.BoardWidth + 1) + (j * -0.3f), manager.MinY + i * 1, 0);
                                 trans *= game.World;
 
                                 effect.World = trans;
@@ -197,10 +194,6 @@ namespace Karo.Gui
                             mesh.Draw();
                         }
                         j++;
-                        if (c != 'I')
-                            previousNotIsI = true;
-                        else
-                            previousNotIsI = false;
                     }
                 }
             }

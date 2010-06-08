@@ -153,9 +153,11 @@ namespace Karo.Gui
             {
                 RomanNumbers current = (RomanNumbers)manager.MinY + i;
                 int j = 1;
+                bool previousNotIsI = false;
                 foreach (char c in current.ToString())
                 {
                     int number = 0;
+                    
                     if (c == 'I')
                     {
                         number = 8;
@@ -176,7 +178,7 @@ namespace Karo.Gui
                             trans *= Matrix.CreateScale(0.03f);
                             trans *= Matrix.CreateRotationX(MathHelper.ToRadians(180));
                             trans *= Matrix.CreateRotationZ(MathHelper.ToRadians(180));
-                            trans *= Matrix.CreateTranslation(12 - manager.BoardWidth + (j * -0.3f), 8f + ((i - 1) * 1), 0);
+                            trans *= Matrix.CreateTranslation(12 - manager.BoardWidth + (j * (previousNotIsI ? -0.7f : -0.3f)), 9f + ((i - 1) * 1), 0);
                             trans *= game.World;
 
                             effect.World = trans;
@@ -187,6 +189,10 @@ namespace Karo.Gui
                         mesh.Draw();
                     }
                     j++;
+                    if (c != 'I')
+                        previousNotIsI = true;
+                    else
+                        previousNotIsI = false;
                 }
             }
             base.Draw(gameTime);

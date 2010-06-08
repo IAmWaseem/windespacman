@@ -83,11 +83,6 @@ namespace Karo.Gui
             letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/S"));
             letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/T"));
             letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/U"));
-            letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/V"));
-            letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/W"));
-            letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/X"));
-            letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/Y"));
-            letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/Z"));
 
             cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/1"));
             cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/2"));
@@ -136,11 +131,6 @@ namespace Karo.Gui
                 letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/S"));
                 letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/T"));
                 letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/U"));
-                letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/V"));
-                letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/W"));
-                letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/X"));
-                letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/Y"));
-                letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/Z"));
             }
 
             if (cijfers.Count == 0)

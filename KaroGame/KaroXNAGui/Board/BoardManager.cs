@@ -351,6 +351,8 @@ namespace Karo.Gui
                         winning = "You've lost the game! :-(";
 
 
+                    Model face = game.ScreenManager.Game.Content.Load<Model>("madFace");
+                    
                     Vector2 sizeText = sf.MeasureString(winning);
 
                     int widthScreen = game.ScreenManager.Game.Window.ClientBounds.Width;

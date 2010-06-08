@@ -178,7 +178,7 @@ namespace Karo.Gui
                             trans *= Matrix.CreateScale(0.03f);
                             trans *= Matrix.CreateRotationX(MathHelper.ToRadians(180));
                             trans *= Matrix.CreateRotationZ(MathHelper.ToRadians(180));
-                            trans *= Matrix.CreateTranslation(12 - manager.BoardWidth + (j * (previousNotIsI ? -0.7f : -0.3f)), 9f + ((i - 1) * 1), 0);
+                            trans *= Matrix.CreateTranslation(manager.MaxX - manager.BoardWidth + (j * (previousNotIsI ? -0.7f : -0.3f)), (manager.MinY + 1) + ((i - 1) * 1), 0);
                             trans *= game.World;
 
                             effect.World = trans;

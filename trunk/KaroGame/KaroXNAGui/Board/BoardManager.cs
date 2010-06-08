@@ -41,6 +41,9 @@ namespace Karo.Gui
         private SpriteBatch spriteBatch;
         private bool isGameEnded = false;
         private bool isBusy = false;
+        private bool threadWaiting = false;
+        private bool undoMove = false;
+        private bool rightMouseButtonPressed = false;
 
         public float XRotation { get; set; }
         public float ZRotation { get; set; }
@@ -238,6 +241,16 @@ namespace Karo.Gui
 
         public override void Update(GameTime gameTime)
         {
+            if (threadWaiting)
+            {
+                if (Mouse.GetState().RightButton == ButtonState.Pressed)
+                    rightMouseButtonPressed = true;
+                if (Mouse.GetState().RightButton == ButtonState.Released && rightMouseButtonPressed)
+                {
+                    rightMouseButtonPressed = false;
+                    undoMove = true;
+                }
+            }
             if (isBusy)
                 return;
 
@@ -526,8 +539,25 @@ namespace Karo.Gui
                     if (uiConnector.ValidatePlacePiece(placePoint))
                     {
                         Piece piece = (Piece)selectedElementFrom;
+                        float oldBoardX = piece.BoardX;
+                        float oldBoardY = piece.BoardY;
+
                         piece.Move((int)selectedElementTo.BoardX, (int)selectedElementTo.BoardY);
                         while (piece.AnimatedStarted) ;
+
+                        threadWaiting = true;
+                        Thread.Sleep(1000);
+                        if (undoMove)
+                        {
+                            piece.Move((int)oldBoardX, (int)oldBoardY);
+                            while (piece.AnimatedStarted) ;
+                            selectedElementFrom = null;
+                            selectedElementTo = null;
+                            isBusy = false;
+                            undoMove = false;
+                            return;
+                        }
+                        threadWaiting = false;
 
                         currentBoard = (BoardPosition[,])uiConnector.GetBoard().BoardSituation.Clone();
                         currentBoard[(int)selectedElementTo.BoardX, (int)selectedElementTo.BoardY] = BoardPosition.WhiteTail;
@@ -570,9 +600,27 @@ namespace Karo.Gui
                         currentBoard[fromPoint.X, fromPoint.Y] = BoardPosition.Tile;
                         currentBoard[toPoint.X, toPoint.Y] = changeTo;
 
+                        float oldBoardX = selectedElementFrom.BoardX;
+                        float oldBoardY = selectedElementFrom.BoardY;
+
                         selectedElementFrom.Move((int)selectedElementTo.BoardX, (int)selectedElementTo.BoardY);
                         while (selectedElementFrom.AnimatedStarted) ;
 
+                        threadWaiting = true;
+                        Thread.Sleep(1000);
+                        if (undoMove)
+                        {
+                            if(moveDistance == 2)
+                                piece.HeadUp = !piece.HeadUp;
+                            selectedElementFrom.Move((int)oldBoardX, (int)oldBoardY);
+                            while (selectedElementFrom.AnimatedStarted) ;
+                            selectedElementFrom = null;
+                            selectedElementTo = null;
+                            isBusy = false;
+                            undoMove = false;
+                            return;
+                        }
+                        threadWaiting = false;
                         uiConnector.MovePiece(fromPoint, toPoint);
                         BoardPosition[,] newBoardSituation = (BoardPosition[,])uiConnector.GetBoard().BoardSituation.Clone();
                         if (uiConnector.IsWon())
@@ -592,9 +640,27 @@ namespace Karo.Gui
                         currentBoard = (BoardPosition[,])uiConnector.GetBoard().BoardSituation.Clone();
                         currentBoard[fromPoint.X, fromPoint.Y] = BoardPosition.Empty;
                         currentBoard[toPoint.X, toPoint.Y] = BoardPosition.Tile;
+
                         Tile tile = (Tile)selectedElementFrom;
+                        float oldBoardX = tile.BoardX;
+                        float oldBoardY = tile.BoardY;
+
                         tile.Move(toPoint.X, toPoint.Y);
                         while (tile.AnimatedStarted) ;
+                        threadWaiting = true;
+                        Thread.Sleep(1000);
+                        if (undoMove)
+                        {
+                            tile.Move((int)oldBoardX, (int)oldBoardY);
+                            while (tile.AnimatedStarted) ;
+                            selectedElementFrom = null;
+                            selectedElementTo = null;
+                            isBusy = false;
+                            undoMove = false;
+                            return;
+                        }
+                        threadWaiting = false;
+
                         uiConnector.MoveTile(fromPoint, toPoint);
                         BoardPosition[,] newBoardSituation = (BoardPosition[,])uiConnector.GetBoard().BoardSituation.Clone();
                     }

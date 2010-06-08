@@ -45,6 +45,7 @@ namespace Karo.Gui
                 if (HeadUp)
                 {
                     float percentageMoved = (distanceToMoveX / distanceMovedX) / 100f;
+                    percentageMoved = 1f;
                     rotationValue = percentageMoved * 180f;
                 }
                 if (Math.Abs(boardX - halfwayX) < 0.1f && Math.Abs(boardY - halfwayY) < 0.1f)

@@ -114,6 +114,7 @@ namespace Karo.Gui
         {
             this.uiConnector = UIConnector.Instance;
             this.game = game;
+            game.ScreenManager.Game.Components.Add(new Letters(game, this));
             spriteBatch = new SpriteBatch(game.ScreenManager.Game.GraphicsDevice);
         }
 

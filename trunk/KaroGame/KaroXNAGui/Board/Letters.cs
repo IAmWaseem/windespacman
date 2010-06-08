@@ -60,52 +60,6 @@ namespace Karo.Gui
             base.Initialize();
         }
 
-        protected override void LoadContent()
-        {
-            letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/A"));
-            letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/B"));
-            letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/C"));
-            letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/D"));
-            letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/E"));
-            letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/F"));
-            letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/G"));
-            letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/H"));
-            letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/I"));
-            letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/J"));
-            letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/K"));
-            letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/L"));
-            letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/M"));
-            letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/N"));
-            letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/O"));
-            letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/P"));
-            letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/Q"));
-            letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/R"));
-            letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/S"));
-            letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/T"));
-            letters.Add(game.ScreenManager.Game.Content.Load<Model>("letters/U"));
-
-            cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/1"));
-            cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/2"));
-            cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/3"));
-            cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/4"));
-            cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/5"));
-            cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/6"));
-            cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/7"));
-            cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/8"));
-            cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/9"));
-            cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/10"));
-            cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/11"));
-            cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/12"));
-            cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/13"));
-            cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/14"));
-            cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/15"));
-            cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/16"));
-            cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/17"));
-            cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/18"));
-            cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/19"));
-            cijfers.Add(game.ScreenManager.Game.Content.Load<Model>("cijfers/20"));
-        }
-
         public override void Update(GameTime gameTime)
         {
             if (letters.Count == 0)

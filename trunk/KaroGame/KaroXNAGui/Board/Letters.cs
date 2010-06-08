@@ -171,7 +171,7 @@ namespace Karo.Gui
 
         public override void Draw(GameTime gameTime)
         {
-            if (game.IsActive && manager.MinY>0 && manager.MinX>0)
+            if (game.IsActive && manager.MinY > 0 && manager.MinX > 0)
             {
                 game.ScreenManager.ResetGraphicsDeviceSettings();
 
@@ -198,13 +198,12 @@ namespace Karo.Gui
                             effect.Projection = game.Projection;
                             effect.EnableDefaultLighting();
                         }
-
                         mesh.Draw();
                     }
                 }
                 //numbers
-                min = manager.MinY -1;
-                max = manager.MaxY-1;
+                min = manager.MinY - 1;
+                max = manager.MaxY - 1;
                 for (int i = min; i <= max; i++)
                 {
                     Matrix[] transforms = new Matrix[cijfers[i].Bones.Count];
@@ -218,7 +217,7 @@ namespace Karo.Gui
                             trans *= Matrix.CreateRotationX(MathHelper.ToRadians(((manager.XRotation - 315))));
                             trans *= Matrix.CreateRotationY(MathHelper.ToRadians(180));
                             trans *= Matrix.CreateRotationZ(MathHelper.ToRadians(-1 * (180 - manager.ZRotation)));
-                            trans *= Matrix.CreateTranslation(manager.MaxX - (manager.BoardWidth + 2), manager.MinY + i-min, 0);
+                            trans *= Matrix.CreateTranslation(manager.MaxX - (manager.BoardWidth + 2), manager.MinY + i - min, 0);
                             trans *= transforms[mesh.ParentBone.Index] * game.World;
 
                             effect.World = trans;

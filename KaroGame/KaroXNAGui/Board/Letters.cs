@@ -126,13 +126,20 @@ namespace Karo.Gui
         {
             game.ScreenManager.ResetGraphicsDeviceSettings();
             //letters
-            for (int i = 0; i < manager.BoardWidth; i++)
+            for (int i = manager.MinX; i <= manager.MaxX; i++)
             {
                 foreach (ModelMesh mesh in letters[i].Meshes)
                 {
                     foreach (BasicEffect effect in mesh.Effects)
                     {
-                        effect.World = Matrix.CreateScale(0.03f) * Matrix.CreateRotationX(MathHelper.ToRadians(180))*Matrix.CreateRotationZ(MathHelper.ToRadians(180)) * Matrix.CreateTranslation(12.5f+(i*-1.1f),5f,0) * game.World;
+                        Matrix trans = Matrix.CreateScale(0.03f);
+                        trans *= Matrix.CreateRotationX(MathHelper.ToRadians(180));
+                        trans *= Matrix.CreateRotationZ(MathHelper.ToRadians(180));
+                        trans *= Matrix.CreateTranslation(i , manager.MinY - 3, 0);
+                        trans *= game.World;
+
+
+                        effect.World = trans;
                         effect.View = game.View;
                         effect.Projection = game.Projection;
                         effect.EnableDefaultLighting();
@@ -141,9 +148,9 @@ namespace Karo.Gui
                 }
             }
             //numbers
-            for (int i = 1; i <= manager.BoardHeight; i++)
+            for (int i = 0; i < manager.BoardHeight; i++)
             {
-                RomanNumbers current = (RomanNumbers)i;
+                RomanNumbers current = (RomanNumbers)manager.MinY + i;
                 int j = 1;
                 foreach (char c in current.ToString())
                 {

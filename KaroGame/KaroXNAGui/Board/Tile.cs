@@ -21,6 +21,7 @@ namespace Karo.Gui
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
+            CreateBoundingBox();
             base.Update(gameTime);
         }
 

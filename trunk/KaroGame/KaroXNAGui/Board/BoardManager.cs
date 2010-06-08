@@ -240,7 +240,6 @@ namespace Karo.Gui
             float? smallestIntersect = float.MaxValue;
 
             List<BoardElement> intersectList = BoardElements.ToList();
-
             if(PossiblePlaces != null)
                 foreach (BoardElement b in PossiblePlaces)
                     intersectList.Add(b);
@@ -438,17 +437,8 @@ namespace Karo.Gui
 
         public void DoMove()
         {
-            if (selectedElementFrom is Tile)
-            {
-                foreach (BoardElement element in BoardElements)
-                {
-                    if (element is Piece && element.BoardX == selectedElementFrom.BoardX && element.BoardY == selectedElementFrom.BoardX)
-                        selectedElementFrom = element;
-                }
-            }
-
             int numItems = uiConnector.CurrentPlayerNumPieces();
-            if (numItems < 6 && selectedElementFrom.BoardY == 12.5f)
+            if (numItems < 6)
             {
                 FormPoint placePoint = new FormPoint((int)selectedElementTo.BoardX,
                                                                            (int)selectedElementTo.BoardY);

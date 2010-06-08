@@ -125,6 +125,7 @@ namespace Karo.Gui
         public override void Draw(GameTime gameTime)
         {
             game.ScreenManager.ResetGraphicsDeviceSettings();
+
             //letters
             for (int i = manager.MinX; i <= manager.MaxX; i++)
             {
@@ -132,12 +133,12 @@ namespace Karo.Gui
                 {
                     foreach (BasicEffect effect in mesh.Effects)
                     {
-                        Matrix trans = Matrix.CreateScale(0.03f);
+                        Matrix trans = Matrix.Identity;
+                        trans *= Matrix.CreateScale(0.03f);
                         trans *= Matrix.CreateRotationX(MathHelper.ToRadians(180));
                         trans *= Matrix.CreateRotationZ(MathHelper.ToRadians(180));
-                        trans *= Matrix.CreateTranslation(i , manager.MinY - 3, 0);
+                        trans *= Matrix.CreateTranslation(i, manager.MinY - 3, 0);
                         trans *= game.World;
-
 
                         effect.World = trans;
                         effect.View = game.View;
@@ -159,7 +160,7 @@ namespace Karo.Gui
                     {
                         number = 8;
                     }
-                    else if(c=='V')
+                    else if (c == 'V')
                     {
                         number = 21;
                     }
@@ -171,7 +172,14 @@ namespace Karo.Gui
                     {
                         foreach (BasicEffect effect in mesh.Effects)
                         {
-                            effect.World = Matrix.CreateScale(0.03f) * Matrix.CreateRotationX(MathHelper.ToRadians(180)) * Matrix.CreateRotationZ(MathHelper.ToRadians(180)) * Matrix.CreateTranslation(12 - manager.BoardWidth + (j * -0.3f), 8f + ((i-1) * 1), 0) * game.World;
+                            Matrix trans = Matrix.Identity;
+                            trans *= Matrix.CreateScale(0.03f);
+                            trans *= Matrix.CreateRotationX(MathHelper.ToRadians(180));
+                            trans *= Matrix.CreateRotationZ(MathHelper.ToRadians(180));
+                            trans *= Matrix.CreateTranslation(12 - manager.BoardWidth + (j * -0.3f), 8f + ((i - 1) * 1), 0);
+                            trans *= game.World;
+
+                            effect.World = trans;
                             effect.View = game.View;
                             effect.Projection = game.Projection;
                             effect.EnableDefaultLighting();

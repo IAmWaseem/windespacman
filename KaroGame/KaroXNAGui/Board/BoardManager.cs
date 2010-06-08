@@ -433,8 +433,17 @@ namespace Karo.Gui
 
         public void DoMove()
         {
+            if (selectedElementFrom is Tile)
+            {
+                foreach (BoardElement element in BoardElements)
+                {
+                    if (element is Piece && element.BoardX == selectedElementFrom.BoardX && element.BoardY == selectedElementFrom.BoardX)
+                        selectedElementFrom = element;
+                }
+            }
+
             int numItems = uiConnector.CurrentPlayerNumPieces();
-            if (numItems < 6)
+            if (numItems < 6 && selectedElementFrom.BoardY == 12.5f)
             {
                 FormPoint placePoint = new FormPoint((int)selectedElementTo.BoardX,
                                                                            (int)selectedElementTo.BoardY);

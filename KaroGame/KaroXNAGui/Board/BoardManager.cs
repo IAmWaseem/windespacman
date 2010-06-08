@@ -520,8 +520,9 @@ namespace Karo.Gui
                                                                            (int)selectedElementTo.BoardY);
                 if (uiConnector.ValidatePlacePiece(placePoint))
                 {
-                    selectedElementFrom.Move((int)selectedElementTo.BoardX, (int)selectedElementTo.BoardY);
-                    while (selectedElementFrom.AnimatedStarted) ;
+                    Piece piece = (Piece)selectedElementFrom;
+                    piece.Move((int)selectedElementTo.BoardX, (int)selectedElementTo.BoardY);
+                    while (piece.AnimatedStarted) ;
 
                     currentBoard = (BoardPosition[,])uiConnector.GetBoard().BoardSituation.Clone();
                     currentBoard[(int)selectedElementTo.BoardX, (int)selectedElementTo.BoardY] = BoardPosition.WhiteTail;
@@ -571,6 +572,9 @@ namespace Karo.Gui
                     BoardPosition[,] newBoardSituation = (BoardPosition[,])uiConnector.GetBoard().BoardSituation.Clone();
                     if (uiConnector.IsWon())
                     {
+                        selectedElementFrom = null;
+                        selectedElementTo = null;
+                        isBusy = false;
                         PlayWinningAnimation(uiConnector.GetCurrentPlayer());
                         return;
                     }

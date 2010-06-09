@@ -255,7 +255,7 @@ namespace Karo.Gui
             }
             if (isBusy)
                 return;
-
+            uiConnector.GetBoard().CalculateMovableTiles();
             isSelected = false;
             if (isGameEnded)
             {
@@ -456,7 +456,7 @@ namespace Karo.Gui
                 }
                 if (movedPiece != null)
                 {
-                    movedPiece.Move((int)toXPiece, (int)toYPiece);
+                    movedPiece.Move((float)toXPiece, (float)toYPiece);
                     while (movedPiece.AnimatedStarted) ;
                 }
             }
@@ -482,7 +482,7 @@ namespace Karo.Gui
                 }
                 if (movedTile != null)
                 {
-                    movedTile.Move((int)toXTile, (int)toYTile);
+                    movedTile.Move((float)toXTile, (float)toYTile);
                     while (movedTile.AnimatedStarted) ;
                 }
                 if (movedPiece != null)
@@ -491,7 +491,7 @@ namespace Karo.Gui
                         movedPiece.HeadUp = false;
                     else
                         movedPiece.HeadUp = true;
-                    movedPiece.Move((int)toXTile, (int)toYTile);
+                    movedPiece.Move((float)toXTile, (float)toYTile);
                     while (movedPiece.AnimatedStarted) ;
                 }
             }
@@ -513,7 +513,7 @@ namespace Karo.Gui
                         movedPiece.HeadUp = false;
                     else
                         movedPiece.HeadUp = true;
-                    movedPiece.Move((int)toXPiece, (int)toYPiece);
+                    movedPiece.Move((float)toXPiece, (float)toYPiece);
                     while (movedPiece.AnimatedStarted) ;
                 }
             }
@@ -544,14 +544,14 @@ namespace Karo.Gui
                         float oldBoardX = piece.BoardX;
                         float oldBoardY = piece.BoardY;
 
-                        piece.Move((int)selectedElementTo.BoardX, (int)selectedElementTo.BoardY);
+                        piece.Move(selectedElementTo.BoardX, selectedElementTo.BoardY);
                         while (piece.AnimatedStarted) ;
 
                         threadWaiting = true;
                         Thread.Sleep(1000);
                         if (undoMove)
                         {
-                            piece.Move((int)oldBoardX, (int)oldBoardY);
+                            piece.Move(oldBoardX, oldBoardY);
                             while (piece.AnimatedStarted) ;
                             selectedElementFrom = null;
                             selectedElementTo = null;
@@ -606,7 +606,7 @@ namespace Karo.Gui
                         float oldBoardX = selectedElementFrom.BoardX;
                         float oldBoardY = selectedElementFrom.BoardY;
 
-                        selectedElementFrom.Move((int)selectedElementTo.BoardX, (int)selectedElementTo.BoardY);
+                        selectedElementFrom.Move(selectedElementTo.BoardX, selectedElementTo.BoardY);
                         while (selectedElementFrom.AnimatedStarted) ;
 
                         threadWaiting = true;
@@ -615,7 +615,7 @@ namespace Karo.Gui
                         {
                             if(moveDistance == 2)
                                 piece.HeadUp = !piece.HeadUp;
-                            selectedElementFrom.Move((int)oldBoardX, (int)oldBoardY);
+                            selectedElementFrom.Move(oldBoardX, oldBoardY);
                             while (selectedElementFrom.AnimatedStarted) ;
                             selectedElementFrom = null;
                             selectedElementTo = null;
@@ -658,7 +658,7 @@ namespace Karo.Gui
                         Thread.Sleep(1000);
                         if (undoMove)
                         {
-                            tile.Move((int)oldBoardX, (int)oldBoardY);
+                            tile.Move(oldBoardX, oldBoardY);
                             while (tile.AnimatedStarted) ;
                             selectedElementFrom = null;
                             selectedElementTo = null;

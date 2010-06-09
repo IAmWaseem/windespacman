@@ -104,7 +104,7 @@ namespace Karo.Gui
             boundingBox.Min = Vector3.Transform(boundingBox.Min, Matrix.CreateScale(0.6f, 0.6f, 0.7f) * Matrix.CreateTranslation(-0.02f, -0.04f, 0.1f) * world * game.World);
         }
 
-        public override void Move(int x, int y)
+        public override void Move(float x, float y)
         {
 
             directionDegrees = MathHelper.ToDegrees((float)Math.Atan2(boardX - x, boardY - y));

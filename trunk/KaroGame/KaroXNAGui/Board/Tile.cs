@@ -74,7 +74,7 @@ namespace Karo.Gui
             boundingBox.Min = Vector3.Transform(boundingBox.Min, Matrix.CreateScale(0.55f, 0.10f, 0.55f) * Matrix.CreateRotationX(MathHelper.ToRadians(90)) * Matrix.CreateTranslation(0.095f, 0.0f, 0.1f) * world * game.World);
         }
 
-        public override void Move(int x, int y)
+        public override void Move(float x, float y)
         {
             moveToX = x;
             moveToY = y;

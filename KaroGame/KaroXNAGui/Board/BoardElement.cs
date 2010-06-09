@@ -105,7 +105,7 @@ namespace Karo.Gui
             base.Draw(gameTime);
         }
 
-        public abstract void Move(int i, int y);
+        public abstract void Move(float x, float y);
 
         public float? Intersect(Ray ray)
         {

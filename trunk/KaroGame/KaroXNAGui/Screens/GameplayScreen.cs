@@ -245,7 +245,7 @@ namespace GameStateManagement
 
 
             manager = new BoardManager(this);
-            manager.StartGame(Difficulty.Easy);
+            manager.StartGame(Difficulty.Hard);
             ScreenManager.Game.Components.Add(manager);
             if (UIConnector.IsTwoAI())
                 thread.Start();
@@ -600,7 +600,8 @@ namespace GameStateManagement
                     lc.Line();
 
                     lc.Line("FPS", fc.Framerate.ToString());
-                    lc.Line("AI Calculates", calculating.ToString());
+                    lc.Line("AI Calculates (vs. AI)", calculating.ToString());
+                    lc.Line("AI Calculates (vs. Human)", manager.AICalculates.ToString());
                     lc.Line("Multisample type", ScreenManager.GraphicsDevice.PresentationParameters.MultiSampleType.ToString());
                     lc.Line();
 

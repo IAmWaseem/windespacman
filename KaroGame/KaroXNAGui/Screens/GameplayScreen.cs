@@ -58,19 +58,8 @@ namespace GameStateManagement
         private const float animationTime = 3.0f;
         public bool ShowTargetPlaces { get; set; }
 
-        public Matrix World
-        {
-            get
-            {
-                return world;
-            }
-        }
-
-        public Matrix Projection
-        {
-            get { return projection; }
-        }
-
+        public Matrix World { get { return world; } }
+        public Matrix Projection { get { return projection; } }
         public Matrix View
         {
             get
@@ -122,7 +111,6 @@ namespace GameStateManagement
                     value = 44.9f;
                 }
 
-
                 _xAngle = value;
             }
         }
@@ -131,11 +119,11 @@ namespace GameStateManagement
         bool tPressed, rPressed, rotate, middleMousePressed, f1Pressed, f12Pressed;
 
         private static bool boardAnimating = false;
-        private static bool pieceAnimating = false;
-        private static bool tileAnimating = false;
 
+        bool f11Pressed = false;
         bool uPressed = false;
         public bool EnableTopView { get; set; }
+        public bool EnableAnimation { get; set; }
 
         public static Board current { get; set; }
         private List<BoundingBox> BoundingBoxes = new List<BoundingBox>();
@@ -159,7 +147,7 @@ namespace GameStateManagement
             // set calculation to true
             calculating = true;
             Thread.Sleep(50);
-            while (boardAnimating || tileAnimating || pieceAnimating)
+            while (boardAnimating)
             {
                 Thread.Sleep(50);
             }
@@ -192,7 +180,7 @@ namespace GameStateManagement
         public void Initialize()
         {
             cameraLocation = new Vector3(0, -10, 10);
-
+            EnableAnimation = true;
             // framerate
             fc = new FramerateComponent(ScreenManager.Game);
             lc = new LoggerComponent(ScreenManager.Game);
@@ -328,6 +316,22 @@ namespace GameStateManagement
                             EnableTopView = true;
                     }
                     tPressed = false;
+                }
+
+                // enable/disable animation
+                if (Keyboard.GetState().IsKeyDown(Keys.F11))
+                    f11Pressed = true;
+
+                if (Keyboard.GetState().IsKeyUp(Keys.F11))
+                {
+                    if (f11Pressed)
+                    {
+                        if (EnableAnimation)
+                            EnableAnimation = false;
+                        else
+                            EnableAnimation = true;
+                    }
+                    f11Pressed = false;
                 }
 
                 if (Mouse.GetState().MiddleButton == ButtonState.Pressed)
@@ -598,21 +602,19 @@ namespace GameStateManagement
                     lc.Line();
 
                     lc.Line("FPS", fc.Framerate.ToString());
-                    lc.Line("AI Calculates (vs. AI)", calculating.ToString());
                     lc.Line("AI Calculates (vs. Human)", manager.AICalculates.ToString());
-                    lc.Line("Multisample type", ScreenManager.GraphicsDevice.PresentationParameters.MultiSampleType.ToString());
                     lc.Line();
 
                     lc.Line("Animating");
+                    lc.Line("Enable animation", EnableAnimation.ToString());
                     lc.Line("Board", boardAnimating.ToString());
-                    lc.Line("Piece", pieceAnimating.ToString());
-                    lc.Line("Tile", tileAnimating.ToString());
                     lc.Line();
 
                     lc.Line("Rotation and zoom");
-                    lc.Line("X Rotation", RotationAngleX.ToString());
-                    lc.Line("Z Rotation", angle.ToString());
-                    lc.Line("Zoom factor", zoom.ToString());
+                    lc.Line("X Rotation", RotationAngleX.ToString("0.00"));
+                    lc.Line("Z Rotation", angle.ToString("0.00"));
+                    lc.Line("Zoom factor", zoom.ToString("0.00"));
+                    lc.Line("Autozoom factor", autozoom.ToString("0.00"));
                     lc.Line();
 
                     lc.Line("Auto rotate", rotate.ToString());
@@ -632,8 +634,6 @@ namespace GameStateManagement
                     lc.Line("Max Y", manager.MaxY.ToString("0"));
                     lc.Line("Width", manager.BoardWidth.ToString());
                     lc.Line("Height", manager.BoardHeight.ToString());
-                    lc.Line("Autozoom factor", autozoom.ToString("0.00"));
-                    lc.Line("BoardElements count", manager.BoardElements.Count.ToString("0.00"));
                 }
             }
         }

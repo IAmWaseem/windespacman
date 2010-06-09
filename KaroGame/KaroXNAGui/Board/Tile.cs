@@ -53,7 +53,8 @@ namespace Karo.Gui
                     boardY -= distanceTraveledY;
                 else
                     boardY += distanceTraveledY;
-                if (Math.Abs(boardX - moveToX) < 0.1f && Math.Abs(boardY - moveToY) < 0.1f)
+
+                if (Math.Abs(boardX - moveToX) < 0.1f && Math.Abs(boardY - moveToY) < 0.1f || game.EnableAnimation == false)
                 {
                     animatedStarted = false;
                     animatedEnded = true;
@@ -83,7 +84,7 @@ namespace Karo.Gui
             toMoveX = boardX - x;
             toMoveY = boardY - y;
             AnimatedStarted = true;
-            animatedEnded = false;
+            AnimatedEnded = false;
             goingUp = true;
         }
     }

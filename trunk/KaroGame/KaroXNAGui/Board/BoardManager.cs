@@ -122,8 +122,8 @@ namespace Karo.Gui
         {
             this.uiConnector = UIConnector.Instance;
             this.game = game;
+            this.DrawOrder = 1000000;
             game.ScreenManager.Game.Components.Add(new Letters(game, this));
-            spriteBatch = new SpriteBatch(game.ScreenManager.Game.GraphicsDevice);
         }
 
         public void UpdateMinMax()
@@ -763,6 +763,8 @@ namespace Karo.Gui
                     }
                 }
             }
+
+            spriteBatch = new SpriteBatch(game.ScreenManager.Game.GraphicsDevice);
         }
     }
 }

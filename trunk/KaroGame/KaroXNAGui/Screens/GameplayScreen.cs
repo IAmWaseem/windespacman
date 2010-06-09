@@ -231,7 +231,7 @@ namespace GameStateManagement
 
 
             manager = new BoardManager(this);
-            manager.StartGame(Difficulty.Hard);
+            manager.StartGame(Difficulty.Medium);
             ScreenManager.Game.Components.Add(manager);
             if (UIConnector.IsTwoAI())
                 thread.Start();

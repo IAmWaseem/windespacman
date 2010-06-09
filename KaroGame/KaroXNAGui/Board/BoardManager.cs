@@ -22,6 +22,8 @@ namespace Karo.Gui
         public Karo.BoardPosition[,] currentBoard { get; set; }
         public int redItems { get; set; }
         public int whiteItems { get; set; }
+        public bool AICalculates { get; private set; }
+        public bool HumanCalculates { get; private set; }
         private BoardElement selectedElementFrom;
         private BoardElement selectedElementTo;
         private GameplayScreen game;
@@ -69,7 +71,7 @@ namespace Karo.Gui
 
         public void StartGame(Difficulty difficulty)
         {
-            PlayerSettings playerA = new PlayerSettings(false, AlgorithmType.AlphaBeta, 2, true, true, EvaluationType.BetterOne);
+            PlayerSettings playerA = new PlayerSettings(false, AlgorithmType.AlphaBeta, 2, false, false, EvaluationType.BetterOne);
             PlayerSettings playerB = null;
             this.difficulty = difficulty;
             switch (difficulty)
@@ -79,11 +81,11 @@ namespace Karo.Gui
                     break;
 
                 case Difficulty.Medium:
-                    playerB = new PlayerSettings(true, AlgorithmType.MiniMax, 1, false, false, EvaluationType.BetterOne);
+                    playerB = new PlayerSettings(true, AlgorithmType.AlphaBeta, 2, false, false, EvaluationType.BetterOne);
                     break;
 
                 case Difficulty.Hard:
-                    playerB = new PlayerSettings(true, AlgorithmType.AlphaBeta, 4, true, true, EvaluationType.BetterOne);
+                    playerB = new PlayerSettings(true, AlgorithmType.AlphaBeta, 4, false, false, EvaluationType.BetterOne);
                     break;
             }
 
@@ -558,13 +560,14 @@ namespace Karo.Gui
                             return;
                         }
                         threadWaiting = false;
-
+                        AICalculates = true;
                         currentBoard = (BoardPosition[,])uiConnector.GetBoard().BoardSituation.Clone();
                         currentBoard[(int)selectedElementTo.BoardX, (int)selectedElementTo.BoardY] = BoardPosition.WhiteTail;
                         uiConnector.PlacePiece(placePoint);
                         BoardPosition[,] newBoardSituation = (BoardPosition[,])uiConnector.GetBoard().BoardSituation.Clone();
 
                         DoAIMove(currentBoard, newBoardSituation);
+                        AICalculates = false;
                     }
                 }
                 else
@@ -620,8 +623,11 @@ namespace Karo.Gui
                             undoMove = false;
                             return;
                         }
+
                         threadWaiting = false;
                         uiConnector.MovePiece(fromPoint, toPoint);
+                        
+                        AICalculates = true;
                         BoardPosition[,] newBoardSituation = (BoardPosition[,])uiConnector.GetBoard().BoardSituation.Clone();
                         if (uiConnector.IsWon())
                         {
@@ -633,6 +639,7 @@ namespace Karo.Gui
                         }
 
                         DoAIMove(currentBoard, newBoardSituation);
+                        AICalculates = false;
 
                     }
                     else if (uiConnector.ValidateMoveTile(fromPoint, toPoint))

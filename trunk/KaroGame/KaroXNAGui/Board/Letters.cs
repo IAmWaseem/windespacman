@@ -157,6 +157,7 @@ namespace Karo.Gui
                 //numbers
                 min = manager.MinY - 1;
                 max = manager.MaxY - 1;
+
                 for (int i = min; i <= max; i++)
                 {
                     Matrix[] transforms = new Matrix[cijfers[i].Bones.Count];

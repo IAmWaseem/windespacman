@@ -48,6 +48,7 @@ namespace Karo.Gui
             graphics.PreferredBackBufferWidth = 800;
             graphics.PreferredBackBufferHeight = 600;
             graphics.PreferMultiSampling = true;
+            Prepare();
             graphics.PreparingDeviceSettings += new EventHandler<PreparingDeviceSettingsEventArgs>(graphics_PreparingDeviceSettings);
             graphics.ApplyChanges();
 
@@ -63,34 +64,16 @@ namespace Karo.Gui
             base.Initialize();
         }
 
-        void graphics_PreparingDeviceSettings(object sender, PreparingDeviceSettingsEventArgs e)
+        void Prepare()
         {
             PresentationParameters pp =
-               e.GraphicsDeviceInformation.PresentationParameters;
+               GraphicsDevice.PresentationParameters;
 
             int quality = 0;
-            GraphicsAdapter adapter = e.GraphicsDeviceInformation.Adapter;
+            GraphicsAdapter adapter = GraphicsAdapter.DefaultAdapter;
             SurfaceFormat format = adapter.CurrentDisplayMode.Format;
-            // Check for 8xAA
-            if (adapter.CheckDeviceMultiSampleType(DeviceType.Hardware, format,
-                false, MultiSampleType.EightSamples, out quality))
-            {
-                // even if a greater quality is returned, we only want quality 0
-                pp.MultiSampleQuality = 0;
-                pp.MultiSampleType =
-                    MultiSampleType.EightSamples;
-            }
-            // Check for 6xAA
-            else if (adapter.CheckDeviceMultiSampleType(DeviceType.Hardware, format,
-                false, MultiSampleType.SixSamples, out quality))
-            {
-                // even if a greater quality is returned, we only want quality 0
-                pp.MultiSampleQuality = 0;
-                pp.MultiSampleType =
-                    MultiSampleType.SixSamples;
-            }
-            // Check for 4xAA
-            else if (adapter.CheckDeviceMultiSampleType(DeviceType.Hardware,
+
+            if (adapter.CheckDeviceMultiSampleType(DeviceType.Hardware,
                 format, false, MultiSampleType.FourSamples, out quality))
             {
                 // even if a greater quality is returned, we only want quality 0
@@ -108,6 +91,11 @@ namespace Karo.Gui
                     MultiSampleType.TwoSamples;
             }
             return;
+        }
+
+        void graphics_PreparingDeviceSettings(object sender, PreparingDeviceSettingsEventArgs e)
+        {
+            Prepare();
         }
 
         /// <summary>

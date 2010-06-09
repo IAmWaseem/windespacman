@@ -160,12 +160,20 @@ namespace Karo.Gui
                         foreach (BasicEffect effect in mesh.Effects)
                         {
                             Matrix trans = Matrix.Identity;
+                            //trans *= Matrix.CreateScale(0.75f);
+                            //trans *= Matrix.CreateRotationX(MathHelper.ToRadians(((manager.XRotation - 315))));
+                            //trans *= Matrix.CreateRotationY(MathHelper.ToRadians(180));
+                            //trans *= Matrix.CreateRotationZ(MathHelper.ToRadians(-1 * (180 - manager.ZRotation)));
+                            //trans *= Matrix.CreateTranslation(manager.MaxX - (manager.BoardWidth + 1), manager.MinY + i - min, 0);
+                            //trans *= transforms[mesh.ParentBone.Index] * game.World;
+
                             trans *= Matrix.CreateScale(0.75f);
-                            trans *= Matrix.CreateRotationX(MathHelper.ToRadians(((manager.XRotation - 315))));
-                            trans *= Matrix.CreateRotationY(MathHelper.ToRadians(180));
+
+                            trans *= Matrix.CreateRotationX(MathHelper.ToRadians(-1 * (180 + (manager.XRotation - 315))));
                             trans *= Matrix.CreateRotationZ(MathHelper.ToRadians(-1 * (180 - manager.ZRotation)));
                             trans *= Matrix.CreateTranslation(manager.MaxX - (manager.BoardWidth + 1), manager.MinY + i - min, 0);
                             trans *= transforms[mesh.ParentBone.Index] * game.World;
+
 
                             effect.World = trans;
                             effect.View = game.View;

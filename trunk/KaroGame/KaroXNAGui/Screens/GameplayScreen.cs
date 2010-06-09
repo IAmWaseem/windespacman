@@ -58,8 +58,6 @@ namespace GameStateManagement
         private const float animationTime = 3.0f;
         public bool ShowTargetPlaces { get; set; }
 
-
-
         public Matrix World
         {
             get
@@ -77,7 +75,7 @@ namespace GameStateManagement
         {
             get
             {
-                if (lookAtTop)
+                if (EnableTopView)
                     return topView;
                 else
                     return cameraView;
@@ -137,7 +135,7 @@ namespace GameStateManagement
         private static bool tileAnimating = false;
 
         bool uPressed = false;
-        bool lookAtTop = false;
+        public bool EnableTopView { get; set; }
 
         public static Board current { get; set; }
         private List<BoundingBox> BoundingBoxes = new List<BoundingBox>();
@@ -324,10 +322,10 @@ namespace GameStateManagement
                 {
                     if (tPressed)
                     {
-                        if (lookAtTop)
-                            lookAtTop = false;
+                        if (EnableTopView)
+                            EnableTopView = false;
                         else
-                            lookAtTop = true;
+                            EnableTopView = true;
                     }
                     tPressed = false;
                 }
@@ -481,7 +479,7 @@ namespace GameStateManagement
                     }
                 }
 
-                if (!lookAtTop)
+                if (!EnableTopView)
                 {
                     // rotate with left key
                     if (Keyboard.GetState().IsKeyDown(Keys.Left))

@@ -85,7 +85,7 @@ namespace Karo.Gui
                     break;
 
                 case Difficulty.Medium:
-                    playerB = new PlayerSettings(true, AlgorithmType.AlphaBeta, 2, false, false, EvaluationType.BetterOne);
+                    playerB = new PlayerSettings(true, AlgorithmType.AlphaBeta, 5, false, false, EvaluationType.BetterOne);
                     break;
 
                 case Difficulty.Hard:
@@ -147,10 +147,10 @@ namespace Karo.Gui
             this.DrawOrder = 1000000;
             game.ScreenManager.Game.Components.Add(new Letters(game, this));
 
-            world = Matrix.CreateScale(0.4f) * Matrix.Identity * Matrix.CreateTranslation(0f,2f,9f);
-            worldRed = Matrix.CreateScale(0.3f) * Matrix.Identity * Matrix.CreateTranslation(0f, 3f, 11f);
-            worldBlue = Matrix.CreateScale(0.5f) * Matrix.Identity * Matrix.CreateTranslation(1f, 3f, 7f);
-            worldWhite = Matrix.CreateScale(0.2f) * Matrix.Identity * Matrix.CreateTranslation(1f, 1.6f, 11f);
+            world = Matrix.CreateScale(0.4f) * Matrix.Identity * Matrix.CreateTranslation(0f,1.5f,11f);
+            worldRed = Matrix.CreateScale(0.3f) * Matrix.Identity * Matrix.CreateTranslation(0f, 2.5f, 13f);
+            worldBlue = Matrix.CreateScale(0.5f) * Matrix.Identity * Matrix.CreateTranslation(1f, 2.5f, 9f);
+            worldWhite = Matrix.CreateScale(0.2f) * Matrix.Identity * Matrix.CreateTranslation(1f, 1.7f, 13f);
             view = Matrix.CreateLookAt(new Vector3(1, 3, 17), new Vector3(0, 0, 0), Vector3.Up);
             projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 1.3f, 0.1f, 10000.0f);
         }
@@ -466,6 +466,22 @@ namespace Karo.Gui
                     }
                     mesh.Draw();
                 }
+
+                spriteBatch.Begin();
+                SpriteFont sf = game.ScreenManager.Game.Content.Load<SpriteFont>("GameEndFont");
+
+                string text = "The AI is thinking...";
+
+                Vector2 sizeText = sf.MeasureString(text);
+
+                int widthScreen = game.ScreenManager.Game.Window.ClientBounds.Width;
+                int heightScreen = game.ScreenManager.Game.Window.ClientBounds.Height;
+
+                float positionCenterX = (widthScreen / 2) - (sizeText.X / 2);
+                float positionCenterY = (heightScreen / 2) - (sizeText.Y / 2);
+
+                spriteBatch.DrawString(sf, text, new Vector2(positionCenterX, positionCenterY), Color.White);
+                spriteBatch.End();
             }
             base.Draw(gameTime);
         }

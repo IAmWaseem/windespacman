@@ -180,7 +180,7 @@ namespace GameStateManagement
         public void Initialize()
         {
             cameraLocation = new Vector3(0, -10, 10);
-            EnableAnimation = true;
+            EnableAnimation = Karo.Gui.Properties.Settings.Default.EnableAnimation;
             // framerate
             fc = new FramerateComponent(ScreenManager.Game);
             lc = new LoggerComponent(ScreenManager.Game);
@@ -327,9 +327,17 @@ namespace GameStateManagement
                     if (f11Pressed)
                     {
                         if (EnableAnimation)
+                        {
+                            Karo.Gui.Properties.Settings.Default.EnableAnimation = false;
+                            Karo.Gui.Properties.Settings.Default.Save();
                             EnableAnimation = false;
+                        }
                         else
+                        {
+                            Karo.Gui.Properties.Settings.Default.EnableAnimation = true;
+                            Karo.Gui.Properties.Settings.Default.Save();
                             EnableAnimation = true;
+                        }
                     }
                     f11Pressed = false;
                 }

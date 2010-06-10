@@ -671,7 +671,9 @@ namespace Karo.Gui
                         }
                         //set to false, so no yellow will apear after 1 sec.
                         selectedElementFrom.IsSelected = false;
+                        selectedElementFrom.IsMouseOver = false;
                         selectedElementTo.IsSelected = false;
+                        selectedElementTo.IsMouseOver = false;
                         
                         AICalculates = true;
                         threadWaiting = false;

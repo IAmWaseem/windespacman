@@ -28,7 +28,8 @@ namespace GameStateManagement
         MenuEntry transtableMenuEntry;
         MenuEntry plyDepthMenuEntry;
 
-        static Difficulty currentLevel = Difficulty.Medium;
+        private static Karo.Gui.Properties.Settings DefaultSettings { get { return Karo.Gui.Properties.Settings.Default; } }
+        static Difficulty currentLevel = (Difficulty)DefaultSettings.Difficulty;
 
         static string[] computerAI = { "Random", "Mini Max", "Alpha Beta" };
         static int currentAI = 0;
@@ -99,8 +100,8 @@ namespace GameStateManagement
             if (currentLevel > Difficulty.Hard)
                 currentLevel = 0;
 
-            Karo.Gui.Properties.Settings.Default.Difficulty = (int)currentLevel;
-            Karo.Gui.Properties.Settings.Default.Save();
+            DefaultSettings.Difficulty = (int)currentLevel;
+            DefaultSettings.Save();
 
             SetMenuEntryText();
         }

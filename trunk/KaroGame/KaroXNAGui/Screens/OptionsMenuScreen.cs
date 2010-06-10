@@ -30,7 +30,7 @@ namespace GameStateManagement
         MenuEntry computerLevelMenuEntry;
         MenuEntry multisamplingtypeMenuEntry;
         MenuEntry fullScreenMenuEntry;
-        MenuEntry plyDepthMenuEntry;
+        MenuEntry resolutionMenuEntry;
 
         private static Karo.Gui.Properties.Settings DefaultSettings { get { return Karo.Gui.Properties.Settings.Default; } }
         static Difficulty currentLevel = (Difficulty)DefaultSettings.Difficulty;
@@ -57,7 +57,7 @@ namespace GameStateManagement
             computerLevelMenuEntry = new MenuEntry(string.Empty);
             multisamplingtypeMenuEntry = new MenuEntry(string.Empty);
             fullScreenMenuEntry = new MenuEntry(string.Empty);
-            plyDepthMenuEntry = new MenuEntry(string.Empty);
+            resolutionMenuEntry = new MenuEntry(string.Empty);
 
             MenuEntry backMenuEntry = new MenuEntry("Back");
 
@@ -76,14 +76,14 @@ namespace GameStateManagement
             computerLevelMenuEntry.Selected += computerlevelMenuEntrySelected;
             multisamplingtypeMenuEntry.Selected += multisamplingtypeMenuEntrySelected;
             fullScreenMenuEntry.Selected += fullScreenMenuEntrySelected;
-            plyDepthMenuEntry.Selected += plydepthMenuEntrySelected;
+            resolutionMenuEntry.Selected += resolutionMenuEntrySelected;
             backMenuEntry.Selected += OnCancel;
 
             // Add entries to the menu.
             MenuEntries.Add(computerLevelMenuEntry);
             MenuEntries.Add(multisamplingtypeMenuEntry);
             MenuEntries.Add(fullScreenMenuEntry);
-            MenuEntries.Add(plyDepthMenuEntry);
+            MenuEntries.Add(resolutionMenuEntry);
             MenuEntries.Add(backMenuEntry);
         }
 
@@ -107,7 +107,7 @@ namespace GameStateManagement
             computerLevelMenuEntry.Text = "Difficulty: " + currentLevel;
             multisamplingtypeMenuEntry.Text = "Anti alias level: " + (int)multisamplingType;
             fullScreenMenuEntry.Text = "Full screen: " + (fullScreen ? "on" : "off");
-            plyDepthMenuEntry.Text = "Ply depth: " + supportedModes[SelectedMode].Width.ToString("0") +"x" +supportedModes[SelectedMode].Height.ToString("0");
+            resolutionMenuEntry.Text = "Resolution: " + supportedModes[SelectedMode].Width.ToString("0") +"x" +supportedModes[SelectedMode].Height.ToString("0");
         }
 
 
@@ -181,11 +181,10 @@ namespace GameStateManagement
             SetMenuEntryText();
         }
 
-
         /// <summary>
         /// Event handler for when the Elf menu entry is selected.
         /// </summary>
-        void plydepthMenuEntrySelected(object sender, PlayerIndexEventArgs e)
+        void resolutionMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
             SelectedMode++;
             if (SelectedMode > supportedModes.Count - 1)

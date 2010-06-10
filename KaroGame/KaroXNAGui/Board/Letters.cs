@@ -187,7 +187,11 @@ namespace Karo.Gui
                             effect.World = trans;
                             effect.View = game.View;
                             effect.Projection = game.Projection;
-                            effect.EnableDefaultLighting();
+
+                            effect.LightingEnabled = true;
+                            effect.DirectionalLight0.Enabled = true;
+                            effect.DirectionalLight0.DiffuseColor = Color.Orange.ToVector3();
+                            effect.DirectionalLight0.Direction = new Vector3(-1, -1, -1);
                         }
                         mesh.Draw();
                     }

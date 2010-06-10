@@ -10,6 +10,7 @@
 #region Using Statements
 using Microsoft.Xna.Framework;
 using Karo.Gui;
+using Microsoft.Xna.Framework.Graphics;
 #endregion
 
 namespace GameStateManagement
@@ -24,15 +25,17 @@ namespace GameStateManagement
         #region Fields
 
         MenuEntry computerLevelMenuEntry;
-        MenuEntry algorithmMenuEntry;
+        MenuEntry multisamplingtypeMenuEntry;
         MenuEntry transtableMenuEntry;
         MenuEntry plyDepthMenuEntry;
 
         private static Karo.Gui.Properties.Settings DefaultSettings { get { return Karo.Gui.Properties.Settings.Default; } }
         static Difficulty currentLevel = (Difficulty)DefaultSettings.Difficulty;
 
-        static string[] computerAI = { "Random", "Mini Max", "Alpha Beta" };
-        static int currentAI = 0;
+        static bool enableMultiSampling = DefaultSettings.MultiSampleAntiAlias;
+        static MultiSampleType multisamplingType = DefaultSettings.MultiSamplingLevel;
+
+        static int currentSampling = 0;
         static bool useTransTable = true;
         static int plyDepth = 2;
 
@@ -49,7 +52,7 @@ namespace GameStateManagement
         {
             // Create our menu entries.
             computerLevelMenuEntry = new MenuEntry(string.Empty);
-            algorithmMenuEntry = new MenuEntry(string.Empty);
+            multisamplingtypeMenuEntry = new MenuEntry(string.Empty);
             transtableMenuEntry = new MenuEntry(string.Empty);
             plyDepthMenuEntry = new MenuEntry(string.Empty);
 
@@ -59,14 +62,14 @@ namespace GameStateManagement
 
             // Hook up menu event handlers.
             computerLevelMenuEntry.Selected += computerlevelMenuEntrySelected;
-            algorithmMenuEntry.Selected += algorithmMenuEntrySelected;
+            multisamplingtypeMenuEntry.Selected += multisamplingtypeMenuEntrySelected;
             transtableMenuEntry.Selected += transtableMenuEntrySelected;
             plyDepthMenuEntry.Selected += plydepthMenuEntrySelected;
             backMenuEntry.Selected += OnCancel;
 
             // Add entries to the menu.
             MenuEntries.Add(computerLevelMenuEntry);
-            MenuEntries.Add(algorithmMenuEntry);
+            MenuEntries.Add(multisamplingtypeMenuEntry);
             MenuEntries.Add(transtableMenuEntry);
             MenuEntries.Add(plyDepthMenuEntry);
             MenuEntries.Add(backMenuEntry);
@@ -79,7 +82,7 @@ namespace GameStateManagement
         void SetMenuEntryText()
         {
             computerLevelMenuEntry.Text = "Difficulty: " + currentLevel;
-            algorithmMenuEntry.Text = "Custom algorithm: " + computerAI[currentAI];
+            multisamplingtypeMenuEntry.Text = "Anti alias level: " + (int)multisamplingType;
             transtableMenuEntry.Text = "Use transposition table: " + (useTransTable ? "on" : "off");
             plyDepthMenuEntry.Text = "Ply depth: " + plyDepth;
         }
@@ -110,9 +113,33 @@ namespace GameStateManagement
         /// <summary>
         /// Event handler for when the Language menu entry is selected.
         /// </summary>
-        void algorithmMenuEntrySelected(object sender, PlayerIndexEventArgs e)
+        void multisamplingtypeMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
-            currentAI = (currentAI + 1) % computerAI.Length;
+            int level = (int)multisamplingType;
+            if (level == 0 || level == 1 || level == 2 || level == 4 || level == 8 || level == 16)
+            {
+                // ok multisample
+            }
+            else
+            {
+                multisamplingType = 0;
+            }
+
+            if (multisamplingType == 0)
+                multisamplingType++;
+            else
+                multisamplingType = (MultiSampleType)((int)multisamplingType * 2);
+
+            if (multisamplingType > MultiSampleType.SixteenSamples)
+                multisamplingType = 0;
+
+            if (multisamplingType == 0)
+                DefaultSettings.MultiSampleAntiAlias = false;
+            else
+                DefaultSettings.MultiSampleAntiAlias = true;
+
+            DefaultSettings.MultiSamplingLevel = multisamplingType;
+            DefaultSettings.Save();
 
             SetMenuEntryText();
         }

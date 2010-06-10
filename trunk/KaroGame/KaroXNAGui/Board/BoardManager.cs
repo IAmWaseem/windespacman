@@ -30,6 +30,9 @@ namespace Karo.Gui
         private GameplayScreen game;
         private UIConnector uiConnector;
         private Difficulty difficulty;
+        private Matrix world, worldWhite, worldRed, worldBlue, view, projection;
+        private Model cogwheel, cogwheelRed, cogwheelBlue, cogwheelWhite;
+        private Matrix[] transforms, transformsRed, transformsBlue, transformsWhite;
 
         public int MaxX { get; set; }
         public int MaxY { get; set; }
@@ -118,6 +121,24 @@ namespace Karo.Gui
             }
         }
 
+        protected override void LoadContent()
+        {
+            cogwheel = game.ScreenManager.Game.Content.Load<Model>("Cogwheel"); ;
+            cogwheelRed = game.ScreenManager.Game.Content.Load<Model>("CogwheelRed");
+            cogwheelWhite = game.ScreenManager.Game.Content.Load<Model>("CogwheelWhite");
+            cogwheelBlue = game.ScreenManager.Game.Content.Load<Model>("CogwheelBlue");
+
+            transforms = new Matrix[cogwheel.Bones.Count];
+            transformsRed = new Matrix[cogwheelRed.Bones.Count];
+            transformsWhite = new Matrix[cogwheelWhite.Bones.Count];
+            transformsBlue = new Matrix[cogwheelBlue.Bones.Count];
+            cogwheel.CopyAbsoluteBoneTransformsTo(transforms);
+            cogwheelRed.CopyAbsoluteBoneTransformsTo(transformsRed);
+            cogwheelWhite.CopyAbsoluteBoneTransformsTo(transformsWhite);
+            cogwheelBlue.CopyAbsoluteBoneTransformsTo(transformsBlue);
+            base.LoadContent();
+        }
+
         public BoardManager(GameplayScreen game)
             : base(game.ScreenManager.Game)
         {
@@ -125,6 +146,13 @@ namespace Karo.Gui
             this.game = game;
             this.DrawOrder = 1000000;
             game.ScreenManager.Game.Components.Add(new Letters(game, this));
+
+            world = Matrix.CreateScale(0.4f) * Matrix.Identity * Matrix.CreateTranslation(0f,2f,9f);
+            worldRed = Matrix.CreateScale(0.3f) * Matrix.Identity * Matrix.CreateTranslation(0f, 3f, 11f);
+            worldBlue = Matrix.CreateScale(0.5f) * Matrix.Identity * Matrix.CreateTranslation(1f, 3f, 7f);
+            worldWhite = Matrix.CreateScale(0.2f) * Matrix.Identity * Matrix.CreateTranslation(1f, 1.6f, 11f);
+            view = Matrix.CreateLookAt(new Vector3(1, 3, 17), new Vector3(0, 0, 0), Vector3.Up);
+            projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 1.3f, 0.1f, 10000.0f);
         }
 
         public void UpdateMinMax()
@@ -368,8 +396,6 @@ namespace Karo.Gui
                         winning = "You've won the game! :-)";
                     else 
                         winning = "You've lost the game! :-(";
-
-
                     
                     Vector2 sizeText = sf.MeasureString(winning);
 
@@ -388,6 +414,57 @@ namespace Karo.Gui
                     timeSpan = new TimeSpan(0, 0, 0, 0);
                     ClearScreen();
                     this.StartGame(difficulty);
+                }
+            }
+            if (AICalculates)
+            {
+                foreach (ModelMesh mesh in cogwheel.Meshes)
+                {
+                    world = Matrix.CreateRotationZ(0.001f) * world;
+                    foreach (BasicEffect effect in mesh.Effects)
+                    {
+                        effect.EnableDefaultLighting();
+                        effect.Projection = projection;
+                        effect.World = transforms[mesh.ParentBone.Index] * world;
+                        effect.View = view;
+                    }
+                    mesh.Draw();
+                }
+                foreach (ModelMesh mesh in cogwheelRed.Meshes)
+                {
+                    worldRed = Matrix.CreateRotationZ(0.003f) * worldRed;
+                    foreach (BasicEffect effect in mesh.Effects)
+                    {
+                        effect.EnableDefaultLighting();
+                        effect.Projection = projection;
+                        effect.World = transformsRed[mesh.ParentBone.Index] * worldRed;
+                        effect.View = view;
+                    }
+                    mesh.Draw();
+                }
+                foreach (ModelMesh mesh in cogwheelBlue.Meshes)
+                {
+                    worldBlue = Matrix.CreateRotationZ(0.0016f) * worldBlue;
+                    foreach (BasicEffect effect in mesh.Effects)
+                    {
+                        effect.EnableDefaultLighting();
+                        effect.Projection = projection;
+                        effect.World = transformsBlue[mesh.ParentBone.Index] * worldBlue;
+                        effect.View = view;
+                    }
+                    mesh.Draw();
+                }
+                foreach (ModelMesh mesh in cogwheelWhite.Meshes)
+                {
+                    worldWhite = Matrix.CreateRotationZ(0.0016f) * worldWhite;
+                    foreach (BasicEffect effect in mesh.Effects)
+                    {
+                        effect.EnableDefaultLighting();
+                        effect.Projection = projection;
+                        effect.World = transformsWhite[mesh.ParentBone.Index] * worldWhite;
+                        effect.View = view;
+                    }
+                    mesh.Draw();
                 }
             }
             base.Draw(gameTime);

@@ -314,8 +314,8 @@ namespace GameStateManagement
             Game.GraphicsDevice.RenderState.AlphaBlendEnable = false;
             Game.GraphicsDevice.RenderState.AlphaTestEnable = false;
 
-            Game.GraphicsDevice.PresentationParameters.MultiSampleType = Karo.Gui.Properties.Settings.Default.MultiSampling;
-            Game.GraphicsDevice.RenderState.MultiSampleAntiAlias = true;
+            Game.GraphicsDevice.PresentationParameters.MultiSampleType = Karo.Gui.Properties.Settings.Default.MultiSamplingLevel;
+            Game.GraphicsDevice.RenderState.MultiSampleAntiAlias = Karo.Gui.Properties.Settings.Default.MultiSampleAntiAlias;
 
             Game.GraphicsDevice.SamplerStates[0].AddressU = TextureAddressMode.Wrap;
             Game.GraphicsDevice.SamplerStates[0].AddressV = TextureAddressMode.Wrap;

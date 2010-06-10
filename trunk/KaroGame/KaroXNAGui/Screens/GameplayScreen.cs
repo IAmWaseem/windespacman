@@ -231,7 +231,7 @@ namespace GameStateManagement
 
 
             manager = new BoardManager(this);
-            manager.StartGame(Difficulty.Medium);
+            manager.StartGame((Difficulty)Karo.Gui.Properties.Settings.Default.Difficulty);
             ScreenManager.Game.Components.Add(manager);
             if (UIConnector.IsTwoAI())
                 thread.Start();
@@ -583,7 +583,6 @@ namespace GameStateManagement
                         boardAnimating = false;
                     }
                 }
-
 
                 int max = Math.Max(manager.BoardWidth + 3, manager.BoardHeight + 3);
 

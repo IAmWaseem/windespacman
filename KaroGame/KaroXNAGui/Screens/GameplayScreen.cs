@@ -188,6 +188,8 @@ namespace GameStateManagement
             ScreenManager.Game.Components.Add(fc);
             ScreenManager.Game.Components.Add(lc);
 
+            ScreenManager.Graphics.IsFullScreen = Karo.Gui.Properties.Settings.Default.FullScreen;
+
             tPressed = false;
             rotate = false;
             middleMousePressed = false;
@@ -364,10 +366,14 @@ namespace GameStateManagement
                     {
                         if (ScreenManager.Graphics.IsFullScreen)
                         {
+                            Karo.Gui.Properties.Settings.Default.FullScreen = false;
+                            Karo.Gui.Properties.Settings.Default.Save();
                             ScreenManager.Graphics.IsFullScreen = false;
                         }
                         else
                         {
+                            Karo.Gui.Properties.Settings.Default.FullScreen = true;
+                            Karo.Gui.Properties.Settings.Default.Save();
                             ScreenManager.Graphics.IsFullScreen = true;
                         }
 

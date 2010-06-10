@@ -161,6 +161,19 @@ namespace GameStateManagement
             if (multisamplingType > MultiSampleType.SixteenSamples)
                 multisamplingType = 0;
 
+            SurfaceFormat format = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Format;
+            // Check for 4xAA
+            if (GraphicsAdapter.DefaultAdapter.CheckDeviceMultiSampleType(DeviceType.Hardware, format,
+                false, multisamplingType))
+            {
+                
+            }
+            else
+            {
+                multisamplingType = 0;
+            }
+
+
             if (multisamplingType == 0)
                 DefaultSettings.MultiSampleAntiAlias = false;
             else

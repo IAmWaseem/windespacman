@@ -169,7 +169,8 @@ namespace Karo.Gui
                         {
                             Matrix trans = Matrix.Identity;
 
-                            trans *= Matrix.CreateScale(0.75f);
+                            trans *= Matrix.CreateScale(1.75f);
+
                             if (game.EnableTopView)
                             {
                                 trans *= Matrix.CreateRotationX(MathHelper.ToRadians(-1 * (180 + (44.9f - 315))));

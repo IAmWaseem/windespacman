@@ -344,16 +344,17 @@ namespace GameStateManagement
                     f11Pressed = false;
                 }
 
-                if (Mouse.GetState().MiddleButton == ButtonState.Pressed)
-                    middleMousePressed = true;
+                MouseState mouseStateCurrent = Mouse.GetState();
 
-                if (Mouse.GetState().MiddleButton == ButtonState.Released)
+                // Move the sprite to the current mouse position when the left button is pressed
+                if (mouseStateCurrent.MiddleButton == ButtonState.Pressed)
                 {
-                    if (middleMousePressed)
-                    {
-                        rotate = true;
-                    }
+                    middleMousePressed = true;
+                }
+                if (mouseStateCurrent.MiddleButton == ButtonState.Released && middleMousePressed)
+                {
                     middleMousePressed = false;
+                    rotate = true;
                 }
 
                 // enter or leave fullscreen

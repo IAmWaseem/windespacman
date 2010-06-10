@@ -329,8 +329,11 @@ namespace Karo.Gui
                 {
                     if (smallestIntersect > intersect)
                     {
-                        selected = boardElement;
-                        smallestIntersect = intersect;
+                        if (boardElement.DefaultColor != Color.Red.ToVector3())
+                        {
+                            selected = boardElement;
+                            smallestIntersect = intersect;
+                        }
                     }
                 }
 

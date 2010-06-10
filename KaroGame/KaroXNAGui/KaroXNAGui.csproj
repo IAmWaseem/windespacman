@@ -105,6 +105,8 @@
     </Compile>
     <Compile Include="Settings.cs" />
     <Compile Include="Settings\Difficulty.cs" />
+    <Compile Include="Sound\SoundPlayer.cs" />
+    <Compile Include="Sound\SoundPlayerLoop.cs" />
     <Compile Include="Utility\DrawBoundingBox.cs" />
     <Compile Include="Components\FramerateComponent.cs" />
     <Compile Include="Components\LoggerComponent.cs" />

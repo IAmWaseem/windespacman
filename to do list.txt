@@ -1,4 +1,4 @@
-cijfers/letters
+cijfers/letters -> finished
 middle-mouse-button
 undo selection right mouse button
 geel blijven 1 sec. daarna niet meer geel(als ai gaat rekenen)

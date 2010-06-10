@@ -7,7 +7,7 @@ using GameStateManagement;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Drawing;
-using Color=Microsoft.Xna.Framework.Graphics.Color;
+using Color = Microsoft.Xna.Framework.Graphics.Color;
 using Point = Microsoft.Xna.Framework.Point;
 using FormPoint = System.Drawing.Point;
 using System.Threading;
@@ -108,7 +108,7 @@ namespace Karo.Gui
 
             foreach (GameComponent gameComponent in game.ScreenManager.Game.Components)
             {
-                if(!(gameComponent is BoardElement))
+                if (!(gameComponent is BoardElement))
                 {
                     clearList.Add(gameComponent);
                 }
@@ -149,7 +149,7 @@ namespace Karo.Gui
             this.DrawOrder = 1000000;
             game.ScreenManager.Game.Components.Add(new Letters(game, this));
 
-            world = Matrix.CreateScale(0.4f) * Matrix.Identity * Matrix.CreateTranslation(0f,1.5f,11f);
+            world = Matrix.CreateScale(0.4f) * Matrix.Identity * Matrix.CreateTranslation(0f, 1.5f, 11f);
             worldRed = Matrix.CreateScale(0.3f) * Matrix.Identity * Matrix.CreateTranslation(0f, 2.5f, 13f);
             worldBlue = Matrix.CreateScale(0.5f) * Matrix.Identity * Matrix.CreateTranslation(1f, 2.5f, 9f);
             worldWhite = Matrix.CreateScale(0.2f) * Matrix.Identity * Matrix.CreateTranslation(1f, 1.7f, 13f);
@@ -274,14 +274,18 @@ namespace Karo.Gui
 
         public override void Update(GameTime gameTime)
         {
-            if (threadWaiting)
+            if (Mouse.GetState().RightButton == ButtonState.Pressed)
+                rightMouseButtonPressed = true;
+            if (Mouse.GetState().RightButton == ButtonState.Released && rightMouseButtonPressed)
             {
-                if (Mouse.GetState().RightButton == ButtonState.Pressed)
-                    rightMouseButtonPressed = true;
-                if (Mouse.GetState().RightButton == ButtonState.Released && rightMouseButtonPressed)
+                rightMouseButtonPressed = false;
+                if (selectedElementFrom != null && selectedElementTo != null)
                 {
-                    rightMouseButtonPressed = false;
                     undoMove = true;
+                }
+                else
+                {
+                    selectedElementFrom = null;
                 }
             }
             if (isBusy)
@@ -380,8 +384,6 @@ namespace Karo.Gui
                 thread.Start();
             }
 
-            
-
             UpdateMinMax();
 
             base.Update(gameTime);
@@ -399,17 +401,17 @@ namespace Karo.Gui
 
                     string winning = "";
 
-                    if(uiConnector.GetCurrentPlayer().Equals("Player A (red)"))
+                    if (uiConnector.GetCurrentPlayer().Equals("Player A (red)"))
                         winning = "You've won the game! :-)";
-                    else 
+                    else
                         winning = "You've lost the game! :-(";
-                    
+
                     Vector2 sizeText = sf.MeasureString(winning);
 
                     int widthScreen = game.ScreenManager.Game.Window.ClientBounds.Width;
                     int heightScreen = game.ScreenManager.Game.Window.ClientBounds.Height;
 
-                    float positionCenterX = (widthScreen/2) - (sizeText.X/2);
+                    float positionCenterX = (widthScreen / 2) - (sizeText.X / 2);
                     float positionCenterY = (heightScreen / 2) - (sizeText.Y / 2);
 
                     spriteBatch.DrawString(sf, winning, new Vector2(positionCenterX, positionCenterY), Color.White);

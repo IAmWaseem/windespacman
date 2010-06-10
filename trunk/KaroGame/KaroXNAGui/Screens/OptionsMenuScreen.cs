@@ -166,7 +166,7 @@ namespace GameStateManagement
             if (GraphicsAdapter.DefaultAdapter.CheckDeviceMultiSampleType(DeviceType.Hardware, format,
                 false, multisamplingType))
             {
-                
+                // it supports!!!!
             }
             else
             {

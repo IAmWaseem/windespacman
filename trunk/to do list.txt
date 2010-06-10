@@ -1,10 +1,13 @@
 cijfers/letters -> finished
-middle-mouse-button
+settings -> finished
+geluidje bij foute move -> finished
+
+middle-mouse-button -> broken
+
 undo selection right mouse button
-geel blijven 1 sec. daarna niet meer geel(als ai gaat rekenen)
+geel blijven 1 sec. daarna niet meer geel (als ai gaat rekenen)
 alleen selecteren wat van jezelf is
-geluidje bij foute move
-settings
+
 
 
 

@@ -334,7 +334,10 @@ namespace Karo.Gui
                 {
                     if (smallestIntersect > intersect)
                     {
-                        if (boardElement.DefaultColor != Color.Red.ToVector3())
+                        if (uiConnector.CurrentPlayerNumPieces() < 6 && boardElement is Tile && selectedElementFrom == null)
+                        {
+                        }
+                        else if (boardElement.DefaultColor != Color.Red.ToVector3())
                         {
                             selected = boardElement;
                             smallestIntersect = intersect;

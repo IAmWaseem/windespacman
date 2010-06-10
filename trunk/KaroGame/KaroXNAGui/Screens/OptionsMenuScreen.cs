@@ -9,6 +9,7 @@
 
 #region Using Statements
 using Microsoft.Xna.Framework;
+using Karo.Gui;
 #endregion
 
 namespace GameStateManagement
@@ -27,15 +28,7 @@ namespace GameStateManagement
         MenuEntry transtableMenuEntry;
         MenuEntry plyDepthMenuEntry;
 
-        enum computerLevel
-        {
-            Easy,
-            Medium,
-            Hard,
-            Custom
-        }
-
-        static computerLevel currentLevel = computerLevel.Medium;
+        static Difficulty currentLevel = Difficulty.Medium;
 
         static string[] computerAI = { "Random", "Mini Max", "Alpha Beta" };
         static int currentAI = 0;
@@ -103,7 +96,7 @@ namespace GameStateManagement
         {
             currentLevel++;
 
-            if (currentLevel > computerLevel.Custom)
+            if (currentLevel > Difficulty.Hard)
                 currentLevel = 0;
 
             SetMenuEntryText();

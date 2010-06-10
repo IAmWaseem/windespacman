@@ -25,7 +25,7 @@ namespace Karo.Gui
         public GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         ScreenManager screenManager;
-
+        SoundPlayerLoop loopSound;
         //background
         SpriteBatch backgroundBatch;
         Texture2D background;
@@ -134,7 +134,8 @@ namespace Karo.Gui
             spriteBatch = new SpriteBatch(GraphicsDevice);
             backgroundBatch = new SpriteBatch(GraphicsDevice);
             background = Content.Load<Texture2D>("GameMenuBackground");
-
+            loopSound = new SoundPlayerLoop(this, "guitar");
+            loopSound.PlayLoop();
             // TODO: use this.Content to load your game content here
         }
 

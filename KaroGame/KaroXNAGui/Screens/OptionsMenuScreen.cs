@@ -105,7 +105,12 @@ namespace GameStateManagement
         void SetMenuEntryText()
         {
             computerLevelMenuEntry.Text = "Difficulty: " + currentLevel;
-            multisamplingtypeMenuEntry.Text = "Anti alias level: " + (int)multisamplingType;
+            if((int)multisamplingType > 0)
+                multisamplingtypeMenuEntry.Text = "Anti alias: " + (int)multisamplingType + "x";
+            else
+                multisamplingtypeMenuEntry.Text = "Anti alias: off";
+
+            
             fullScreenMenuEntry.Text = "Full screen: " + (fullScreen ? "on" : "off");
             resolutionMenuEntry.Text = "Resolution: " + supportedModes[SelectedMode].Width.ToString("0") +"x" +supportedModes[SelectedMode].Height.ToString("0");
         }

@@ -153,7 +153,12 @@ namespace Karo.Gui
                             effect.LightingEnabled = true;
                             effect.DirectionalLight0.Enabled = true;
                             effect.DirectionalLight0.DiffuseColor = Color.Orange.ToVector3();
+                            effect.DirectionalLight0.SpecularColor = Color.White.ToVector3();
                             effect.DirectionalLight0.Direction = new Vector3(-1, -1, -1);
+
+                            effect.DirectionalLight1.Enabled = true;
+                            effect.DirectionalLight1.DiffuseColor = Color.Orange.ToVector3();
+                            effect.DirectionalLight1.Direction = new Vector3(1, 1, 1);
                         }
                         mesh.Draw();
                     }
@@ -195,7 +200,12 @@ namespace Karo.Gui
                             effect.LightingEnabled = true;
                             effect.DirectionalLight0.Enabled = true;
                             effect.DirectionalLight0.DiffuseColor = Color.Orange.ToVector3();
+                            effect.DirectionalLight0.SpecularColor = Color.White.ToVector3();
                             effect.DirectionalLight0.Direction = new Vector3(-1, -1, -1);
+
+                            effect.DirectionalLight1.Enabled = true;
+                            effect.DirectionalLight1.DiffuseColor = Color.Orange.ToVector3();
+                            effect.DirectionalLight1.Direction = new Vector3(1, 1, 1);
                         }
                         mesh.Draw();
                     }

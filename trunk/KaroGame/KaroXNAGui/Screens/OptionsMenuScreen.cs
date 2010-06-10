@@ -99,6 +99,9 @@ namespace GameStateManagement
             if (currentLevel > Difficulty.Hard)
                 currentLevel = 0;
 
+            Karo.Gui.Properties.Settings.Default.Difficulty = (int)currentLevel;
+            Karo.Gui.Properties.Settings.Default.Save();
+
             SetMenuEntryText();
         }
 

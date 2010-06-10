@@ -11,8 +11,8 @@
     <Setting Name="ScreenHeight" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">600</Value>
     </Setting>
-    <Setting Name="MultiSampling" Type="Microsoft.Xna.Framework.Graphics.MultiSampleType" Scope="User">
-      <Value Profile="(Default)">SixteenSamples</Value>
+    <Setting Name="MultiSamplingLevel" Type="Microsoft.Xna.Framework.Graphics.MultiSampleType" Scope="User">
+      <Value Profile="(Default)">None</Value>
     </Setting>
     <Setting Name="EnableDebug" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -21,7 +21,10 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="Difficulty" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">2</Value>
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="MultiSampleAntiAlias" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
 </SettingsFile>

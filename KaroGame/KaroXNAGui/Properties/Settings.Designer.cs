@@ -61,13 +61,13 @@ namespace Karo.Gui.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("SixteenSamples")]
-        public global::Microsoft.Xna.Framework.Graphics.MultiSampleType MultiSampling {
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::Microsoft.Xna.Framework.Graphics.MultiSampleType MultiSamplingLevel {
             get {
-                return ((global::Microsoft.Xna.Framework.Graphics.MultiSampleType)(this["MultiSampling"]));
+                return ((global::Microsoft.Xna.Framework.Graphics.MultiSampleType)(this["MultiSamplingLevel"]));
             }
             set {
-                this["MultiSampling"] = value;
+                this["MultiSamplingLevel"] = value;
             }
         }
         
@@ -97,13 +97,25 @@ namespace Karo.Gui.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
         public int Difficulty {
             get {
                 return ((int)(this["Difficulty"]));
             }
             set {
                 this["Difficulty"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool MultiSampleAntiAlias {
+            get {
+                return ((bool)(this["MultiSampleAntiAlias"]));
+            }
+            set {
+                this["MultiSampleAntiAlias"] = value;
             }
         }
     }

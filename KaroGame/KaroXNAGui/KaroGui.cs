@@ -65,8 +65,8 @@ namespace Karo.Gui
         public void InitGraphics()
         {
             // TODO: Add your initialization logic here
-            graphics.GraphicsDevice.RenderState.MultiSampleAntiAlias = true;
-            graphics.GraphicsDevice.PresentationParameters.MultiSampleType = DefaultSettings.MultiSampling;
+            graphics.GraphicsDevice.RenderState.MultiSampleAntiAlias = DefaultSettings.MultiSampleAntiAlias;
+            graphics.GraphicsDevice.PresentationParameters.MultiSampleType = DefaultSettings.MultiSamplingLevel;
 
             graphics.PreferredBackBufferWidth = DefaultSettings.ScreenWidth;
             graphics.PreferredBackBufferHeight = DefaultSettings.ScreenHeight;

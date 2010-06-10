@@ -2,10 +2,11 @@ cijfers/letters -> finished
 settings -> finished
 geluidje bij foute move -> finished
 alleen selecteren wat van jezelf is -> finished
+undo selection right mouse button -> finished
 
 middle-mouse-button -> correct implemented, not working
 
-undo selection right mouse button
+
 geel blijven 1 sec. daarna niet meer geel (als ai gaat rekenen)
 
 

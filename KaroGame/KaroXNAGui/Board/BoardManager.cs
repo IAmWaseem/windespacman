@@ -22,6 +22,7 @@ namespace Karo.Gui
         public Karo.BoardPosition[,] currentBoard { get; set; }
         public int redItems { get; set; }
         public int whiteItems { get; set; }
+
         public bool AICalculates { get; private set; }
         public bool HumanCalculates { get; private set; }
         private BoardElement selectedElementFrom;
@@ -559,15 +560,16 @@ namespace Karo.Gui
                             undoMove = false;
                             return;
                         }
-                        threadWaiting = false;
+
                         AICalculates = true;
+                        threadWaiting = false;
                         currentBoard = (BoardPosition[,])uiConnector.GetBoard().BoardSituation.Clone();
                         currentBoard[(int)selectedElementTo.BoardX, (int)selectedElementTo.BoardY] = BoardPosition.WhiteTail;
                         uiConnector.PlacePiece(placePoint);
                         BoardPosition[,] newBoardSituation = (BoardPosition[,])uiConnector.GetBoard().BoardSituation.Clone();
 
-                        DoAIMove(currentBoard, newBoardSituation);
                         AICalculates = false;
+                        DoAIMove(currentBoard, newBoardSituation);
                     }
                 }
                 else
@@ -625,9 +627,9 @@ namespace Karo.Gui
                         }
 
                         threadWaiting = false;
+                        AICalculates = true;
                         uiConnector.MovePiece(fromPoint, toPoint);
                         
-                        AICalculates = true;
                         BoardPosition[,] newBoardSituation = (BoardPosition[,])uiConnector.GetBoard().BoardSituation.Clone();
                         if (uiConnector.IsWon())
                         {
@@ -638,8 +640,8 @@ namespace Karo.Gui
                             return;
                         }
 
-                        DoAIMove(currentBoard, newBoardSituation);
                         AICalculates = false;
+                        DoAIMove(currentBoard, newBoardSituation);
 
                     }
                     else if (uiConnector.ValidateMoveTile(fromPoint, toPoint))

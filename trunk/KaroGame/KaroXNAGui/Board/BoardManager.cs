@@ -33,6 +33,7 @@ namespace Karo.Gui
         private Matrix world, worldWhite, worldRed, worldBlue, view, projection;
         private Model cogwheel, cogwheelRed, cogwheelBlue, cogwheelWhite;
         private Matrix[] transforms, transformsRed, transformsBlue, transformsWhite;
+        private SoundPlayer wrongMoveSound;
 
         public int MaxX { get; set; }
         public int MaxY { get; set; }
@@ -128,6 +129,7 @@ namespace Karo.Gui
             cogwheelWhite = game.ScreenManager.Game.Content.Load<Model>("CogwheelWhite");
             cogwheelBlue = game.ScreenManager.Game.Content.Load<Model>("CogwheelBlue");
 
+            wrongMoveSound = new SoundPlayer(game.ScreenManager.Game, "error");
             transforms = new Matrix[cogwheel.Bones.Count];
             transformsRed = new Matrix[cogwheelRed.Bones.Count];
             transformsWhite = new Matrix[cogwheelWhite.Bones.Count];
@@ -355,6 +357,8 @@ namespace Karo.Gui
                     {
                         if (uiConnector.IsMovable((int)selectedElementFrom.BoardX, (int)selectedElementFrom.BoardY))
                             GenerateTargetTiles();
+                        else
+                            wrongMoveSound.PlaySound();
                     }
                     else
                     {
@@ -664,6 +668,8 @@ namespace Karo.Gui
                         AICalculates = false;
                         DoAIMove(currentBoard, newBoardSituation);
                     }
+                    else
+                        wrongMoveSound.PlaySound();
                 }
                 else
                 {
@@ -708,7 +714,7 @@ namespace Karo.Gui
                         Thread.Sleep(1000);
                         if (undoMove)
                         {
-                            if(moveDistance == 2)
+                            if (moveDistance == 2)
                                 piece.HeadUp = !piece.HeadUp;
                             selectedElementFrom.Move(oldBoardX, oldBoardY);
                             while (selectedElementFrom.AnimatedStarted) ;
@@ -722,7 +728,7 @@ namespace Karo.Gui
                         threadWaiting = false;
                         AICalculates = true;
                         uiConnector.MovePiece(fromPoint, toPoint);
-                        
+
                         BoardPosition[,] newBoardSituation = (BoardPosition[,])uiConnector.GetBoard().BoardSituation.Clone();
                         if (uiConnector.IsWon())
                         {
@@ -766,6 +772,8 @@ namespace Karo.Gui
                         uiConnector.MoveTile(fromPoint, toPoint);
                         BoardPosition[,] newBoardSituation = (BoardPosition[,])uiConnector.GetBoard().BoardSituation.Clone();
                     }
+                    else
+                        wrongMoveSound.PlaySound();
                 }
             }
             selectedElementFrom = null;

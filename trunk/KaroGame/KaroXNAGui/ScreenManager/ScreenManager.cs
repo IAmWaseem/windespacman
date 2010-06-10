@@ -310,15 +310,16 @@ namespace GameStateManagement
 
         public void ResetGraphicsDeviceSettings()
         {
-            Game.GraphicsDevice.RenderState.DepthBufferEnable = true;
-            Game.GraphicsDevice.RenderState.AlphaBlendEnable = false;
-            Game.GraphicsDevice.RenderState.AlphaTestEnable = false;
+            GraphicsDevice.RenderState.DepthBufferEnable = true;
+            GraphicsDevice.RenderState.AlphaBlendEnable = false;
+            GraphicsDevice.RenderState.AlphaTestEnable = false;
 
-            Game.GraphicsDevice.PresentationParameters.MultiSampleType = Karo.Gui.Properties.Settings.Default.MultiSamplingLevel;
-            Game.GraphicsDevice.RenderState.MultiSampleAntiAlias = Karo.Gui.Properties.Settings.Default.MultiSampleAntiAlias;
+            Graphics.PreferMultiSampling = Karo.Gui.Properties.Settings.Default.MultiSampleAntiAlias;
+            GraphicsDevice.PresentationParameters.MultiSampleType = Karo.Gui.Properties.Settings.Default.MultiSamplingLevel;
+            GraphicsDevice.RenderState.MultiSampleAntiAlias = Karo.Gui.Properties.Settings.Default.MultiSampleAntiAlias;
 
-            Game.GraphicsDevice.SamplerStates[0].AddressU = TextureAddressMode.Wrap;
-            Game.GraphicsDevice.SamplerStates[0].AddressV = TextureAddressMode.Wrap;
+            GraphicsDevice.SamplerStates[0].AddressU = TextureAddressMode.Wrap;
+            GraphicsDevice.SamplerStates[0].AddressV = TextureAddressMode.Wrap;
         }
         
         #endregion

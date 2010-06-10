@@ -49,6 +49,53 @@ namespace Karo.Gui
         /// </summary>
         protected override void Initialize()
         {
+            if (DefaultSettings.FirstRun)
+            {
+                DefaultSettings.FirstRun = false;
+
+                List<DisplayMode> dispList = GraphicsAdapter.DefaultAdapter.SupportedDisplayModes.ToList();
+                List<DisplayMode> tempList = GraphicsAdapter.DefaultAdapter.SupportedDisplayModes.ToList();
+
+                foreach (DisplayMode dm in tempList)
+                {
+                    if (dm.Format != SurfaceFormat.Bgr32)
+                        dispList.Remove(dm);
+                }
+
+                if (dispList.Count > 2)
+                {
+                    DefaultSettings.ScreenWidth = dispList[dispList.Count - 2].Width;
+                    DefaultSettings.ScreenHeight = dispList[dispList.Count - 2].Height;
+                }
+
+                SurfaceFormat format = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Format;
+                // Check for 4xAA
+                if (GraphicsAdapter.DefaultAdapter.CheckDeviceMultiSampleType(DeviceType.Hardware, format,
+                    false, MultiSampleType.FourSamples))
+                {
+                    DefaultSettings.MultiSamplingLevel = MultiSampleType.FourSamples;
+                }
+                // Check for 2xAA
+                else if (GraphicsAdapter.DefaultAdapter.CheckDeviceMultiSampleType(DeviceType.Hardware, format,
+                    false, MultiSampleType.TwoSamples))
+                {
+                    DefaultSettings.MultiSamplingLevel = MultiSampleType.TwoSamples;
+                }
+                // Check for 1xAA
+                else if (GraphicsAdapter.DefaultAdapter.CheckDeviceMultiSampleType(DeviceType.Hardware, format,
+                    false, MultiSampleType.NonMaskable))
+                {
+                    DefaultSettings.MultiSamplingLevel = MultiSampleType.NonMaskable;
+                }
+                else
+                {
+                    DefaultSettings.MultiSamplingLevel = MultiSampleType.None;
+                }
+
+
+                DefaultSettings.Save();
+            }
+
             InitGraphics();
 
             // screenmanager
@@ -70,7 +117,7 @@ namespace Karo.Gui
 
             graphics.PreferredBackBufferWidth = DefaultSettings.ScreenWidth;
             graphics.PreferredBackBufferHeight = DefaultSettings.ScreenHeight;
-            graphics.PreferMultiSampling = true;
+            graphics.PreferMultiSampling = DefaultSettings.MultiSampleAntiAlias;
             graphics.IsFullScreen = DefaultSettings.FullScreen;
 
             graphics.ApplyChanges();

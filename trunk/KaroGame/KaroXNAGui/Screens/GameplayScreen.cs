@@ -365,14 +365,10 @@ namespace GameStateManagement
                         if (ScreenManager.Graphics.IsFullScreen)
                         {
                             ScreenManager.Graphics.IsFullScreen = false;
-                            ScreenManager.Graphics.PreferredBackBufferWidth = 800;
-                            ScreenManager.Graphics.PreferredBackBufferHeight = 600;
                         }
                         else
                         {
                             ScreenManager.Graphics.IsFullScreen = true;
-                            ScreenManager.Graphics.PreferredBackBufferWidth = 1280;
-                            ScreenManager.Graphics.PreferredBackBufferHeight = 800;
                         }
 
                         // apply changes

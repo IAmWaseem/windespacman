@@ -132,7 +132,7 @@ namespace Karo.Gui
                         {
                             Matrix trans = Matrix.Identity;
 
-                            trans *= Matrix.CreateScale(0.75f);
+                            trans *= Matrix.CreateScale(2f);
                             if (game.EnableTopView)
                             {
                                 trans *= Matrix.CreateRotationX(MathHelper.ToRadians(-1 * (180 + (44.9f - 315))));
@@ -149,7 +149,11 @@ namespace Karo.Gui
                             effect.World = trans;
                             effect.View = game.View;
                             effect.Projection = game.Projection;
-                            effect.EnableDefaultLighting();
+
+                            effect.LightingEnabled = true;
+                            effect.DirectionalLight0.Enabled = true;
+                            effect.DirectionalLight0.DiffuseColor = Color.Orange.ToVector3();
+                            effect.DirectionalLight0.Direction = new Vector3(-1, -1, -1);
                         }
                         mesh.Draw();
                     }
@@ -169,7 +173,7 @@ namespace Karo.Gui
                         {
                             Matrix trans = Matrix.Identity;
 
-                            trans *= Matrix.CreateScale(1.75f);
+                            trans *= Matrix.CreateScale(2f);
 
                             if (game.EnableTopView)
                             {

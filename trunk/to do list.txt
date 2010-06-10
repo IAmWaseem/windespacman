@@ -3,11 +3,12 @@ settings -> finished
 geluidje bij foute move -> finished
 alleen selecteren wat van jezelf is -> finished
 undo selection right mouse button -> finished
+geel blijven 1 sec. daarna niet meer geel (als ai gaat rekenen) -> finished
 
 middle-mouse-button -> correct implemented, not working
 
 
-geel blijven 1 sec. daarna niet meer geel (als ai gaat rekenen)
+
 
 
 

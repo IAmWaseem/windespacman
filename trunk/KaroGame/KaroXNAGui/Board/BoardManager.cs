@@ -279,6 +279,7 @@ namespace Karo.Gui
             if (Mouse.GetState().RightButton == ButtonState.Released && rightMouseButtonPressed)
             {
                 rightMouseButtonPressed = false;
+                //if from and to selected, then do undoMove, else do undo select
                 if (selectedElementFrom != null && selectedElementTo != null)
                 {
                     undoMove = true;
@@ -668,7 +669,10 @@ namespace Karo.Gui
                             undoMove = false;
                             return;
                         }
-
+                        //set to false, so no yellow will apear after 1 sec.
+                        selectedElementFrom.IsSelected = false;
+                        selectedElementTo.IsSelected = false;
+                        
                         AICalculates = true;
                         threadWaiting = false;
                         currentBoard = (BoardPosition[,])uiConnector.GetBoard().BoardSituation.Clone();

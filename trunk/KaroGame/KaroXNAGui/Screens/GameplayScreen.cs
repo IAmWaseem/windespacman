@@ -172,7 +172,7 @@ namespace GameStateManagement
         /// </summary>
         public GameplayScreen()
         {
-            EnableDebug = true;
+            EnableDebug = Karo.Gui.Properties.Settings.Default.EnableDebug;
             TransitionOnTime = TimeSpan.FromSeconds(1.5);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
         }
@@ -546,9 +546,17 @@ namespace GameStateManagement
                 if (Keyboard.GetState().IsKeyUp(Keys.F12) && f12Pressed)
                 {
                     if (EnableDebug)
+                    {
+                        Karo.Gui.Properties.Settings.Default.EnableDebug = false;
+                        Karo.Gui.Properties.Settings.Default.Save();
                         EnableDebug = false;
+                    }
                     else
+                    {
+                        Karo.Gui.Properties.Settings.Default.EnableDebug = true;
+                        Karo.Gui.Properties.Settings.Default.Save();
                         EnableDebug = true;
+                    }
 
                     f12Pressed = false;
                 }

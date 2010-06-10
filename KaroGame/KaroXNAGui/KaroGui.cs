@@ -36,6 +36,11 @@ namespace Karo.Gui
             Content.RootDirectory = "Content";
         }
 
+        private Properties.Settings DefaultSettings
+        {
+            get { return Properties.Settings.Default; }
+        }
+
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
@@ -44,17 +49,10 @@ namespace Karo.Gui
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-            graphics.PreferredBackBufferWidth = 800;
-            graphics.PreferredBackBufferHeight = 600;
-            graphics.PreferMultiSampling = true;
-            Prepare();
-            graphics.PreparingDeviceSettings += new EventHandler<PreparingDeviceSettingsEventArgs>(graphics_PreparingDeviceSettings);
-            graphics.ApplyChanges();
+            InitGraphics();
 
             // screenmanager
             screenManager = new ScreenManager(this);
-
             Components.Add(screenManager);
 
             // Activate the first screens.
@@ -64,39 +62,20 @@ namespace Karo.Gui
             base.Initialize();
         }
 
-        void Prepare()
+        public void InitGraphics()
         {
-            PresentationParameters pp =
-               GraphicsDevice.PresentationParameters;
+            // TODO: Add your initialization logic here
+            graphics.GraphicsDevice.RenderState.MultiSampleAntiAlias = true;
+            graphics.GraphicsDevice.PresentationParameters.MultiSampleType = DefaultSettings.MultiSampling;
 
-            int quality = 0;
-            GraphicsAdapter adapter = GraphicsAdapter.DefaultAdapter;
-            SurfaceFormat format = adapter.CurrentDisplayMode.Format;
+            graphics.PreferredBackBufferWidth = DefaultSettings.ScreenWidth;
+            graphics.PreferredBackBufferHeight = DefaultSettings.ScreenHeight;
+            graphics.PreferMultiSampling = true;
+            graphics.IsFullScreen = DefaultSettings.FullScreen;
 
-            if (adapter.CheckDeviceMultiSampleType(DeviceType.Hardware,
-                format, false, MultiSampleType.FourSamples, out quality))
-            {
-                // even if a greater quality is returned, we only want quality 0
-                pp.MultiSampleQuality = 0;
-                pp.MultiSampleType =
-                    MultiSampleType.FourSamples;
-            }
-            // Check for 2xAA
-            else if (adapter.CheckDeviceMultiSampleType(DeviceType.Hardware,
-                format, false, MultiSampleType.TwoSamples, out quality))
-            {
-                // even if a greater quality is returned, we only want quality 0
-                pp.MultiSampleQuality = 0;
-                pp.MultiSampleType =
-                    MultiSampleType.TwoSamples;
-            }
-            return;
+            graphics.ApplyChanges();
         }
 
-        void graphics_PreparingDeviceSettings(object sender, PreparingDeviceSettingsEventArgs e)
-        {
-            Prepare();
-        }
 
         /// <summary>
         /// LoadContent will be called once per game and is the place to load

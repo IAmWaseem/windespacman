@@ -603,6 +603,7 @@ namespace GameStateManagement
 
                     lc.Line("FPS", fc.Framerate.ToString());
                     lc.Line("AI Calculates (vs. Human)", manager.AICalculates.ToString());
+                    lc.Line("MultiSampling", ScreenManager.Graphics.GraphicsDevice.PresentationParameters.MultiSampleType.ToString());
                     lc.Line();
 
                     lc.Line("Animating");

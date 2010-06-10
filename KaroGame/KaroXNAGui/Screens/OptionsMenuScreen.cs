@@ -8,9 +8,12 @@
 #endregion
 
 #region Using Statements
-using Microsoft.Xna.Framework;
 using Karo.Gui;
+using System;
+using System.Linq;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 #endregion
 
 namespace GameStateManagement
@@ -34,10 +37,10 @@ namespace GameStateManagement
 
         static bool enableMultiSampling = DefaultSettings.MultiSampleAntiAlias;
         static MultiSampleType multisamplingType = DefaultSettings.MultiSamplingLevel;
-
+        static List<DisplayMode> supportedModes;
         static int currentSampling = 0;
         static bool fullScreen = DefaultSettings.FullScreen;
-        static int plyDepth = 2;
+        static int SelectedMode = 2;
 
         #endregion
 
@@ -56,9 +59,18 @@ namespace GameStateManagement
             fullScreenMenuEntry = new MenuEntry(string.Empty);
             plyDepthMenuEntry = new MenuEntry(string.Empty);
 
-            SetMenuEntryText();
-
             MenuEntry backMenuEntry = new MenuEntry("Back");
+
+            supportedModes = GraphicsAdapter.DefaultAdapter.SupportedDisplayModes.ToList();
+            List<DisplayMode> temp = supportedModes.ToList();
+            foreach (DisplayMode dm in temp)
+            {
+                if (dm.Format != SurfaceFormat.Bgr32 || dm.Width < 800)
+                    supportedModes.Remove(dm);
+            }
+
+            SelectCurrentDisplay();
+            SetMenuEntryText();
 
             // Hook up menu event handlers.
             computerLevelMenuEntry.Selected += computerlevelMenuEntrySelected;
@@ -75,6 +87,17 @@ namespace GameStateManagement
             MenuEntries.Add(backMenuEntry);
         }
 
+        private void SelectCurrentDisplay()
+        {
+            for(int i = 0; i < supportedModes.Count; i++)
+            {
+                DisplayMode dm = supportedModes[i];
+                if (dm.Width == DefaultSettings.ScreenWidth && dm.Height == DefaultSettings.ScreenHeight)
+                {
+                    SelectedMode = i;
+                }
+            }
+        }
 
         /// <summary>
         /// Fills in the latest values for the options screen menu text.
@@ -84,7 +107,7 @@ namespace GameStateManagement
             computerLevelMenuEntry.Text = "Difficulty: " + currentLevel;
             multisamplingtypeMenuEntry.Text = "Anti alias level: " + (int)multisamplingType;
             fullScreenMenuEntry.Text = "Full screen: " + (fullScreen ? "on" : "off");
-            plyDepthMenuEntry.Text = "Ply depth: " + plyDepth;
+            plyDepthMenuEntry.Text = "Ply depth: " + supportedModes[SelectedMode].Width.ToString("0") +"x" +supportedModes[SelectedMode].Height.ToString("0");
         }
 
 
@@ -164,9 +187,17 @@ namespace GameStateManagement
         /// </summary>
         void plydepthMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
-            plyDepth++;
-            if (plyDepth > 6)
-                plyDepth = 1;
+            SelectedMode++;
+            if (SelectedMode > supportedModes.Count - 1)
+                SelectedMode = 0;
+
+            DefaultSettings.ScreenWidth = supportedModes[SelectedMode].Width;
+            DefaultSettings.ScreenHeight = supportedModes[SelectedMode].Height;
+            DefaultSettings.Save();
+
+            ScreenManager.Graphics.PreferredBackBufferWidth = DefaultSettings.ScreenWidth;
+            ScreenManager.Graphics.PreferredBackBufferHeight = DefaultSettings.ScreenHeight;
+            ScreenManager.Graphics.ApplyChanges();
 
             SetMenuEntryText();
         }

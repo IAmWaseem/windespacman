@@ -386,7 +386,7 @@ namespace GameStateManagement
                     }
                     f1Pressed = false;
                 }
-
+                
                 #endregion
 
                 #region rotate

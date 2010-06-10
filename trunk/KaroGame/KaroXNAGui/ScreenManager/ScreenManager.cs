@@ -319,7 +319,6 @@ namespace GameStateManagement
 
             Game.GraphicsDevice.SamplerStates[0].AddressU = TextureAddressMode.Wrap;
             Game.GraphicsDevice.SamplerStates[0].AddressV = TextureAddressMode.Wrap;
-
         }
         
         #endregion

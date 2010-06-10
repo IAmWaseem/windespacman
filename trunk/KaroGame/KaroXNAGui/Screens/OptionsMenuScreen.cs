@@ -26,7 +26,7 @@ namespace GameStateManagement
 
         MenuEntry computerLevelMenuEntry;
         MenuEntry multisamplingtypeMenuEntry;
-        MenuEntry transtableMenuEntry;
+        MenuEntry fullScreenMenuEntry;
         MenuEntry plyDepthMenuEntry;
 
         private static Karo.Gui.Properties.Settings DefaultSettings { get { return Karo.Gui.Properties.Settings.Default; } }
@@ -36,7 +36,7 @@ namespace GameStateManagement
         static MultiSampleType multisamplingType = DefaultSettings.MultiSamplingLevel;
 
         static int currentSampling = 0;
-        static bool useTransTable = true;
+        static bool fullScreen = DefaultSettings.FullScreen;
         static int plyDepth = 2;
 
         #endregion
@@ -53,7 +53,7 @@ namespace GameStateManagement
             // Create our menu entries.
             computerLevelMenuEntry = new MenuEntry(string.Empty);
             multisamplingtypeMenuEntry = new MenuEntry(string.Empty);
-            transtableMenuEntry = new MenuEntry(string.Empty);
+            fullScreenMenuEntry = new MenuEntry(string.Empty);
             plyDepthMenuEntry = new MenuEntry(string.Empty);
 
             SetMenuEntryText();
@@ -63,14 +63,14 @@ namespace GameStateManagement
             // Hook up menu event handlers.
             computerLevelMenuEntry.Selected += computerlevelMenuEntrySelected;
             multisamplingtypeMenuEntry.Selected += multisamplingtypeMenuEntrySelected;
-            transtableMenuEntry.Selected += transtableMenuEntrySelected;
+            fullScreenMenuEntry.Selected += fullScreenMenuEntrySelected;
             plyDepthMenuEntry.Selected += plydepthMenuEntrySelected;
             backMenuEntry.Selected += OnCancel;
 
             // Add entries to the menu.
             MenuEntries.Add(computerLevelMenuEntry);
             MenuEntries.Add(multisamplingtypeMenuEntry);
-            MenuEntries.Add(transtableMenuEntry);
+            MenuEntries.Add(fullScreenMenuEntry);
             MenuEntries.Add(plyDepthMenuEntry);
             MenuEntries.Add(backMenuEntry);
         }
@@ -83,7 +83,7 @@ namespace GameStateManagement
         {
             computerLevelMenuEntry.Text = "Difficulty: " + currentLevel;
             multisamplingtypeMenuEntry.Text = "Anti alias level: " + (int)multisamplingType;
-            transtableMenuEntry.Text = "Use transposition table: " + (useTransTable ? "on" : "off");
+            fullScreenMenuEntry.Text = "Full screen: " + (fullScreen ? "on" : "off");
             plyDepthMenuEntry.Text = "Ply depth: " + plyDepth;
         }
 
@@ -148,10 +148,13 @@ namespace GameStateManagement
         /// <summary>
         /// Event handler for when the Frobnicate menu entry is selected.
         /// </summary>
-        void transtableMenuEntrySelected(object sender, PlayerIndexEventArgs e)
+        void fullScreenMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
-            useTransTable = !useTransTable;
-
+            fullScreen = !fullScreen;
+            ScreenManager.Graphics.IsFullScreen = fullScreen;
+            ScreenManager.Graphics.ApplyChanges();
+            DefaultSettings.FullScreen = fullScreen;
+            DefaultSettings.Save();
             SetMenuEntryText();
         }
 

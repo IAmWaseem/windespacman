@@ -419,7 +419,11 @@ namespace Karo.Gui
                     ClearScreen();
                     this.StartGame(difficulty);
                 }
+
+                game.ScreenManager.ResetGraphicsDeviceSettings();
             }
+
+
             if (AICalculates)
             {
                 foreach (ModelMesh mesh in cogwheel.Meshes)
@@ -487,6 +491,8 @@ namespace Karo.Gui
                 spriteBatch.DrawString(sf, text, new Vector2(positionCenterX, positionCenterY), Color.White);
                 spriteBatch.End();
             }
+            game.ScreenManager.ResetGraphicsDeviceSettings();
+
             base.Draw(gameTime);
         }
 
@@ -734,6 +740,7 @@ namespace Karo.Gui
                         {
                             selectedElementFrom = null;
                             selectedElementTo = null;
+                            AICalculates = false;
                             isBusy = false;
                             PlayWinningAnimation(uiConnector.GetCurrentPlayer());
                             return;

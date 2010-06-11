@@ -600,7 +600,7 @@ namespace Karo.Gui
                 }
                 if (movedPiece != null)
                 {
-                    if (newBoardSituation[(int)toXPiece, (int)toYPiece] == BoardPosition.RedTail)
+                    if (newBoardSituation[(int)toXTile, (int)toYTile] == BoardPosition.RedTail)
                         movedPiece.HeadUp = false;
                     else
                         movedPiece.HeadUp = true;
@@ -608,7 +608,7 @@ namespace Karo.Gui
                     while (movedPiece.AnimatedStarted) ;
                 }
             }
-            else
+            else if (fromXPiece != null && fromYPiece != null && toXPiece != null && toYPiece != null)
             {
                 Piece movedPiece = null;
                 foreach (BoardElement tempBoardElement in BoardElements)
@@ -630,6 +630,11 @@ namespace Karo.Gui
                     while (movedPiece.AnimatedStarted) ;
                 }
             }
+            else
+            {
+                if (!isGameEnded)
+                    throw new Exception("This should not happen if the game is not ended!");
+            }
         }
 
         public void DoMove()
@@ -641,7 +646,7 @@ namespace Karo.Gui
                 {
                     foreach (BoardElement element in BoardElements)
                     {
-                        if (element is Piece && element.BoardX == selectedElementFrom.BoardX && element.BoardY == selectedElementFrom.BoardX)
+                        if (element is Piece && element.BoardX == selectedElementFrom.BoardX && element.BoardY == selectedElementFrom.BoardY)
                             selectedElementFrom = element;
                     }
                 }
@@ -752,6 +757,8 @@ namespace Karo.Gui
                         BoardPosition[,] newBoardSituation = (BoardPosition[,])uiConnector.GetBoard().BoardSituation.Clone();
                         if (uiConnector.IsWon())
                         {
+                            isGameEnded = true;
+                            DoAIMove(currentBoard, newBoardSituation);
                             selectedElementFrom = null;
                             selectedElementTo = null;
                             AICalculates = false;

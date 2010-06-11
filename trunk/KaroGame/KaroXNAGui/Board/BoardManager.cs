@@ -650,6 +650,19 @@ namespace Karo.Gui
                             selectedElementFrom = element;
                     }
                 }
+                Tile fromTile = null;
+                if (selectedElementFrom is Piece && selectedElementTo is Tile)
+                {
+                    selectedElementTo.IsSelected = true;
+                    foreach (BoardElement element in BoardElements)
+                    {
+                        if (element is Tile && element.BoardX == selectedElementFrom.BoardX && element.BoardY == selectedElementFrom.BoardY)
+                        {
+                            fromTile = (Tile)element;
+                            element.IsSelected = true;
+                        }
+                    }
+                }
 
                 int numItems = uiConnector.CurrentPlayerNumPieces();
                 if (numItems < 6 && selectedElementFrom.BoardY == 12.5f)
@@ -664,7 +677,8 @@ namespace Karo.Gui
 
                         piece.Move(selectedElementTo.BoardX, selectedElementTo.BoardY);
                         while (piece.AnimatedStarted) ;
-
+                        selectedElementFrom.IsSelected = false;
+                        selectedElementFrom.IsMouseOver = false;
                         threadWaiting = true;
                         Thread.Sleep(1000);
                         if (undoMove)
@@ -678,8 +692,7 @@ namespace Karo.Gui
                             return;
                         }
                         //set to false, so no yellow will apear after 1 sec.
-                        selectedElementFrom.IsSelected = false;
-                        selectedElementFrom.IsMouseOver = false;
+                        
                         selectedElementTo.IsSelected = false;
                         selectedElementTo.IsMouseOver = false;
                         
@@ -734,6 +747,8 @@ namespace Karo.Gui
 
                         selectedElementFrom.Move(selectedElementTo.BoardX, selectedElementTo.BoardY);
                         while (selectedElementFrom.AnimatedStarted) ;
+                        selectedElementFrom.IsSelected = false;
+                        selectedElementFrom.IsMouseOver = false;
 
                         threadWaiting = true;
                         Thread.Sleep(1000);
@@ -749,6 +764,11 @@ namespace Karo.Gui
                             undoMove = false;
                             return;
                         }
+
+                        selectedElementTo.IsSelected = false;
+                        selectedElementTo.IsMouseOver = false;
+                        fromTile.IsSelected = false;
+                        fromTile.IsMouseOver = false;
 
                         threadWaiting = false;
                         AICalculates = true;

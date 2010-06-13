@@ -43,16 +43,15 @@ namespace Karo
                 int value = 0;
                 if (this.transtable)
                 {
-                    if (table.IsCalculatedBefore(board, plieDepth + 1, Game.Instance.GetTurn()))
-                        value = table.GetCalculatedValue(board, plieDepth + 1, Game.Instance.GetTurn());
-                    else
-                    {
-                        value = MiniMaxFunction(board, plieDepth, Game.Instance.GetTurn(), !Game.Instance.GetTurn());
-                        table.InsertCalculatedValue(board, plieDepth + 1, Game.Instance.GetTurn(), value);
-                    }
+                    /**TODO**/
                 }
                 else
-                    value = MiniMaxFunction(board, plieDepth, Game.Instance.GetTurn(), !Game.Instance.GetTurn());
+                {
+                    if(board.IsTileMoved)
+                        value = MiniMaxFunction(board, plieDepth, Game.Instance.GetTurn(), Game.Instance.GetTurn());
+                    else
+                        value = MiniMaxFunction(board, plieDepth, Game.Instance.GetTurn(), !Game.Instance.GetTurn()); 
+                }
 
                 if (value > valuelast)
                 {
@@ -87,44 +86,32 @@ namespace Karo
             }
 
             int alpha = Int32.MinValue;
+            
+            if (!node.IsTileMoved)
+                turnPlayerA = !turnPlayerA;
+
             List<Board> possibleMoves = node.GenerateMoves(turnPlayerA);
 
-            turnPlayerA = !turnPlayerA;
             foreach (Board board in possibleMoves)
             {
-                bool turnPlayerB = turnPlayerA;
-                if (!board.IsTileMoved)
-                    turnPlayerB = !turnPlayerB;
 
-                if (turnPlayerB == isPlayerAMax)
+                if (turnPlayerA == isPlayerAMax)
                 {
                     if (this.transtable)
                     {
-                        if (table.IsCalculatedBefore(board, depth, turnPlayerB))
-                            alpha = table.GetCalculatedValue(board, depth, turnPlayerB);
-                        else
-                        {
-                            alpha = Math.Max(alpha, MiniMaxFunction(board, depth - 1, isPlayerAMax, turnPlayerB));
-                            table.InsertCalculatedValue(board, depth, turnPlayerB, alpha);
-                        }
+                        /**TODO**/
                     }
                     else
-                        alpha = Math.Max(alpha, MiniMaxFunction(board, depth - 1, isPlayerAMax, turnPlayerB));
+                        alpha = Math.Max(alpha, MiniMaxFunction(board, depth - 1, isPlayerAMax, turnPlayerA));
                 }
                 else
                 {
                     if (this.transtable)
                     {
-                        if (table.IsCalculatedBefore(board, depth, turnPlayerB))
-                            alpha = table.GetCalculatedValue(board, depth, turnPlayerB);
-                        else
-                        {
-                            alpha = Math.Max(alpha, -MiniMaxFunction(board, depth - 1, isPlayerAMax, turnPlayerB));
-                            table.InsertCalculatedValue(board, depth, turnPlayerB, alpha);
-                        }
+                        /**TODO**/
                     }
                     else
-                        alpha = Math.Max(alpha, -MiniMaxFunction(board, depth - 1, isPlayerAMax, turnPlayerB));
+                        alpha = Math.Max(alpha, -MiniMaxFunction(board, depth - 1, isPlayerAMax, turnPlayerA));
                 }
             }
 

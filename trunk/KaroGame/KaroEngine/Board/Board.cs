@@ -359,7 +359,8 @@ namespace Karo
                     }
                 }
             }
-
+            if (boards.Count == 0)
+                throw new Exception();
             return boards;
         }
 

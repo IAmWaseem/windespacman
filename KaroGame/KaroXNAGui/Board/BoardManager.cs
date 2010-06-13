@@ -124,9 +124,9 @@ namespace Karo.Gui
 
         protected override void LoadContent()
         {
-            cogwheel = game.ScreenManager.Game.Content.Load<Model>("Cogwheel"); ;
+            cogwheel = game.ScreenManager.Game.Content.Load<Model>("Cogwheel"); 
             cogwheelRed = game.ScreenManager.Game.Content.Load<Model>("CogwheelRed");
-            cogwheelWhite = game.ScreenManager.Game.Content.Load<Model>("CogwheelWhite");
+            cogwheelWhite = game.ScreenManager.Game.Content.Load<Model>("CogwheelWhite"); ;
             cogwheelBlue = game.ScreenManager.Game.Content.Load<Model>("CogwheelBlue");
 
             wrongMoveSound = new SoundPlayer(game.ScreenManager.Game, "error");
@@ -134,6 +134,7 @@ namespace Karo.Gui
             transformsRed = new Matrix[cogwheelRed.Bones.Count];
             transformsWhite = new Matrix[cogwheelWhite.Bones.Count];
             transformsBlue = new Matrix[cogwheelBlue.Bones.Count];
+
             cogwheel.CopyAbsoluteBoneTransformsTo(transforms);
             cogwheelRed.CopyAbsoluteBoneTransformsTo(transformsRed);
             cogwheelWhite.CopyAbsoluteBoneTransformsTo(transformsWhite);
@@ -152,7 +153,7 @@ namespace Karo.Gui
             world = Matrix.CreateScale(0.4f) * Matrix.Identity * Matrix.CreateTranslation(0f, 1.5f, 11f);
             worldRed = Matrix.CreateScale(0.3f) * Matrix.Identity * Matrix.CreateTranslation(0f, 2.5f, 13f);
             worldBlue = Matrix.CreateScale(0.5f) * Matrix.Identity * Matrix.CreateTranslation(1f, 2.5f, 9f);
-            worldWhite = Matrix.CreateScale(0.2f) * Matrix.Identity * Matrix.CreateTranslation(1f, 1.7f, 13f);
+            worldWhite = Matrix.CreateScale(0.2f)*Matrix.Identity*Matrix.CreateTranslation(1f, 1.7f, 13f);
             view = Matrix.CreateLookAt(new Vector3(1, 3, 17), new Vector3(0, 0, 0), Vector3.Up);
             projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 1.3f, 0.1f, 10000.0f);
         }
@@ -500,6 +501,7 @@ namespace Karo.Gui
                 spriteBatch.DrawString(sf, text, new Vector2(positionCenterX, positionCenterY), Color.White);
                 spriteBatch.End();
             }
+
             game.ScreenManager.ResetGraphicsDeviceSettings();
 
             base.Draw(gameTime);
@@ -834,6 +836,25 @@ namespace Karo.Gui
         private void PlayWinningAnimation(string currentPlayer)
         {
             timeSpan = new TimeSpan(0, 0, 0, 0, 10000);
+
+            Model model = game.ScreenManager.Game.Content.Load<Model>("Star");
+            Matrix v = Matrix.CreateLookAt(new Vector3(0, 0, 17), new Vector3(0, 0, 0), Vector3.Up);
+            Matrix p = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 1.3f, 0.1f, 10000.0f);
+
+            Random r = new Random();
+
+            if (currentPlayer.Equals("Player A (red)"))
+            {
+                for (int i = 0; i < 200; i++)
+                {
+                    Star s = new Star(this.game, model, v, p, r);
+                    game.ScreenManager.Game.Components.Add(s);
+                }
+            }
+            else
+            {
+                
+            }
             isGameEnded = true;
         }
 

@@ -98,6 +98,7 @@
     <Compile Include="Board\BoardElement.cs" />
     <Compile Include="Board\BoardManager.cs" />
     <Compile Include="Board\Letters.cs" />
+    <Compile Include="Board\Star.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>

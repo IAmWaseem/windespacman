@@ -163,6 +163,7 @@ namespace GameStateManagement
 
             SurfaceFormat format = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Format;
             // Check for 4xAA
+            
             if (GraphicsAdapter.DefaultAdapter.CheckDeviceMultiSampleType(DeviceType.Hardware, format,
                 false, multisamplingType))
             {

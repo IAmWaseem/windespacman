@@ -82,7 +82,7 @@ namespace Karo.Gui
             switch (difficulty)
             {
                 case Difficulty.Easy:
-                    playerB = new PlayerSettings(true, AlgorithmType.AlphaBeta, 2, false, false, EvaluationType.BetterOne);
+                    playerB = new PlayerSettings(true, AlgorithmType.AlphaBeta, 1, false, false, EvaluationType.BetterOne);
                     break;
 
                 case Difficulty.Medium:
@@ -367,10 +367,19 @@ namespace Karo.Gui
 
                     if (FromTileSelected)
                     {
+
                         if (uiConnector.IsMovable((int)selectedElementFrom.BoardX, (int)selectedElementFrom.BoardY))
+                        {
                             GenerateTargetTiles();
+                        }
+                        else if (selectedElementFrom is Piece)
+                        {
+
+                        }
                         else
-                            wrongMoveSound.PlaySound();
+                        {
+                            //wrongMoveSound.PlaySound();
+                        }
                     }
                     else
                     {

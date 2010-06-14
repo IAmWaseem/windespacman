@@ -51,6 +51,7 @@ namespace Karo.Gui
         private bool threadWaiting = false;
         private bool undoMove = false;
         private bool rightMouseButtonPressed = false;
+        private Thread doMoveThread = null;
 
         public float XRotation { get; set; }
         public float ZRotation { get; set; }
@@ -394,8 +395,8 @@ namespace Karo.Gui
 
             if (selectedElementFrom != null && selectedElementTo != null)
             {
-                Thread thread = new Thread(new ThreadStart(this.DoMove));
-                thread.Start();
+                doMoveThread = new Thread(new ThreadStart(this.DoMove));
+                doMoveThread.Start();
             }
 
             UpdateMinMax();
@@ -946,6 +947,14 @@ namespace Karo.Gui
             }
 
             spriteBatch = new SpriteBatch(game.ScreenManager.Game.GraphicsDevice);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if(doMoveThread != null)
+                if (doMoveThread.ThreadState != ThreadState.Stopped)
+                    doMoveThread.Abort();
+            base.Dispose(disposing);
         }
     }
 }

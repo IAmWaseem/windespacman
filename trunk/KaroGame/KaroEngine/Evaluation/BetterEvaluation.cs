@@ -34,7 +34,7 @@ namespace Karo
                 if (board.IsTileMoved)
                 {
                     List<Board> nextMoves = board.GenerateMoves(turnPlayerA);
-                    if (nextMoves.Count == 1)
+                    if (nextMoves.Count > 0)
                     {
                         return nextMoves[0].Evaluation(isPlayerAMax, !turnPlayerA);
                     }

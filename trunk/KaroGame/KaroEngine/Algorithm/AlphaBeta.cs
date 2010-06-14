@@ -76,7 +76,11 @@ namespace Karo
                 List<Board> highestOfTheHighest = new List<Board>();
                 foreach (Board board in sameHighest)
                 {
-                    int eval = board.Evaluation(Game.Instance.GetTurn(), !Game.Instance.GetTurn());
+                    int eval = Int32.MinValue;
+                    if(board.IsTileMoved)
+                        eval = board.Evaluation(Game.Instance.GetTurn(), Game.Instance.GetTurn());
+                    else
+                        eval = board.Evaluation(Game.Instance.GetTurn(), !Game.Instance.GetTurn());
                     if (eval > highest)
                     {
                         highest = eval;
@@ -104,11 +108,10 @@ namespace Karo
 
             int value = Int32.MinValue;
 
-            if (!node.IsTileMoved)
-                turnPlayerA = !turnPlayerA;
-
             List<Board> possibleMoves = node.GenerateMoves(turnPlayerA);
-            
+
+            turnPlayerA = !turnPlayerA;
+
             if (isPlayerAMax == turnPlayerA)
                 possibleMoves = Order(possibleMoves, true, true);
             else
@@ -123,8 +126,12 @@ namespace Karo
                         /**TODO**/
                     }
                     else
-                        value = Math.Max(value, AlphaBetaFunction(board, depth - 1, isPlayerAMax, turnPlayerA, alphaEval, betaEval));
-                    
+                    {
+                        if(board.IsTileMoved)
+                            value = Math.Max(value, AlphaBetaFunction(board, depth - 1, isPlayerAMax, !turnPlayerA, alphaEval, betaEval));
+                        else
+                            value = Math.Max(value, AlphaBetaFunction(board, depth - 1, isPlayerAMax, turnPlayerA, alphaEval, betaEval));
+                    }
                     alphaEval = Math.Max(value, alphaEval);
                     if (betaEval <= alphaEval)
                         return alphaEval;
@@ -136,8 +143,12 @@ namespace Karo
                         /**TODO**/
                     }
                     else
-                        value = Math.Max(value, -AlphaBetaFunction(board, depth - 1, isPlayerAMax, turnPlayerA, alphaEval, betaEval));
-                    
+                    {
+                        if(board.IsTileMoved)
+                            value = Math.Max(value, -AlphaBetaFunction(board, depth - 1, isPlayerAMax, !turnPlayerA, alphaEval, betaEval));
+                        else
+                            value = Math.Max(value, -AlphaBetaFunction(board, depth - 1, isPlayerAMax, turnPlayerA, alphaEval, betaEval));
+                    }
                     betaEval = Math.Min(value, betaEval);
                     if (betaEval <= alphaEval)
                         return betaEval;

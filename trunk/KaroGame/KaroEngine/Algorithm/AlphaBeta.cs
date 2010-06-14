@@ -93,9 +93,26 @@ namespace Karo
                 System.Random random = new System.Random();
                 evaluationBoard = highestOfTheHighest[random.Next(0, highestOfTheHighest.Count - 1)];
             }
+            if (IsEqual(evaluationBoard, currentBoard))
+                throw new Exception();
+
             Logger.AddLine("AB: boards with same value: " + sameHighest.Count + " of " + moves.Count + " moves");
             Logger.AddLine("Board -> Evaluation value: " + evaluationBoard.Evaluation(Game.Instance.GetTurn(), Game.Instance.GetTurn()));
             return evaluationBoard;
+        }
+
+        private bool IsEqual(Board boardA, Board boardB)
+        {
+            for (int x = 0; x < 21; x++)
+            {
+                for (int y = 0; y < 20; y++)
+                {
+                    if (boardA.BoardSituation[x, y] != boardB.BoardSituation[x, y])
+                        return false;
+                }
+            }
+
+            return true;
         }
 
 

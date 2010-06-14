@@ -382,10 +382,25 @@ namespace Karo
             else
                 generatedMoves.AddRange(ChangeBoardPosition(turnPlayerA));
 
-            
 
+            foreach (Board board in generatedMoves)
+                if (IsEqual(board)) throw new Exception();
             //Logger.AddLine("Generated moves: " + generatedMoves.Count);
             return generatedMoves;
+        }
+
+        private bool IsEqual(Board board)
+        {
+            for (int x = 0; x < 21; x++)
+            {
+                for (int y = 0; y < 20; y++)
+                {
+                    if (this.BoardSituation[x, y] != board.BoardSituation[x, y])
+                        return false;
+                }
+            }
+
+            return true;
         }
 
         /// <summary>

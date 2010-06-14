@@ -383,8 +383,8 @@ namespace Karo
                 generatedMoves.AddRange(ChangeBoardPosition(turnPlayerA));
 
 
-            foreach (Board board in generatedMoves)
-                if (IsEqual(board)) throw new Exception();
+            ////foreach (Board board in generatedMoves)
+            ////    if (IsEqual(board)) throw new Exception();
             //Logger.AddLine("Generated moves: " + generatedMoves.Count);
             return generatedMoves;
         }

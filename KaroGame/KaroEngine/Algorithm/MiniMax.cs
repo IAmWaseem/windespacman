@@ -24,7 +24,7 @@ namespace Karo
             this.plieDepth = plieDepth;
             this.transtable = doTranstable;
             if (this.transtable)
-                table = new TranspositionTable(50000, 1600000);
+                table = new TranspositionTable();
         }
 
         /// <summary>
@@ -35,30 +35,26 @@ namespace Karo
         public Board NextMove(Board currentBoard)
         {
             Board evaluationBoard = new Board();
+            bool evaluationBoardSet = false;
             int valuelast = Int32.MinValue;
             List<Board> sameHighest = new List<Board>();
             List<Board> moves = currentBoard.GenerateMoves(Game.Instance.GetTurn());
             foreach (Board board in moves)
             {
                 int value = 0;
-                if (this.transtable)
-                {
-                    /**TODO**/
-                }
-                else
-                {
-                    if(board.IsTileMoved)
-                        value = MiniMaxFunction(board, plieDepth, Game.Instance.GetTurn(), Game.Instance.GetTurn());
-                    else
-                        value = MiniMaxFunction(board, plieDepth, Game.Instance.GetTurn(), !Game.Instance.GetTurn()); 
-                }
 
-                if (value > valuelast)
+                if(board.IsTileMoved)
+                    value = MiniMaxFunction(board, plieDepth, Game.Instance.GetTurn(), Game.Instance.GetTurn());
+                else
+                    value = MiniMaxFunction(board, plieDepth, Game.Instance.GetTurn(), !Game.Instance.GetTurn()); 
+
+                if (value > valuelast || !evaluationBoardSet)
                 {
                     sameHighest = new List<Board>();
                     sameHighest.Add(board);
                     evaluationBoard = board;
                     valuelast = value;
+                    evaluationBoardSet = true;
                 }
                 else if (value == valuelast)
                 {
@@ -73,9 +69,25 @@ namespace Karo
                 while (evaluationBoard.IsTileMoved)
                     evaluationBoard = sameHighest[random.Next(0, sameHighest.Count - 1)];
             }
+            if (IsEqual(evaluationBoard, currentBoard))
+                throw new Exception();
             //Logger.AddLine("MiniMax: boards with same value: " + sameHighest.Count + " of " + moves.Count + " moves");
             Logger.AddLine("Board -> Evaluation value: " + evaluationBoard.Evaluation(Game.Instance.GetTurn(), Game.Instance.GetTurn()));
             return evaluationBoard;
+        }
+
+        private bool IsEqual(Board boardA, Board boardB)
+        {
+            for (int x = 0; x < 21; x++)
+            {
+                for (int y = 0; y < 20; y++)
+                {
+                    if (boardA.BoardSituation[x, y] != boardB.BoardSituation[x, y])
+                        return false;
+                }
+            }
+
+            return true;
         }
 
         private int MiniMaxFunction(Board node, int depth, bool isPlayerAMax, bool turnPlayerA)
@@ -83,6 +95,11 @@ namespace Karo
             if (depth <= 0 || node.IsWon())
             {
                 return node.Evaluation(isPlayerAMax, turnPlayerA);
+            }
+            if (this.transtable)
+            {
+                if(table.IsCalculatedBefore(node, depth, isPlayerAMax, turnPlayerA))
+                    return table.GetCalculatedValue(node, depth, isPlayerAMax, turnPlayerA);
             }
 
             int alpha = Int32.MinValue;
@@ -99,32 +116,22 @@ namespace Karo
 
                 if (turnPlayerA == isPlayerAMax)
                 {
-                    if (this.transtable)
-                    {
-                        /**TODO**/
-                    }
+                    if(board.IsTileMoved)
+                        alpha = Math.Max(alpha, MiniMaxFunction(board, depth - 1, isPlayerAMax, !turnPlayerA));
                     else
-                    {
-                        if(board.IsTileMoved)
-                            alpha = Math.Max(alpha, MiniMaxFunction(board, depth - 1, isPlayerAMax, !turnPlayerA));
-                        else
-                            alpha = Math.Max(alpha, MiniMaxFunction(board, depth - 1, isPlayerAMax, turnPlayerA));
-                    }
+                        alpha = Math.Max(alpha, MiniMaxFunction(board, depth - 1, isPlayerAMax, turnPlayerA));
                 }
                 else
                 {
-                    if (this.transtable)
-                    {
-                        /**TODO**/
-                    }
+                    if(board.IsTileMoved)
+                        alpha = Math.Max(alpha, -MiniMaxFunction(board, depth - 1, isPlayerAMax, !turnPlayerA));
                     else
-                    {
-                        if(board.IsTileMoved)
-                            alpha = Math.Max(alpha, -MiniMaxFunction(board, depth - 1, isPlayerAMax, !turnPlayerA));
-                        else
-                            alpha = Math.Max(alpha, -MiniMaxFunction(board, depth - 1, isPlayerAMax, turnPlayerA));
-                    }
+                        alpha = Math.Max(alpha, -MiniMaxFunction(board, depth - 1, isPlayerAMax, turnPlayerA));
                 }
+            }
+            if(this.transtable)
+            {
+                table.InsertCalculatedValue(node, depth, isPlayerAMax, !turnPlayerA, alpha);
             }
 
             return alpha;

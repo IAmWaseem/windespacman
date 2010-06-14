@@ -83,15 +83,15 @@ namespace Karo.Gui
             switch (difficulty)
             {
                 case Difficulty.Easy:
-                    playerB = new PlayerSettings(true, AlgorithmType.AlphaBeta, 1, false, false, EvaluationType.BetterOne);
+                    playerB = new PlayerSettings(true, AlgorithmType.Random, 1, false, false, EvaluationType.BetterOne);
                     break;
 
                 case Difficulty.Medium:
-                    playerB = new PlayerSettings(true, AlgorithmType.AlphaBeta, 3, false, false, EvaluationType.BetterOne);
+                    playerB = new PlayerSettings(true, AlgorithmType.AlphaBeta, 2, true, true, EvaluationType.BetterOne);
                     break;
 
                 case Difficulty.Hard:
-                    playerB = new PlayerSettings(true, AlgorithmType.AlphaBeta, 4, false, false, EvaluationType.BetterOne);
+                    playerB = new PlayerSettings(true, AlgorithmType.AlphaBeta, 4, true, true, EvaluationType.BetterOne);
                     break;
             }
 

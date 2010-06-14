@@ -436,6 +436,7 @@ namespace Karo.Gui
                 {
                     isGameEnded = false;
                     timeSpan = new TimeSpan(0, 0, 0, 0);
+                    AICalculates = false;
                     ClearScreen();
                     this.StartGame(difficulty);
                 }
@@ -645,7 +646,9 @@ namespace Karo.Gui
             else
             {
                 if (!isGameEnded)
+                {
                     throw new Exception("This should not happen if the game is not ended!");
+                }
             }
         }
 
@@ -789,13 +792,14 @@ namespace Karo.Gui
                         BoardPosition[,] newBoardSituation = (BoardPosition[,])uiConnector.GetBoard().BoardSituation.Clone();
                         if (uiConnector.IsWon())
                         {
+                            timeSpan = new TimeSpan(0,0,0,0,10000);
                             isGameEnded = true;
+                            AICalculates = false;
                             DoAIMove(currentBoard, newBoardSituation);
+                            PlayWinningAnimation(uiConnector.GetCurrentPlayer());
                             selectedElementFrom = null;
                             selectedElementTo = null;
-                            AICalculates = false;
                             isBusy = false;
-                            PlayWinningAnimation(uiConnector.GetCurrentPlayer());
                             return;
                         }
 
@@ -845,6 +849,7 @@ namespace Karo.Gui
 
         private void PlayWinningAnimation(string currentPlayer)
         {
+            isGameEnded = true;
             timeSpan = new TimeSpan(0, 0, 0, 0, 10000);
 
             Model model = game.ScreenManager.Game.Content.Load<Model>("Star");
@@ -861,11 +866,6 @@ namespace Karo.Gui
                     game.ScreenManager.Game.Components.Add(s);
                 }
             }
-            else
-            {
-                
-            }
-            isGameEnded = true;
         }
 
         public void SetupBoard()

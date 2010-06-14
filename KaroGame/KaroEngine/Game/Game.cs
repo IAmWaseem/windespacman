@@ -70,7 +70,23 @@ namespace Karo
         /// <param name="board">the new board</param>
         public void SetBoard(Board board)
         {
+            if (IsEqual(this.board, board))
+                throw new Exception();
             this.board = board;
+        }
+
+        private bool IsEqual(Board boardA, Board boardB)
+        {
+            for (int x = 0; x < 21; x++)
+            {
+                for (int y = 0; y < 20; y++)
+                {
+                    if (boardA.BoardSituation[x, y] != boardB.BoardSituation[x, y])
+                        return false;
+                }
+            }
+
+            return true;
         }
 
         /// <summary>

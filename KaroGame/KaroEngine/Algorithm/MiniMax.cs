@@ -86,11 +86,13 @@ namespace Karo
             }
 
             int alpha = Int32.MinValue;
-            
-            if (!node.IsTileMoved)
-                turnPlayerA = !turnPlayerA;
 
             List<Board> possibleMoves = node.GenerateMoves(turnPlayerA);
+
+            turnPlayerA = !turnPlayerA;
+            
+            if (possibleMoves.Count == 0)
+                throw new Exception();
 
             foreach (Board board in possibleMoves)
             {
@@ -102,7 +104,12 @@ namespace Karo
                         /**TODO**/
                     }
                     else
-                        alpha = Math.Max(alpha, MiniMaxFunction(board, depth - 1, isPlayerAMax, turnPlayerA));
+                    {
+                        if(board.IsTileMoved)
+                            alpha = Math.Max(alpha, MiniMaxFunction(board, depth - 1, isPlayerAMax, !turnPlayerA));
+                        else
+                            alpha = Math.Max(alpha, MiniMaxFunction(board, depth - 1, isPlayerAMax, turnPlayerA));
+                    }
                 }
                 else
                 {
@@ -111,7 +118,12 @@ namespace Karo
                         /**TODO**/
                     }
                     else
-                        alpha = Math.Max(alpha, -MiniMaxFunction(board, depth - 1, isPlayerAMax, turnPlayerA));
+                    {
+                        if(board.IsTileMoved)
+                            alpha = Math.Max(alpha, -MiniMaxFunction(board, depth - 1, isPlayerAMax, !turnPlayerA));
+                        else
+                            alpha = Math.Max(alpha, -MiniMaxFunction(board, depth - 1, isPlayerAMax, turnPlayerA));
+                    }
                 }
             }
 

@@ -27,7 +27,7 @@ namespace Karo
             this.moveOrdering = doMoveOrdering;
             this.transtable = doTranstable;
             if (this.transtable)
-                table = new TranspositionTable(50000, 1600000);
+                table = new TranspositionTable();
         }
 
         /// <summary>
@@ -38,6 +38,7 @@ namespace Karo
         public Board NextMove(Board currentBoard)
         {
             Board evaluationBoard = new Board();
+            bool evaluationBoardSet = false;
             evaluationBoard.BoardSituation[0, 0] = BoardPosition.RedTail;
             int valuelast = Int32.MinValue;
             List<Board> sameHighest = new List<Board>();
@@ -46,23 +47,18 @@ namespace Karo
             List<Board> moves = currentBoard.GenerateMoves(Game.Instance.GetTurn());
             foreach (Board board in moves)
             {
-                if (this.transtable)
-                {
-                    /** TODO**/
-                }
+                if (board.IsTileMoved)
+                    alpha = AlphaBetaFunction(board, plieDepth, Game.Instance.GetTurn(), Game.Instance.GetTurn(), alpha, beta);
                 else
-                {
-                    if (board.IsTileMoved)
-                        alpha = AlphaBetaFunction(board, plieDepth, Game.Instance.GetTurn(), Game.Instance.GetTurn(), alpha, beta);
-                    else
-                        alpha = AlphaBetaFunction(board, plieDepth, Game.Instance.GetTurn(), !Game.Instance.GetTurn(), alpha, beta);
-                }
-                if (alpha > valuelast)
+                    alpha = AlphaBetaFunction(board, plieDepth, Game.Instance.GetTurn(), !Game.Instance.GetTurn(), alpha, beta);
+
+                if (alpha > valuelast || !evaluationBoardSet)
                 {
                     sameHighest = new List<Board>();
                     sameHighest.Add(board);
                     evaluationBoard = board;
                     valuelast = alpha;
+                    evaluationBoardSet = true;
                 }
                 else if (alpha == valuelast)
                 {
@@ -122,6 +118,11 @@ namespace Karo
             {
                 return node.Evaluation(isPlayerAMax, turnPlayerA);
             }
+            if (this.transtable)
+            {
+                if (table.IsCalculatedBefore(node, depth, isPlayerAMax, turnPlayerA))
+                    return table.GetCalculatedValue(node, depth, isPlayerAMax, turnPlayerA);
+            }
 
             int value = Int32.MinValue;
 
@@ -138,39 +139,40 @@ namespace Karo
             {
                 if (turnPlayerA == isPlayerAMax)
                 {
-                    if (this.transtable)
-                    {
-                        /**TODO**/
-                    }
+
+                    if(board.IsTileMoved)
+                        value = Math.Max(value, AlphaBetaFunction(board, depth - 1, isPlayerAMax, !turnPlayerA, alphaEval, betaEval));
                     else
-                    {
-                        if(board.IsTileMoved)
-                            value = Math.Max(value, AlphaBetaFunction(board, depth - 1, isPlayerAMax, !turnPlayerA, alphaEval, betaEval));
-                        else
-                            value = Math.Max(value, AlphaBetaFunction(board, depth - 1, isPlayerAMax, turnPlayerA, alphaEval, betaEval));
-                    }
+                        value = Math.Max(value, AlphaBetaFunction(board, depth - 1, isPlayerAMax, turnPlayerA, alphaEval, betaEval));
+
                     alphaEval = Math.Max(value, alphaEval);
                     if (betaEval <= alphaEval)
+                    {
+                        if (this.transtable)
+                            table.InsertCalculatedValue(node, depth, isPlayerAMax, !turnPlayerA, alphaEval);
                         return alphaEval;
+                    }
                 }
                 else
                 {
-                    if (this.transtable)
-                    {
-                        /**TODO**/
-                    }
+
+                    if(board.IsTileMoved)
+                        value = Math.Max(value, -AlphaBetaFunction(board, depth - 1, isPlayerAMax, !turnPlayerA, alphaEval, betaEval));
                     else
-                    {
-                        if(board.IsTileMoved)
-                            value = Math.Max(value, -AlphaBetaFunction(board, depth - 1, isPlayerAMax, !turnPlayerA, alphaEval, betaEval));
-                        else
-                            value = Math.Max(value, -AlphaBetaFunction(board, depth - 1, isPlayerAMax, turnPlayerA, alphaEval, betaEval));
-                    }
+                        value = Math.Max(value, -AlphaBetaFunction(board, depth - 1, isPlayerAMax, turnPlayerA, alphaEval, betaEval));
+
                     betaEval = Math.Min(value, betaEval);
                     if (betaEval <= alphaEval)
+                    {
+                        if (this.transtable)
+                            table.InsertCalculatedValue(node, depth, isPlayerAMax, !turnPlayerA, betaEval);
                         return betaEval;
+                    }
                 }
             }
+
+            if (this.transtable)
+                table.InsertCalculatedValue(node, depth, isPlayerAMax, !turnPlayerA, value);
 
             return value;
 

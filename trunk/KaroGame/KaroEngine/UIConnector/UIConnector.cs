@@ -19,27 +19,7 @@ namespace Karo
         /// </summary>
         public UIConnector()
         {
-            TranspositionTable table = new TranspositionTable(100, 2000000);
-            Board boardA = new Board();
-            boardA.BoardSituation[3, 3] = BoardPosition.RedHead;
-            boardA.BoardSituation[3, 4] = BoardPosition.RedHead;
-            boardA.BoardSituation[3, 5] = BoardPosition.RedHead;
-            boardA.BoardSituation[3, 6] = BoardPosition.RedHead;
 
-            boardA.BoardSituation[4, 2] = BoardPosition.WhiteHead;
-            boardA.BoardSituation[4, 3] = BoardPosition.WhiteHead;
-            boardA.BoardSituation[4, 4] = BoardPosition.WhiteHead;
-            boardA.BoardSituation[4, 5] = BoardPosition.WhiteHead;
-
-            bool a = table.IsCalculatedBefore(boardA, 2, true);
-            table.InsertCalculatedValue(boardA, 2, true, 5);
-            bool b = table.IsCalculatedBefore(boardA, 3, true);
-            bool c = table.IsCalculatedBefore(boardA, 2, true);
-            bool d = table.IsCalculatedBefore(boardA, 4, true);
-            bool e = table.IsCalculatedBefore(boardA, 1, true);
-            int f = table.GetCalculatedValue(boardA, 2, true);
-            int g = table.GetCalculatedValue(boardA, 2, false);
-            int x = 5;
         }
 
         /// <summary>

@@ -11,7 +11,7 @@ namespace Karo.Gui
     class Piece : BoardElement
     {
         public bool HeadUp { get; set; }
-        public bool previousHead { get; set; }
+        public bool PreviousHead { get; set; }
         private float moveToY;
         private float moveToX;
         private float toMoveY;
@@ -31,7 +31,7 @@ namespace Karo.Gui
             : base(game, model, boardY, boardX)
         {
             HeadUp = false;
-            previousHead = false;
+            PreviousHead = false;
             world = Matrix.CreateTranslation(BoardX, BoardY, 0);
             CreateBoundingBox();
         }
@@ -77,11 +77,11 @@ namespace Karo.Gui
             }
             if (animatedStarted)
             {
-                if (HeadUp && !previousHead)
+                if (HeadUp && !PreviousHead)
                 {
                     //rotate
                     rotationValue = Math.Abs(gameTime.ElapsedGameTime.Milliseconds * speed * 180);
-                    previousHead = true;
+                    PreviousHead = true;
                 }
                 else if (HeadUp && rotationValue == 180.0f)
                 {

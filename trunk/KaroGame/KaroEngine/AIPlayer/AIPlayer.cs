@@ -47,7 +47,7 @@ namespace Karo
             if (algorithm != null)
             {
                 Board next = algorithm.NextMove(currentBoard);
-                if(IsEqual(currentBoard, next)
+                if(IsEqual(currentBoard, next))
                     throw new Exception();
                 Game.Instance.SetBoard(next);
             }

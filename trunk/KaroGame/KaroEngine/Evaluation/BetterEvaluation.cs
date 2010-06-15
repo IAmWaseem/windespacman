@@ -14,7 +14,7 @@ namespace Karo
         /// <param name="board">Provided board</param>
         /// <param name="isRed">Is player red's turn</param>
         /// <returns></returns>
-        public static int Evaluate(Board board, bool isPlayerAMax, bool turnPlayerA )
+        public static int Evaluate(Board board, bool isPlayerAMax, bool turnPlayerA)
         {
             // evaluation value
             int lEvaluationValue = 0;
@@ -44,7 +44,7 @@ namespace Karo
                     // tiles not moves, so we can continue here
                     List<PieceSituation> goodSituations = FindSituations(board.BoardSituation, turnPlayerA);
                     List<PieceSituation> badSituations = FindSituations(board.BoardSituation, !turnPlayerA);
-                    
+
                     if (goodSituations.Count > 0)
                     {
                         IOrderedEnumerable<PieceSituation> orderedGood = from e in goodSituations orderby e select e;
@@ -401,7 +401,7 @@ namespace Karo
                             if (boardSituation[x - 1, y - 1] == lookFor)
                             {
                                 // check if we can move left
-                                if (x >1 && y > 1)
+                                if (x > 1 && y > 1)
                                 {
                                     if (boardSituation[x - 2, y - 2] == lookFor)
                                     {
@@ -415,7 +415,7 @@ namespace Karo
 
                                         if (boardSituation[x - 2, y - 2] == BoardPosition.Tile)
                                         {
-                                            if (x >2 && y > 2)
+                                            if (x > 2 && y > 2)
                                             {
                                                 // if next is tile, then we can have tree with space
                                                 if (boardSituation[x - 3, y - 3] == lookFor)
@@ -424,7 +424,7 @@ namespace Karo
                                         }
                                         else
                                         {
-                                            if (x >2 && y > 2)
+                                            if (x > 2 && y > 2)
                                             {
                                                 // three with space and blocked
                                                 if (boardSituation[x - 3, y - 3] == lookFor)
@@ -447,7 +447,7 @@ namespace Karo
                                             if (x > 2 && y > 2)
                                             {
                                                 // if next two spaces are head of himself then max tree with space
-                                                if (boardSituation[x -3, y - 3] == lookFor)
+                                                if (boardSituation[x - 3, y - 3] == lookFor)
                                                     situations.Add(PieceSituation.ThreeHeadsWithSpace);
                                             }
                                         }
@@ -628,7 +628,7 @@ namespace Karo
                             if (boardSituation[x + 1, y + 1] == lookFor)
                             {
                                 // check if we can move left
-                                if (y < 18 && x <19)
+                                if (y < 18 && x < 19)
                                 {
                                     if (boardSituation[x + 2, y + 2] == lookFor)
                                     {
@@ -639,7 +639,7 @@ namespace Karo
                                     else if (boardSituation[x + 2, y + 2] != BoardPosition.Empty)
                                     {
                                         // space is not nothing, but also not a head of yourself
-                                        if (y < 17 && x <18)
+                                        if (y < 17 && x < 18)
                                         {
                                             if (boardSituation[x + 2, y + 2] == BoardPosition.Tile)
                                             {
@@ -657,10 +657,10 @@ namespace Karo
                                     }
                                 }
                             }
-                            else if (boardSituation[x + 2, y + 2] != BoardPosition.Empty)
+                            else if ((x < 19 && y < 18) ^ (boardSituation[x + 2, y + 2] != BoardPosition.Empty))
                             {
                                 // space next to piece is not nothing or not a head of himself
-                                if (y < 17 && x <18)
+                                if (x < 18 && y < 17)
                                 {
                                     if (boardSituation[x + 1, y + 1] == BoardPosition.Tile)
                                     {

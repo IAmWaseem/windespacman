@@ -87,6 +87,7 @@ namespace Karo.Gui
                 {
                     rotationValue = 0.0f;
                 }
+
                 world = Matrix.CreateRotationZ(MathHelper.ToRadians(this.directionDegrees));
                 world *= Matrix.CreateRotationX(MathHelper.ToRadians(rotationValue));
                 world *= Matrix.CreateTranslation(BoardX, BoardY, height);

@@ -361,7 +361,7 @@ namespace Karo
                                     }
                                 }
                             }
-                            else if (boardSituation[x, y + 2] != BoardPosition.Empty)
+                            else if ((y < 17) ^ (boardSituation[x, y + 2] != BoardPosition.Empty))
                             {
                                 // space next to piece is not nothing or not a head of himself
                                 if (y < 17)

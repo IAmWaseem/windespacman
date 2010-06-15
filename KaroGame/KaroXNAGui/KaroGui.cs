@@ -137,11 +137,11 @@ namespace Karo.Gui
             background = Content.Load<Texture2D>("GameMenuBackground");
             loopSound = new SoundPlayerLoop(this, "guitar");
 
+            // check to enable or disable music
             if (Karo.Gui.Properties.Settings.Default.EnableSound)
                 loopSound.PlayLoop();
             else
                 loopSound.StopLoop();
-            // TODO: use this.Content to load your game content here
         }
 
         /// <summary>
@@ -167,6 +167,7 @@ namespace Karo.Gui
             if(Keyboard.GetState().IsKeyUp(Keys.F10) && f10Pressed)
             {
                 // switch setting
+
                 if (Karo.Gui.Properties.Settings.Default.EnableSound)
                     Karo.Gui.Properties.Settings.Default.EnableSound = false;
                 else
@@ -181,8 +182,11 @@ namespace Karo.Gui
                 else
                     loopSound.StopLoop();
 
+
                 f10Pressed = false;
             }
+
+            
 
 
             base.Update(gameTime);

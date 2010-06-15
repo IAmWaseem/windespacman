@@ -442,6 +442,7 @@ namespace Karo.Gui
                 }
                 else
                 {
+                    isBusy = false;
                     isGameEnded = false;
                     timeSpan = new TimeSpan(0, 0, 0, 0);
                     AICalculates = false;
@@ -807,7 +808,6 @@ namespace Karo.Gui
                             PlayWinningAnimation(uiConnector.GetCurrentPlayer());
                             selectedElementFrom = null;
                             selectedElementTo = null;
-                            isBusy = false;
                             return;
                         }
 
@@ -857,6 +857,7 @@ namespace Karo.Gui
 
         private void PlayWinningAnimation(string currentPlayer)
         {
+            isBusy = true;
             isGameEnded = true;
             timeSpan = new TimeSpan(0, 0, 0, 0, 10000);
 

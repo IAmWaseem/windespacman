@@ -29,6 +29,7 @@ namespace Karo.Gui
         //background
         SpriteBatch backgroundBatch;
         Texture2D background;
+        bool f10Pressed = false;
 
         public KaroGui()
         {
@@ -135,7 +136,11 @@ namespace Karo.Gui
             backgroundBatch = new SpriteBatch(GraphicsDevice);
             background = Content.Load<Texture2D>("GameMenuBackground");
             loopSound = new SoundPlayerLoop(this, "guitar");
-            loopSound.PlayLoop();
+
+            if (Karo.Gui.Properties.Settings.Default.EnableSound)
+                loopSound.PlayLoop();
+            else
+                loopSound.StopLoop();
             // TODO: use this.Content to load your game content here
         }
 
@@ -156,6 +161,30 @@ namespace Karo.Gui
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            if (Keyboard.GetState().IsKeyDown(Keys.F10))
+                f10Pressed = true;
+
+            if(Keyboard.GetState().IsKeyUp(Keys.F10) && f10Pressed)
+            {
+                // switch setting
+                if (Karo.Gui.Properties.Settings.Default.EnableSound)
+                    Karo.Gui.Properties.Settings.Default.EnableSound = false;
+                else
+                    Karo.Gui.Properties.Settings.Default.EnableSound = true;
+
+                // save settings
+                Karo.Gui.Properties.Settings.Default.Save();
+
+                // check to enable or disable music
+                if (Karo.Gui.Properties.Settings.Default.EnableSound)
+                    loopSound.PlayLoop();
+                else
+                    loopSound.StopLoop();
+
+                f10Pressed = false;
+            }
+
+
             base.Update(gameTime);
         }
 

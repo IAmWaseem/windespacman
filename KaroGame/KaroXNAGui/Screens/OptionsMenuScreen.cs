@@ -38,7 +38,6 @@ namespace GameStateManagement
         static bool enableMultiSampling = DefaultSettings.MultiSampleAntiAlias;
         static MultiSampleType multisamplingType = DefaultSettings.MultiSamplingLevel;
         static List<DisplayMode> supportedModes;
-        static int currentSampling = 0;
         static bool fullScreen = DefaultSettings.FullScreen;
         static int SelectedMode = 2;
 

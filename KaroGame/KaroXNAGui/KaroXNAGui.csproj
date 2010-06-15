@@ -33,7 +33,7 @@
     <ProductName>Karo</ProductName>
     <PublisherName>Group 3</PublisherName>
     <SuiteName>Karo</SuiteName>
-    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationRevision>2</ApplicationRevision>
     <ApplicationVersion>0.1.3.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>

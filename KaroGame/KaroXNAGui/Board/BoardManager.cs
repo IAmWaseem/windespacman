@@ -244,15 +244,23 @@ namespace Karo.Gui
                     }
                 }
 
-                // clear all components
-                List<Tile> oldTiles = game.ScreenManager.Game.Components.OfType<Tile>().ToList();
-
-                foreach (Tile t in oldTiles)
+                try
                 {
-                    if (t.IsPossiblePlace)
+                    // clear all components
+                    List<IGameComponent> temp = game.ScreenManager.Game.Components.ToList();
+                    List<Tile> oldTiles = temp.OfType<Tile>().ToList();
+
+                    foreach (Tile t in oldTiles)
                     {
-                        game.ScreenManager.Game.Components.Remove(t);
+                        if (t.IsPossiblePlace)
+                        {
+                            game.ScreenManager.Game.Components.Remove(t);
+                        }
                     }
+                }
+                catch (Exception e)
+                {
+
                 }
             }
 

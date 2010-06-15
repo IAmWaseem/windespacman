@@ -25,8 +25,10 @@ namespace Karo
             int move = random.Next(0, nextMoves.Count);
 
             // return move
-            if(nextMoves.Count > 0)
+            if (nextMoves.Count > 0)
                 return nextMoves[move];
+            else
+                throw new Exception();
             return currentBoard;
         }
     }

@@ -301,7 +301,7 @@ namespace Karo.Gui
             }
             if (isBusy)
                 return;
-            uiConnector.GetBoard().CalculateMovableTiles();
+            //uiConnector.GetBoard().CalculateMovableTiles();
             isSelected = false;
             if (isGameEnded)
             {
@@ -881,7 +881,7 @@ namespace Karo.Gui
             if (!uiConnector.IsTwoAI() || currentBoard == null)
             {
                 Board tempBoard = uiConnector.GetBoard();
-                currentBoard = tempBoard.BoardSituation;
+                currentBoard = (BoardPosition[,])tempBoard.BoardSituation.Clone();
                 whiteItems = tempBoard.WhiteItems;
                 redItems = tempBoard.RedItems;
             }

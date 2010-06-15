@@ -52,7 +52,7 @@ namespace Karo
             {
                 MakeAIMove();
             }
-            return board;
+            return (Board)board.Clone();
         }
 
         /// <summary>
@@ -458,7 +458,8 @@ namespace Karo
         /// </summary>
         public void MakeAIMove()
         {
-            if (!board.IsWon())
+            Board boardClone = (Board)board.Clone();
+            if (!boardClone.IsWon())
             {
                 DateTime beforeFunction = DateTime.Now;
 
@@ -473,9 +474,10 @@ namespace Karo
                     if (turnPlayerA && playerA.PlayerSettings.IsAI)
                     {
                         // execute ai move
-                        playerA.Execute(board);
-                        if (board.IsTileMoved)
-                            playerA.Execute(board);
+                        playerA.Execute(boardClone);
+                        Board boardCloneClone = (Board)board.Clone();
+                        if (boardCloneClone.IsTileMoved)
+                            playerA.Execute(boardCloneClone);
                         // change player
                         NumMovesA++;
                         NumMovesB++;
@@ -492,14 +494,13 @@ namespace Karo
                     }
                     else if (!turnPlayerA && playerB.PlayerSettings.IsAI)
                     {
-                        // execute ai move
-                        playerB.Execute(board);
-                        if (board.IsTileMoved)
-                            playerB.Execute(board);
+                        playerB.Execute(boardClone);
+                        Board boardCloneClone = (Board)board.Clone();
+                        if (boardCloneClone.IsTileMoved)
+                            playerB.Execute(boardCloneClone);
                         // change player
                         NumMovesA++;
                         NumMovesB++;
-
 
                         // Elapsed time
                         DateTime afterFunction = DateTime.Now;

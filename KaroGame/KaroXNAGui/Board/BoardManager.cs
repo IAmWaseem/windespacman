@@ -91,7 +91,7 @@ namespace Karo.Gui
                     break;
 
                 case Difficulty.Hard:
-                    playerB = new PlayerSettings(true, AlgorithmType.AlphaBeta, 4, true, true, EvaluationType.BetterOne);
+                    playerB = new PlayerSettings(true, AlgorithmType.AlphaBeta, 2, true, true, EvaluationType.BetterOne);
                     break;
             }
 

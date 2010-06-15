@@ -44,14 +44,28 @@ namespace Karo
         /// <param name="currentBoard">The current board</param>
         public void Execute(Board currentBoard)
         {
-            
-
             if (algorithm != null)
             {
                 Board next = algorithm.NextMove(currentBoard);
+                if(IsEqual(currentBoard, next)
+                    throw new Exception();
                 Game.Instance.SetBoard(next);
             }
 
+        }
+
+        private bool IsEqual(Board boardA, Board boardB)
+        {
+            for (int x = 0; x < 21; x++)
+            {
+                for (int y = 0; y < 20; y++)
+                {
+                    if (boardA.BoardSituation[x, y] != boardB.BoardSituation[x, y])
+                        return false;
+                }
+            }
+
+            return true;
         }
     }
 }
